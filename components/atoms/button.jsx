@@ -55,4 +55,4 @@ const Button = ({ href, children, className, size = 'md', variant = "primary", o
 }
 
 
-export default Button
+export default Button;
