@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Text,{Text1,InputField,TextArea, TextField, TextInputArea} from '../components/atoms/field'
+import Text,{Text1,InputField,TextArea, TextField, TextInputArea, CustomSelect} from '../components/atoms/field'
 import TableComp from '../components/organism/tablecomp'
 import DialogPage from '../components/molecules/dialog'
 import Sidebar from '../components/organism/sidebar'
@@ -93,6 +93,15 @@ const Headerbody = [{id:1,name:"prince",types:"employe",batch:"B",id:'234'},{id:
         <Button variant='contained'>contained</Button>
         <Button variant='primary1'>primary1</Button>
         {/* <p className='bg-primary'>fjsa</p> */}
+      </div>
+
+      <div>
+      <CustomSelect label={'City'} handleChange={(e)=>console.log(e.target.value)}>
+      <option value={''}>choose city</option>
+        <option value={'mumbai'}>mumbai</option>
+        <option value={'delhi'}>delhi</option>
+        <option value={'patna'}>patna</option>
+      </CustomSelect>
       </div>
     </div>
   )
