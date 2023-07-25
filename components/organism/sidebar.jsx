@@ -2,28 +2,20 @@ import cn from 'classnames';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { FinbitLogo } from '../atoms/icons';
 
  const Sidebar = ({ children }) => {
     return (
-      <div className="bg-sidebar min-w-[16rem] text-primary-lightest flex flex-col h-screen  overflow-y-auto border-r">
+      <div className="bg-sidebackground min-w-[16rem] text-primary-lightest flex flex-col h-screen  overflow-y-auto border-r">
         <div className="flex flex-row p-6  items-center justify-center gap-4">
-          <Image
-            src="/images/logo.png"
-            alt="Logo"
-            width={56}
-            height={56}
-            className="rounded-xl object-cover "
-          />
-  
-          <div className="flex flex-col">
-            <p className="text-base">Asset</p>
-            <p className="text-base">Management</p>
-          </div>
+          <FinbitLogo/>
         </div>
         {children}
       </div>
     );
 }
+
+
 
 export const SidebarItem = ({
     href,
