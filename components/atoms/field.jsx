@@ -323,7 +323,7 @@ required={required}
 id={id}
 name={id}
 value={value}
-className={`text-gray-400 px-1 border border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
+className={`text-gray-400 px-1  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
 onChange={(e) => handleChange(e)}
 disabled={disabled}
 >

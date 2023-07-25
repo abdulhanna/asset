@@ -56,7 +56,7 @@ function Profile(props) {
   };
 
   return (
-    <div className="2xl:px-[456px] 2xl:py-[74px]  px-20">
+    <div className="2xl:px-[456px] 2xl:py-[74px]  sm:px-20">
       <form action="" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-[52px]">
           <div className="flex justify-center items-center">
@@ -68,13 +68,12 @@ function Profile(props) {
             <div>
               <p>Profile Information</p>
             </div>
-            <div className=" grid grid-cols-3 gap-[24px]">
+            <div className=" grid md:grid-cols-3 gap-[24px]">
               <TextField
                 bgColor="white"
                 label="Company name"
                 name="companyName"
                 placeHolder="input text"
-               
                 onChange={handleChange}
               />
               <div className="pt-2">
@@ -152,7 +151,7 @@ function Profile(props) {
                   name="addressLine2"
                 />
               </div>
-              <div className="grid grid-cols-3  gap-[24px]">
+              <div className="grid md:grid-cols-3  gap-[24px]">
                 <div className="pt-2">
                   <label
                     htmlFor="city"
@@ -198,7 +197,7 @@ function Profile(props) {
                     Contact No
                   </label>
                 </div>
-                <div className=" grid grid-cols-12 gap-[12px]">
+                <div className=" grid grid-cols-6 md:grid-cols-12 gap-[12px]">
                   <div className="col-span-1">
                     <InputField
                       placeHolder="+00"
