@@ -2,7 +2,8 @@ import React from 'react'
 import Sidebar, { SidebarItem ,SidebarList,SidebarSubItem,SidebarSubList} from "../../../components/organism/sidebar";
 import { useRouter } from 'next/router';
 import InventoryFillIcon from '../../../components/atoms/icons';
-import { SampleIcon ,QrIcon } from '../../../components/atoms/icons';
+import { SampleIcon ,QrIcon,Overview,Location,AssetMangment,AssetGroup,Departments,UserManagment,Reports,RootMangment,FieldMangment,Organizations } from '../../../components/atoms/icons';
+import Image from 'next/image';
 
 
 
@@ -14,43 +15,98 @@ const SidebarComp = () => {
 const whiteColor = '#FFFFFF';
 const currentPath = router.pathname;
  let user  = 'root'
-    const menuRoot = [
+    const superAdmin = [
         {
-          label: 'Home',
+          label: 'Overview',
           url: '/dashboard/root',
-          icon: <SampleIcon />,
+          icon: <Overview />,
           fillIcon: <InventoryFillIcon />,
         },
         {
-          label: 'User Management',
+          label: 'locations',
           url: '/dashboard/user-management',
-          icon: <SampleIcon />,
+          icon: <Location />,
           fillIcon: <InventoryFillIcon />,
         },
         {
-          label: 'Field Management',
+          label: 'Asset Management',
           url: '/dashboard/fields',
-          icon: <SampleIcon />,
+          submenu: [
+            { label: 'All Assets', url: '/dashboard/sample/viewSample' },
+            { label: 'Asset From Managment', url: '/dashboard/sample/viewScheduler' },
+  
+          ],
+          icon: <AssetMangment />,
           fillIcon: <InventoryFillIcon />,
         },
         {
-            label: 'Generate QR Code',
+          label: 'Asset Groups',
+          url: '/dashboard/user-management',
+          icon: <AssetGroup />,
+          fillIcon: <InventoryFillIcon />,
+        },
+        {
+          label: 'Department',
+          url: '/dashboard/user-management',
+          icon: <Departments />,
+          fillIcon: <InventoryFillIcon />,
+        },
+        {
+          label: 'Reports',
+          url: '/dashboard/user-management',
+          icon: <Reports />,
+          fillIcon: <InventoryFillIcon />,
+        },
+        {
+            label: 'User Mangement',
             url: '/dashboard/qr-code' ,
             submenu: [
-              { label: 'Samples', url: '/dashboard/sample/viewSample' },
-              { label: 'Schedules', url: '/dashboard/sample/viewScheduler' },
+              { label: 'All Users', url: '/dashboard/sample/viewSample' },
+              { label: 'Roles & Permission', url: '/dashboard/sample/viewScheduler' },
               { label: 'Generate QR Code', url: '/dashboard/qr-code' },
             ],
-            icon: <QrIcon/>,
+            icon: <UserManagment/>,
             fillIcon: <QrIcon/>,
           }
       ];
+
+    const menuRoot = [
+      {
+        label: 'Overview',
+        url: '/dashboard/root',
+        icon: <Overview />,
+        fillIcon: <InventoryFillIcon />,
+      },
+      {
+        label: 'Organizations',
+        url: '/dashboard/user-management',
+        icon: <Organizations />,
+        fillIcon: <InventoryFillIcon />,
+      },
+      {
+        label: 'Field Managment',
+        url: '/dashboard/user-management',
+        icon: <FieldMangment />,
+        fillIcon: <InventoryFillIcon />,
+      },
+      {
+        label: 'User Management',
+        url: '/dashboard/fields',
+        submenu: [
+          { label: 'All User', url: '/dashboard/sample/viewSample' },
+          { label: 'Roles & Permission', url: '/dashboard/sample/viewScheduler' },
+
+        ],
+        icon: <RootMangment />,
+        fillIcon: <InventoryFillIcon />,
+      },
+    ]
      
       const menuItem =
       user === 'root'
         ? menuRoot
         : user === 'super_admin'
-        ? menuAdmin
+        ? superAdmin
         : user === 'sub_admin'
         ? menuSubAdmin
         : menu;
@@ -71,11 +127,12 @@ const currentPath = router.pathname;
                 icon={Icon}
                 fillIcon={FillIcon}
               >
-                {/* {item.submenu.map((item) => (
+                {/* {item.submenu.map((item,index) => (
                   <SidebarSubItem
                     label={item.label}
                     href={item.url}
                     active={currentPath.startsWith(item.url)}
+                    isLastSubItem={index === item.submenu?.length - 1}
                   />
                 ))} */}
                 {/* Checking Item.submenu exist or not handling for length and also checking item.submenu is an array or not*/}
@@ -103,6 +160,25 @@ const currentPath = router.pathname;
 
          
         </div>
+         
+        <div className="flex-1 border-1  border-t-red-500" />
+        <div className="bg-gray-300 h-px" />
+        <div className="py-6  p-4 px-4">
+          <div className="flex flex-row   p-2 rounded-lg gap-4">
+            <Image
+              src="/gk/girl.jpg"
+              alt="user"
+              width={40}
+              height={40}
+              className="peer cursor-pointer rounded-lg object-cover"
+            />
+            <div className="flex flex-col">
+              <p className="text-sm">Plaxonic Technologies</p>
+              <p className="text-xs text-gray-400">userName</p>
+            </div>
+          </div>
+        </div>
+
         </SidebarList>
     </Sidebar>
   )

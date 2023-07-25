@@ -304,4 +304,33 @@ export const TextInputArea = ({
   );
 };
 
+export const CustomSelect = ({
+  id,
+  children,
+  handleChange,
+  label,
+  required = false,
+  bgColor = 'white',
+  disabled = false,
+  classname = 'my-1 py-2 gap-0.5',
+  value,
+}) => {
+return (
+<div className={` w-full min-w-auto   ${classname}`}>
+<div className="font-normal text-sm text-textColor">{label}</div>
+<select
+required={required}
+id={id}
+name={id}
+value={value}
+className={`text-gray-400 px-1 border border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
+onChange={(e) => handleChange(e)}
+disabled={disabled}
+>
+{children}
+</select>
+</div>
+);
+};
+
 export default Text;
