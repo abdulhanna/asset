@@ -82,7 +82,7 @@ export const SidebarList = ({ children }) => {
   // };
 
   export const SidebarSubItem = ({ href, label, active,isLastSubItem }) => {
-    // console.log(isLastSubItem,'this is lastiten');
+    // console.log(active,label,'this is lastiten');
    return (
      <div className="flex flex-row ">
        <div className="flex">
