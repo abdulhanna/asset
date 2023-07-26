@@ -1,10 +1,13 @@
 import React from 'react'
+import MainLayout from '../../../proj-components/MainLayout'
 
 const Overview = () => {
   return (
-    <div>
-      Welcome to overview
-    </div>
+    <>
+      <MainLayout>
+        This is the overview page.
+      </MainLayout>
+    </>
   )
 }
 

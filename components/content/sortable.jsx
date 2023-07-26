@@ -16,23 +16,28 @@ const seed = [
     isDirectory: true,
     expanded: true,
     children: [
-      { id: "456", title: "Human Resource", subtitle: "zzz" },
+      { id: "456", title: "Human Resource", subtitle: "zzz", isDirectory: true, expanded: true },
       {
         id: "789",
         title: "Bussiness",
         subtitle: "zzsdsd",
+        isDirectory: true,
         expanded: true,
         children: [
           {
-            id: "234",
+            id: "2394",
             title: "Store A",
-            subtitle: "zzz"
+            subtitle: "zzz",
+            isDirectory: true,
+            expanded: true,
           },
-          { id: "567", title: "Store B", subtitle: "zzz" ,children: [
+          { id: "567", title: "Store B", subtitle: "zzz", isDirectory: true, expanded: true , children: [
             {
-              id: "234",
+              id: "2134",
               title: "Store c",
-              subtitle: "zzz"
+              subtitle: "zzz",
+              isDirectory: true,
+              expanded: true,
             }
             // { id: "567", title: "Store B", subtitle: "zzz"  }
           ] }
@@ -47,6 +52,8 @@ function Tree() {
   const [searchFocusIndex, setSearchFocusIndex] = useState(0);
   const [searchFoundCount, setSearchFoundCount] = useState(null);
   const [treeData, setTreeData] = useState(seed);
+  const [selectedNode, setSelectedNode] = useState(false);
+  
   const [state,setState] = useState({
     name:"",
     desc:"",
@@ -58,6 +65,13 @@ function Tree() {
   const inputEl = useRef();
 
   // console.log(treeData);
+
+  const handleNodeClick = (rowInfo) => {
+    setSelectedNode(rowInfo.node.id)
+    addNodeChild(rowInfo)
+   
+    console.log("yes it clicked me")
+  }
 
   function createNode() {
     const value = inputEl.current.value;
@@ -227,7 +241,7 @@ function Tree() {
 
     global.alert(
       "Info passed to the icon and button generators:\n\n" +
-        `node: {\n   ${objectString}\n},\n` +
+       ` node: {\n   ${objectString}\n},\n` +
         `path: [${path.join(", ")}],\n` +
         `treeIndex: ${treeIndex}`
     );
@@ -323,9 +337,11 @@ function Tree() {
           theme={FileExplorerTheme}
           canDrag={({ node }) => !node.dragDisabled}
           generateNodeProps={(rowInfo,node) => ({
-            icons: node?.isDirectory ? [node?.expanded ? '📂' : '📁'] : ['📄'],
+            icons: rowInfo.node?.isDirectory ? [rowInfo.node?.expanded ? '📂' : '📁'] : ['📄'],
             name: rowInfo.node.label,
             subtitle: rowInfo.node.subtitle,
+            searchFocusOffset:true,
+            onClick: () => handleNodeClick(rowInfo),
             buttons: [
               <div className="space-x-2"> 
                 {/* <button
@@ -335,12 +351,10 @@ function Tree() {
                   Add Sibling
                 </button> */}
                 <button
-                  className="border-2 rounded-full px-2 " label="Add Child"
-                  onClick={(event) => addNodeChild(rowInfo)}
-
-                 
+                  className="border-1 rounded px-2 " label="Add Child"
+                  // onClick={(event) => addNodeChild(rowInfo)}
                 >
-                  +
+                  📄
                 </button>
                 {/* <button className="border-2 py-1 " label="Update" onClick={(event) => updateNode(rowInfo)}>
                   Update
@@ -356,13 +370,13 @@ function Tree() {
                 </button> */}
               </div>
             ],
+            isSearchFocus:selectedNode === rowInfo?.node?.id ? true:false ,
             style: {
-              height: "32px",
-            //   innerWidth:'20px',
-            //   outerWidth:'40px'
-            // width:"60px"
-
-            }
+             
+              color: selectedNode === rowInfo?.node?.id ? 'darkred' : 'green',
+              // borderColor: 2px solid ${selectedNode === rowInfo?.node?.id ? 'darkblue' : ''},
+            },
+            
           })}
 
           ref={inputEl}
@@ -373,5 +387,6 @@ function Tree() {
     </div>
   );
 }
+
 
 export default Tree;

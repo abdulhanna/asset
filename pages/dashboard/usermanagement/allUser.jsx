@@ -1,10 +1,12 @@
 import React from 'react'
-
+import MainLayout from '../../../proj-components/MainLayout'
 const UserList = () => {
   return (
-    <div>
-      Root user list
-    </div>
+    <>
+      <MainLayout>
+        user list page
+      </MainLayout>
+    </>
   )
 }
 

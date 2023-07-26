@@ -73,28 +73,34 @@ const currentPath = router.pathname;
     const menuRoot = [
       {
         label: 'Overview',
-        url: '/dashboard/root',
+        url: '/dashboard/overview',
         icon: <Overview />,
         fillIcon: <InventoryFillIcon />,
       },
       {
         label: 'Organizations',
-        url: '/dashboard/user-management',
+        url: '/dashboard/root/organisation',
+        submenu: [
+          { label: 'Add Organisations', url: '/dashboard/root/organisation' },
+          // { label: 'Roles & Permission', url: '/dashboard/sample/viewScheduler' },
+
+        ],
         icon: <Organizations />,
         fillIcon: <InventoryFillIcon />,
       },
       {
         label: 'Field Managment',
-        url: '/dashboard/user-management',
+        url: '/dashboard/root/field-management',
         icon: <FieldMangment />,
         fillIcon: <InventoryFillIcon />,
       },
       {
         label: 'User Management',
-        url: '/dashboard/fields',
+        url: '/dashboard/usermanagement/allUser',
+        
         submenu: [
-          { label: 'All User', url: '/dashboard/sample/viewSample' },
-          { label: 'Roles & Permission', url: '/dashboard/sample/viewScheduler' },
+          { label: 'All User', url: '/dashboard/usermanagement/allUser' },
+          { label: 'Roles & Permission', url: '/dashboard/usermanagement/roles' },
 
         ],
         icon: <RootMangment />,
@@ -116,7 +122,7 @@ const currentPath = router.pathname;
         <SidebarList>
         <div className="flex flex-col  p-4 px-4">
           {menuItem.map((item, index) => {
-            {/* console.log(item,'ite') */}
+            console.log(currentPath.startsWith(item.url),item,currentPath,'ite')
             const Icon = item.icon;
             const FillIcon = item.fillIcon;
             return item.submenu ? (
@@ -127,21 +133,16 @@ const currentPath = router.pathname;
                 icon={Icon}
                 fillIcon={FillIcon}
               >
-                {/* {item.submenu.map((item,index) => (
-                  <SidebarSubItem
-                    label={item.label}
-                    href={item.url}
-                    active={currentPath.startsWith(item.url)}
-                    isLastSubItem={index === item.submenu?.length - 1}
-                  />
-                ))} */}
+              
                 {/* Checking Item.submenu exist or not handling for length and also checking item.submenu is an array or not*/}
                 {item.submenu && Array.isArray(item.submenu) && item.submenu.map((subItem, index) => (
+               
                    <SidebarSubItem
                       key={index}
                       href={subItem.url}
                       label={subItem.label}
                       active={currentPath.startsWith(item.url)}
+
                        isLastSubItem={index === item.submenu.length - 1} // Set isLastSubItem to true for the last sub-item
                       />
                  ))}
