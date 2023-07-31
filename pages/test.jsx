@@ -13,6 +13,8 @@ import Sidebar from "../components/organism/sidebar";
 import { useScroll } from "framer-motion";
 import SidebarComp from "../proj-components/Layout/sub-components/navbar-components";
 import Button from "../components/atoms/button";
+import Image from "next/image";
+import img1 from "../public/images/auth/acountVarified.svg";
 
 const ShowData = ({ open, close, data }) => {
   return (
@@ -29,8 +31,22 @@ const ShowData = ({ open, close, data }) => {
 const AccountShow = ({ open, close }) => {
   return (
     <DialogPage open={open} close={close}>
-      <div className="">
-        <div>account not varified</div>
+      <div className=" text-center flex flex-col gap-8">
+    
+          <div className="flex flex-col gap-6">
+            <div>
+              <Image src={img1} className="" />
+            </div>
+            <p className="text-2xl font-medium leading-8 text-[#3B5FDA]">Account Not Verified!</p>
+            <p className="w-[400px] text-sm font-normal mx-auto">
+              In order to start using your Asset Monitoring account, please
+              verify your email address
+            </p>
+          </div>
+          <div>
+            <Button variant="contained">RESEND VERIFICATION EMAIL</Button>
+          </div>
+        
       </div>
     </DialogPage>
   );

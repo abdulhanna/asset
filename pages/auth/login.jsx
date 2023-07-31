@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import img1 from "../../public/images/auth/login.svg";
+// import img1 from "../../public/images/auth/login.svg";
 import Text, { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
+import { LoginImg } from "../../components/atoms/icons";
 
 // import "../styles/globals.css";
 
@@ -50,31 +51,39 @@ function Login() {
 
   return (
     <>
-      <div className="w-full lg:h-screen bg-[#00000080] flex  justify-center items-center">
-        <div className="flex flex-col lg:flex-row border-2 rounded-lg">
-          <div className="px-[91px]   pt-[72px] lg:pb-[244px] bg-[#F1F5FD] flex flex-col gap-[124px]">
-            <div className="flex justify-center items-center py-[32px]">
-              <p className="text-[40px] font-black leading-8 text-[#3B5FDA]">
-                <span className="text-[#7CC270]">Fin</span>
-                Bit
+      <div className="w-full md:h-screen  flex justify-center  items-center py-4">
+        <div className="flex flex-col md:flex-row  border-1 rounded-lg">
+          <div className="xl:px-[160px]   lg:py-[200px] lg:pb-[244px] bg-[#F1F5FD] flex flex-col lg:gap-[120px]">
+            <LoginImg className={"hidden sm:block"} />
+            <div className="w-[300px] sm:w-[432px] mx-auto text-center flex flex-col  gap-6">
+              <p className="text-2xl font-medium text-[#283995]">Lorem Ipsum</p>
+              <p className=" font-normal text-base">
+                Lorem ipsum dolor sit amet consectetur. Senectus enim ultricies
+                tellus mauris sapien dignissim ut tempor urna.
               </p>
             </div>
-            <Image src={img1} className="" />
           </div>
-          <div className="md:px-[100px] md:py-[40px]  bg-white  flex item-center justify-center">
+          <div className="px-[30px] 2xl:px-[220px] md:py-[40px]  bg-white  md:flex item-center justify-center">
             <form
               onSubmit={handleSubmit}
               action=""
-              className="md:w-[368px] flex flex-col  gap-[52px] justify-center">
-              <Text1
-                weight="medium"
-                size="xl"
-                color={"text-[#283995]"}
-                className={"text-center"}>
-                Login
-              </Text1>
+              className="w-[300px] sm:w-[400px] lg:w-[528px] flex flex-col  md:gap-[52px] justify-center ">
+              <div className="flex flex-col gap-8">
+                <Text1
+                  weight="medium"
+                  size="2xl"
+                  color={"text-[#283995]"}
+                 >
+                  Login
+                </Text1>
+                <Text1>
+                  Lorem ipsum dolor sit amet consectetur. Senectus enim
+                  ultricies tellus mauris sapien sit ut dignissim ut tempor
+                  urna.
+                </Text1>
+              </div>
 
-              <div className="flex flex-col gap-8 ">
+              <div className="flex flex-col md:gap-8 ">
                 <div>
                   <TextField
                     label={"Email Address"}
@@ -98,11 +107,10 @@ function Login() {
                   <p className="text-red-500">{formErrors.Password}</p>
                 </div>
               </div>
-              <div className="mx-auto">
-                <Button type="submit" variant="contained">
-                  Login
-                </Button>
-              </div>
+
+              <Button type="submit" variant="contained">
+                Login
+              </Button>
             </form>
           </div>
         </div>

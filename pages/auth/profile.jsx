@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Text1, TextField, InputField } from "../../components/atoms/field";
+import {
+  Text1,
+  TextField,
+  InputField,
+  CustomSelect,
+} from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 
 function Profile(props) {
@@ -76,7 +81,7 @@ function Profile(props) {
                 placeHolder="input text"
                 onChange={handleChange}
               />
-              <div className="pt-2">
+              {/* <div className="pt-2">
                 <label
                   htmlFor="industry"
                   className="block mb-1  text-sm font-medium text-textColor dark:text-white">
@@ -92,7 +97,13 @@ function Profile(props) {
                     Reaserch And development
                   </option>
                 </select>
-              </div>
+              </div> */}
+              <CustomSelect label={"Industry"}>
+                <option value="">Industry type</option>
+                <option value="Reaserch and development ">
+                  Reaserch And Development
+                </option>
+              </CustomSelect>
               <div className="pt-2">
                 <label
                   htmlFor="country"
