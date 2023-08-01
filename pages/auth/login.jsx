@@ -4,6 +4,8 @@ import Image from "next/image";
 import Text, { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { LoginImg } from "../../components/atoms/icons";
+import {Headerouter} from "../../proj-components/Layout/sub-components/header";
+
 
 // import "../styles/globals.css";
 
@@ -51,7 +53,8 @@ function Login() {
 
   return (
     <>
-      <div className="w-full md:h-screen  flex justify-center  items-center py-4">
+    <Headerouter/>
+      <div className="w-full  flex justify-center  items-center py-4">
         <div className="flex flex-col md:flex-row  border-1 rounded-lg">
           <div className="xl:px-[160px]   lg:py-[200px] lg:pb-[244px] bg-[#F1F5FD] flex flex-col lg:gap-[120px]">
             <LoginImg className={"hidden sm:block"} />
@@ -63,7 +66,7 @@ function Login() {
               </p>
             </div>
           </div>
-          <div className="px-[30px] 2xl:px-[220px] md:py-[40px]  bg-white  md:flex item-center justify-center">
+          <div className="px-[30px] 2xl:px-[170px] md:py-[40px]  bg-white  md:flex item-center justify-center">
             <form
               onSubmit={handleSubmit}
               action=""

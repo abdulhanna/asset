@@ -6,10 +6,7 @@ module.exports = {
   ],
 
   theme: {
-    fontFamily: {
-      sans: ['Roboto'],
-    },
-
+  
     extend: {
       colors: {
         // Configure your color palette here
@@ -24,6 +21,12 @@ module.exports = {
         menuText: '#076DA9',
         fieldBg: 'rgba(196,196,196,0.25)',
       },
+
+      fontFamily: {
+        'public-sans': ['Public Sans', 'sans-serif'],
+      },
+ 
+   
     },
   },
   plugins: [],

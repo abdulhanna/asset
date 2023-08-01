@@ -14,7 +14,7 @@ const SidebarComp = () => {
     const defultColor = '#A3A3A3';
 const whiteColor = '#FFFFFF';
 const currentPath = router.pathname;
- let user  = 'sub_admin'
+ let user  = 'root'
     const superAdmin = [
         {
           label: 'Overview',

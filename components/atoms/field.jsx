@@ -161,6 +161,7 @@ export const TextField = ({
   name = "",
   id = "",
   height = "h-[48px]",
+  width="w-[378px]",
   textsize = "text-sm",
   type = "text",
   required = null,
@@ -192,6 +193,7 @@ export const TextField = ({
         <div className="relative">
           <motion.input
             height={height}
+            width={width}
             name={name}
             type={showPassword ? "text" : "password"}
             // value={value}

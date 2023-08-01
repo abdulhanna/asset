@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { RegisterImg } from "../../components/atoms/icons";
+import {Headerouter} from "../../proj-components/Layout/sub-components/header"
 
 
 // import "../styles/globals.css";
@@ -57,7 +58,8 @@ function Register() {
 
   return (
     <>
-      <div className="h-[81px]"></div>
+    
+      <Headerouter/>
       <div className="w-full lg:h-screen flex  ">
         <div className="flex flex-col lg:flex-row  rounded-lg">
           <div className="px-[150px] 2xl:px-[108px] py-[186px] xl:py-[200px]  2xl:py-[210px] bg-[#F1F5FD] flex flex-col   items-center gap-28">

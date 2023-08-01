@@ -15,6 +15,7 @@ import SidebarComp from "../proj-components/Layout/sub-components/navbar-compone
 import Button from "../components/atoms/button";
 import Image from "next/image";
 import img1 from "../public/images/auth/acountVarified.svg";
+import { Nodata } from "../components/atoms/icons";
 
 const ShowData = ({ open, close, data }) => {
   return (
@@ -75,6 +76,9 @@ const Test = () => {
   return (
     <div className="p-4">
       <div className="space-y-2">
+
+        <Nodata/>
+     
         <Text size="lg" weight="medium">
           this is text component
         </Text>

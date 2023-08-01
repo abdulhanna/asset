@@ -11,8 +11,8 @@ const MainLayout = ({children}) => {
       </div>
       <div className="flex flex-col w-full overflow-hidden   bg-background">
         <Header />
-        <div className="w-full  h-full  overflow-y-auto pb-20">
-          <div className="container px-8 mx-auto flex-1">{children}</div>
+        <div className="w-full  h-full  overflow-hidden pb-20">
+          <div className="container p-6  flex-1">{children}</div>
         </div>
       </div>
     </div>
