@@ -3,7 +3,6 @@ import { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { RegisterImg } from "../../components/atoms/icons";
 
-
 // import "../styles/globals.css";
 
 function Register() {
@@ -26,6 +25,7 @@ function Register() {
     setFormErrors(validate(register));
     setIsSubmit(true);
   };
+  
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -66,7 +66,11 @@ function Register() {
               Anytime! Anywhere!
             </p>
 
-            <RegisterImg className={'w-[270px] h-[280px] xl:w-[325px] xl:h-[338px] 2xl:w-[375px] 2xl:h-[400] rounded-sm'} />
+            <RegisterImg
+              className={
+                "w-[270px] h-[280px] xl:w-[325px] xl:h-[338px] 2xl:w-[375px] 2xl:h-[400] rounded-sm"
+              }
+            />
           </div>
           <div className="md:px-[100px]  bg-white  flex item-center justify-center py-[60px]">
             <form
