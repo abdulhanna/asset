@@ -8,13 +8,14 @@ import Text, {
   CustomSelect,
 } from "../components/atoms/field";
 import TableComp from "../components/organism/tablecomp";
-import DialogPage from "../components/molecules/dialog";
+import DialogPage,{DialogPage1} from "../components/molecules/dialog";
 import Sidebar from "../components/organism/sidebar";
 import { useScroll } from "framer-motion";
 import SidebarComp from "../proj-components/Layout/sub-components/navbar-components";
 import Button from "../components/atoms/button";
 import Image from "next/image";
 import img1 from "../public/images/auth/acountVarified.svg";
+import { UpArrow } from "../components/atoms/icons";
 
 const ShowData = ({ open, close, data }) => {
   return (
@@ -32,23 +33,72 @@ const AccountShow = ({ open, close }) => {
   return (
     <DialogPage open={open} close={close}>
       <div className=" text-center flex flex-col gap-8">
-    
-          <div className="flex flex-col gap-6">
-            <div>
-              <Image src={img1} className="" />
-            </div>
-            <p className="text-2xl font-medium leading-8 text-[#3B5FDA]">Account Not Verified!</p>
-            <p className="w-[400px] text-sm font-normal mx-auto">
-              In order to start using your Asset Monitoring account, please
-              verify your email address
-            </p>
-          </div>
+        <div className="flex flex-col gap-6">
           <div>
-            <Button variant="contained">RESEND VERIFICATION EMAIL</Button>
+            <Image src={img1} className="" />
           </div>
-        
+          <p className="text-2xl font-medium leading-8 text-[#3B5FDA]">
+            Account Not Verified!
+          </p>
+          <p className="w-[400px] text-sm font-normal mx-auto">
+            In order to start using your Asset Monitoring account, please verify
+            your email address
+          </p>
+        </div>
+        <div>
+          <Button variant="contained">RESEND VERIFICATION EMAIL</Button>
+        </div>
       </div>
     </DialogPage>
+  );
+};
+
+const AddCompanyLogo = ({ open, close }) => {
+  return (
+    <DialogPage1 open={open} close={close} width="w-[510px]">
+      <div className=" text-center flex flex-col gap-6">
+        <div className="flex flex-col gap-8 justify-center items-center">
+          <div>
+            <p className="text-2xl font-medium leading-8 text-[#3B5FDA] mb-[14px]">
+              Add Profile Picture
+            </p>
+            <Button variant="transparent">
+              <div className="w-[60px] h-[60px] rounded-[50%] bg-[#3B5FDA] flex justify-center items-center">
+                <UpArrow />
+              </div>
+            </Button>
+          </div>
+          <div className="w-[161px]">
+            <p className="text-xs font-normal">
+              Drag and Drop files here,{" "}
+              <span className="text-[#666]"> OR, </span>
+            </p>
+            <Button className={"font-medium border-none"}>BROWSER FILES</Button>
+          </div>
+          <div>
+            <p className="text-[12px] leading-[14px] font-normal text-[#666]">
+              Supported files
+            </p>
+            <p>
+              <label
+                htmlFor=""
+                className="text-[12px] leading-[14px] font-normal text-[#A4A4A4]  border-r-2 border-slate-400">
+                Upto 2MB max
+              </label>{" "}
+              <label
+                htmlFor=""
+                className="text-[12px] leading-[14px] font-normal text-[#A4A4A4] ">
+                JPG, JPEG, PNG
+              </label>
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-2 justify-center">
+          <Button variant="primary" onClick={close} >CANCEL</Button>
+          <Button variant="contained">FINISH</Button>
+        </div>
+      </div>
+    </DialogPage1>
   );
 };
 
@@ -57,6 +107,7 @@ const Test = () => {
   const [data1, setData1] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [high, setHigh] = useState(false);
+  const [logohigh, setLogoHigh] = useState(false);
 
   const HeaderGoods = [
     { label: "Name", name: "name" },
@@ -108,7 +159,6 @@ const Test = () => {
           onClick={() => setIsOpen(true)}
         />
       </div>
-
       <div>
         <TableComp
           headers={HeaderGoods}
@@ -127,16 +177,13 @@ const Test = () => {
         {/* <Sidebar>sakdfl</Sidebar> */}
         <SidebarComp></SidebarComp>
       </div>
-
       <ShowData open={isOpen} close={() => setIsOpen(false)} data={data1} />
-
       <div className="space-x-4 my-4">
         <Button> primary</Button>
         <Button variant="contained">contained</Button>
         <Button variant="primary1">primary1</Button>
         {/* <p className='bg-primary'>fjsa</p> */}
       </div>
-
       <div>
         <CustomSelect
           label={"City"}
@@ -147,11 +194,16 @@ const Test = () => {
           <option value={"patna"}>patna</option>
         </CustomSelect>
       </div>
-
       <button onClick={() => setHigh(true)} className="border-2 p-1 rounded-md">
         Open Acount varification Page
       </button>
-      <AccountShow open={high} close={() => setHigh(false)} />
+      <AccountShow open={high} close={() => setHigh(false)} />{" "}
+      <button
+        onClick={() => setLogoHigh(true)}
+        className="border-2 p-1 rounded-md">
+        Add Company Logo
+      </button>
+      <AddCompanyLogo open={logohigh} close={() => setLogoHigh(false)} />
     </div>
   );
 };

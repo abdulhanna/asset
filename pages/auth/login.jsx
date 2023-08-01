@@ -70,10 +70,9 @@ function Login() {
               className="w-[300px] sm:w-[400px] lg:w-[528px] flex flex-col  md:gap-[52px] justify-center ">
               <div className="flex flex-col gap-8">
                 <Text1
-                  weight="medium"
-                  size="2xl"
-                  color={"text-[#283995]"}
-                 >
+                  weight="semibold"
+                  color={"text-[#3B5FDA]"}
+                  className={"text-[32px] leading-[44px] tracking-[1.28px]"}>
                   Login
                 </Text1>
                 <Text1>
@@ -111,6 +110,9 @@ function Login() {
               <Button type="submit" variant="contained">
                 Login
               </Button>
+              <p className="text-[#3B5FDA] mx-auto mt-[-20px]  text-sm">
+                <a href="">Forgot Password ?</a>
+              </p>
             </form>
           </div>
         </div>
