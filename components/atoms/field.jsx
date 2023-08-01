@@ -101,9 +101,9 @@ export const InputField = ({
   children,
   type,
   id,
-  handleChange,
+  handleChange = (e) => {},
   placeHolder,
-  name,
+  name = "",
   defaultValue = "",
   readonly = false,
   required = false,
@@ -118,13 +118,13 @@ export const InputField = ({
       <input
         type={type}
         id={id}
-        name={id}
+        name={name}
         onChange={(e) => handleChange(e)}
         defaultValue={defaultValue}
         disabled={readonly}
         required={required}
         placeholder={placeHolder}
-        className={`w-full ${height}  ${border} py-1 px-2 text-background rounded-md border-gray-200 focus:outline-none focus:ring-0`}
+        className={`w-full ${height}  ${border} py-1 px-2  rounded-md border-gray-200 focus:outline-none focus:ring-0`}
       />
     </div>
   );
@@ -135,10 +135,10 @@ export const TextArea = ({
   type,
   id,
   name,
-  handleChange,
   defaultValue = "",
   readonly = false,
   required = false,
+  handleChange,
 }) => {
   return (
     <div>
@@ -323,7 +323,7 @@ required={required}
 id={id}
 name={id}
 value={value}
-className={`text-gray-400 px-1 border border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
+className={`text-gray-400 px-1  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
 onChange={(e) => handleChange(e)}
 disabled={disabled}
 >
