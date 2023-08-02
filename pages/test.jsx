@@ -8,14 +8,14 @@ import Text, {
   CustomSelect,
 } from "../components/atoms/field";
 import TableComp from "../components/organism/tablecomp";
-import DialogPage,{DialogPage1} from "../components/molecules/dialog";
+import DialogPage, { DialogPage1 } from "../components/molecules/dialog";
 import Sidebar from "../components/organism/sidebar";
 import { useScroll } from "framer-motion";
 import SidebarComp from "../proj-components/Layout/sub-components/navbar-components";
 import Button from "../components/atoms/button";
 import Image from "next/image";
 import img1 from "../public/images/auth/acountVarified.svg";
-import { Nodata,UpArrow } from "../components/atoms/icons";
+import { Nodata, UpArrow } from "../components/atoms/icons";
 
 const ShowData = ({ open, close, data }) => {
   return (
@@ -31,7 +31,7 @@ const ShowData = ({ open, close, data }) => {
 
 const AccountShow = ({ open, close }) => {
   return (
-    <DialogPage open={open} close={close}>
+    <DialogPage open={open} close={close} width="w-[510px]">
       <div className=" text-center flex flex-col gap-8">
         <div className="flex flex-col gap-6">
           <div>
@@ -53,7 +53,7 @@ const AccountShow = ({ open, close }) => {
   );
 };
 
-const AddCompanyLogo = ({ open, close }) => {
+const AddCompanyLogo = ({ open, close,}) => {
   return (
     <DialogPage1 open={open} close={close} width="w-[510px]">
       <div className=" text-center flex flex-col gap-6">
@@ -94,7 +94,9 @@ const AddCompanyLogo = ({ open, close }) => {
           </div>
         </div>
         <div className="flex gap-2 justify-center">
-          <Button variant="primary" onClick={close} >CANCEL</Button>
+          <Button variant="primary" onClick={close}>
+            CANCEL
+          </Button>
           <Button variant="contained">FINISH</Button>
         </div>
       </div>
@@ -126,9 +128,8 @@ const Test = () => {
   return (
     <div className="p-4">
       <div className="space-y-2">
+        <Nodata />
 
-        <Nodata/>
-     
         <Text size="lg" weight="medium">
           this is text component
         </Text>

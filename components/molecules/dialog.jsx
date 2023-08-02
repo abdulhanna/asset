@@ -52,7 +52,7 @@ const DialogPage = ({
                   leaveTo="opacity-0 scale-95"
                 >
                   <div
-                    className={`inline-block w-full  ${width} p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl`}
+                    className={`inline-block  ${width} p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl`}
                   >
                     <div className="flex flex-row">
                       <div className="flex-1" />
@@ -109,7 +109,7 @@ export const DialogPage1 = ({
                   aria-hidden="true"
                 >
                   &#8203;
-                </span>
+                </span>  
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -120,7 +120,7 @@ export const DialogPage1 = ({
                   leaveTo="opacity-0 scale-95"
                 >
                   <div
-                    className={`inline-block w-full  ${width}  p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl`}
+                    className={`inline-block  ${width}  p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl`}
                   >
                     <div className="flex flex-row">
                       <div className="flex-1" />

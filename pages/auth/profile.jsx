@@ -7,6 +7,7 @@ import {
   CustomSelect,
 } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
+import { CompanyLogo, ProfileIcon } from "../../components/atoms/icons";
 
 function Profile(props) {
   const initialValue = {
@@ -48,193 +49,306 @@ function Profile(props) {
     console.log(profileData);
     setProfileErrors(validate(profileData));
     setIsSubmit(true);
-    console.log(profileErrors.companyRegistrationNumber);
+    console.log(profileErrors);
   };
 
   const validate = () => {
     const errors = {};
     if (!profileData.companyRegistrationNumber) {
       errors.companyRegistrationNumber =
-        " Company registration number is required !";
+        " Company registration number is required!";
     }
+    if (!profileData.companyName) {
+      errors.companyName = " Company name is required !";
+    }
+    if (!profileData.industryType) {
+      errors.industryType = "Industry name is required !";
+    }
+    if (!profileData.country) {
+      errors.country = "country name is required !";
+    }
+    if (!profileData.panNumber) {
+      errors.panNumber = "Pan number is required !";
+    }
+    if (!profileData.gstinNumber) {
+      errors.gstinNumber = "GST number is required !";
+    }
+    if (!profileData.addressLine1) {
+      errors.addressLine1 = "address Line 1 is required !";
+    }
+    if (!profileData.addressLine2) {
+      errors.addressLine2 = "address Line 2 is required !";
+    }
+    if (!profileData.city) {
+      errors.city = "City name is required !";
+    }
+    if (!profileData.state) {
+      errors.state = "State name is required !";
+    }
+    if (!profileData.zipCode) {
+      errors.zipCode = "zip code is required !";
+    }
+    if (!profileData.countryCode) {
+      errors.countryCode = "country code is required !";
+    }
+    if (!profileData.contactNumber) {
+      errors.contactNumber = "Contact number is required !";
+    }
+
     return errors;
   };
 
   return (
-    <div className="2xl:px-[456px] 2xl:py-[74px]  sm:px-20">
-      <form action="" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-[52px]">
-          <div className="flex justify-center items-center">
-            <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
-              Company Profile
-            </Text1>
-          </div>
-          <div className="flex flex-col gap-8">
-            <div>
-              <p>Profile Information</p>
+    <>
+      <div className="flex mx-[180px] my-[72px] gap-[50px] lg:gap-[100px] xl:gap-[150px] 2xl:gap-[371px]">
+        <div className="flex flex-col justify-between w-[288px] h-[888px] ">
+          <div className=" flex flex-col gap-[52px]">
+            <div className=" flex flex-col gap-5">
+              <p className="text-2xl font-normal w-[285px]">
+                Let’s set up your account
+              </p>
+              <p className="text-sm font-normal text-[#000]">
+                Lorem ipsum dolor sit amet consectetur. Senectus enim ultricies
+                tellus mauris sapien dignissim ut tempor urna.
+              </p>
             </div>
-            <div className=" grid md:grid-cols-3 gap-[24px]">
-              <TextField
-                bgColor="white"
-                label="Company name"
-                name="companyName"
-                placeHolder="input text"
-                onChange={handleChange}
-              />
-              {/* <div className="pt-2">
-                <label
-                  htmlFor="industry"
-                  className="block mb-1  text-sm font-medium text-textColor dark:text-white">
-                  Industry Type
-                </label>
-                <select
-                  id=""
-                  onChange={handleChange}
-                  name="industryType"
-                  className=" pt-[7.5px] h-[48px] border border-gray-300 text-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option value="">industry type</option>
-                  <option value="Reaserch And development">
-                    Reaserch And development
-                  </option>
-                </select>
-              </div> */}
-              <CustomSelect label={"Industry"}>
-                <option value="">Industry type</option>
-                <option value="Reaserch and development ">
-                  Reaserch And Development
-                </option>
-              </CustomSelect>
-              <div className="pt-2">
-                <label
-                  htmlFor="country"
-                  className="block mb-1  text-sm font-medium text-textColor dark:text-white">
-                  Country
-                </label>
-                <select
-                  id=""
-                  onChange={handleChange}
-                  name="country"
-                  className=" pt-[7.5px] h-[48px] border border-gray-300 text-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option value="">select</option>
-                  <option value="india">India</option>
-                </select>
-              </div>
-              <TextField
-                bgColor="white"
-                label="Company Registration Number"
-                placeHolder="input text"
-                onChange={handleChange}
-                name="companyRegistrationNumber"
-              />
-              <TextField
-                bgColor="white"
-                label="PAN No."
-                placeHolder="input text"
-                onChange={handleChange}
-                name="panNumber"
-              />
-              <TextField
-                bgColor="white"
-                label="GSTIN No."
-                onChange={handleChange}
-                name="gstinNumber"
-                placeHolder="input text"
-              />
-            </div>
-
-            <div>
-              <p>Company Address</p>
-            </div>
-            <div>
-              <div>
-                <TextField
-                  bgColor="white"
-                  label="Address Line 1"
-                  placeHolder="input text"
-                  onChange={handleChange}
-                  name="addressLine1"
-                />
-                <TextField
-                  bgColor="white"
-                  label="Address Line 2"
-                  placeHolder="input text"
-                  onChange={handleChange}
-                  name="addressLine2"
-                />
-              </div>
-              <div className="grid md:grid-cols-3  gap-[24px]">
-                <div className="pt-2">
-                  <label
-                    htmlFor="city"
-                    className="block mb-1  text-sm font-medium text-textColor dark:text-white">
-                    City
-                  </label>
-                  <select
-                    id=""
-                    onChange={handleChange}
-                    name="city"
-                    className=" pt-[7.5px] h-[48px] border border-gray-300 text-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="">Select</option>
-                    <option value="mumbai">Mumbai</option>
-                  </select>
-                </div>
-                <div className="pt-2">
-                  <label
-                    htmlFor="state"
-                    className="block mb-1  text-sm font-medium text-textColor dark:text-white">
-                    State
-                  </label>
-                  <select
-                    id=""
-                    onChange={handleChange}
-                    name="state"
-                    className=" pt-[7.5px] h-[48px] border border-gray-300 text-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="">select</option>
-                    <option value="maharashtra">Maharashtra</option>
-                  </select>
-                </div>
-
-                <TextField
-                  bgColor="white"
-                  label="Zip Code"
-                  placeHolder="input text"
-                  onChange={handleChange}
-                  name="zipCode"
-                />
-              </div>
-              <div>
-                <div>
-                  <label htmlFor="" className="text-[12px] text-textColor">
-                    Contact No
-                  </label>
-                </div>
-                <div className=" grid grid-cols-6 md:grid-cols-12 gap-[12px]">
-                  <div className="col-span-1">
-                    <InputField
-                      placeHolder="+00"
-                      name="countryCode"
-                      handleChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-span-4">
-                    <InputField
-                      placeHolder="00000 00000"
-                      handleChange={handleChange}
-                      name="contactNumber"
-                    />
-                  </div>
-                </div>
-              </div>
+            <div className="flex flex-col gap-5">
+              <p className="border-l-2 border-[#3B5FDA] ps-[12px] text-[#3B5FDA]  text-[1.125rem] leading-[1.5rem] font-medium">
+                Profile Information
+              </p>
+              <p className="text-base font-medium text-[#515151]">
+                Address & Contact Details
+              </p>
+              <p className="text-base font-medium text-[#515151]">
+                Billing & Plans
+              </p>
             </div>
           </div>
-          <div className="flex">
-            <Button variant="contained" className={"mx-auto"} type="submit">
-              SAVE
-            </Button>
+          <div>
+            <ProfileIcon />
           </div>
         </div>
-      </form>
-    </div>
+
+        <div className="w-full">
+          <form action="" onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-[52px] ">
+              <div className=" flex flex-col gap-8">
+                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
+                  Company logo
+                </Text1>
+                <div className="flex justify-between items-center">
+                  <div className="border-2 w-[120px] h-[120px]"></div>
+                  {/* <CompanyLogo /> */}
+                  <Button variant="primary">ADD LOGO</Button>
+                </div>
+              </div>
+              <div className="border-b-2 border-dashed"> </div>
+
+              <div className="flex flex-col gap-6">
+                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
+                  Profile Information
+                </Text1>
+                <div className=" grid md:grid-cols-2  gap-x-[52px] gap-y-[40px]">
+                  <div>
+                    <TextField
+                      bgColor="white"
+                      label="Company Name"
+                      name="companyName"
+                      // required={true}
+                      placeHolder="input text"
+                      onChange={handleChange}
+                      roundedText="rounded-[4px]"
+                    />
+                    <p className="text-red-500">{profileErrors.companyName}</p>
+                  </div>
+                  <div>
+                    <CustomSelect
+                      label={"Industry"}
+                      selectHeight="h-[48px]"
+                      name="industryType"
+                      onChange={handleChange}>
+                      <option value="">Select</option>
+                      <option value="Reaserch and development ">
+                        Reaserch And Development
+                      </option>
+                    </CustomSelect>
+                    <p className="text-red-500">{profileErrors.industryType}</p>
+                  </div>
+                  <div>
+                    <CustomSelect
+                      label={"Country"}
+                      selectHeight="h-[48px] "
+                      name="country"
+                      onChange={handleChange}>
+                      <option value="">select</option>
+                      <option value="india">India</option>
+                    </CustomSelect>
+                    <p className="text-red-500">{profileErrors.country}</p>
+                  </div>
+                  <div>
+                    <TextField
+                      bgColor="white"
+                      label="Company Registration Number"
+                      placeHolder="input text"
+                      // required={true}
+                      onChange={handleChange}
+                      name="companyRegistrationNumber"
+                      roundedText="rounded-[4px]"
+                    />
+                    <p className="text-red-500">
+                      {profileErrors.companyRegistrationNumber}
+                    </p>
+                  </div>
+                  <div>
+                    <TextField
+                      bgColor="white"
+                      label="PAN No."
+                      placeHolder="input text"
+                      // required={true}
+                      onChange={handleChange}
+                      roundedText="rounded-[4px]"
+                      name="panNumber"
+                    />
+                    <p className="text-red-500">{profileErrors.panNumber}</p>
+                  </div>
+                  <div>
+                    <TextField
+                      bgColor="white"
+                      label="GSTIN No."
+                      // required={true}
+                      onChange={handleChange}
+                      name="gstinNumber"
+                      placeHolder="input text"
+                      roundedText="rounded-[4px]"
+                    />
+                    <p className="text-red-500">{profileErrors.gstinNumber}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="border-b-2 border-dashed"> </div>
+              <div className="flex flex-col gap-6">
+                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
+                  Address & Contact Details
+                </Text1>
+
+                <div className="flex flex-col gap-[40px]">
+                  <div className="flex flex-col gap-[40px]">
+                    <div>
+                      <TextField
+                        bgColor="white"
+                        label="Address Line 1"
+                        placeHolder="input text"
+                        onChange={handleChange}
+                        name="addressLine1"
+                        roundedText="rounded-[4px]"
+                      />
+                      <p className="text-red-500">
+                        {profileErrors.addressLine1}
+                      </p>
+                    </div>
+                    <div>
+                      <TextField
+                        bgColor="white"
+                        label="Address Line 2"
+                        placeHolder="input text"
+                        onChange={handleChange}
+                        name="addressLine2"
+                        roundedText="rounded-[4px]"
+                      />
+                      <p className="text-red-500">
+                        {profileErrors.addressLine2}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-2  gap-x-[52px] gap-y-[40px]">
+                    <div>
+                      <CustomSelect
+                        label={"City"}
+                        selectHeight="h-[48px] "
+                        name="city"
+                        onChange={handleChange}>
+                        <option value="">select</option>
+                        <option value="mumbai">Mumbai</option>
+                      </CustomSelect>
+                      <p className="text-red-500">{profileErrors.city}</p>
+                    </div>
+                    <div>
+                      <CustomSelect
+                        label={"State"}
+                        selectHeight="h-[48px] "
+                        name="state"
+                        onChange={handleChange}>
+                        <option value="">select</option>
+                        <option value="maharashtra">Maharashtra</option>
+                      </CustomSelect>
+                      <p className="text-red-500">{profileErrors.state}</p>
+                    </div>
+                    <div>
+                      <TextField
+                        bgColor="white"
+                        label="Zip Code"
+                        placeHolder="input text"
+                        onChange={handleChange}
+                        name="zipCode"
+                        roundedText="rounded-[4px]"
+                      />
+                      <p className="text-red-500">{profileErrors.zipCode}</p>
+                    </div>
+
+                    <div className="flex flex-col justify-center">
+                      <div>
+                        <label
+                          htmlFor=""
+                          className="text-[12px] text-textColor">
+                          Contact No
+                        </label>
+                      </div>
+                      <div>
+                        <div className=" grid grid-cols-6 md:grid-cols-12 gap-[12px]">
+                          <div className="col-span-3">
+                            <InputField
+                              placeHolder="+00"
+                              name="countryCode"
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="col-span-9">
+                            <InputField
+                              placeHolder="00000 00000"
+                              onChange={handleChange}
+                              name="contactNumber"
+                            />
+                          </div>
+                        </div>
+
+                        <p className="text-red-500">
+                          {profileErrors.countryCode}
+                        </p>
+
+                        <p className="text-red-500">
+                          {profileErrors.contactNumber}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="border-b-2 border-dashed"> </div>
+              <div>
+                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
+                  Billings and plans
+                </Text1>
+              </div>
+              <div className="flex flex-col">
+                <Button variant="contained" type="submit">
+                  SAVE & CONTINUE
+                </Button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
 }
 

@@ -101,7 +101,7 @@ export const InputField = ({
   children,
   type,
   id,
-  handleChange = (e) => {},
+  onChange = (e) => {},
   placeHolder,
   name = "",
   defaultValue = "",
@@ -119,7 +119,7 @@ export const InputField = ({
         type={type}
         id={id}
         name={name}
-        onChange={(e) => handleChange(e)}
+        onChange={(e) => onChange(e)}
         defaultValue={defaultValue}
         disabled={readonly}
         required={required}
@@ -167,7 +167,8 @@ export const TextField = ({
   required = null,
   bgColor = "bg-fieldBg",
   labelColor ="textColor",
-  rounded = "md",
+  roundedText = "",
+  roundedPassword = "lg",
   placeHolder = "",
   className = "",
   value,
@@ -202,7 +203,7 @@ export const TextField = ({
             placeholder={placeHolder}
             onChange={(e) => onChange(e)}
             className={classNames(
-              `${bgColor}  border-[1px] rounded-${rounded} px-3 py-[7.5px] ${height} active:outline-none w-full`,
+              `${bgColor}  border-[1px] rounded-${roundedPassword} px-3 py-[7.5px] ${height} active:outline-none w-full`,
               {
                 "border-red-600 focus:outline-none": error,
                 "border-gray-300": !error,
@@ -236,7 +237,7 @@ export const TextField = ({
           placeholder={placeHolder}
           onChange={(e) => onChange(e)}
           className={classNames(
-            `${bgColor}  border-[1px] rounded-lg px-3 py-[7.5px]  ${height} active:outline-none w-full ${textsize}`,
+            `${bgColor}  border-[1px] ${roundedText} px-3 py-[7.5px]  ${height} active:outline-none w-full ${textsize}`,
             {
               "border-red-600 focus:outline-none": error,
               "border-gray-300": !error,
@@ -277,7 +278,8 @@ export const TextInputArea = ({
       className={`flex flex-col gap-0.5 py-1 2xl:gap-1 2xl:py-2  ${className}`}>
       <p className="select-none font-normal flex text-sm text-textColor">
         {label}
-        {required && <div className="text-red-500">*</div>}
+        {required}
+        {/* {required && <div className="text-red-500">*</div>} */}
       </p>
 
       <motion.textarea
@@ -311,12 +313,14 @@ export const TextInputArea = ({
 export const CustomSelect = ({
   id,
   children,
-  handleChange,
+  onChange ,
   label,
+  name,
   required = false,
   bgColor = 'white',
   disabled = false,
   classname = 'my-1 py-2 gap-0.5',
+  selectHeight ="",
   value,
 }) => {
 return (
@@ -325,10 +329,10 @@ return (
 <select
 required={required}
 id={id}
-name={id}
+name={name}
 value={value}
-className={`text-gray-400 px-1  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
-onChange={(e) => handleChange(e)}
+className={`text-gray-400 px-1 ${selectHeight}  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
+onChange={onChange}
 disabled={disabled}
 >
 {children}
