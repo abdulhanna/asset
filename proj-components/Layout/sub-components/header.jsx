@@ -43,11 +43,22 @@ const Header = () => {
 export const Headerouter = () => {
    return (
     <>
-  <div className="flex flex-row  order-b w-full h-20">
-    <div className="flex flex-row items-center gap-4 w-full ">
+  <div className="flex flex-row  w-full h-20">
+    <div className="flex justify-between px-6 flex-row items-center gap-4 w-full ">
       
     
-          <FinbitLogo/>
+       <div>
+       <FinbitLogo/>
+       </div>
+
+          <div className='flex flex-row items-center text-sm gap-6 px-8 text-gray-600'>
+             <div>
+               Privacy Notice
+            </div>
+            <div>
+              Disclaimer
+            </div> 
+        </div>
 
     
         {/* <Search placeholder="Search..." classname="px-2" /> */}
@@ -58,17 +69,12 @@ export const Headerouter = () => {
 
     <div className="px-40" />
 
-    <div className="flex flex-row items-center  gap-6 px-8">
+    <div className="">
       {/* <NotificationLineIcon classname="cursor-pointer" /> */}
       {/* <span>NotificationLineIcon</span> */}
 
       {/* <SettingsIcon classname="cursor-pointer" /> */}
-      <div>
-      Privacy Notice
-      </div>
-      <div>
-      Disclaimer
-      </div>
+     
     </div>
   </div>
     </>
