@@ -66,7 +66,7 @@ function Login() {
               </p>
             </div>
           </div>
-          <div className="px-[30px] 2xl:px-[170px] md:py-[40px]  bg-white  md:flex item-center justify-center">
+          <div className="px-[30px] 2xl:px-[240px] md:py-[120px]  bg-white  md:flex item-center justify-center">
             <form
               onSubmit={handleSubmit}
               action=""
