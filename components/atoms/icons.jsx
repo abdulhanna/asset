@@ -744,7 +744,7 @@ export const LoginImg = ({ className }) => {
   );
 };
 
-export const RegisterImg = ({ width , height, className }) => {
+export const RegisterImg = ({ width, height, className }) => {
   return (
     <>
       <span className={className}>

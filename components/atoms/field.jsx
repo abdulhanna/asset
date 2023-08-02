@@ -166,6 +166,8 @@ export const TextField = ({
   type = "text",
   required = null,
   bgColor = "bg-fieldBg",
+  labelColor ="textColor",
+  rounded = "md",
   placeHolder = "",
   className = "",
   value,
@@ -185,7 +187,7 @@ export const TextField = ({
   return (
     <div
       className={`flex flex-col gap-0.5 py-1 2xl:gap-1 2xl:py-2  ${className}`}>
-      <p className="select-none font-normal flex text-sm text-textColor">
+        <p className={`select-none font-normal flex text-sm text-${labelColor}`}>
         {label}
         {required && <div className="text-red-500">*</div>}
       </p>
@@ -200,7 +202,7 @@ export const TextField = ({
             placeholder={placeHolder}
             onChange={(e) => onChange(e)}
             className={classNames(
-              `${bgColor}  border-[1px] rounded-lg px-3 py-[7.5px] ${height} active:outline-none w-full`,
+              `${bgColor}  border-[1px] rounded-${rounded} px-3 py-[7.5px] ${height} active:outline-none w-full`,
               {
                 "border-red-600 focus:outline-none": error,
                 "border-gray-300": !error,
