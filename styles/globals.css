@@ -9,3 +9,22 @@
 .rst__moveHandle{
     width: 24px !important;
 }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&family=Public+Sans:ital,wght@0,200;1,200&display=swap');
+
+
+@font-face {
+    font-family: 'Public Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../public//fonts/Public_Sans/PublicSans-VariableFont_wght.ttf') format('ttf'),
+         url('../public//fonts/Public_Sans/PublicSans-Italic-VariableFont_wght.ttf') format('ttf');
+  }
+  
+  @font-face {
+    font-family: 'Public Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../public//fonts/Public_Sans/PublicSans-VariableFont_wght.ttf') format('ttf'),
+    url('../public//fonts/Public_Sans/PublicSans-Italic-VariableFont_wght.ttf') format('ttf');
+  }
+  
