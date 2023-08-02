@@ -15,7 +15,7 @@ import SidebarComp from "../proj-components/Layout/sub-components/navbar-compone
 import Button from "../components/atoms/button";
 import Image from "next/image";
 import img1 from "../public/images/auth/acountVarified.svg";
-import { Nodata } from "../components/atoms/icons";
+import { Nodata,UpArrow } from "../components/atoms/icons";
 
 const ShowData = ({ open, close, data }) => {
   return (
