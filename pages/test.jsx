@@ -102,6 +102,8 @@ const AddCompanyLogo = ({ open, close }) => {
   );
 };
 
+
+
 const Test = () => {
   const [data, setData] = useState("");
   const [data1, setData1] = useState("");
@@ -207,6 +209,11 @@ const Test = () => {
         Add Company Logo
       </button>
       <AddCompanyLogo open={logohigh} close={() => setLogoHigh(false)} />
+
+
+      
+
+
     </div>
   );
 };

@@ -23,8 +23,9 @@ module.exports = {
       },
 
       fontFamily: {
-        'public-sans': ['Public Sans', 'sans-serif'],
+        body: ['Public Sans', 'sans-serif'],
       },
+      
  
    
     },

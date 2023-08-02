@@ -44,7 +44,7 @@ const Text = ({
             "9x": `text-${color}-900`,
           }[colorWeight]
         }
-      font-lato tracking-wide ${classname}
+      font-body tracking-wide ${classname}
     `)}>
       {children}
     </div>
@@ -88,7 +88,7 @@ export const Text1 = ({
         //  },
         // `text-${color}-${colorWeight}`,
         color,
-        "font-lato",
+        "font-body",
         "tracking-wide",
         className
       )}>
@@ -309,32 +309,34 @@ export const TextInputArea = ({
 };
 
 export const CustomSelect = ({
-  id,
-  children,
-  handleChange,
-  label,
-  required = false,
-  bgColor = 'white',
-  disabled = false,
-  classname = 'my-1 py-2 gap-0.5',
-  value,
-}) => {
-return (
-<div className={` w-full min-w-auto   ${classname}`}>
-<div className="font-normal text-sm text-textColor">{label}</div>
-<select
-required={required}
-id={id}
-name={id}
-value={value}
-className={`text-gray-400 px-1  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
-onChange={(e) => handleChange(e)}
-disabled={disabled}
->
-{children}
-</select>
-</div>
-);
+    id,
+    children,
+    onChange ,
+    label,
+    name,
+    required = false,
+    bgColor = 'white',
+    disabled = false,
+    classname = 'my-1 py-2 gap-0.5',
+    selectHeight ="",
+    value,
+  }) => {
+  return (
+  <div className={` w-full min-w-auto   ${classname}`}>
+  <div className="font-normal  text-sm text-textColor">{label}</div>
+  <select
+  required={required}
+  id={id}
+  name={name}
+  value={value}
+  className={` px-1 ${selectHeight}  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
+  onChange={onChange}
+  disabled={disabled}
+  >
+  {children}
+  </select>
+  </div>
+  );
 };
 
 export default Text;
