@@ -167,8 +167,8 @@ export const TextField = ({
   required = null,
   bgColor = "bg-fieldBg",
   labelColor ="textColor",
-  roundedText = "",
-  roundedPassword = "lg",
+  roundedText = "rounded-[4px]",
+  roundedPassword = "rounded-lg",
   placeHolder = "",
   className = "",
   value,
@@ -203,7 +203,7 @@ export const TextField = ({
             placeholder={placeHolder}
             onChange={(e) => onChange(e)}
             className={classNames(
-              `${bgColor}  border-[1px] rounded-${roundedPassword} px-3 py-[7.5px] ${height} active:outline-none w-full`,
+              `${bgColor}  border-[1px] ${roundedPassword} px-3 py-[7.5px] ${height} active:outline-none w-full`,
               {
                 "border-red-600 focus:outline-none": error,
                 "border-gray-300": !error,
@@ -331,7 +331,7 @@ export const CustomSelect = ({
   id={id}
   name={name}
   value={value}
-  className={` px-1 ${selectHeight}  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
+  className={`px-1 ${selectHeight}  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
   onChange={onChange}
   disabled={disabled}
   >

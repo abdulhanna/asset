@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 // import img1 from "../../public/images/auth/login.svg";
 import Text, { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";

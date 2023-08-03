@@ -16,6 +16,7 @@ import Button from "../components/atoms/button";
 import Image from "next/image";
 import img1 from "../public/images/auth/acountVarified.svg";
 import { Nodata, UpArrow } from "../components/atoms/icons";
+import AddInputDiv from "./testComponents/AddInputDiv";
 
 const ShowData = ({ open, close, data }) => {
   return (
@@ -53,7 +54,7 @@ const AccountShow = ({ open, close }) => {
   );
 };
 
-const AddCompanyLogo = ({ open, close,}) => {
+const AddCompanyLogo = ({ open, close }) => {
   return (
     <DialogPage1 open={open} close={close} width="w-[510px]">
       <div className=" text-center flex flex-col gap-6">
@@ -104,7 +105,15 @@ const AddCompanyLogo = ({ open, close,}) => {
   );
 };
 
-
+const AddInputField = ({ open, close }) => {
+  return (
+    <>
+      <DialogPage open={open} close={close}>
+        <AddInputDiv />
+      </DialogPage>
+    </>
+  );
+};
 
 const Test = () => {
   const [data, setData] = useState("");
@@ -112,6 +121,7 @@ const Test = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [high, setHigh] = useState(false);
   const [logohigh, setLogoHigh] = useState(false);
+  const [inputHigh, setInputHigh] = useState(false);
 
   const HeaderGoods = [
     { label: "Name", name: "name" },
@@ -131,7 +141,6 @@ const Test = () => {
     <div className="p-4">
       <div className="space-y-2">
         <Nodata />
-
         <Text size="lg" weight="medium">
           this is text component
         </Text>
@@ -204,17 +213,22 @@ const Test = () => {
         Open Acount varification Page
       </button>
       <AccountShow open={high} close={() => setHigh(false)} />{" "}
+      {/* add company logo popup  */}
       <button
         onClick={() => setLogoHigh(true)}
         className="border-2 p-1 rounded-md">
         Add Company Logo
       </button>
       <AddCompanyLogo open={logohigh} close={() => setLogoHigh(false)} />
-
-
-      
-
-
+      {/* add input field component */}
+      <div className="py-2">
+        <button
+          onClick={() => setInputHigh(true)}
+          className="border-2 p-1 rounded-md">
+          Add input Field
+        </button>
+        <AddInputField open={inputHigh} close={() => setInputHigh(false)} />
+      </div>
     </div>
   );
 };
