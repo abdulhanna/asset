@@ -2,11 +2,11 @@ import Table from '../molecules/table';
 
 const classes = {
   table: 'w-full text-sm text-left  ',
-  thead: 'text-sm  uppercase bg-primary border-b text-gray-500  font-semibold',
+  thead: 'text-sm  uppercase bg-[#F7F7F7] border-b text-gray-500  font-semibold',
   tbody: 'bg-white cursor-pointer',
-  tr: 'text-white font-medium text-sm text-left',
+  tr: 'text-[#121212] font-medium text-sm text-left',
   th: 'px-6 py-4  truncate',
-  td: 'px-6 py-4 text-sm font-normal  tracking-tighter turncate text-primary border-t border-gray-200',
+  td: 'px-6 py-4 text-sm font-normal  tracking-tighter turncate text-[#121212] border-t border-white',
 };
 
 const TableComp = ({

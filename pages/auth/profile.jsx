@@ -101,7 +101,8 @@ function Profile(props) {
   return (
     <>
       <div className="flex mx-[180px] my-[72px] gap-[50px] lg:gap-[100px] xl:gap-[150px] 2xl:gap-[371px]">
-        <div className="flex flex-col justify-between w-[288px] h-[888px] ">
+        <div className="w-[288px]">
+        <div className="flex flex-col justify-between w-[288px] h-[888px] fixed">
           <div className=" flex flex-col gap-[52px]">
             <div className=" flex flex-col gap-5">
               <p className="text-2xl font-normal w-[285px]">
@@ -129,6 +130,8 @@ function Profile(props) {
           </div>
         </div>
 
+        </div>
+      
         <div className="w-full">
           <form action="" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-[52px] ">
