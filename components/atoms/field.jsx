@@ -237,7 +237,7 @@ export const TextField = ({
           placeholder={placeHolder}
           onChange={(e) => onChange(e)}
           className={classNames(
-            `${bgColor}  border-[1px] ${roundedText} px-3 py-[7.5px]  ${height} active:outline-none w-full ${textsize}`,
+            `${bgColor}  border-[1px] rounded-${roundedPassword} px-3 py-[7.5px]  ${height} active:outline-none w-full ${textsize}`,
             {
               "border-red-600 focus:outline-none": error,
               "border-gray-300": !error,
@@ -331,7 +331,7 @@ export const CustomSelect = ({
   id={id}
   name={name}
   value={value}
-  className={` px-1 ${selectHeight}  border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
+  className={` px-1 ${selectHeight} rounded-lg border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
   onChange={onChange}
   disabled={disabled}
   >

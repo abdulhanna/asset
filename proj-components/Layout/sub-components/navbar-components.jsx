@@ -81,7 +81,7 @@ const currentPath = router.pathname;
         label: 'Organizations',
         url: '/dashboard/root/organisation',
         submenu: [
-          { label: 'Add Organisations', url: '/dashboard/root/organisation' },
+          { label: 'Add Organisations', url: '/dashboard/root/organisation/add' },
           // { label: 'Roles & Permission', url: '/dashboard/sample/viewScheduler' },
 
         ],
@@ -203,9 +203,9 @@ const currentPath = router.pathname;
         : menu;
 
   return (
-    <Sidebar>
+    <Sidebar >
     <SidebarList>
-      <div className="flex flex-col  p-4 px-4">
+      <div className="flex flex-col bg-[#F7F7F7] p-4 px-4">
         {menuItem.map((item, index) => {
           const Icon = item.icon;
           const FillIcon = item.fillIcon;
