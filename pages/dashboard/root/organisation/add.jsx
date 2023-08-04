@@ -75,7 +75,7 @@ const AddOganisation = () => {
            <Text1 size="2xl" weight="medium">
               Add Organizations
           </Text1>
-          <Button type="submit" variant="contained">Save</Button>
+          <Button type="submit" variant="contained" className="w-[100px] h-[40px]">Save</Button>
           </div>
              <div>
           <Text size="lg" weight="semibold" classname='mb-3'>
