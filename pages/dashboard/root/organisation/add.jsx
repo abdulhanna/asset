@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
 import Text,{Text1,TextField, CustomSelect} from "../../../../components/atoms/field";
 import Button from '../../../../components/atoms/button';
+import { useRouter } from 'next/router';
+
+
 const AddOganisation = () => {
+
+   const router = useRouter();
 
    const profileValue = {
       EmailAddress:"",
@@ -30,7 +35,8 @@ const AddOganisation = () => {
    // Checking if profilerrors have 0 length and isSubmit true then show me an action
    useEffect(() => {
       if(Object.keys(profileErrors).length === 0 && isSubmit){
-         alert("done done")
+         // alert("done done")
+
       }
    }, [profileErrors])
    
@@ -56,6 +62,7 @@ const AddOganisation = () => {
       setProfileErrors(validate(companyprofileData))
       setIsSubmit(true)
       console.log("hiih", companyprofileData)
+      router.push('/dashboard/root/organisation'); 
    }
 
   return (

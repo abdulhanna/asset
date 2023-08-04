@@ -237,7 +237,7 @@ export const TextField = ({
           placeholder={placeHolder}
           onChange={(e) => onChange(e)}
           className={classNames(
-            `${bgColor}  border-[1px] ${roundedText} px-3 py-[7.5px]  ${height} active:outline-none w-full ${textsize}`,
+            `${bgColor}  border-[1px] rounded-${roundedPassword} px-3 py-[7.5px]  ${height} active:outline-none w-full ${textsize}`,
             {
               "border-red-600 focus:outline-none": error,
               "border-gray-300": !error,

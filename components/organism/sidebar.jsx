@@ -6,7 +6,7 @@ import { FinbitLogo } from '../atoms/icons';
 
  const Sidebar = ({ children }) => {
     return (
-      <div className="bg-sidebackground min-w-[16rem] text-primary-lightest flex flex-col h-screen  overflow-y-auto border-r">
+      <div className="bg-[#F7F7F7] min-w-[16rem] text-primary-lightest flex flex-col h-screen  overflow-y-auto border-r">
         <div className="flex flex-row p-6  items-center justify-center gap-4">
           <FinbitLogo/>
         </div>
@@ -34,7 +34,7 @@ export const SidebarItem = ({
               `${classname}`,
               'w-full inline-block p-2 flex flex-row items-center cursor-pointer text-sm rounded',
               {
-                'bg-menuBG text-sky-800 font-semibold': active,
+                'bg-menuBG text-sky-800 font-medium': active,
               },
               {
                 'hover:bg-gray-100 hover:text-gray-400 text-gray-400': !active,
@@ -103,7 +103,7 @@ export const SidebarList = ({ children }) => {
               className={cn(
                'inline-block p-2 px-4 flex flex-row items-center cursor-pointer md:text-sm',
                {
-                 'font-semibold text-sky-800': active,
+                 'font-medium text-sky-800': active,
                  'text-gray-400': !active,
                  // Add custom CSS for the last sub-element item
                  'text-gray-400 ': isLastSubItem,
