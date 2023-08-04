@@ -17,6 +17,7 @@ import Image from "next/image";
 import img1 from "../public/images/auth/acountVarified.svg";
 import { Nodata, UpArrow } from "../components/atoms/icons";
 import AddInputDiv from "./testComponents/AddInputDiv";
+import AddField from "./testComponents/addField";
 
 const ShowData = ({ open, close, data }) => {
   return (
@@ -114,6 +115,20 @@ const AddInputField = ({ open, close }) => {
     </>
   );
 };
+const AddtextField = ({ open, close }) => {
+  return (
+    <>
+      <DialogPage1 open={open} close={close} width="w-[1288px]">
+        <div className="w-full text-right  pb-3 pr-8">
+          <button onClick={close} >
+            X
+          </button>
+        </div>
+        <AddField />
+      </DialogPage1>
+    </>
+  );
+};
 
 const Test = () => {
   const [data, setData] = useState("");
@@ -122,6 +137,7 @@ const Test = () => {
   const [high, setHigh] = useState(false);
   const [logohigh, setLogoHigh] = useState(false);
   const [inputHigh, setInputHigh] = useState(false);
+  const [textHigh, setTextHigh] = useState(false);
 
   const HeaderGoods = [
     { label: "Name", name: "name" },
@@ -228,6 +244,14 @@ const Test = () => {
           Add input Field
         </button>
         <AddInputField open={inputHigh} close={() => setInputHigh(false)} />
+      </div>
+      <div className="py-2">
+        <button
+          onClick={() => setTextHigh(true)}
+          className="border-2 p-1 rounded-md">
+          Add Text Field
+        </button>
+        <AddtextField open={textHigh} close={() => setTextHigh(false)} />
       </div>
     </div>
   );
