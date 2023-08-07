@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar, { SidebarItem ,SidebarList,SidebarSubItem,SidebarSubList} from "../../../components/organism/sidebar";
 import { useRouter } from 'next/router';
 import InventoryFillIcon from '../../../components/atoms/icons';
-import { SampleIcon ,QrIcon,Overview,Location,AssetMangment,AssetGroup,Departments,UserManagment,Reports,RootMangment,FieldMangment,Organizations } from '../../../components/atoms/icons';
+import { FillOverview,FillOrganization,FillFieldMangment, SampleIcon ,QrIcon,Overview,Location,AssetMangment,AssetGroup,Departments,UserManagment,Reports,RootMangment,FieldMangment,Organizations } from '../../../components/atoms/icons';
 import Image from 'next/image';
 
 
@@ -20,7 +20,7 @@ const currentPath = router.pathname;
           label: 'Overview',
           url: '/dashboard/root',
           icon: <Overview />,
-          fillIcon: <InventoryFillIcon />,
+          fillIcon: <FillOverview />,
         },
         {
           label: 'locations',
@@ -75,24 +75,19 @@ const currentPath = router.pathname;
         label: 'Overview',
         url: '/dashboard/overview',
         icon: <Overview />,
-        fillIcon: <InventoryFillIcon />,
+        fillIcon:<FillOverview />,
       },
       {
         label: 'Organizations',
         url: '/dashboard/root/organisation',
-        submenu: [
-          { label: 'Add Organisations', url: '/dashboard/root/organisation/add' },
-          // { label: 'Roles & Permission', url: '/dashboard/sample/viewScheduler' },
-
-        ],
         icon: <Organizations />,
-        fillIcon: <InventoryFillIcon />,
+        fillIcon: <FillOrganization />,
       },
       {
         label: 'Field Managment',
         url: '/dashboard/root/field-management',
         icon: <FieldMangment />,
-        fillIcon: <InventoryFillIcon />,
+        fillIcon: <FillFieldMangment />,
       },
       {
         label: 'User Management',
