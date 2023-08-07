@@ -43,15 +43,13 @@ const Header = () => {
 export const Headerouter = () => {
    return (
     <>
-  <div className="flex flex-row  w-full h-20">
-    <div className="flex justify-between px-6 flex-row items-center gap-4 w-full ">
-      
-    
+  <div className="flex flex-row w-full px-3 h-20">
+    <div className="flex justify-between flex-row items-center gap-4 w-full ">
        <div>
        <FinbitLogo/>
        </div>
 
-          <div className='flex flex-row items-center text-sm gap-6 px-8 text-gray-600'>
+          <div className='flex items-center text-sm gap-6 text-gray-600'>
              <div>
                Privacy Notice
             </div>
@@ -67,7 +65,7 @@ export const Headerouter = () => {
       {/* <PrimaryButton classname="px-4">Search</PrimaryButton> */}
     </div>
 
-    <div className="px-40" />
+  
 
     <div className="">
       {/* <NotificationLineIcon classname="cursor-pointer" /> */}

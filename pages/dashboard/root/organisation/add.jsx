@@ -90,6 +90,7 @@ const AddOganisation = () => {
                          name="EmailAddress" 
                          placeHolder="Enter Your Email"
                          onChange={handleChange}
+                      
                          />
                 <p className="text-red-500">{profileErrors.EmailAddress}</p>
                  </div>

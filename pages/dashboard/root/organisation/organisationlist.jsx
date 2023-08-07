@@ -39,7 +39,7 @@ const OrganisationList = () => {
       <Text1 size="2xl" weight="medium">
          All Organizations
      </Text1>
-     <Button onClick={handleAddButtonClick} variant="contained" className="w-[180px] h-[40px]">Add Organizations</Button>
+     <Button onClick={handleAddButtonClick} variant="contained" className="px-6 h-10">Add Organizations</Button>
      </div>
 
         <TableComp
