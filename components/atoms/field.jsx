@@ -332,7 +332,7 @@ export const CustomSelect = ({
   id={id}
   name={name}
   value={value}
-  className={` px-1 ${selectHeight} rounded border-[1px] rounded py-[8px] active:outline-none w-full ${bgColor}`}
+  className={` px-1 ${selectHeight} rounded border-[1px]  py-[8px] active:outline-none w-full ${bgColor}`}
   onChange={onChange}
   disabled={disabled}
   >

@@ -43,11 +43,11 @@ function checkmail(props) {
   return (
     <>
       <div className="h-screen">
-        <div className="h-[5%]">
+        <div className="">
           <Headerouter />
         </div>
 
-        <div className="h-[95%] w-full lg:flex">
+        <div className="h w-full lg:flex">
           <div className="flex flex-col lg:flex-row">
             <div className="px-[108px] pt-44 lg:pb-60 2xl:pb-72 bg-[#F1F5FD] flex flex-col gap-[95px]">
               <p className="w-[409px]  2xl:w-[525px] text-[20px] leading-[28px] 2xl:leading-8 font-[700] 2xl:font-light text-center">
