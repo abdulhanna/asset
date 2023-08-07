@@ -11,12 +11,13 @@ const Overview = () => {
     
   const {id,name} = router.query
 
-  console.log(name, id,"jjname")
 
   let loginRole = 'root'
   
   const handleAddButtonClick = () => {
-    router.push('/dashboard/root/organisation/add'); // This will navigate to the 'add-form' page
+    router.push(`/dashboard/root/organisation/edit-organisation?id=${id}&name=${name}`); 
+   
+    console.log(loginRole, "this is login role")// This will navigate to the 'add-form' page
   };
 
   console.log(loginRole, "this is login role")

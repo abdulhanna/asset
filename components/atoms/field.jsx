@@ -69,6 +69,7 @@ export const Text1 = ({
           "text-lg": size === "lg",
           "text-xl": size === "xl",
           "text-2xl": size === "2xl",
+          "text-3xl": size === "3xl",
         },
         {
           "font-light": weight === "light",
@@ -165,7 +166,7 @@ export const TextField = ({
   textsize = "text-sm",
   type = "text",
   required = null,
-  bgColor = "bg-fieldBg",
+  bgColor = "",
   labelColor ="textColor",
   roundedText = "rounded-[4px]",
   roundedPassword = "rounded-lg",
@@ -199,7 +200,7 @@ export const TextField = ({
             width={width}
             name={name}
             type={showPassword ? "text" : "password"}
-            // value={value}
+            value={value}
             placeholder={placeHolder}
             onChange={(e) => onChange(e)}
             className={classNames(
