@@ -1555,8 +1555,8 @@ export const ProfileIcon = ({ className }) => {
     <>
       <span className={className}>
         <svg
-          width="253"
-          height="252"
+          width="191"
+          height="200"
           viewBox="0 0 253 252"
           fill="none"
           xmlns="http://www.w3.org/2000/svg">

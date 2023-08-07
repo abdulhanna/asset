@@ -8,6 +8,7 @@ import {
 } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { CompanyLogo, ProfileIcon } from "../../components/atoms/icons";
+import { Headerouter } from "../../proj-components/Layout/sub-components/header";
 
 function Profile(props) {
   const initialValue = {
@@ -100,38 +101,39 @@ function Profile(props) {
 
   return (
     <>
+      <Headerouter />
+
       <div className="flex mx-[180px] my-[72px] gap-[50px] lg:gap-[100px] xl:gap-[150px] 2xl:gap-[371px]">
         <div className="w-[288px]">
-        <div className="flex flex-col justify-between w-[288px] h-[888px] fixed">
-          <div className=" flex flex-col gap-[52px]">
-            <div className=" flex flex-col gap-5">
-              <p className="text-2xl font-normal w-[285px]">
-                Let’s set up your account
-              </p>
-              <p className="text-sm font-normal text-[#000]">
-                Lorem ipsum dolor sit amet consectetur. Senectus enim ultricies
-                tellus mauris sapien dignissim ut tempor urna.
-              </p>
+          <div className="flex flex-col justify-between w-[288px] h-[888px] fixed">
+            <div className=" flex flex-col gap-[52px]">
+              <div className=" flex flex-col gap-5">
+                <p className="text-2xl font-normal w-[285px]">
+                  Let’s set up your account
+                </p>
+                <p className="text-sm font-normal text-[#000]">
+                  Lorem ipsum dolor sit amet consectetur. Senectus enim
+                  ultricies tellus mauris sapien dignissim ut tempor urna.
+                </p>
+              </div>
+              <div className="flex flex-col gap-5">
+                <p className="border-l-2 border-[#3B5FDA] ps-[12px] text-[#3B5FDA]  text-[1.125rem] leading-[1.5rem] font-medium">
+                  Profile Information
+                </p>
+                <p className="text-base font-medium text-[#515151]">
+                  Address & Contact Details
+                </p>
+                <p className="text-base font-medium text-[#515151]">
+                  Billing & Plans
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col gap-5">
-              <p className="border-l-2 border-[#3B5FDA] ps-[12px] text-[#3B5FDA]  text-[1.125rem] leading-[1.5rem] font-medium">
-                Profile Information
-              </p>
-              <p className="text-base font-medium text-[#515151]">
-                Address & Contact Details
-              </p>
-              <p className="text-base font-medium text-[#515151]">
-                Billing & Plans
-              </p>
+            <div>
+              <ProfileIcon />
             </div>
-          </div>
-          <div>
-            <ProfileIcon />
           </div>
         </div>
 
-        </div>
-      
         <div className="w-full">
           <form action="" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-[52px] ">
