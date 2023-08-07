@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { ResetImg } from "../../components/atoms/icons";
+import { Text1 } from "../../components/atoms/field";
+import { Headerouter } from "../../proj-components/Layout/sub-components/header";
 
 function ResetPassword(props) {
   const [mailAddress, setMailAddress] = useState({
@@ -47,12 +49,15 @@ function ResetPassword(props) {
 
   return (
     <>
-      <div className="w-full lg:h-screen lg:flex">
+      <Headerouter />
+      <div className="w-full h-full  lg:flex">
         <div className="flex flex-col lg:flex-row">
-          <div className="px-[108px] pt-[150px] 2xl:pt-[190px] bg-[#F1F5FD] flex flex-col gap-[95px] 2xl:gap-[120px]">
+          <div className="px-[108px] py-40 2xl:pt-56 bg-[#F1F5FD] flex flex-col gap-[95px] 2xl:gap-[120px]">
             <ResetImg className={"flex justify-center"} />
             <div className=" flex flex-col items-center gap-6">
-              <p className="text-2xl font-medium text-[#3B5FDA]">Lorem Ipsum</p>
+              <Text1 size="2xl" color="text-primary">
+                Lorem Ipsum
+              </Text1>
               <p className="w-[432px]  2xl:w-[525px] text-center text-base font-normal">
                 Lorem ipsum dolor sit amet consectetur. Senectus enim ultricies
                 tellus mauris sapien dignissim ut tempor urna.
@@ -60,7 +65,7 @@ function ResetPassword(props) {
             </div>
           </div>
 
-          <div className="flex items-center ms-[40px] xl:ms-[140px] 2xl:ms-[220px]">
+          <div className=" flex items-center ms-[40px] xl:ms-[140px] 2xl:ms-[220px]">
             <form
               action=""
               onSubmit={handleSubmit}
