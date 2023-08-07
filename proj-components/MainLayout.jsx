@@ -9,9 +9,9 @@ const MainLayout = ({children}) => {
       <div className="w-auto bg-background">
         <SidebarComp user={'user'} />
       </div>
-      <div className="flex flex-col w-full overflow-hidden   bg-background">
+      <div className="flex flex-col w-full  ">
         <Header />
-        <div className="w-full  h-full  overflow-hidden pb-20">
+        <div className="w-full  h-full  pb-20">
           <div className="container p-6  flex-1">{children}</div>
         </div>
       </div>

@@ -43,8 +43,8 @@ const Header = () => {
 export const Headerouter = () => {
    return (
     <>
-  <div className="flex flex-row w-full px-3 h-20">
-    <div className="flex justify-between flex-row items-center gap-4 w-full ">
+  <div className=" py-3 w-full">
+    <div className="flex justify-between  px-28 flex-row items-center gap-4  ">
        <div>
        <FinbitLogo/>
        </div>

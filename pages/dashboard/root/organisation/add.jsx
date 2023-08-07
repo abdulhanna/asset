@@ -71,7 +71,7 @@ const AddOganisation = () => {
         
 {/* Company Profile---------------------------------------------------------------------------------- */}
 <form action="" onSubmit={handleSubmit}>
-<div className='flex justify-between mb-4'>
+<div className='flex justify-between mb-4 overflow-y-auto'>
            <Text1 size="2xl" weight="medium">
               Add Organizations
           </Text1>
