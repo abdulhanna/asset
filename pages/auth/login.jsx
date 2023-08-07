@@ -55,9 +55,9 @@ function Login() {
     <Headerouter/>
       <div className="w-full  flex justify-center  items-center py-4">
         <div className="flex flex-col md:flex-row  border-1 rounded-lg">
-          <div className="xl:px-[160px]   lg:py-[200px] lg:pb-[244px] bg-[#F1F5FD] flex flex-col lg:gap-[120px]">
+          <div className="xl:px-40   lg:py-52 lg:pb-60 bg-[#F1F5FD] flex flex-col lg:gap-32">
             <LoginImg className={"hidden sm:block"} />
-            <div className="w-[300px] sm:w-[432px] mx-auto text-center flex flex-col  gap-6">
+            <div className="w-72 sm:w-[432px] mx-auto text-center flex flex-col  gap-6">
               <p className="text-2xl font-medium text-[#283995]">Lorem Ipsum</p>
               <p className=" font-normal text-base">
                 Lorem ipsum dolor sit amet consectetur. Senectus enim ultricies
@@ -65,11 +65,11 @@ function Login() {
               </p>
             </div>
           </div>
-          <div className="px-[30px] 2xl:px-[240px] md:py-[120px]  bg-white  md:flex item-center justify-center">
+          <div className=" bg-white  md:flex item-center justify-center">
             <form
               onSubmit={handleSubmit}
               action=""
-              className="w-[300px] sm:w-[400px] lg:w-[528px] flex flex-col  md:gap-[52px] justify-center ">
+              className="w-[300px] sm:w-[400px] lg:w-3/5 flex flex-col  md:gap-[52px] justify-center ">
               <div className="flex flex-col gap-8">
                 <Text1
                   weight="semibold"
