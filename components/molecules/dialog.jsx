@@ -1,6 +1,8 @@
 import React from "react";
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import {CloseIcon} from '../atoms/icons'
+
 
 const DialogPage = ({
     children,
@@ -57,7 +59,7 @@ const DialogPage = ({
                     <div className="flex flex-row">
                       <div className="flex-1" />
                       {/* <CloseIcon onClick={close} classname="cursor-pointer" /> */}
-                      <p  className="cursor-pointer" onClick={close}>X</p>
+                      <p  className="cursor-pointer" onClick={close}><CloseIcon/></p>
                     </div>
                     {children}
                   </div>
