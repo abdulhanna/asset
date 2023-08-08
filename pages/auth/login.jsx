@@ -114,7 +114,7 @@ function Login() {
                 Login
               </Button>
               <p className="text-[#3B5FDA] mx-auto mt-[-20px]  text-sm">
-                <a href="">Forgot Password ?</a>
+                <a href="/auth/forgetPassword">Forgot Password ?</a>
               </p>
             </form>
           </div>

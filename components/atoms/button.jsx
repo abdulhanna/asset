@@ -1,5 +1,6 @@
 import React, { Children } from 'react'
 import classNames from 'classnames'
+import Link from 'next/link'
 
 const Button = ({ href, children, className, size = 'md', variant = "primary", onClick }) => {
     const content = <>

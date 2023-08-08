@@ -27,8 +27,7 @@ module.exports = {
         body: ['Public Sans', 'sans-serif'],
       },
       
- 
-   
+        
     },
   },
   plugins: [],

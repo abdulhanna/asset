@@ -125,7 +125,7 @@ export const InputField = ({
         disabled={readonly}
         required={required}
         placeholder={placeHolder}
-        className={`w-full ${height}  ${border} py-1 px-2  rounded-md border-gray-200 focus:outline-none focus:ring-0`}
+        className={`w-full ${height}  ${border} py-1 px-2  rounded-md border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
       />
     </div>
   );
@@ -151,7 +151,7 @@ export const TextArea = ({
         disabled={readonly}
         required={required}
         defaultValue={defaultValue}
-        className="border-gray-200 border focus:outline-none focus:ring-0 rounded-md px-6 py-12 w-full"
+        className="border-gray-200 border focus:outline-none focus:ring-0 rounded-md px-6 py-12 w-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
       />
       {children}
     </div>
@@ -204,7 +204,7 @@ export const TextField = ({
             placeholder={placeHolder}
             onChange={(e) => onChange(e)}
             className={classNames(
-              `${bgColor}  border-[1px] rounded px-3 py-[7.5px] ${height} active:outline-none w-full`,
+              `${bgColor}  border-[1px] rounded px-3 py-[7.5px] ${height} active:outline-none w-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`,
               {
                 "border-red-600 focus:outline-none": error,
                 "border-gray-300": !error,
@@ -238,7 +238,7 @@ export const TextField = ({
           placeholder={placeHolder}
           onChange={(e) => onChange(e)}
           className={classNames(
-            `${bgColor}  border-[1px] rounded px-3 py-[7.5px]  ${height} active:outline-none w-full ${textsize}`,
+            `${bgColor}  border-[1px] rounded px-3 py-[7.5px]  ${height} active:outline-none w-full ${textsize} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`,
             {
               "border-red-600 focus:outline-none": error,
               "border-gray-300": !error,
@@ -293,7 +293,7 @@ export const TextInputArea = ({
         placeholder={placeHolder}
         onChange={(e) => onChange(e)}
         className={classNames(
-          `${bgColor}  border-[1px] rounded px-3 py-[7.5px]  active:outline-none w-full ${textsize}`,
+          `${bgColor}  border-[1px] rounded px-3 py-[7.5px]  active:outline-none w-full ${textsize} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`,
           {
             "border-red-600 focus:outline-none": error,
             "border-gray-200": !error,
@@ -332,7 +332,7 @@ export const CustomSelect = ({
   id={id}
   name={name}
   value={value}
-  className={` px-1 ${selectHeight} rounded border-[1px]  py-[8px] active:outline-none w-full ${bgColor}`}
+  className={` px-1 ${selectHeight} rounded border-[1px]  py-[8px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
   onChange={onChange}
   disabled={disabled}
   >
