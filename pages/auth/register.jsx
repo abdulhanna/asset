@@ -4,9 +4,14 @@ import Button from "../../components/atoms/button";
 import { RegisterImg } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
 
+import { useRouter } from 'next/router';
+
 // import "../styles/globals.css";
 
 function Register() {
+
+  const router = useRouter();
+
   const [register, setRegister] = useState({
     EmailAddress: "",
     Password: "",
@@ -34,6 +39,11 @@ function Register() {
       alert("form submit");
     }
   }, [formErrors]);
+
+
+  const handleLoginButtonClick = () => {
+    router.push('/auth/login')
+  }
 
   const validate = (value) => {
     const error = {};
@@ -64,8 +74,8 @@ function Register() {
         </div>
         <div className="w-full  flex item-center ">
           <div className="flex flex-col lg:flex-row  rounded-lg">
-            <div className="w-[38%]  py-44 xl:py-52  2xl:py-48 bg-[#F1F5FD] flex flex-col   items-center gap-28">
-              <p className="w-[331px] xl:w-[409px] text-base xl:text-xl font-normal text-center">
+            <div className="w-[38%]  py-44 xl:py-52  2xl:py-48 bg-[#F1F5FD] flex flex-col justify-center items-center gap-28">
+              <p className="w-[331px] xl:w-[409px] text-base xl:text-xl font-light text-center">
                 Track and Manage your Assets at the comfort of your screen.
                 Anytime! Anywhere!
               </p>
@@ -153,11 +163,11 @@ function Register() {
                     </label>
                   </div>
                 </div>
-                <Button type="submit" variant="contained">
+                <Button type="submit" variant="contained" >
                   Get Started
                 </Button>
                 <div className=" mx-auto my-[-40px]">
-                  <a href="#" className="text-blue-600 text-sm font-medium">
+                  <a href="/auth/login" className="text-blue-600 text-sm font-medium">
                     Already have an Account ? Log in
                   </a>
                 </div>
