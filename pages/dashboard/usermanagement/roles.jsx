@@ -1,5 +1,5 @@
 import React from 'react'
-import MainLayout from '../../../proj-components/MainLayout'
+import MainLayout from "../../../proj-components/MainLayout"
 const RolesPermission = () => {
   return (
     <>

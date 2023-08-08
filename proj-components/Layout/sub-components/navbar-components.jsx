@@ -91,8 +91,7 @@ const currentPath = router.pathname;
       },
       {
         label: 'User Management',
-        url: '/dashboard/usermanagement/allUser',
-        
+        url: '/dashboard/usermanagement', 
         submenu: [
           { label: 'All User', url: '/dashboard/usermanagement/allUser' },
           { label: 'Roles & Permission', url: '/dashboard/usermanagement/roles' },
