@@ -75,7 +75,7 @@ const validate = () => {
  }
 
   return (
-      <MainLayout>
+      <MainLayout isScroll={true}>
               <div>
               <form action="" onSubmit={handleSubmit}>
          <div className='flex justify-between mb-4'>

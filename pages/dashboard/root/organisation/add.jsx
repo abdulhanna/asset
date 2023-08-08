@@ -67,7 +67,7 @@ const AddOganisation = () => {
 
   return (
     <>
-    <MainLayout>
+    <MainLayout isScroll={true}>
         
 {/* Company Profile---------------------------------------------------------------------------------- */}
 <form action="" onSubmit={handleSubmit}>
