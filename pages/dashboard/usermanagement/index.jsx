@@ -1,13 +1,37 @@
 import React from 'react'
-import MainLayout from '../../../proj-components/MainLayout'
+
 const UserList = () => {
   return (
-    <>
-      <MainLayout>
-        user list page
-      </MainLayout>
-    </>
+    <div>
+      
+    </div>
   )
 }
+export const getServerSideProps = async (appCtx) => {
+
+
+
+    return {
+      redirect: {
+        destination: '/dashboard/usermanagement/allUser',
+        permanent: false,
+      },
+    };
+
+  
+
+ 
+  return {
+    props: {
+      data: [
+
+      ],
+     
+    }
+  }
+
+
+}
+
 
 export default UserList
