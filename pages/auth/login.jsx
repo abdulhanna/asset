@@ -51,9 +51,12 @@ function Login() {
 
   return (
     <>
-      <Headerouter />
-      <div className="w-full  flex   items-center">
-        <div className="flex flex-col md:flex-row  border-1 rounded-lg">
+        <div className="h-screen">
+        <div className="h-[7%]">
+          <Headerouter />
+        </div>
+        <div className="w-full h-[93%] flex   items-center">
+        <div className="flex h-full flex-col md:flex-row  border-1 rounded-lg">
           <div className="xl:px-40   lg:py-48 lg:pb-48 bg-[#F1F5FD] flex flex-col lg:gap-32">
             <LoginImg className={"hidden sm:block"} />
             <div className="w-72 sm:w-[432px] mx-auto text-center flex flex-col  gap-5">
@@ -116,6 +119,7 @@ function Login() {
             </form>
           </div>
         </div>
+      </div>
       </div>
     </>
   );
