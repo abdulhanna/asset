@@ -55,7 +55,7 @@ const AccountShow = ({ open, close }) => {
   );
 };
 
-const AddCompanyLogo = ({ open, close }) => {
+export const AddCompanyLogo = ({ open, close }) => {
   return (
     <DialogPage1 open={open} close={close} width="w-[510px]">
       <div className=" text-center flex flex-col gap-6">
@@ -72,7 +72,7 @@ const AddCompanyLogo = ({ open, close }) => {
           </div>
           <div className="w-[161px]">
             <p className="text-xs font-normal">
-              Drag and Drop files here,{" "}
+              Drag and Drop files here,
               <span className="text-[#666]"> OR, </span>
             </p>
             <Button className={"font-medium border-none"}>BROWSER FILES</Button>
