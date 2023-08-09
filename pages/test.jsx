@@ -16,7 +16,7 @@ import Button from "../components/atoms/button";
 import Image from "next/image";
 import img1 from "../public/images/auth/acountVarified.svg";
 import { Nodata, UpArrow } from "../components/atoms/icons";
-import AddInputDiv from "./testComponents/AddInputDiv";
+import AddInputDiv from "./testComponents/addInputDiv";
 import AddField from "./testComponents/addField";
 
 const ShowData = ({ open, close, data }) => {

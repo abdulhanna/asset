@@ -48,9 +48,12 @@ function SetPassword(props) {
 
   return (
     <>
-     <Headerouter/>
-      <div className="w-full lg:h-screen lg:flex">
-        <div className="flex flex-col lg:flex-row">
+      <div className="h-screen">
+        <div className="h-[7%]">
+        <Headerouter/>
+        </div>
+      <div className="w-full h-[93%] lg: lg:flex">
+        <div className="flex h-full flex-col lg:flex-row">
           <div className="px-[108px] pt-[150px] 2xl:pt-[190px] bg-[#F1F5FD] flex flex-col gap-[95px] 2xl:gap-[120px]">
             <ResetImg className={"flex justify-center"} />
             <div className=" flex flex-col items-center gap-6">
@@ -109,6 +112,7 @@ function SetPassword(props) {
             </form>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

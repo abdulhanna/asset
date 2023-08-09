@@ -1,10 +1,18 @@
 import React from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
+import FieldOverview from './fieldoverview'
+
+
+
+
 const FieldMangment = () => {
+  const handleAddButtonClick = () => {
+    console.log("thhh")
+  }
   return (
     <>
         <MainLayout>
-            This is the field management page. Coming Soon...
+               <FieldOverview/>
         </MainLayout>
     </>
   )
