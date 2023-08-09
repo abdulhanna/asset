@@ -15,7 +15,7 @@ const AddInputDiv = ({Heading, labelName}) => {
   };
 
   const handleSave = () => {
-    console.log(inputData);
+     console.log(inputData);
   };
 
   const handleChange = (e,index)=>{
@@ -41,7 +41,7 @@ const AddInputDiv = ({Heading, labelName}) => {
                 </label>
                 <input
                   type="text"
-                  placeholder="input text"
+                  placeholder="Add Description"
                   className="w-full border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   // name="inputText"
                   // value={item.label}
