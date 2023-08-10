@@ -25,13 +25,14 @@ const AddField = () => {
   };
 
   const handleSave = () => {
+    setInputData([...inputData, initialValue]);
     console.log(inputData);
   };
 
   return (
     <div className="h-[704px] overflow-y-auto  flex flex-col">
       <div className=" flex flex-col items-center pb-[52px]">
-        <p className="text-base font-medium">Add Field</p>
+        <p className="text-base font-body">Add Field</p>
         <p className="text-sm font-normal">Asset Description</p>
       </div>
       {inputData?.map((item, index) => {
@@ -108,7 +109,7 @@ const AddField = () => {
                   />
                   <label
                     htmlFor="link-checkbox"
-                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    className="ml-2 text-sm font-body text-gray-900 dark:text-gray-300">
                     Mendatory Field ?
                   </label>
                 </div>
@@ -122,7 +123,7 @@ const AddField = () => {
           onClick={handleAddField}
           size="sm"
           variant="primary"
-          className={"font-medium"}>
+          className={"font-body"}>
           + ADD ANOTHER FIELD
         </Button>
 

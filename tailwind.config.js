@@ -26,7 +26,8 @@ module.exports = {
       fontFamily: {
         body: ['Public Sans', 'sans-serif'],
       },
-      
+
+  
         
     },
   },

@@ -34,7 +34,7 @@ export const SidebarItem = ({
               `${classname}`,
               'w-full inline-block p-2 flex flex-row items-center cursor-pointer text-sm rounded',
               {
-                'bg-menuBG text-sky-800 font-medium': active,
+                'bg-menuBG text-primary font-body': active,
               },
               {
                 'hover:bg-gray-100 hover:text-gray-400 text-gray-400': !active,
@@ -103,7 +103,7 @@ export const SidebarList = ({ children }) => {
               className={cn(
                'inline-block p-2 px-4 flex flex-row items-center cursor-pointer md:text-sm',
                {
-                 'font-medium text-sky-800': active,
+                 'font-body text-primary': active,
                  'text-gray-400': !active,
                  // Add custom CSS for the last sub-element item
                  'text-gray-400 ': isLastSubItem,

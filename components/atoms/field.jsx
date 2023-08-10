@@ -26,7 +26,7 @@ const Text = ({
           {
             light: "font-thin",
             normal: "font-normal",
-            medium: "font-medium",
+            medium: "font-body",
             semibold: "font-semibold",
             bold: "font-bold",
           }[weight]
@@ -74,7 +74,7 @@ export const Text1 = ({
         {
           "font-light": weight === "light",
           "font-normal": weight === "normal",
-          "font-medium": weight === "medium",
+          "font-body": weight === "medium",
           "font-semibold": weight === "semibold",
           "font-bold": weight === "bold",
         },
@@ -113,7 +113,7 @@ export const InputField = ({
 }) => {
   return (
     <div>
-      <div className="font-sans text-gray font-medium tracking-wide text-sm min-w-md">
+      <div className="font-sans text-gray font-body tracking-wide text-sm min-w-md">
         {children}
       </div>
       <input

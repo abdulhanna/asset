@@ -1,6 +1,7 @@
 import React from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
 import FieldOverview from './fieldoverview'
+import Groupview from './groupview'
 
 
 
@@ -12,7 +13,8 @@ const FieldMangment = () => {
   return (
     <>
         <MainLayout>
-               <FieldOverview/>
+                <FieldOverview/>
+                <Groupview/>
         </MainLayout>
     </>
   )

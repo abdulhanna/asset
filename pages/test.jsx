@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import Text, {
   Text1,
   InputField,
@@ -39,7 +40,7 @@ const AccountShow = ({ open, close }) => {
           <div>
             <Image src={img1} className="" />
           </div>
-          <p className="text-2xl font-medium leading-8 text-[#3B5FDA]">
+          <p className="text-2xl font-body leading-8 text-[#3B5FDA]">
             Account Not Verified!
           </p>
           <p className="w-[400px] text-sm font-normal mx-auto">
@@ -61,7 +62,7 @@ export const AddCompanyLogo = ({ open, close }) => {
       <div className=" text-center flex flex-col gap-6">
         <div className="flex flex-col gap-8 justify-center items-center">
           <div>
-            <p className="text-2xl font-medium leading-8 text-[#3B5FDA] mb-[14px]">
+            <p className="text-2xl font-body leading-8 text-[#3B5FDA] mb-[14px]">
               Add Profile Picture
             </p>
             <Button variant="transparent">
@@ -75,7 +76,7 @@ export const AddCompanyLogo = ({ open, close }) => {
               Drag and Drop files here,
               <span className="text-[#666]"> OR, </span>
             </p>
-            <Button className={"font-medium border-none"}>BROWSER FILES</Button>
+            <Button className={"font-body border-none"}>BROWSER FILES</Button>
           </div>
           <div>
             <p className="text-[12px] leading-[14px] font-normal text-[#666]">
@@ -108,11 +109,10 @@ export const AddCompanyLogo = ({ open, close }) => {
 
 const AddInputField = ({ open, close }) => {
   return (
-    <>
-      <DialogPage open={open} close={close}>
-        <AddInputDiv />
-      </DialogPage>
-    </>
+     <>
+   <DialogPage open={open} close={close}>
+     <AddInputDiv />
+   </DialogPage></>
   );
 };
 const AddtextField = ({ open, close }) => {

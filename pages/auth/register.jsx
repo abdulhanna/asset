@@ -147,7 +147,7 @@ function Register() {
                     />
                     <label
                       htmlFor="link-checkbox"
-                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      className="ml-2 text-sm font-body text-gray-900 dark:text-gray-300">
                       Accept{" "}
                       <a
                         href="#"
@@ -167,7 +167,7 @@ function Register() {
                   Get Started
                 </Button>
                 <div className=" mx-auto my-[-40px]">
-                  <a href="/auth/login" className="text-blue-600 text-sm font-medium">
+                  <a href="/auth/login" className="text-blue-600 text-sm font-body">
                     Already have an Account ? Log in
                   </a>
                 </div>

@@ -145,41 +145,12 @@ export const FinbitLogo = ({ className }) => {
 export const Overview = ({ className }) => {
   return (
     <span className={className}>
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M9.5625 2.25H3.1875C2.66973 2.25 2.25 2.66973 2.25 3.1875V9.5625C2.25 10.0803 2.66973 10.5 3.1875 10.5H9.5625C10.0803 10.5 10.5 10.0803 10.5 9.5625V3.1875C10.5 2.66973 10.0803 2.25 9.5625 2.25Z"
-          fill="#3B5FDA"
-          stroke="#3B5FDA"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M20.8125 2.25H14.4375C13.9197 2.25 13.5 2.66973 13.5 3.1875V9.5625C13.5 10.0803 13.9197 10.5 14.4375 10.5H20.8125C21.3303 10.5 21.75 10.0803 21.75 9.5625V3.1875C21.75 2.66973 21.3303 2.25 20.8125 2.25Z"
-          fill="#3B5FDA"
-          stroke="#3B5FDA"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M9.5625 13.5H3.1875C2.66973 13.5 2.25 13.9197 2.25 14.4375V20.8125C2.25 21.3303 2.66973 21.75 3.1875 21.75H9.5625C10.0803 21.75 10.5 21.3303 10.5 20.8125V14.4375C10.5 13.9197 10.0803 13.5 9.5625 13.5Z"
-          fill="#3B5FDA"
-          stroke="#3B5FDA"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M20.8125 13.5H14.4375C13.9197 13.5 13.5 13.9197 13.5 14.4375V20.8125C13.5 21.3303 13.9197 21.75 14.4375 21.75H20.8125C21.3303 21.75 21.75 21.3303 21.75 20.8125V14.4375C21.75 13.9197 21.3303 13.5 20.8125 13.5Z"
-          fill="#3B5FDA"
-          stroke="#3B5FDA"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.5625 2.25H3.1875C2.66973 2.25 2.25 2.66973 2.25 3.1875V9.5625C2.25 10.0803 2.66973 10.5 3.1875 10.5H9.5625C10.0803 10.5 10.5 10.0803 10.5 9.5625V3.1875C10.5 2.66973 10.0803 2.25 9.5625 2.25Z" stroke="#383838" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.8125 2.25H14.4375C13.9197 2.25 13.5 2.66973 13.5 3.1875V9.5625C13.5 10.0803 13.9197 10.5 14.4375 10.5H20.8125C21.3303 10.5 21.75 10.0803 21.75 9.5625V3.1875C21.75 2.66973 21.3303 2.25 20.8125 2.25Z" stroke="#383838" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.5625 13.5H3.1875C2.66973 13.5 2.25 13.9197 2.25 14.4375V20.8125C2.25 21.3303 2.66973 21.75 3.1875 21.75H9.5625C10.0803 21.75 10.5 21.3303 10.5 20.8125V14.4375C10.5 13.9197 10.0803 13.5 9.5625 13.5Z" stroke="#383838" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.8125 13.5H14.4375C13.9197 13.5 13.5 13.9197 13.5 14.4375V20.8125C13.5 21.3303 13.9197 21.75 14.4375 21.75H20.8125C21.3303 21.75 21.75 21.3303 21.75 20.8125V14.4375C21.75 13.9197 21.3303 13.5 20.8125 13.5Z" stroke="#383838" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
     </span>
   );
 };
@@ -442,6 +413,22 @@ export const UserManagment = ({ className }) => {
     </span>
   );
 };
+
+
+export const FillUserManagment = ({className}) => {
+  return(
+    <span className={className}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18.8439 7.875C18.7065 9.78141 17.2923 11.25 15.7501 11.25C14.2079 11.25 12.7914 9.78188 12.6564 7.875C12.5157 5.89172 13.8925 4.5 15.7501 4.5C17.6078 4.5 18.9845 5.92781 18.8439 7.875Z" fill="#3B5FDA" stroke="#3B5FDA" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.7498 14.25C12.695 14.25 9.75731 15.7673 9.02138 18.7223C8.92388 19.1133 9.16903 19.5 9.57075 19.5H21.9293C22.3311 19.5 22.5748 19.1133 22.4787 18.7223C21.7428 15.72 18.8051 14.25 15.7498 14.25Z" fill="#3B5FDA" stroke="#3B5FDA" stroke-miterlimit="10"/>
+<path d="M9.37496 8.71594C9.26527 10.2384 8.12246 11.4375 6.89058 11.4375C5.65871 11.4375 4.51402 10.2389 4.40621 8.71594C4.29418 7.13203 5.40652 6 6.89058 6C8.37465 6 9.48699 7.16109 9.37496 8.71594Z" fill="#3B5FDA" stroke="#3B5FDA" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.65622 14.3437C8.81013 13.9561 7.87825 13.807 6.89059 13.807C4.45309 13.807 2.10466 15.0187 1.51638 17.3789C1.43903 17.6911 1.63497 18 1.9556 18H7.21872" fill="#3B5FDA"/>
+<path d="M9.65622 14.3437C8.81013 13.9561 7.87825 13.807 6.89059 13.807C4.45309 13.807 2.10466 15.0187 1.51638 17.3789C1.43903 17.6911 1.63497 18 1.9556 18H7.21872L9.65622 14.3437Z" stroke="#3B5FDA" stroke-miterlimit="10" stroke-linecap="round"/>
+</svg>
+
+    </span>
+  )
+}
 
 export const Reports = ({ className }) => {
   return (
@@ -1827,6 +1814,17 @@ export const SelectIcon = () => {
     </span>
   );
 };
+
+export const Verified = ({className}) => {
+    return(
+      <span className={className}>
+              <svg width="46" height="48" viewBox="0 0 46 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="12" y="12" width="24" height="24" rx="12" fill="#5DA64E"/>
+<path d="M29 20L22 28L19 25" stroke="#FEFEFE" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+      </span>
+    )
+}
 
 export const SortIcon = ({ classname }) => {
   return (

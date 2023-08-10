@@ -57,7 +57,7 @@ function SetPassword(props) {
           <div className="px-[108px] pt-[150px] 2xl:pt-[190px] bg-[#F1F5FD] flex flex-col gap-[95px] 2xl:gap-[120px]">
             <ResetImg className={"flex justify-center"} />
             <div className=" flex flex-col items-center gap-6">
-              <p className="text-2xl font-medium text-[#3B5FDA]">Lorem Ipsum</p>
+              <p className="text-2xl font-body text-[#3B5FDA]">Lorem Ipsum</p>
               <p className="w-[432px]  2xl:w-[525px] text-center text-base font-normal">
                 Lorem ipsum dolor sit amet consectetur. Senectus enim ultricies
                 tellus mauris sapien dignissim ut tempor urna.
