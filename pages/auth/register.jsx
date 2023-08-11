@@ -69,10 +69,10 @@ function Register() {
   return (
     <>
       <div className="h-screen">
-        <div className="">
+        <div className="h-[7%]">
           <Headerouter />
         </div>
-        <div className="w-full  flex item-center ">
+        <div className="w-full h-[93%] flex item-center ">
           <div className="flex flex-col lg:flex-row  rounded-lg">
             <div className="w-[38%]  py-44 xl:py-52  2xl:py-48 bg-[#F1F5FD] flex flex-col justify-center items-center gap-28">
               <p className="w-[331px] xl:w-[409px] text-base xl:text-xl font-light text-center">

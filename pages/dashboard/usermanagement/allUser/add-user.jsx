@@ -6,6 +6,7 @@ import Button from "@/components/atoms/button";
 import { TextField, CustomSelect } from "@/components/atoms/field";
 import { DialogPage1 } from "@/components/molecules/dialog";
 import { UpArrow } from "@/components/atoms/icons";
+import { useRouter } from "next/router";
 
 const AddCompanyLogo = ({ open, close }) => {
   return (
@@ -65,16 +66,19 @@ const AddCompanyLogo = ({ open, close }) => {
     </DialogPage1>
   );
 };
+
+
 const AddUser = () => {
   const [logoHigh, setLogoHigh] = useState(false);
+  const router = useRouter()
   return (
     <>
       <MainLayout isScroll={true}>
         <div className="flex flex-col gap-10">
           <div className="w-full flex justify-between ">
-            <div className="flex items-center gap-5">
+            <div className="flex items-center cursor-pointer" onClick={()=> router.back()}>
               <LeftArrowIcon />
-              <Text1 size="2xl" weight="semibold">
+              <Text1 size="2xl" >
                 Add User
               </Text1>
             </div>
