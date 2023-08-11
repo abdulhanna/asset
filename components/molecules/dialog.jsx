@@ -54,7 +54,7 @@ const DialogPage = ({
                   leaveTo="opacity-0 scale-95"
                 >
                   <div
-                    className={`inline-block  ${width} p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl`}
+                    className={`inline-block  ${width} p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-lg`}
                   >
                     <div className="flex flex-row">
                       <div className="flex-1" />

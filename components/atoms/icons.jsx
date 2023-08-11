@@ -24,6 +24,23 @@ const InventoryFillIcon = ({ classname }) => {
   );
 };
 
+
+export const DeleteIcon = ({className}) => {
+  return(
+    <span className={className}>
+    <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19.25 19.25L20.1875 34.25C20.232 35.1167 20.8625 35.75 21.6875 35.75H30.3125C31.1408 35.75 31.7595 35.1167 31.8125 34.25L32.75 19.25" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17.75 19.25H34.25" stroke="#FC5555" stroke-miterlimit="10" stroke-linecap="round"/>
+    <path d="M23 19.25V17.375C22.9996 17.2271 23.0284 17.0807 23.0848 16.944C23.1411 16.8073 23.224 16.6831 23.3285 16.5785C23.4331 16.474 23.5573 16.3911 23.694 16.3348C23.8307 16.2784 23.9771 16.2496 24.125 16.25H27.875C28.0229 16.2496 28.1693 16.2784 28.306 16.3348C28.4427 16.3911 28.5669 16.474 28.6715 16.5785C28.776 16.6831 28.8589 16.8073 28.9153 16.944C28.9716 17.0807 29.0004 17.2271 29 17.375V19.25" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M26 22.25V32.75" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M22.625 22.25L23 32.75" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M29.375 22.25L29 32.75" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    
+    </span>
+  )
+}
+
 export const SampleIcon = ({ classname }) => {
   return (
     <span className={classname}>

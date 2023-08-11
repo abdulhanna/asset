@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { EditIcon } from '../atoms/icons';
+import { DeleteIcon, EditIcon } from '../atoms/icons';
 
 const Table = ({
   headers,
@@ -53,7 +53,11 @@ const Table = ({
                       {/* {typeof dataRow[item.name] === 'function'
                         ? dataRow[item.name]()
                         : dataRow[item.name]} */}
-                        {dataRow[item.name] === "action" ? <div><EditIcon onClick={(e)=> editItem(dataRow.id)}/></div>: dataRow[item.name]}
+                        {dataRow[item.name] === "action" ? 
+                        <div className='flex items-center'>
+                        <EditIcon onClick={(e)=> editItem(dataRow.id)}/>
+                        <DeleteIcon className={"mx-2"}/>
+                        </div>: dataRow[item.name]}
                     </td>
                   );
                 })}

@@ -201,15 +201,15 @@ function editGroup(props) {
             Edit Group
           </Text1>
           <Button onClick={handleAddButtonClick} variant="contained">
-            {" "}
+         
             Save Changes
           </Button>
         </div>
-             {" "}
+    
         <div className="w-1/5">
-                 {" "}
-          <TextField label={"Group Name"} placeHolder="Asset Description" />   
-           {" "}
+       
+          <TextField label={"Group Name"} placeHolder="Asset Description" />
+    
         </div>
         <TableComp
           headers={HeaderGoods}
