@@ -2,28 +2,31 @@ import {useState } from "react";
 import Button from "../../components/atoms/button";
 import {Text1} from "../../components/atoms/field";
 
-const AddInputDiv = ({Heading, labelName}) => {
+const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
   const [inputData, setInputData] = useState([
     {
       label: ""
     }
   ]);
 
-  const handleSubmit = () => {
-    setInputData([...inputData, { label: "" }]);
+  const handleSumbit = () => {
+    // setInputData([...inputData, { label: "" }]);
+    handleSave(inputData)
     // console.log(inputData);
   };
 
-  const handleSave = () => {
-     console.log(inputData);
-  };
+ 
 
   const handleChange = (e,index)=>{
     // console.log(e.target.value,index)
     let data = [...inputData]
      data[index]['label'] = e.target.value 
      setInputData(data)
+     
   }
+
+
+
 
 
   console.log(inputData);
@@ -61,10 +64,10 @@ const AddInputDiv = ({Heading, labelName}) => {
         </div> */}
         <div className="mx-auto py-[30px]">
           <Button
-            onClick={handleSave}
+            onClick={handleSumbit}
             size="sm"
             variant="contained"
-            className={"font-medium px-8"}>
+            className={"font-body px-8"}>
             SAVE
           </Button>
         </div>

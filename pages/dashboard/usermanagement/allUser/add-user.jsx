@@ -14,7 +14,7 @@ const AddCompanyLogo = ({ open, close }) => {
       <div className=" text-center flex flex-col gap-6">
         <div className="flex flex-col gap-8 justify-center items-center">
           <div>
-            <p className="text-2xl font-medium leading-8 text-[#3B5FDA] mb-[14px]">
+            <p className="text-2xl font-body leading-8 text-[#3B5FDA] mb-[14px]">
               Add Profile Picture
             </p>
             <Button variant="transparent">

@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Text1,
   TextField,
@@ -7,7 +6,7 @@ import {
   CustomSelect,
 } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
-import { CompanyLogo, ProfileIcon } from "../../components/atoms/icons";
+import { ProfileIcon } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
 
 function Profile(props) {
@@ -30,11 +29,45 @@ function Profile(props) {
   const [profileErrors, setProfileErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const [activeSection, setActiveSection] = useState("");
+  const profileInfoRef = useRef(null);
+  const addressRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        { id: "profile-information", ref: profileInfoRef },
+        { id: "address-contact-details", ref: addressRef },
+        // Add other sections here
+      ];
+
+      for (const section of sections) {
+        const sectionElement = section.ref.current;
+        if (sectionElement) {
+          const rect = sectionElement.getBoundingClientRect();
+          if (
+            rect.top <= window.innerHeight / 2 &&
+            rect.bottom >= window.innerHeight / 2
+          ) {
+            setActiveSection(section.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+ 
+
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setProfileData({ ...profileData, [name]: value });
-    console.log(profileData, "dfsg");
   };
 
   useEffect(() => {
@@ -53,6 +86,15 @@ function Profile(props) {
     console.log(profileErrors);
   };
 
+  const profileHandle = () => {
+    // const element = document.getElementById('section1')
+    // if(element){
+    //   window.scrollY(400)
+    // }
+    console.log("testsend")
+  } 
+
+ 
   const validate = () => {
     const errors = {};
     if (!profileData.companyRegistrationNumber) {
@@ -105,7 +147,7 @@ function Profile(props) {
 
       <div className="flex mx-[180px] my-[72px] gap-[50px] lg:gap-[100px] xl:gap-[150px] 2xl:gap-[371px]">
         <div className="w-[288px]">
-          <div className="flex flex-col justify-between w-[288px] h-[888px] fixed">
+        <div className="flex flex-col justify-between w-[288px] h-[888px] fixed">
             <div className=" flex flex-col gap-[52px]">
               <div className=" flex flex-col gap-5">
                 <p className="text-2xl font-normal w-[285px]">
@@ -117,21 +159,35 @@ function Profile(props) {
                 </p>
               </div>
               <div className="flex flex-col gap-5">
-                <p className="border-l-2 border-[#3B5FDA] ps-[12px] text-[#3B5FDA]  text-[1.125rem] leading-[1.5rem] font-medium">
+              <p
+                  className={`text-base font-body ${
+                    activeSection === "profile-information"
+                      ? "text-blue-600 border-l-2 border-blue-600 p-2.5"
+                      : "text-[#515151]"
+                  }`}
+                  onClick={() => profileInfoRef.current.scrollIntoView()}
+                >
                   Profile Information
                 </p>
-                <p className="text-base font-medium text-[#515151]">
+                <p
+                  className={`text-base font-body ${
+                    activeSection === "address-contact-details"
+                      ? "text-blue-600 border-l-2 border-blue-600 p-2.5"
+                      : "text-[#515151]"
+                  }`}
+                  onClick={() => addressRef.current.scrollIntoView()}
+                >
                   Address & Contact Details
                 </p>
-                <p className="text-base font-medium text-[#515151]">
+                <p className="text-base font-body text-[#515151]">
                   Billing & Plans
                 </p>
-              </div>
             </div>
             <div>
               <ProfileIcon />
             </div>
           </div>
+        </div>
         </div>
 
         <div className="w-full">
@@ -142,17 +198,25 @@ function Profile(props) {
                   Company logo
                 </Text1>
                 <div className="flex justify-between items-center">
-                  <div className="border-2 w-[120px] h-[120px]"></div>
+                  <div className="border-2 w-[120px] h-[120px] rounded-full"></div>
                   {/* <CompanyLogo /> */}
                   <Button variant="primary">ADD LOGO</Button>
                 </div>
               </div>
               <div className="border-b-2 border-dashed"> </div>
 
-              <div className="flex flex-col gap-6">
-                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
+{/* Profile INformation Section------------------------------------------------------------------------------------- */}
+               <div
+                ref={profileInfoRef}
+                className={`flex flex-col gap-5 ${
+                  activeSection === "profile-information"
+                    ? "bg-white text-blue-500 border-l-2 border-blue-600 p-3"
+                    : ""
+                }`}
+              >
+                <button className="text-xl text-[#3B5FDA]" id="section1" onClick={profileHandle}>
                   Profile Information
-                </Text1>
+                </button>
                 <div className=" grid md:grid-cols-2  gap-x-[52px] gap-y-[40px]">
                   <div>
                     <TextField
@@ -231,8 +295,16 @@ function Profile(props) {
                 </div>
               </div>
               <div className="border-b-2 border-dashed"> </div>
-              <div className="flex flex-col gap-6">
-                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
+            {/* Address Contact Deatails Page------------------------------------------------------------------------------------------------- */}
+            <div
+                ref={addressRef}
+                className={`flex flex-col gap-5 ${
+                  activeSection === "address-contact-details"
+                    ? "bg-white text-blue-500 border-l-2 border-blue-600 p-3"
+                    : ""
+                }`}
+              >
+                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]" id="section2" >
                   Address & Contact Details
                 </Text1>
 
@@ -339,6 +411,7 @@ function Profile(props) {
                 </div>
               </div>
               <div className="border-b-2 border-dashed"> </div>
+              {/* Billings and PLans---------------------------------------------------------------------------------------------------------- */}
               <div>
                 <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
                   Billings and plans

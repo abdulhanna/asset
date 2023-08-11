@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar, { SidebarItem ,SidebarList,SidebarSubItem,SidebarSubList} from "../../../components/organism/sidebar";
 import { useRouter } from 'next/router';
 import InventoryFillIcon from '../../../components/atoms/icons';
-import { FillOverview,FillOrganization,FillFieldMangment, SampleIcon ,QrIcon,Overview,Location,AssetMangment,AssetGroup,Departments,UserManagment,Reports,RootMangment,FieldMangment,Organizations } from '../../../components/atoms/icons';
+import { FillOverview,FillUserManagment,FillOrganization,FillFieldMangment, SampleIcon ,QrIcon,Overview,Location,AssetMangment,AssetGroup,Departments,UserManagment,Reports,RootMangment,FieldMangment,Organizations } from '../../../components/atoms/icons';
 import Image from 'next/image';
 
 
@@ -98,7 +98,7 @@ const currentPath = router.pathname;
 
         ],
         icon: <RootMangment />,
-        fillIcon: <InventoryFillIcon />,
+        fillIcon: <FillUserManagment/>,
       },
     ]
     
