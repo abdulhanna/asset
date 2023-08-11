@@ -3,6 +3,7 @@ import { CustomSelect } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 
 const AddField = () => {
+  
   const initialValue = {
     fieldName: "",
     fieldType: "",

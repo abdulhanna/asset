@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import Text, {
   Text1,
   InputField,
@@ -18,7 +19,6 @@ import img1 from "../public/images/auth/acountVarified.svg";
 import { Nodata, UpArrow } from "../components/atoms/icons";
 import AddInputDiv from "./testComponents/addInputDiv";
 import AddField from "./testComponents/addField";
-import SampleTableReceived from "./test1";
 
 const ShowData = ({ open, close, data }) => {
   return (
@@ -40,7 +40,7 @@ const AccountShow = ({ open, close }) => {
           <div>
             <Image src={img1} className="" />
           </div>
-          <p className="text-2xl font-medium leading-8 text-[#3B5FDA]">
+          <p className="text-2xl font-body leading-8 text-[#3B5FDA]">
             Account Not Verified!
           </p>
           <p className="w-[400px] text-sm font-normal mx-auto">
@@ -62,7 +62,7 @@ export const AddCompanyLogo = ({ open, close }) => {
       <div className=" text-center flex flex-col gap-6">
         <div className="flex flex-col gap-8 justify-center items-center">
           <div>
-            <p className="text-2xl font-medium leading-8 text-[#3B5FDA] mb-[14px]">
+            <p className="text-2xl font-body leading-8 text-[#3B5FDA] mb-[14px]">
               Add Profile Picture
             </p>
             <Button variant="transparent">
@@ -76,7 +76,7 @@ export const AddCompanyLogo = ({ open, close }) => {
               Drag and Drop files here,
               <span className="text-[#666]"> OR, </span>
             </p>
-            <Button className={"font-medium border-none"}>BROWSER FILES</Button>
+            <Button className={"font-body border-none"}>BROWSER FILES</Button>
           </div>
           <div>
             <p className="text-[12px] leading-[14px] font-normal text-[#666]">
@@ -109,11 +109,10 @@ export const AddCompanyLogo = ({ open, close }) => {
 
 const AddInputField = ({ open, close }) => {
   return (
-    <>
-      <DialogPage open={open} close={close}>
-        <AddInputDiv />
-      </DialogPage>
-    </>
+     <>
+   <DialogPage open={open} close={close}>
+     <AddInputDiv />
+   </DialogPage></>
   );
 };
 const AddtextField = ({ open, close }) => {
@@ -153,91 +152,6 @@ const Test = () => {
     { id: 2, name: "siddhu", types: "employe", batch: "B", id: "231" },
     { id: 3, name: "john", types: "employe", batch: "C", id: "3241" },
   ];
-  const headerDataNew = [
-    // {name:'check',label:""},
-    { name: 'date',
-      label: 'Date' },
-    {
-      name: 'sampleId',
-      label: 'Sample ID',
-    },
-    {
-      name: 'qrCode',
-      label: 'QR Code',
-    },
-    {
-      name: 'sourceData',
-      label: 'Source Type',
-    },
-    {
-      name: 'locationData',
-      label: 'Location',
-    },
-    {
-      name: 'subSourceData',
-      label: 'Sub Location',
-    },
-    {
-      name: 'type',
-      label: 'Type',
-    }
-  ];
-
-  const openModal = (e) => {
-    // setsampleResponse(e)
-    // setActive(true);
-    console.log(e,'g')
-
-  };
-
-
-  const onCheck=(data)=>{
-    console.log(data,'dd')
-
-    // if(samplePermission.actions === true){
-    //   const exist = checkedData.find(
-    //       (element) => element._id === data._id
-    //   );
-    //   if(checkedData.length === 0){
-    //     if (exist) {
-    //       setCheckedData(
-    //           checkedData.filter((single) => single._id !== data._id)
-    //       );
-    //     } else {
-    //       setCheckedData([...checkedData, data]);
-    //     }
- 
-    //     if(data.subSource){
- 
-    //       const filterdData =  approvedFilteredSample.filter((item)=> item.source._id === data.source._id && item.subSource._id === data.subSource._id &&  item.sample_for._id ===  data.sample_for._id && item.qr_code.length !== 0)
-    //       setCheckedData(filterdData)
-    //     }else{
-    //       const filterdData =  approvedFilteredSample.filter((item)=> item.source._id === data.source._id  &&  item.sample_for._id ===  data.sample_for._id && data.qr_code.length !== 0)
-    //       setCheckedData(filterdData)
-    //     }
-    //     setCurrentSubSource(data);
-    //   } else if (checkedData.find(item => item.source._id) && data.source._id && !data.subSource && checkedData.find(item => item.source._id === data.source._id && item.sample_for._id === data.sample_for._id && item.qr_code.length !== 0)){
-    //     if (exist) {
-    //       setCheckedData(
-    //           checkedData.filter((single) => single._id !== data._id)
-    //       );
-    //     } else {
-    //       setCheckedData([...checkedData, data]);
-    //     }
-    //   }else if (checkedData.find(item => item.source._id && item.subSource._id) && data.source._id && data.subSource._id && checkedData.find(item => item.source._id === data.source._id && item.subSource._id === data.subSource._id && item.sample_for._id === data.sample_for._id && item.qr_code.length !== 0)){
-    //     if (exist) {
-    //       setCheckedData(
-    //           checkedData.filter((single) => single._id !== data._id)
-    //       );
-    //     } else {
-    //       setCheckedData([...checkedData, data]);
-    //     }
-    //   }
-    // }
- 
- 
- 
-   }
 
   return (
     <div className="p-4">
@@ -339,167 +253,8 @@ const Test = () => {
         </button>
         <AddtextField open={textHigh} close={() => setTextHigh(false)} />
       </div>
-      <div>
-      <SampleTableReceived
-                          response={[{sample_id:'fdghj',qr_code:'dfghghfg',data:'12/02/23',sourceData:"dafsgh",locationData:"delhii",subSourceData:"dsgefg",type:'none'}]}
-                          headerData={ [{ name: 'check', label: '' },...headerDataNew]}
-                          onClick={openModal}
-                          checkedData={[{sampleId:123}]}
-                          responseData={(e) => onCheck(e)}
-                          // rejectSample={(e) => rejectSample(e)}
-                          // approveSample={(e) => approveSample(e)}
-                          // samplePermission={samplePermission}
-                          // currentPage ={currentPage}
-                          // pageSize ={pageSize}
-                          // onPageChange ={onPageChange}
-                          // chemicalPaginationData ={chemicalPaginationData}
-                          // microPaginationData ={microPaginationData}
-                          // type ={type}
-
-                      />
-      </div>
     </div>
   );
 };
-
-
-export const SampleReceivingTable = ({
-  headers,
-  data,
-  classes,
-  extra,
-  onClick,
-  responseData,
-   clickAll,
-   checkAllStatus
-}) => {
-const lastIndex = headers.length - 1;
-let sortedData;
-
-const [sortOrder, setSortOrder] = useState('none'); // State to track the sort order
-
-const sortData = (field, ascending) => {
-return data.sort((a, b) => {
-if (field === 'date') {
-const dateA = a.createdAt;
-const dateB = b.createdAt;
-return ascending ? (dateA - dateB) : (dateB - dateA);
-} else if(field === 'locationData'){
-const valueA = a[field].props.children.toString().toLowerCase();
-const valueB = b[field].props.children.toString().toLowerCase();
-return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-}else {
-const valueA = a[field].toString().toLowerCase();
-const valueB = b[field].toString().toLowerCase();
-return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-}
-});
-};
-
-const handleSortClick = (field) => {
-let newSortOrder = { ...sortOrder };
-
-if (!newSortOrder[field]) {
-newSortOrder[field] = 'asc';
-} else if (newSortOrder[field] === 'asc') {
-newSortOrder[field] = 'desc';
-} else if (newSortOrder[field] === 'desc') {
-newSortOrder[field] = 'asc';
-}
-
-headers.forEach((item) => {
-if (item.name !== field) {
-newSortOrder[item.name] = '';
-}
-});
-
-setSortOrder(newSortOrder);
-const ascending = newSortOrder[field] === 'asc';
-const sortedData = sortData(field, ascending);
-  };
-  const renderSortIcon = (field) => {
-  if(sortOrder[field] === 'none') {
-  return(
-  <div className={"pl-1"}>
-  <SortIcon />
-  </div>
-  )
-  }
-  else if (sortOrder[field] === 'asc') {
-  return (
-  <div className={"pl-1 pt-1"}>
-  <AscenSort />
-  </div>
-  );
-  } else if (sortOrder[field] === 'desc') {
-  return (
-  <div className={"pl-1 pt-1"}>
-  <DescSort />
-  </div>
-  );
-  } else {
-  return(
-  <div className={"pl-1"}>
-  <SortIcon />
-  </div>)
-  }
-  };
-  sortedData = sortData('date', true);
-
-return (
-    <table className={classes.table}>
-    <thead className={classes.thead}>
-    <tr className={classes.tr}>
-
-    {headers.map((item, index) => (
-    <th
-    className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
-    index === lastIndex && 'rounded-tr-lg'
-    }`}
-    scope="col"
-    onClick={()=> index === 0 ? clickAll('click'):handleSortClick(item.name)}
-    >
-    <div className="flex flex-row">
-    {index === 0 ? <ClickCheckBoxComp status={checkAllStatus === true ? "true": "false"} /> : typeof item.label === 'function' ? item.label() : item.label}
-    {!(index === 0) && <div>{renderSortIcon(item.name)}</div>}
-    </div>
-
-    </th>
-    ))}
-    </tr>
-    </thead>
-
-    <tbody className={classes.tbody}>
-    {sortedData.map((dataRow, index) => {
-    return (
-
-<tr>
-    {headers.map((item,index) => {
-    return (
-    <td
-      key={item.name}
-      className={`${classes.td} ${extra}`}
-      onClick={() => {
-          if(index === 0){
-              responseData && responseData(dataRow);
-          }else {
-              onClick && onClick(dataRow);
-          }
-      }}
-    >
-      {typeof dataRow[item.name] === 'function'
-          ? dataRow[item.name]()
-          : dataRow[item.name]}
-    </td>
-    );
-    })}
-    </tr>
-
-    );
-    })}
-    </tbody>
-    </table>
-    );
-    };
 
 export default Test;
