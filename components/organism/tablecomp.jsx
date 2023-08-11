@@ -14,6 +14,7 @@ const TableComp = ({
   body,
   href,
   onClick,
+  editItem,
   responseData,
   extraclasses,
 }) => {
@@ -29,6 +30,7 @@ const TableComp = ({
           href={href}
           extra={extraclasses}
           onClick={onClick}
+          editItem={editItem}
           responseData={responseData}
         />
       </div>

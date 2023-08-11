@@ -28,9 +28,15 @@ const AddCompanyLogo = ({ open, close }) => {
               Drag and Drop files here,
               <span className="text-[#666]"> OR, </span>
             </p>
-            <input type="file" ></input>
-            <Button className={"font-medium border-none"}>BROWSER FILES</Button>
-            
+            <div className="overflow-hidden  border my-1 rounded  ">
+              <input
+                type="file"
+                className="absolute opacity-0 border-2 cursor-pointer left-[150px] top-[60px] w-full h-full "
+              />
+              <Button className={"font-medium border-none"}>
+                BROWSER FILES
+              </Button>
+            </div>
           </div>
           <div>
             <p className="text-[12px] leading-[14px] font-normal text-[#666]">

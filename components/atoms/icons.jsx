@@ -2057,25 +2057,40 @@ export const ResetPassword = ({ className }) => {
         </defs>
       </svg>
     </span>
-  )
-}
+  );
+};
 
-export const CloseIcon = ({className}) => {
-  return(
+export const CloseIcon = ({ className }) => {
+  return (
     <>
       <span className={className}>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="close-outline">
-<path id="Vector" d="M17.25 17.25L6.75 6.75" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="Vector_2" d="M17.25 6.75L6.75 17.25" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-</svg>
-
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <g id="close-outline">
+            <path
+              id="Vector"
+              d="M17.25 17.25L6.75 6.75"
+              stroke="#121212"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              id="Vector_2"
+              d="M17.25 6.75L6.75 17.25"
+              stroke="#121212"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </g>
+        </svg>
       </span>
     </>
-  )
-}
-
+  );
+};
 
 export const LeftArrowIcon = ({ classname }) => {
   return (
@@ -2098,6 +2113,7 @@ export const LeftArrowIcon = ({ classname }) => {
     </>
   );
 };
+
 export const AddIcon = ({ classname }) => {
   return (
     <>
@@ -2131,6 +2147,52 @@ export const AddIcon = ({ classname }) => {
   );
 };
 
+export const EditIcon = ({ classname, onClick }) => {
+  return (
+    <>
+      <span className={classname} onClick={onClick}>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M4.82812 21.75H2.25V19.1719L16.7878 4.59796L19.402 7.21265L4.82812 21.75Z"
+            fill="black"
+          />
+          <path
+            d="M19.9556 6.65625L17.3438 4.04438L18.8278 2.60719C19.057 2.37657 19.4086 2.25 19.7344 2.25C19.8948 2.24959 20.0536 2.28093 20.2018 2.34224C20.35 2.40355 20.4846 2.4936 20.5978 2.60719L21.3947 3.40407C21.5078 3.51715 21.5974 3.65149 21.6584 3.79935C21.7194 3.94722 21.7505 4.10568 21.75 4.26563C21.75 4.59375 21.623 4.94297 21.3928 5.17313L19.9556 6.65625Z"
+            fill="black"
+          />
+        </svg>
+      </span>
+    </>
+  );
+};
 
+export const TrashIcon = ({ classname, onClick }) => {
+  return (
+    <>
+      <span className={classname} onClick={onClick}>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M4.82812 21.75H2.25V19.1719L16.7878 4.59796L19.402 7.21265L4.82812 21.75Z"
+            fill="black"
+          />
+          <path
+            d="M19.9556 6.65625L17.3438 4.04438L18.8278 2.60719C19.057 2.37657 19.4086 2.25 19.7344 2.25C19.8948 2.24959 20.0536 2.28093 20.2018 2.34224C20.35 2.40355 20.4846 2.4936 20.5978 2.60719L21.3947 3.40407C21.5078 3.51715 21.5974 3.65149 21.6584 3.79935C21.7194 3.94722 21.7505 4.10568 21.75 4.26563C21.75 4.59375 21.623 4.94297 21.3928 5.17313L19.9556 6.65625Z"
+            fill="black"
+          />
+        </svg>
+      </span>
+    </>
+  );
+};
 
 export default InventoryFillIcon;
