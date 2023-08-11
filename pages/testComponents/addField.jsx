@@ -27,8 +27,9 @@ const AddField = () => {
   };
 
   const handleSave = () => {
-    setInputData([...inputData, initialValue]);
+    setInputData([initialValue]);
     console.log(inputData);
+    
   };
 
   return (
