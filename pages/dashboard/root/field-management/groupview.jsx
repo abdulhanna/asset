@@ -1,9 +1,32 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Text1 from '@/components/atoms/field'
 import Button from '../../../../components/atoms/button';
 import AddField from 'pages/testComponents/addField';
+import { CloseIcon } from '@/components/atoms/icons';
+import {DialogPage1} from "@/components/molecules/dialog";
+import { useRouter } from 'next/router';
+
+
+
+const AddtextField = ({ open, close }) => {
+   
+  return (
+    <>
+      <DialogPage1 open={open} close={close} width="w-[1288px]">
+        <div className="w-full text-right  pb-3 pr-8">
+          <button onClick={close} >
+            <CloseIcon/>
+          </button>
+        </div>
+        <AddField />
+      </DialogPage1>
+    </>
+  );
+};
 
 const groupview =() => {
+
+  const [textHigh, setTextHigh] = useState(false);
 
   const data = [
     {
@@ -23,8 +46,14 @@ const groupview =() => {
     }
   ]
 
+  const router = useRouter();
+
   const AddFieldbtn = () => {
-  console.log("check")
+      setTextHigh(true)
+  }
+
+  const editGroup = () => {
+    router.push('/dashboard/root/field-management/editGroup');
   }
 
 
@@ -33,7 +62,7 @@ const groupview =() => {
   
     <div className="flex h-screen">
     {/* Left Side */}
-    <div className="w-full p-4 border-r">
+    <div className="w-full ">
       {/* Add Field Button */}
       {/* Display Text */}
       {data.map((component) => (
@@ -42,16 +71,17 @@ const groupview =() => {
              {component.title}
            </Text1>
            <div>
-           <button onClick={AddFieldbtn} className="mb-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 mx-2 rounded">
+           <Button  onClick={() => setTextHigh(true)} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
               Add Field
-           </button>
-          <button className="mb-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded">
+           </Button>
+          <Button onClick={editGroup} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform hover:scale-110 ">
             Edit Group
-          </button>
+          </Button>
            </div>
         </div>
       ))}
     </div>
+    <AddtextField open={textHigh} close={() => setTextHigh(false)} />
      </div>
     </div>
   )

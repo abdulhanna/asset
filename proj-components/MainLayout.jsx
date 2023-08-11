@@ -13,7 +13,7 @@ const MainLayout = ({children,isScroll}) => {
       <div className="flex flex-col w-full  ">
         <Header />
         <div className={`${isScroll?"overflow-y-auto":"overflow-hidden"} w-full  h-full  pb-20`}>
-          <div className={`container p-6  flex-1`}>{children}</div>
+          <div className={`container px-6 py-16  flex-1`}>{children}</div>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ import SidebarComp from "../proj-components/Layout/sub-components/navbar-compone
 import Button from "../components/atoms/button";
 import Image from "next/image";
 import img1 from "../public/images/auth/acountVarified.svg";
-import { Nodata, UpArrow } from "../components/atoms/icons";
+import { Nodata, UpArrow, CloseIcon } from "../components/atoms/icons";
 import AddInputDiv from "./testComponents/addInputDiv";
 import AddField from "./testComponents/addField";
 
@@ -121,7 +121,7 @@ const AddtextField = ({ open, close }) => {
       <DialogPage1 open={open} close={close} width="w-[1288px]">
         <div className="w-full text-right  pb-3 pr-8">
           <button onClick={close} >
-            X
+            <CloseIcon/>
           </button>
         </div>
         <AddField />

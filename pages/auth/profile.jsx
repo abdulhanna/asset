@@ -86,8 +86,15 @@ function Profile(props) {
     console.log(profileErrors);
   };
 
-  console.log(activeSection, "kjhgf")
+  const profileHandle = () => {
+    // const element = document.getElementById('section1')
+    // if(element){
+    //   window.scrollY(400)
+    // }
+    console.log("testsend")
+  } 
 
+ 
   const validate = () => {
     const errors = {};
     if (!profileData.companyRegistrationNumber) {
@@ -207,9 +214,9 @@ function Profile(props) {
                     : ""
                 }`}
               >
-                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]" >
+                <button className="text-xl text-[#3B5FDA]" id="section1" onClick={profileHandle}>
                   Profile Information
-                </Text1>
+                </button>
                 <div className=" grid md:grid-cols-2  gap-x-[52px] gap-y-[40px]">
                   <div>
                     <TextField
@@ -297,7 +304,7 @@ function Profile(props) {
                     : ""
                 }`}
               >
-                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]">
+                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]" id="section2" >
                   Address & Contact Details
                 </Text1>
 

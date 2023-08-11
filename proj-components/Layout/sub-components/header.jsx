@@ -7,7 +7,7 @@ const Header = () => {
         alert("djfa")
     }
   return (
-    <div className="flex flex-row  border-b w-full p-6">
+    <div className="py-3 border-b-2 shadow-slate-100 p-6">
     <div className="flex flex-row items-center gap-4 w-full">
       <div className="bg-white rounded-md flex items-center px-2 py-px w-full">
         {/* <SearchIcon /> */}
