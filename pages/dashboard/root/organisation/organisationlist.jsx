@@ -6,7 +6,7 @@ import TableComp from '../../../../components//organism/tablecomp'
 import {Text1} from "../../../../components/atoms/field";
 import Button from '../../../../components/atoms/button';
 import { SampleTableNew } from '../../../../components//organism/tablecomp'
-
+import { OrganisationTableNew } from 'proj-components/Dashboard/organisation/table'
 import { useRouter } from 'next/router';
 
 const OrganisationList = () => {
@@ -78,20 +78,8 @@ useEffect(()=>{
      </Text1>
      <Button onClick={handleAddButtonClick} variant="contained" className="px-6 h-10">Add Organizations</Button>
      </div>
-
-        {/* <TableComp
-          headers={HeaderGoods}
-          responseData={(e) => console.log(e, "e")}
-          body={Headerbody.map((item) => {
-            return {
-              ...item,
-              href: `id=${item.id}&name=${item.name}`,
-            };
-          })}
-          href={`/dashboard/root/organisation/organizationprofile?`}
-        /> */}
-
-        <SampleTableNew
+        
+        <OrganisationTableNew
           response={Headerbody}
           headerData={[{ name: 'check', label:'' },...HeaderGoods]}
           checkedData={checkedNewData}
@@ -100,7 +88,6 @@ useEffect(()=>{
            clickAll={clickAll}
            onClick={(e)=> console.log(e,'onclick') }
            checkAllStatus={allClick}
-           
         />
    
    </>

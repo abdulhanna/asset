@@ -29,10 +29,10 @@ const AddCompanyLogo = ({ open, close }) => {
               <span className="text-[#666]"> OR, </span>
             </p>
             <div className="overflow-hidden  border my-1 rounded  ">
-              <input
+              {/* <input
                 type="file"
                 className="absolute opacity-0 border-2 cursor-pointer left-[150px] top-[60px] w-full h-full "
-              />
+              /> */}
               <Button className={"font-medium border-none"}>
                 BROWSER FILES
               </Button>
