@@ -142,6 +142,7 @@ export const SampleTableNew = ({
   response,
   onClick,
   responseData,
+  href,
   
 
                                    checkedData,
@@ -164,12 +165,12 @@ export const SampleTableNew = ({
         responseData={responseData}
         clickAll={clickAll}
         checkAllStatus={checkAllStatus}
-        href={'/test/org?'}
+        href={href}
         body={response.map((row) => ({
           ...row,
 
             check:<SampleTableCheckBox data={checkedData} bodyData={row}/>,
-            href :row._id
+            href :`id=${row._id}`
           //   type: <p>{row.isFieldSample && row.isFieldSample === true ? 'Field Sample':'Lab Sample'}</p>,
           //   href: row.sampleStatus === '2New'?`/dashboard/sample/sampleDetails/?sampleId=${row._id}`:'',
           //   sampleId: row.sample_id.toUpperCase(),

@@ -19,7 +19,7 @@ const Button = ({ href, children, className, size = 'md', variant = "primary", o
                     '2xl': 'text-[22px] 2xl:text-[26px]',
                     '3xl': 'text-[24px] 2xl:text-[28px]',
 
-                }[size]}font-Libre  px-5 py-2 text-center rounded `, className, {
+                }[size]}font-body  px-5 py-2 text-center rounded `, className, {
                     "border-primary border  bg-transparent text-primary": variant === "primary",
                     "border border-black  bg-transparent ": variant === "primary1",
                     "bg-primary text-white": variant === "contained",
@@ -46,7 +46,7 @@ const Button = ({ href, children, className, size = 'md', variant = "primary", o
             "border-primary border  bg-transparent text-primary": variant === "primary",
             "border border-black  bg-transparent ": variant === "primary1",
             "bg-primary text-white": variant === "contained",
-            "bg-red-200 text-red-600 rounded-lg": variant === "red",
+            "bg-red-200 text-red-600 rounded bg-transparent border border-red-500": variant === "danger",
             "bg-yellow-600 text-white rounded-sm": variant === "yellow",
             "bg-teal-700 text-white rounded-sm": variant === "teal"
         })} onClick={onClick}>
