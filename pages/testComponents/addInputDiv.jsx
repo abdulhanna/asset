@@ -9,9 +9,9 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
     }
   ]);
 
-  const handleSumbit = () => {
-    // setInputData([...inputData, { label: "" }]);
-    handleSave(inputData)
+  const handleSubmit = () => {
+    setInputData([...inputData, { label: "" }]);
+  
     // console.log(inputData);
   };
 
@@ -25,14 +25,15 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
      
   }
 
-
-
+  const handlesaveall = () => {
+    handleSave(inputData)
+  }
 
 
   console.log(inputData);
   return (
     <div className="w-full flex justify-center py-[22px]">
-      <div className="w-[488px] h-auto flex flex-col items-center overflow-y-auto">
+      <div className="w-[488px]  h-auto max-h-[550px] flex flex-col items-center overflow-y-auto">
         <Text1 size="2xl" weight="medium"> {Heading}</Text1>
         {inputData?.map((item,index) => {
           console.log(item);
@@ -46,25 +47,25 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
                   type="text"
                   placeholder="Add Description"
                   className="w-full border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  // name="inputText"
-                  // value={item.label}
+                  name="inputText"
+                  value={item.label}
                   onChange={(e) => handleChange(e,index)}
                 />
               </div>
             </>
           );
         })}
-        {/* <div className="w-[368px] mx-auto">
+         <div className="w-[368px] mx-auto">
           <button
             type="button"
             onClick={handleSubmit}
             className="text-[16px] font-[500] text-[#3B5FDA] ">
             + Add Another Group
           </button>
-        </div> */}
+        </div>
         <div className="mx-auto py-[30px]">
           <Button
-            onClick={handleSumbit}
+            onClick={handlesaveall}
             size="sm"
             variant="contained"
             className={"font-body px-8"}>
