@@ -3,6 +3,7 @@ import Text,{Text1,TextField, CustomSelect} from "../../../../components/atoms/f
 import Button from '../../../../components/atoms/button';
 import { useRouter } from 'next/router';
 import MainLayout from '../../../../proj-components/MainLayout'
+import { LeftArrowIcon } from '@/components/atoms/icons';
 
 
 const EditOrganisation = () => {
@@ -79,9 +80,13 @@ const validate = () => {
               <div>
               <form action="" onSubmit={handleSubmit}>
          <div className='flex justify-between mb-4'>
+         <div className='flex items-center cursor-pointer' onClick={()=> router.back()}>
+
+         <LeftArrowIcon/>
            <Text1 size="2xl" weight="medium">
              Organization
           </Text1>
+         </div>
         
           {showSave ? 
           <>
