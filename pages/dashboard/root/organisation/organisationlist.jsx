@@ -1,15 +1,17 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
 import Overview from '../../overview'
 import { EmptyData, Verified } from '../../../../components/atoms/icons'
 import TableComp from '../../../../components//organism/tablecomp'
 import {Text1} from "../../../../components/atoms/field";
 import Button from '../../../../components/atoms/button';
+import { SampleTableNew } from '../../../../components//organism/tablecomp'
 
 import { useRouter } from 'next/router';
 
 const OrganisationList = () => {
-
+  const [checkedNewData, setCheckedNewData] = useState([])
+  const [allClick, setAllClick] = useState(false)
   const router = useRouter();
 
   const HeaderGoods = [
@@ -23,14 +25,47 @@ const OrganisationList = () => {
   // const [Href, setHref] = useState("");
 
   const Headerbody = [
-    { id: 1, name: "prince", types: "employe",verification:<Verified/>, batch: "B", id: "234" },
-    { id: 2, name: "siddhu", types: "employe", verification:<Verified/>,batch: "B", id: "231" },
-    { id: 3, name: "john", types: "employe", verification:<Verified/>,batch: "C", id: "3241" },
+    { _id: 1, name: "prince", types: "employe",verification:<Verified/>, batch: "B", id: "234" },
+    { _id: 2, name: "siddhu", types: "employe", verification:<Verified/>,batch: "B", id: "231" },
+    { _id: 3, name: "john", types: "employe", verification:<Verified/>,batch: "C", id: "3241" },
   ];
 
   const handleAddButtonClick = () => {
     router.push('/dashboard/root/organisation/add'); // This will navigate to the 'add-form' page
   };
+
+
+  const clickAll = (e)=>{
+    setAllClick(!allClick)
+  }
+
+  const onNewCheck=(data)=>{
+    console.log(data,'data')
+    const exist = checkedNewData.find(
+        (element) => element._id === data._id
+    );
+    console.log(exist,'exit')
+    if (exist) {
+      setCheckedNewData(
+          checkedNewData.filter((single) => single._id !== data._id)
+      );
+    } else {
+      setCheckedNewData([...checkedNewData, data]);
+    }
+  }
+
+
+  useEffect(()=>{
+    console.log(checkedNewData,'cehc')
+},[checkedNewData])
+
+useEffect(()=>{
+    if(allClick === true){
+      setCheckedNewData(Headerbody)
+    }else {
+      setCheckedNewData([])
+    }
+   },[allClick])
 
   return (
    <>
@@ -44,7 +79,7 @@ const OrganisationList = () => {
      <Button onClick={handleAddButtonClick} variant="contained" className="px-6 h-10">Add Organizations</Button>
      </div>
 
-        <TableComp
+        {/* <TableComp
           headers={HeaderGoods}
           responseData={(e) => console.log(e, "e")}
           body={Headerbody.map((item) => {
@@ -54,6 +89,18 @@ const OrganisationList = () => {
             };
           })}
           href={`/dashboard/root/organisation/organizationprofile?`}
+        /> */}
+
+        <SampleTableNew
+          response={Headerbody}
+          headerData={[{ name: 'check', label:'' },...HeaderGoods]}
+          checkedData={checkedNewData}
+          responseData={(e) => onNewCheck(e)}
+          //  href={`/dashboard/root/organisation/organizationprofile?`}
+           clickAll={clickAll}
+           onClick={(e)=> console.log(e,'onclick') }
+           checkAllStatus={allClick}
+           
         />
    
    </>
