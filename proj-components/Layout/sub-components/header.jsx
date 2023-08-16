@@ -1,13 +1,13 @@
 import React from 'react'
 import SearchComponent from '../../../components/atoms/searchComponent'
-import { Bell, FinbitLogo } from '../../../components/atoms/icons'
+import {  FinbitLogo } from '../../../components/atoms/icons'
 
 const Header = () => {
     const onClickLogout = ()=>{
         alert("djfa")
     }
   return (
-    <div className="py-3 border-b-2 shadow-slate-100 p-6">
+    <div className="py-3 border-b-2 shadow-slate-100 p-6 ">
     <div className="flex flex-row items-center gap-4 w-full">
       <div className="bg-white rounded-md flex items-center px-2 py-px w-full">
         {/* <SearchIcon /> */}
@@ -31,8 +31,6 @@ const Header = () => {
         onClick={onClickLogout}
       >
         {/* <LogoutIcon /> */}
-        <Bell/>
-      
       </span>
     </div>
   </div>
@@ -43,7 +41,7 @@ const Header = () => {
 export const Headerouter = () => {
    return (
     <>
-  <div className=" py-3 border-b-2 shadow-slate-100  w-full">
+  <div className=" py-3 border-b-2 bg-white  w-full fixed">
     <div className="flex justify-between  px-28 flex-row items-center gap-4  ">
        <div>
        <FinbitLogo/>

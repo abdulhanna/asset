@@ -87,11 +87,12 @@ function Profile(props) {
   };
 
   const profileHandle = () => {
-    // const element = document.getElementById('section1')
-    // if(element){
-    //   window.scrollY(400)
-    // }
-    console.log("testsend")
+  const scrollPosition = 0;
+
+  window.scrollTo({
+    top: scrollPosition,
+    behavior: "smooth", 
+  });
   } 
 
  
@@ -145,9 +146,9 @@ function Profile(props) {
     <>
       <Headerouter />
 
-      <div className="flex mx-[180px] my-[72px] gap-[50px] lg:gap-[100px] xl:gap-[150px] 2xl:gap-[371px]">
-        <div className="w-[288px]">
-        <div className="flex flex-col justify-between w-[288px] h-[888px] fixed">
+      <div className="flex mx-[180px] gap-[50px] lg:gap-[100px] xl:gap-[150px] 2xl:gap-[371px]">
+        <div className="w-[288px] my-[100px]">
+        <div className="flexflex-col justify-between w-[288px] h-[888px] fixed">
             <div className=" flex flex-col gap-[52px]">
               <div className=" flex flex-col gap-5">
                 <p className="text-2xl font-normal w-[285px]">
@@ -160,17 +161,17 @@ function Profile(props) {
               </div>
               <div className="flex flex-col gap-5">
               <p
-                  className={`text-base font-body ${
+                  className={`text-base cursor-pointer font-body ${
                     activeSection === "profile-information"
                       ? "text-blue-600 border-l-2 border-blue-600 p-2.5"
                       : "text-[#515151]"
                   }`}
-                  onClick={() => profileInfoRef.current.scrollIntoView()}
+                  onClick={profileHandle}
                 >
                   Profile Information
                 </p>
                 <p
-                  className={`text-base font-body ${
+                  className={`text-base cursor-pointer font-body ${
                     activeSection === "address-contact-details"
                       ? "text-blue-600 border-l-2 border-blue-600 p-2.5"
                       : "text-[#515151]"
@@ -190,7 +191,7 @@ function Profile(props) {
         </div>
         </div>
 
-        <div className="w-full">
+        <div className="w-full my-[100px]">
           <form action="" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-[52px] ">
               <div className=" flex flex-col gap-8">
@@ -214,7 +215,7 @@ function Profile(props) {
                     : ""
                 }`}
               >
-                <button className="text-xl text-[#3B5FDA]" id="section1" onClick={profileHandle}>
+                <button className="text-xl text-[#3B5FDA]" id="section1" >
                   Profile Information
                 </button>
                 <div className=" grid md:grid-cols-2  gap-x-[52px] gap-y-[40px]">
