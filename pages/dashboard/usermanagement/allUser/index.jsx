@@ -92,6 +92,7 @@ useEffect(()=>{
                   responseData={(e) => onNewCheck(e)}
                   clickAll={clickAll}
                   onClick={(e)=> console.log(e,'onclick') }
+                  href={`/dashboard/usermanagement/allUser/single?`}
                   checkAllStatus={allClick}
             />
           </div>}
