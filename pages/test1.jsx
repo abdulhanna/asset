@@ -303,6 +303,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { Accordin } from '@/components/molecules/accordion'
+import { ToggleButton,ToggleOnButton } from '@/components/atoms/icons'
+import Text from '@/components/atoms/field'
+
 const Test1 = () => {
     const [role,setRole] = useState({
         roleName:'',
@@ -356,7 +359,18 @@ const Test1 = () => {
       <p>this is test1</p>
        {role.Permissions.map((item,index)=>{
           return (<>
-            <Accordin label={item.modelName} data={item} handleClick={handleClick} key={index} id={index}>{item.modelName}</Accordin>
+            <Accordin label={item.modelName} data={item} handleClick={handleClick} key={index} id={index}>
+              <div className='flex items-center gap-4'>
+                  <div className='flex'>
+                   <Text size='lg'>EDIT</Text>
+                   {item.read ? <ToggleOnButton/> :<ToggleButton/>}
+                  </div>
+                  <div className='flex'>
+                   <Text size='lg'>WRITE</Text>
+                   {item.write ? <ToggleOnButton/> :<ToggleButton/>}
+                  </div>
+              </div>
+            </Accordin>
           </>)
        })}
     </div>
