@@ -19,6 +19,7 @@ import img1 from "../public/images/auth/acountVarified.svg";
 import { Nodata, UpArrow, CloseIcon } from "../components/atoms/icons";
 import AddInputDiv from "./testComponents/addInputDiv";
 import AddField from "./testComponents/addField";
+import Accordion, { Accordin } from "@/components/molecules/accordion";
 
 const ShowData = ({ open, close, data }) => {
   return (
@@ -253,6 +254,10 @@ const Test = () => {
         </button>
         <AddtextField open={textHigh} close={() => setTextHigh(false)} />
       </div>
+      <Accordion></Accordion>
+      <Accordin label={'organisation management'} data={{allAccess:true,removeAccess:false}}>
+
+      </Accordin>
     </div>
   );
 };

@@ -2184,4 +2184,45 @@ export const TrashIcon = ({ classname, onClick }) => {
   );
 };
 
+
+export const ToggleOnButton = ({classname,onClick}) =>{
+  return (
+    <>
+    <span className={classname} onClick={onClick}>
+    <svg width="36" height="20" viewBox="0 0 36 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="36" height="20" rx="10" fill="#5DA64E"/>
+<circle cx="26" cy="10" r="8" fill="white"/>
+</svg>
+
+    </span>
+    </>
+  )
+}
+
+export const ToggleButton = ({classname,onClick}) =>{
+  return (
+    <>
+    <span className={classname} onClick={onClick}>
+    <svg width="38" height="22" viewBox="0 0 38 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="37" height="21" rx="10.5" fill="#FEFEFE"/>
+<rect x="3" y="3" width="16" height="16" rx="8" fill="#A4A4A4"/>
+<rect x="0.5" y="0.5" width="37" height="21" rx="10.5" stroke="#A4A4A4"/>
+</svg>
+ </span>
+    </>
+  )
+}
+
+export const DropDownIcon = ({classname}) =>{
+  return(
+   <>
+     <span className={classname} >
+     <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+ <path d="M1.25 1.625L8 8.375L14.75 1.625" stroke="#121212" stroke-miterlimit="10" stroke-linecap="square"/>
+ </svg>
+ 
+     </span>
+   </>
+  )
+ }
 export default InventoryFillIcon;
