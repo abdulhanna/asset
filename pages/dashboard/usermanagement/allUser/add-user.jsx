@@ -7,8 +7,14 @@ import { TextField, CustomSelect } from "@/components/atoms/field";
 import { DialogPage1 } from "@/components/molecules/dialog";
 import { UpArrow } from "@/components/atoms/icons";
 import { useRouter } from "next/router";
+import { FileUploader } from "react-drag-drop-files";
 
 const AddCompanyLogo = ({ open, close }) => {
+  const fileTypes = ["JPEG", "PNG", "JPG"];
+  const [file, setFile] = useState(null);
+  const handleChange = (file) => {
+    setFile(file);
+  };
   return (
     <DialogPage1 open={open} close={close} width="w-[510px]">
       <div className=" text-center flex flex-col gap-6">
@@ -23,20 +29,16 @@ const AddCompanyLogo = ({ open, close }) => {
               </div>
             </Button>
           </div>
-          <div className="w-[161px]">
-            <p className="text-xs font-normal">
-              Drag and Drop files here,
-              <span className="text-[#666]"> OR, </span>
-            </p>
-            <div className="overflow-hidden  border my-1 rounded  ">
-              {/* <input
-                type="file"
-                className="absolute opacity-0 border-2 cursor-pointer left-[150px] top-[60px] w-full h-full "
-              /> */}
-              <Button className={"font-medium border-none"}>
-                BROWSER FILES
-              </Button>
-            </div>
+          <FileUploader
+          multiple={true}
+          handleChange={handleChange}
+          name="file"
+          types={fileTypes}
+          hoverTitle="Drop Here"
+          children={<div><p>Drag and Drop File here,<br></br> <button className="text-[#3B5FDA] w-auto h-[60px] py-1">Browse File</button></p></div>}
+        />
+          <div className="w-auto">
+            <p>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
           </div>
           <div>
             <p className="text-[12px] leading-[14px] font-normal text-[#666]">
@@ -60,7 +62,7 @@ const AddCompanyLogo = ({ open, close }) => {
           <Button variant="primary" onClick={close}>
             CANCEL
           </Button>
-          <Button variant="contained">FINISH</Button>
+          <Button variant="contained" onClick={close}>FINISH</Button>
         </div>
       </div>
     </DialogPage1>
