@@ -210,6 +210,7 @@ const currentPath = router.pathname;
               open={currentPath.startsWith(item.url)}
               icon={Icon}
               fillIcon={FillIcon}
+              key={index}
             >
              
              {item.submenu && Array.isArray(item.submenu) && item.submenu.map((subItem, index) => (
@@ -220,6 +221,7 @@ const currentPath = router.pathname;
                       label={subItem.label}
                       active={currentPath.startsWith(subItem.url)}
                        isLastSubItem={index === item.submenu.length - 1} // Set isLastSubItem to true for the last sub-item
+                      
                       />
                  ))}
 
@@ -232,6 +234,7 @@ const currentPath = router.pathname;
               active={currentPath.startsWith(item.url)}
               icon={Icon}
               fillIcon={FillIcon}
+              key={index}
             />
           );
         })}

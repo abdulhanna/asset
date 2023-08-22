@@ -44,7 +44,9 @@
 import Table from '../molecules/table';
 import { useState } from 'react';
 import { SampleTableCheckBox,ClickCheckBoxComp } from 'proj-components/Dashboard/tableItem';
-import { CheckWithLinkTable } from '../molecules/table';
+import { ActionTable, CheckWithLinkTable } from '../molecules/table';
+import { TrashOutline } from '../atoms/icons';
+
 
 // const classes = {
 //   table: 'w-full text-sm text-left  ',
@@ -267,6 +269,40 @@ export const NewSampleReceivingTableComponent = ({ headers,
       </div>
   );
 }
+
+export  const AssignedUserTable = ({
+  headers,
+  response,
+  href,
+  onClick,
+  responseData,
+  extraclasses,
+}) => {
+
+// console.log(response,'res')
+  return (
+    <div className="h-auto py-8">
+      <div className="relative overflow-x-auto rounded-lg">
+        <ActionTable
+          headers={headers}
+          data={response.map((item)=>{
+
+            return {
+              ...item,
+              action :<TrashOutline/>
+            }
+          })}
+          classes={classes}
+          href={href}
+          extra={extraclasses}
+          onClick={onClick}
+          responseData={responseData}
+        />
+      </div>
+    </div>
+  );
+}
+
 
 // export const SortIcon = ({classname}) =>{
 //   return(
