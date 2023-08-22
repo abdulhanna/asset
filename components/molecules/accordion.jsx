@@ -44,20 +44,21 @@ export const Accordin = (props) => {
         props.handleClick(e)
     }
     return (
-        <motion.div className="w-full my-2">
+        <motion.div className="w-full my-4">
             <AnimatePresence>
                 <motion.div
                     key="question"
-                    className="  rounded-t-md shadow-sm px-2 py-3 bg-transparent cursor-pointer font-open border w-full"
+                    className="  rounded-t-md shadow-sm px-2 py-3 bg-transparent cursor-pointer font-body border border-black w-full"
                     
                 >
                   
-                    <motion.div className="flex justify-between  items-center space-x-2 w-full  font-bold ml-1">
+                    <motion.div className="flex justify-between capitalize items-center space-x-2 w-full ml-1">
                         
-                        <p> {props.label} </p>
+                        {/* <p> {props.label} </p> */}
+                        <Text1 size='lg'>{props.label}</Text1>
                 <div className='flex gap-4'>
-                        <div className='flex space-x-4'>
-                                <div className='flex items-center'>
+                        <div className='flex gap-4'>
+                                <div className='flex items-center gap-1'>
                                     <Text1>All Access</Text1>
                                     <div >{props.data.allAccess ? <ToggleOnButton onClick={()=>{
                                         // alert(!props.data.allAccess)
@@ -67,7 +68,7 @@ export const Accordin = (props) => {
                                         handleToggle({allAccess:(!props.data.allAccess),id:props.id})
                                     }}/>}</div>
                                 </div>
-                                <div className='flex items-center'>
+                                <div className='flex items-center gap-1'>
                                     <Text1>Remove Access</Text1>
                                     <div> {props.data.removeAccess ? <ToggleOnButton  onClick={()=>{
                                           handleToggle({removeAccess:(!props.data.removeAccess),id:props.id})
@@ -98,7 +99,7 @@ export const Accordin = (props) => {
                                 },
                             }}
                             exit={{ opacity: 0 }}
-                            className=" px-2 py-4  text-sm text-gray-700 border rounded-b-md border-gray-300"
+                            className=" px-2 py-4  text-sm text-gray-700 border border-black rounded-b-md "
                             >
                             {props.children}
                         </motion.div>
