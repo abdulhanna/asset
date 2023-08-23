@@ -9,13 +9,16 @@ const Manage = () => {
   return (
     <>
         <MainLayout>
-             <div>
+             <div className='space-y-2'>
                 <div className='flex items-center justify-between'>
                     <Text1 size="lg">All Permissions</Text1>
-                    <Button variant='contained'>
+
+                    <Button href={'/dashboard/usermanagement/manage/permission'} variant='contained'>
                         CREATE PERMISSION
                     </Button>
-
+                </div>
+                <div>
+                  {data.length === 0 ? <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'} /> :<div>dsfasdsd</div> }
                 </div>
              </div>
         </MainLayout>

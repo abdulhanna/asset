@@ -322,24 +322,24 @@ export const CustomSelect = ({
     required = false,
     bgColor = 'white',
     disabled = false,
-    classname = 'my-1 py-2 gap-0.5',
+    className ,
     selectHeight ="",
     value,
   }) => {
   return (
-  <div className={` w-full min-w-auto  ${classname}`}>
+  <div className={`flex  flex-col py-1 2xl:py-2 gap-0.5 2xl:gap-1 ${className}`}>
   <div className="font-normal  text-sm text-textColor">{label}</div>
-  <select
-  required={required}
-  id={id}
-  name={name}
-  value={value}
-  className={` px-1 ${selectHeight} rounded border-[1px]  py-[8px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
-  onChange={onChange}
-  disabled={disabled}
-  >
-  {children}
-  </select>
+      <select
+      required={required}
+      id={id}
+      name={name}
+      value={value}
+      className={` px-1 ${selectHeight} rounded border-[1px]  py-[12px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
+      onChange={onChange}
+      disabled={disabled}
+      >
+      {children}
+      </select>
   </div>
   );
 };

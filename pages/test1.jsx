@@ -12,6 +12,7 @@ const Test1 = () => {
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
   const [data1,setData1] = useState()
+  const [view,setView] = useState(false)
   const header = [
     {
       label:"Role Name",
@@ -223,6 +224,12 @@ const Test1 = () => {
           responseData={(e)=>setData1(e)}
           onClick={(e)=> console.log(data1,'dd')}
         />
+       </div>
+
+       <div className='bg-slate-200 p-4'>
+     
+     {!view ? <ToggleButton/> : <ToggleOnButton/>}
+           
        </div>
        </div>
     </div>
