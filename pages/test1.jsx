@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Accordin } from '@/components/molecules/accordion'
 import { ToggleButton,ToggleOnButton } from '@/components/atoms/icons'
-import Text from '@/components/atoms/field'
+import Text, { TextField } from '@/components/atoms/field'
 import { ActionCheckTable } from '@/components/molecules/table'
 import { UserTableNew } from 'proj-components/Dashboard/user-management/table'
 import { SampleTableNew } from '@/components/organism/tablecomp'
 import { AssignedUserTable } from '@/components/organism/tablecomp'
 import { TrashOutline } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
+import PermissionToggle from 'proj-components/Dashboard/user-management/permissionItem'
+
 const Test1 = () => {
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
@@ -226,11 +228,12 @@ const Test1 = () => {
         />
        </div>
 
-       <div className='bg-slate-200 p-4'>
-     
-     {!view ? <ToggleButton/> : <ToggleOnButton/>}
-           
-       </div>
+       {/* <div className='bg-slate-200 px-3 py-3 max-w-[10%] flex justify-between'>
+        <Text> upload</Text>
+        {!view ? <ToggleButton/> : <ToggleOnButton/>}   
+       </div> */}
+       <PermissionToggle label={'download'} status={view} handleClick={(e)=> setView(!view)}/>
+       <TextField type='checkbox'/>
        </div>
     </div>
   )
