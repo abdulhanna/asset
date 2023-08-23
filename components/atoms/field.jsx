@@ -177,6 +177,7 @@ export const TextField = ({
   max = "2030-01-01",
   min = "1980-01-01",
   error = null,
+  isRead = false,
   onChange = (e) => {},
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -249,6 +250,7 @@ export const TextField = ({
           disabled={disabled}
           max={max}
           min={min}
+          readOnly={isRead}
         />
       )}
       {/* {error && <Error data={error} />} */}
@@ -312,27 +314,27 @@ export const TextInputArea = ({
 };
 
 export const CustomSelect = ({
-    id,
-    children,
-    onChange ,
-    label,
-    name,
-    required = false,
-    bgColor = 'white',
-    disabled = false,
-    classname = 'my-1 py-2 gap-0.5',
-    selectHeight ="",
-    value,
+    id,
+    children,
+    onChange ,
+    label,
+    name,
+    required = false,
+    bgColor = 'white',
+    disabled = false,
+    classname = 'my-1 py-2 gap-0.5',
+    selectHeight ="",
+    value,
   }) => {
   return (
-  <div className={` w-full min-w-auto   ${classname}`}>
+  <div className={` w-full min-w-auto  ${classname}`}>
   <div className="font-normal  text-sm text-textColor">{label}</div>
   <select
   required={required}
   id={id}
   name={name}
   value={value}
-  className={` px-1 ${selectHeight} rounded border-[1px]  py-[8px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
+  className={` px-1 ${selectHeight} rounded border-[1px]  py-[8px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
   onChange={onChange}
   disabled={disabled}
   >

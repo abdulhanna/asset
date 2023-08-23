@@ -110,7 +110,14 @@ useEffect(()=>{
                  <div>
                      <div className='flex justify-between items-center'>
                         <Text1>Role Permissions</Text1>
-                        <Button>RESTORE DEFAULTS</Button>
+                        <Button onClick={()=>{
+                            const data = [...role.Permissions]
+                            role.Permissions.map((item,id)=>{
+                               role.Permissions[id] = {...role.Permissions[id],removeAccess:true,read:false,readWrite:false,allAccess:false,delete:false}
+                                 })
+                         
+                            setRole({...role,Permissions:role.Permissions})
+                         } }>RESTORE DEFAULTS</Button>
                      </div>
                      <div>
                       {role.Permissions.map((item,index)=>{

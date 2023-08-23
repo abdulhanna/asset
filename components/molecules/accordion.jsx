@@ -111,6 +111,71 @@ export const Accordin = (props) => {
     );
 }
 
+export const AccordinRead = (props) => {
+  const [isActive, setIsActive] = useState(false)
+  const toggle = () => {
+      setIsActive(!isActive)
+  }
+
+  
+  return (
+      <motion.div className="w-full my-4">
+          <AnimatePresence>
+              <motion.div
+                  key="question"
+                  className="  rounded-t-md shadow-sm px-2 py-3 bg-transparent cursor-pointer font-body border border-black w-full"
+                  
+              >
+                
+                  <motion.div className="flex justify-between capitalize items-center space-x-2 w-full ml-1">
+                      
+                      {/* <p> {props.label} </p> */}
+                      <Text1 size='lg'>{props.label}</Text1>
+              <div className='flex gap-4'>
+                      <div className='flex gap-4'>
+                              <div className='flex items-center gap-1'>
+                                  <Text1>All Access</Text1>
+                                  <div >{props.data.allAccess ? <ToggleOnButton /> : <ToggleButton />}</div>
+                              </div>
+                              <div className='flex items-center gap-1'>
+                                  <Text1>Remove Access</Text1>
+                                  <div> {props.data.removeAccess ? <ToggleOnButton  /> : <ToggleButton  />} </div>
+                              </div>
+                      </div>
+                      <ChevronUpIcon
+                className={`${
+                  isActive ? 'rotate-180 transform' : ''
+                } h-5 w-5 text-slate-300`}
+                // onClick={toggle}
+              />
+          </div>
+                  </motion.div>
+              </motion.div>
+
+              {
+                  isActive && (
+                      <motion.div
+                          key="answer"
+                          initial={{ opacity: 0 }}
+                          animate={{
+                              opacity: 1,
+                              transition: {
+                                  duration: 0.5,
+                              },
+                          }}
+                          exit={{ opacity: 0 }}
+                          className=" px-2 py-4  text-sm text-gray-700 border border-black rounded-b-md "
+                          >
+                          {props.children}
+                      </motion.div>
+                  )
+              }
+          </AnimatePresence>
+      </motion.div>
+
+  );
+}
+
 export default Accordion
 
 

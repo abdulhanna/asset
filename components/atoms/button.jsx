@@ -2,7 +2,7 @@ import React, { Children } from 'react'
 import classNames from 'classnames'
 import Link from 'next/link'
 
-const Button = ({ href, children, className, size = 'md', variant = "primary", onClick }) => {
+const Button = ({ href, children, className, size = 'md', variant = "primary", onClick, isDisabled=false }) => {
     const content = <>
         {children}
     </>
@@ -25,7 +25,7 @@ const Button = ({ href, children, className, size = 'md', variant = "primary", o
                     "bg-primary text-white": variant === "contained",
                     
 
-                })}>{content}</button>
+                })} >{content}</button>
             </Link>
 
         )
@@ -42,14 +42,14 @@ const Button = ({ href, children, className, size = 'md', variant = "primary", o
             '2xl': 'text-[22px] 2xl:text-[26px]',
             '3xl': 'text-[24px] 2xl:text-[28px]',
 
-        }[size]}font-Libre  px-5 py-2 text-center rounded`, className, {
+        }[size]} font-Libre  px-5 py-2 text-center rounded`, className, {
             "border-primary border  bg-transparent text-primary": variant === "primary",
             "border border-black  bg-transparent ": variant === "primary1",
             "bg-primary text-white": variant === "contained",
             "bg-red-200 text-red-600 rounded bg-transparent border border-red-500": variant === "danger",
             "bg-yellow-600 text-white rounded-sm": variant === "yellow",
             "bg-teal-700 text-white rounded-sm": variant === "teal"
-        })} onClick={onClick}>
+        })} onClick={onClick} disabled={isDisabled}>
             {content}
         </button>
 
