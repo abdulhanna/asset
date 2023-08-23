@@ -5,14 +5,11 @@ import {Text1} from "@/components/atoms/field";
 import Button from '../../../../components/atoms/button';
 import DialogPage, {DialogPage1} from '../../../../components/molecules/dialog';
 import AddInputDiv from '../../../testComponents/addInputDiv'
-import groupview from './groupview';
+import groupview from './subgroupview';
 
 
 
 const AddInputField = ({ open, close, showData, setShow }) => {
-
-
-
 
   const getData = ({data}) => {
     
@@ -60,7 +57,7 @@ const FieldOverview = () => {
 
       return (
         <>
-        <div className='flex justify-between mb-4'>
+        <div className='flex justify-between mb-4 px-2'>
          <Text1 size="2xl" weight="medium">
             Field Management
          </Text1>
