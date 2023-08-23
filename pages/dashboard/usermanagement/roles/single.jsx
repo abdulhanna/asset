@@ -1,17 +1,21 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import MainLayout from 'proj-components/MainLayout'
-import { Accordin } from '@/components/molecules/accordion'
+import { Accordin,AccordinRead } from '@/components/molecules/accordion'
 import { Text1 } from '@/components/atoms/field'
 import { ToggleButton, ToggleOnButton,LeftArrowIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import { TextField,TextInputArea } from '@/components/atoms/field'
 import { useRouter } from 'next/router'
+import TableComp from '@/components/organism/tablecomp'
+import { AssignedUserTable } from '@/components/organism/tablecomp'
 
 const Single = () => {
+  const [isEdit, setIsEdit] = useState(false)
+  const [data,setData] = useState([])
     const router=useRouter()
     const [role,setRole] = useState({
-        roleName:'',
-        desc:'',
+        roleName:'Jack',
+        desc:'jack is workings',
         Permissions:[
             {
                 moduleName:"Organisation Mangament",
@@ -40,6 +44,37 @@ const Single = () => {
           }
          ]
       })
+      const header = [
+        {
+          label:'User Name',
+          name:'name'
+        },
+        {
+          label:'Role',
+          name:'role'
+        },{
+          label:'User Email',
+          name:'email'
+        },
+        {
+          label:"Status",
+          name:'status'
+        }
+      ]
+
+      const headerbody = [
+        {
+          name:'jack',
+          role:'admin',
+          email:"jack@test.com",
+          status:'Active'
+        },{
+          name:'john',
+          role:'admin',
+          email:'john@test.com',
+          status:'Active'
+        }
+      ]
 
       const handleClick = (e)=>{
         const data = [...role.Permissions]
@@ -80,6 +115,14 @@ const Single = () => {
             })
         
         }
+
+        useEffect(()=>{
+          
+            if(data){
+
+              console.log(data,'data')
+            }
+        },[data])
   return (
     <>
         <MainLayout isScroll={true}>
@@ -90,27 +133,33 @@ const Single = () => {
                   <Text1 size='2xl'> Roles Description</Text1>
                 </div>
                <div className='space-x-4'> 
-               <Button variant='contained'>Edit</Button>
+               <Button variant='contained' onClick={()=> setIsEdit(!isEdit)} isDisabled={false}>EDIT</Button>
                 <Button variant='danger'>DEACTIVATE</Button>
                </div>
             </div>
             <div className='mt-8 space-y-8'>
                  <div className='space-y-3'>
                     <Text1>Role Name</Text1>
-                    <TextField className='w-1/4' value={role.roleName} label='Role Name' onChange={(e)=>setRole({...role,roleName:e.target.value})}/>
+                    <TextField className='w-1/4' value={role.roleName} label='Role Name' onChange={(e)=>setRole({...role,roleName:e.target.value})} disabled={!isEdit}/>
                  </div>
                  <div className='space-y-3'>
                     <Text1>Role Description</Text1>
-                    <TextInputArea value={role.desc} label='Description' onChange={(e)=>setRole({...role,desc:e.target.value})}/>
+                    <TextInputArea value={role.desc} label='Description' onChange={(e)=>setRole({...role,desc:e.target.value})} disabled={!isEdit}/>
                  </div>
                  <div>
                      <div className='flex justify-between items-center'>
                         <Text1>Role Permissions</Text1>
-                        <Button>RESTORE DEFAULTS</Button>
+                        <Button onClick={()=>{
+                            role.Permissions.map((item,id)=>{
+                                 role.Permissions[id] = {...role.Permissions[id],removeAccess:true,read:false,readWrite:false,allAccess:false,delete:false}
+                             }) 
+                             setRole({...role,Permissions:role.Permissions})
+                        }} isDisabled={!isEdit}>RESTORE DEFAULTS</Button>
                      </div>
                      <div>
                       {role.Permissions.map((item,index)=>{
-                        return <Accordin label={item.moduleName} handleClick={handleClick} data={item} key={index} id={index}>
+
+                      return ( !isEdit ?<AccordinRead label={item.moduleName} data={item} key={index} id={index}></AccordinRead>: <Accordin label={item.moduleName} handleClick={handleClick} data={item} key={index} id={index}>
                             <div className='flex items-center gap-6'>
                                 <div className='flex items-center gap-1'>
                               
@@ -126,13 +175,31 @@ const Single = () => {
                                 {item.delete ? <ToggleOnButton onClick={()=>handleToggle({delete:(!item.delete),id:index})}/> :<ToggleButton onClick={()=>handleToggle({delete:(!item.delete),id:index})}/>}
                                 </div>
                              </div>
-                          </Accordin>
+                          </Accordin>)
+                        
                       })}
                      </div>
                     
                  </div>
                  <div>
                     <Text1  size='lg'>Assigned Users</Text1>
+                    {!isEdit ?  <TableComp
+                      headers={header}
+                      body={headerbody}
+                    />  :
+                     <AssignedUserTable 
+                     response={headerbody}
+                       headers={[...header,{name:'action',label:'action'}]} 
+                       responseData={(e)=>setData([e])}
+                       onClick={(e)=> console.log(data,'dd')}
+                    />}
+
+                    {/* <AssignedUserTable 
+                     response={headerbody}
+                       headers={[...header,{name:'action',label:'action'}]} 
+                       responseData={(e)=>setData([e])}
+                       onClick={(e)=> console.log(data,'dd')}
+                    /> */}
                  </div>
             </div>
         </div>

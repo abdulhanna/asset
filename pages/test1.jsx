@@ -7,6 +7,7 @@ import { UserTableNew } from 'proj-components/Dashboard/user-management/table'
 import { SampleTableNew } from '@/components/organism/tablecomp'
 import { AssignedUserTable } from '@/components/organism/tablecomp'
 import { TrashOutline } from '@/components/atoms/icons'
+import Button from '@/components/atoms/button'
 const Test1 = () => {
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
@@ -125,7 +126,7 @@ const Test1 = () => {
     }
 
     useEffect(()=>{
-        // console.log(role,'d')
+        console.log(role,'d')
     },[role])
 
 
@@ -157,14 +158,23 @@ const Test1 = () => {
     }
 
     useEffect(()=>{
-      console.log(data1,'data1')
+      // console.log(data1,'data1')
     },[data1])
 
   return (
     <div className='p-8'>
       <p>this is test1</p>
+      <Button onClick={()=>{
+        const data = [role.Permissions]
+        role.Permissions.map((item,id)=>{
+     role.Permissions[id] = {...role.Permissions[id],removeAccess:true,read:false,readWrite:false,allAccess:false,delete:false}
+        })
+       
+        setRole({...role,Permissions:role.Permissions})
+      }}>Restore default</Button>
        {role.Permissions.map((item,index)=>{
           return (<>
+          
             <Accordin label={item.moduleName} data={item} handleClick={handleClick} key={index} id={index}>
               <div className='flex items-center gap-4'>
                   <div className='flex items-center gap-1'>
