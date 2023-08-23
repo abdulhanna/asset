@@ -73,8 +73,8 @@ function Register() {
           <Headerouter />
         </div>
         <div className="w-full h-[93%] flex item-center ">
-          <div className="flex flex-col lg:flex-row  rounded-lg">
-            <div className="w-[38%]  py-44 xl:py-52  2xl:py-48 bg-[#F1F5FD] flex flex-col justify-center items-center gap-28">
+          <div className="flex flex-col lg:flex-row  rounded-lg w-full">
+            <div className="w-full  py-44 xl:py-52  2xl:py-48 bg-[#F1F5FD] flex flex-col justify-center items-center gap-28">
               <p className="w-[331px] xl:w-[409px] text-base xl:text-xl font-light text-center">
                 Track and Manage your Assets at the comfort of your screen.
                 Anytime! Anywhere!
@@ -85,11 +85,11 @@ function Register() {
                 }
               />
             </div>
-            <div className="w-[60%] md:px-36 2xl:px-56 lg:py-28  bg-white  flex item-center justify-center ">
+            <div className="w-full  bg-white  flex items-center justify-center ">
               <form
                 onSubmit={handleSubmit}
                 action=""
-                className=" flex flex-col  gap-[52px] ">
+                className=" flex flex-col  gap-[52px] w-[60%]">
                 <div className="flex flex-col gap-8">
                   <Text1
                     weight="semibold"

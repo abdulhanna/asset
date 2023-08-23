@@ -81,7 +81,7 @@ const AddUser = () => {
             <div className="flex items-center cursor-pointer" onClick={()=> router.back()}>
               <LeftArrowIcon />
               <Text1 size="2xl" >
-                Add User
+                Add Member
               </Text1>
             </div>
             <Button variant="contained">SAVE</Button>

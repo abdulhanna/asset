@@ -50,7 +50,7 @@ function forgetPassword(props) {
 
         <div className="w-full h-[93%] lg:flex">
           <div className=" w-full flex flex-col lg:flex-row">
-            <div className="px-[108px] py-40 2xl:pt-56 bg-[#F1F5FD] flex flex-col gap-[95px] 2xl:gap-[120px]">
+            <div className="px-[180px] py-40 2xl:pt-56 bg-[#F1F5FD] flex flex-col gap-[95px] 2xl:gap-[120px]">
               <ForgetPasswordIcon className={"flex justify-center"} />
               <div className=" flex flex-col items-center gap-6">
                 <Text1 size="2xl" color="text-primary">

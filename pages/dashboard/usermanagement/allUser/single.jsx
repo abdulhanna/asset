@@ -15,7 +15,6 @@ const SingleUser = () => {
     console.log("this is test")
     setShowsave(!showSave)
   }
-
   return (
     <>
       <MainLayout>
@@ -26,12 +25,10 @@ const SingleUser = () => {
            <Text1 size='2xl' >Johdoe</Text1>
            </div>
            <div className='space-x-2'>
-           {showSave ?  <Button variant='contained' onClick={handleshow}>EDIT</Button> :  <Button variant='contained' onClick={handleshow}>SAVE</Button>}  
-         
-             <Button variant='danger'>DEACTIVATE</Button>
+           {showSave ?  <Button variant='contained' onClick={handleshow}>EDIT</Button> : <Button variant='contained' onClick={handleshow}>SAVE</Button>}  
+                <Button variant='danger'>DEACTIVATE</Button>
            </div>
            </div>
-
            <div className="flex p-5 py-5 flex-col gap-12">
            <div className="flex flex-col gap-6">
              <Text1 weight="semibold">Profile Picture</Text1>
@@ -40,7 +37,6 @@ const SingleUser = () => {
                  pic
                </div>
                <div>
-               
                </div>
              </div>
            </div>

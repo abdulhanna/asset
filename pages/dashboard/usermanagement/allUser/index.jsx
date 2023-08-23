@@ -81,8 +81,8 @@ useEffect(()=>{
         <MainLayout>
          <div className=''>
          <div className='flex justify-between items-center py-4'>
-         <Text1 size='2xl'>All Users</Text1>
-         <Button variant='contained' onClick={()=>router.push('/dashboard/usermanagement/allUser/add-user')}>ADD USER</Button>
+         <Text1 size='2xl'>All Member</Text1>
+         <Button variant='contained' onClick={()=>router.push('/dashboard/usermanagement/allUser/add-user')}>ADD MEMBER</Button>
          </div>
           {data.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
             <SampleTableNew

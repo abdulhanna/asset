@@ -1,7 +1,8 @@
 import React from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
 import FieldOverview from './fieldoverview'
-import Groupview from './groupview'
+import SubGroupview from './subgroupview'
+import Fieldgroupdescription from './fieldgroupdescription'
 
 
 
@@ -14,7 +15,7 @@ const FieldMangment = () => {
     <>
         <MainLayout>
                 <FieldOverview/>
-                <Groupview/>
+                <SubGroupview/>
         </MainLayout>
     </>
   )
