@@ -4,11 +4,13 @@ import { ToggleButton,ToggleOnButton } from '@/components/atoms/icons'
 import Text, { TextField } from '@/components/atoms/field'
 import { ActionCheckTable } from '@/components/molecules/table'
 import { UserTableNew } from 'proj-components/Dashboard/user-management/table'
-import { SampleTableNew } from '@/components/organism/tablecomp'
+import TableComp, { PermissionActionTable, SampleTableNew } from '@/components/organism/tablecomp'
 import { AssignedUserTable } from '@/components/organism/tablecomp'
 import { TrashOutline } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import PermissionToggle from 'proj-components/Dashboard/user-management/permissionItem'
+import { TableComp1, FieldActionTable }  from '@/components/organism/tablecomp'
+
 
 const Test1 = () => {
   const [checkedNewData, setCheckedNewData] = useState([])
@@ -27,14 +29,11 @@ const Test1 = () => {
     {
       label: "Created On",
       name:'created_on'
-    },{
-      label :"Permission",
-      name:'permission'
+    },
+    {
+      label :"Action",
+      name:'action'
     }
-    // {
-    //   label :"Action",
-    //   name:'action'
-    // }
   ]
   const headerData = [
     { label: 'User Identification no',name:'uno'},
@@ -47,17 +46,28 @@ const Test1 = () => {
     {label:'created on', name:'created'}
   ]
 
-  const data = [{
+  const data = [
+    {
     _id:3245,
     roleName: 'Admin',
     status:'Active' ,
     created_on : '1/12/22',
     Permission:[{
       permissionId: 67890,
-    }]
-    // action0: "on",
-    // action1:'off'
-  }]
+    }],
+    action:'action'
+  },
+  {
+    _id:3249,
+    roleName: 'User',
+    status:'Active' ,
+    created_on : '1/8/23',
+    Permission:[{
+      permissionId: 67890,
+    }],
+    action:'action'
+  }
+]
     const [role,setRole] = useState({
         roleName:'',
         Permissions:[
@@ -128,8 +138,53 @@ const Test1 = () => {
 
     }
 
+
+    const headers = [
+      {
+        label:'Module Name',
+        name:'modlueName',
+      },
+      {
+        label:'Dashboard Type',
+        name:'dashboardType',
+      },
+      {
+        label:"created on",
+        name:"created"
+      },
+      {
+        label:'Action',
+        name:"action"
+      }
+
+    ]
+    const data2 = [
+      {
+        modlueName :"admin",
+        dashboardType:"root",
+        view:false,
+        edit:true,
+        action:false,
+        created:"1/2/23",
+        allAccess:true,
+        removeAccess:false,
+       
+     },
+     {
+      modlueName :"user",
+      dashboardType:"root",
+      view:false,
+      edit:true,
+      created:'1/4/23',
+      action:false,
+      allAccess:false,
+      removeAccess:true,
+     
+   }
+    ]
+
     useEffect(()=>{
-        console.log(role,'d')
+        // console.log(role,'d')
     },[role])
 
 
@@ -163,7 +218,7 @@ const Test1 = () => {
     useEffect(()=>{
       // console.log(data1,'data1')
     },[data1])
-
+    // console.log(allClick,'aa')
   return (
     <div className='p-8'>
       <p>this is test1</p>
@@ -208,7 +263,7 @@ const Test1 = () => {
            onClick={(e)=> console.log(e,'onclick') }
            checkAllStatus={allClick}
        /> */}
-       <SampleTableNew
+       {/* <SampleTableNew
         response={data}
         headerData={[{name:'check',label:''},...header]} 
         checkedData={checkedNewData}
@@ -217,15 +272,15 @@ const Test1 = () => {
            clickAll={clickAll}
            onClick={(e)=> console.log(e,'onclick') }
            checkAllStatus={allClick} 
-       />
+       /> */}
 
        <div>
-        <AssignedUserTable
+        {/* <AssignedUserTable
         response={data}
           headers={[...header,{name:'action',label:'action'}]}
           responseData={(e)=>setData1(e)}
           onClick={(e)=> console.log(data1,'dd')}
-        />
+        /> */}
        </div>
 
        {/* <div className='bg-slate-200 px-3 py-3 max-w-[10%] flex justify-between'>
@@ -233,7 +288,41 @@ const Test1 = () => {
         {!view ? <ToggleButton/> : <ToggleOnButton/>}   
        </div> */}
        <PermissionToggle label={'download'} status={view} handleClick={(e)=> setView(!view)}/>
-       <TextField type='checkbox'/>
+       {/* <TextField type='checkbox'/> */}
+       </div>
+       {/* <div>
+        <TableComp1
+          headers={header}
+          body={data}
+          responseData={(e)=>console.log(e,'res')}
+          editItem={(e)=> console.log(e,'edit')}
+          onClick={(e)=>console.log(e)}
+        />
+       </div> */}
+       <div>
+        <FieldActionTable
+               response={data}
+               headers={[{name:'check',label:''},...header]} 
+               checkedData={checkedNewData}
+               responseData={(e) => onNewCheck(e)}
+               clickAll={clickAll}
+               onClick={(e)=> console.log(e,'onclick') }
+               checkAllStatus={allClick}
+               onDelete={(e)=> console.log(e,'delete')}
+               onEdit={(e)=> console.log(e)}
+         
+        />
+       </div>
+       <div>
+        <PermissionActionTable
+          response={data2}
+          headers={[{name:'check',label:''},...headers]} 
+          checkedData={checkedNewData}
+           responseData={(e) => onNewCheck(e)}
+           clickAll={clickAll}
+           onClick={(e)=> console.log(e,'onclick') }
+           checkAllStatus={allClick}
+        />
        </div>
     </div>
   )

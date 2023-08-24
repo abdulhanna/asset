@@ -25,9 +25,9 @@ const InventoryFillIcon = ({ classname }) => {
 };
 
 
-export const DeleteIcon = ({className}) => {
+export const DeleteIcon = ({className,onClick}) => {
   return(
-    <span className={className}>
+    <span className={className} onClick={onClick}>
     <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M19.25 19.25L20.1875 34.25C20.232 35.1167 20.8625 35.75 21.6875 35.75H30.3125C31.1408 35.75 31.7595 35.1167 31.8125 34.25L32.75 19.25" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M17.75 19.25H34.25" stroke="#FC5555" strokeMiterlimit="10" strokeLinecap="round"/>
@@ -2218,7 +2218,7 @@ export const DropDownIcon = ({classname}) =>{
    <>
      <span className={classname} >
      <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
- <path d="M1.25 1.625L8 8.375L14.75 1.625" stroke="#121212" stroke-miterlimit="10" stroke-linecap="square"/>
+ <path d="M1.25 1.625L8 8.375L14.75 1.625" stroke="#121212" strokeMiterlimit="10" strokeLinecap="square"/>
  </svg>
  
      </span>
@@ -2230,15 +2230,37 @@ export const DropDownIcon = ({classname}) =>{
   return (<>
     <span className={className}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5.25 5.25L6.1875 20.25C6.23203 21.1167 6.8625 21.75 7.6875 21.75H16.3125C17.1408 21.75 17.7595 21.1167 17.8125 20.25L18.75 5.25" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M3.75 5.25H20.25" stroke="#FC5555" stroke-miterlimit="10" stroke-linecap="round"/>
-      <path d="M9 5.25V3.375C8.99957 3.22715 9.02838 3.08066 9.08476 2.94397C9.14114 2.80729 9.22399 2.6831 9.32854 2.57854C9.4331 2.47399 9.55729 2.39114 9.69397 2.33476C9.83066 2.27838 9.97715 2.24957 10.125 2.25H13.875C14.0229 2.24957 14.1693 2.27838 14.306 2.33476C14.4427 2.39114 14.5669 2.47399 14.6715 2.57854C14.776 2.6831 14.8589 2.80729 14.9153 2.94397C14.9716 3.08066 15.0004 3.22715 15 3.375V5.25" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 8.25V18.75" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M8.625 8.25L9 18.75" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M15.375 8.25L15 18.75" stroke="#FC5555" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5.25 5.25L6.1875 20.25C6.23203 21.1167 6.8625 21.75 7.6875 21.75H16.3125C17.1408 21.75 17.7595 21.1167 17.8125 20.25L18.75 5.25" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M3.75 5.25H20.25" stroke="#FC5555" strokeMiterlimit="10" strokeLinecap="round"/>
+      <path d="M9 5.25V3.375C8.99957 3.22715 9.02838 3.08066 9.08476 2.94397C9.14114 2.80729 9.22399 2.6831 9.32854 2.57854C9.4331 2.47399 9.55729 2.39114 9.69397 2.33476C9.83066 2.27838 9.97715 2.24957 10.125 2.25H13.875C14.0229 2.24957 14.1693 2.27838 14.306 2.33476C14.4427 2.39114 14.5669 2.47399 14.6715 2.57854C14.776 2.6831 14.8589 2.80729 14.9153 2.94397C14.9716 3.08066 15.0004 3.22715 15 3.375V5.25" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M12 8.25V18.75" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M8.625 8.25L9 18.75" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M15.375 8.25L15 18.75" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
 
     </span>
   </>)
+ }
+
+ export const AccountManagement = ({className}) =>{
+  return (<>
+     <span className={className}>
+       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <path d="M16.125 6.75C15.9413 9.22828 14.0625 11.25 12 11.25C9.93754 11.25 8.05551 9.22875 7.87504 6.75C7.68754 4.17188 9.51566 2.25 12 2.25C14.4844 2.25 16.3125 4.21875 16.125 6.75Z" stroke="#383838" strokeLinecap="round" strokeLinejoin="round"/>
+         <path d="M12.0001 14.25C7.92199 14.25 3.78293 16.5 3.01699 20.7469C2.92465 21.2588 3.21433 21.75 3.75011 21.75H20.2501C20.7864 21.75 21.0761 21.2588 20.9837 20.7469C20.2173 16.5 16.0782 14.25 12.0001 14.25Z" stroke="#383838" strokeMiterlimit="10"/>
+        </svg>
+     </span>
+  </>)
+ }
+
+ export const AccountManagementFill = ({className}) =>{
+   return (<>
+     <span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.125 6.75C15.9413 9.22828 14.0625 11.25 12 11.25C9.93754 11.25 8.05551 9.22875 7.87504 6.75C7.68754 4.17188 9.51566 2.25 12 2.25C14.4844 2.25 16.3125 4.21875 16.125 6.75Z" fill="#3B5FDA" stroke="#3B5FDA" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12.0001 14.25C7.92199 14.25 3.78293 16.5 3.01699 20.7469C2.92465 21.2588 3.21433 21.75 3.75011 21.75H20.2501C20.7864 21.75 21.0761 21.2588 20.9837 20.7469C20.2173 16.5 16.0782 14.25 12.0001 14.25Z" fill="#3B5FDA" stroke="#3B5FDA" strokeMiterlimit="10"/>
+          </svg>
+     </span>
+   </>)
  }
 export default InventoryFillIcon;

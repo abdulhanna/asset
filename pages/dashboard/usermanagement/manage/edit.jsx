@@ -4,6 +4,7 @@ import { Text1, CustomSelect, TextField } from '@/components/atoms/field'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import PermissionToggle,{PermissionToggleRead} from 'proj-components/Dashboard/user-management/permissionItem'
+import { useRouter } from 'next/router'
 
 const Edit = () => {
     const [isEdit,setIsEdit] = useState(false)
@@ -16,13 +17,14 @@ const Edit = () => {
         action:false,
         allAccess:false
      })
+     const router = useRouter()
 
   return (
    <>
    <MainLayout>
        <div className='space-y-10'>
             <div className='flex justify-between items-center'>
-                <div className='flex items-center gap-3'>
+                <div className='flex items-center gap-3 cursor-pointer' onClick={()=> router.back()}>
                     <LeftArrowIcon/>
                     <Text1 size='2xl'>Permission</Text1>
                 </div>

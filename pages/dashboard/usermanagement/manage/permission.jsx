@@ -40,7 +40,7 @@ const Permission = () => {
         <MainLayout>
              <div>
                <div className='flex justify-between items-center'>
-                    <div className='flex items-center space-x-2' onClick={()=> router.back()}>
+                    <div className='flex items-center space-x-2 cursor-pointer' onClick={()=> router.back()}>
                             <LeftArrowIcon/>
                             <Text1 size='2xl'>Create Permission</Text1>
                      </div>

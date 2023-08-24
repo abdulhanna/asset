@@ -1,10 +1,13 @@
 import React from 'react'
+import MainLayout from 'proj-components/MainLayout'
 
 const Account = () => {
   return (
-    <div>
-      Account Manager
-    </div>
+    <>
+      <MainLayout>
+        Account Manager
+      </MainLayout>
+    </>
   )
 }
 

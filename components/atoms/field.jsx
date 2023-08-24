@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useState } from "react";
 import { motion } from "framer-motion";
+
 const Text = ({
   children,
   size = "md",
