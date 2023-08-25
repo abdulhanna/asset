@@ -11,7 +11,6 @@ const Overview = () => {
     
   const {id,name} = router.query
 
-
   let loginRole = 'root'
   
   const handleAddButtonClick = () => {
@@ -22,7 +21,6 @@ const Overview = () => {
 
   console.log(loginRole, "this is login role",id)
   
-
   return (
     <>
 

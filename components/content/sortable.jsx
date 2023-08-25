@@ -15,29 +15,33 @@ const seed = [
     subtitle: "zzz",
     isDirectory: true,
     expanded: true,
+    className:"icon-a",
     children: [
-      { id: "456", title: "Human Resource", subtitle: "zzz", isDirectory: true, expanded: true },
+      { id: "456", title: "Human Resource", subtitle: "zzz", className:"icon-b" , isDirectory: true, expanded: true },
       {
         id: "789",
         title: "Bussiness",
         subtitle: "zzsdsd",
         isDirectory: true,
         expanded: true,
+        className:"icon-b",
         children: [
           {
             id: "2394",
             title: "Store A",
             subtitle: "zzz",
             isDirectory: true,
+            className:"icon-b",
             expanded: true,
           },
-          { id: "567", title: "Store B", subtitle: "zzz", isDirectory: true, expanded: true , children: [
+          { id: "567", title: "Store B", subtitle: "zzz", isDirectory: true, expanded: true , className:"icon-b", children: [
             {
               id: "2134",
               title: "Store c",
               subtitle: "zzz",
               isDirectory: true,
               expanded: true,
+              className:"icon-b",
             }
             // { id: "567", title: "Store B", subtitle: "zzz"  }
           ] }
@@ -254,7 +258,7 @@ function Tree() {
         : searchFoundCount - 1
     );
   };
-
+  
   const selectNextMatch = () => {
     setSearchFocusIndex(
       searchFocusIndex !== null ? (searchFocusIndex + 1) % searchFoundCount : 0
@@ -323,7 +327,7 @@ function Tree() {
       </div>
 
       <div style={{ height: "100vh" }}>
-        <SortableTree
+      <SortableTree
           treeData={treeData}
           onChange={(treeData) => updateTreeData(treeData)}
           searchQuery={searchString}
@@ -336,52 +340,35 @@ function Tree() {
           }}
           theme={FileExplorerTheme}
           canDrag={({ node }) => !node.dragDisabled}
-          generateNodeProps={(rowInfo,node) => ({
-            icons: rowInfo.node?.isDirectory ? [rowInfo.node?.expanded ? '📂' : '📁'] : ['📄'],
+          generateNodeProps={(rowInfo) => ({
+            icons: rowInfo.node?.isDirectory ? [rowInfo.node?.expanded ? "📂" : "📁"] : ["📄"],
             name: rowInfo.node.label,
             subtitle: rowInfo.node.subtitle,
-            searchFocusOffset:true,
+            searchFocusOffset: true,
             onClick: () => handleNodeClick(rowInfo),
+            className: `${rowInfo.className} ${rowInfo.node.isDirectory ? "parent-node" : "child-node"}`,
             buttons: [
-              <div className="space-x-2"> 
-                {/* <button
-                  className="border-2 py-1 " label="Add Sibling"
-                  onClick={(event) => addNodeSibling(rowInfo)}
-                >
-                  Add Sibling
-                </button> */}
-                <button
-                  className="border-1 rounded px-2 " label="Add Child"
-                  // onClick={(event) => addNodeChild(rowInfo)}
-                >
+              <div className="space-x-2">
+                <button className="border-1 rounded px-2" label="Add Child">
                   📄
                 </button>
-                {/* <button className="border-2 py-1 " label="Update" onClick={(event) => updateNode(rowInfo)}>
-                  Update
-                </button> */}
-                {/* <button className="border-2 py-1 " label="Delete" onClick={(event) => removeNode(rowInfo)}>
-                  Remove
-                </button> */}
-                {/* <button
-                  className="border-2 py-1 " label="Alert"
-                  onClick={(event) => alertNodeInfo(rowInfo)}
-                >
-                  Info
-                </button> */}
               </div>
             ],
-            isSearchFocus:selectedNode === rowInfo?.node?.id ? true:false ,
+            isSearchFocus: selectedNode === rowInfo?.node?.id ? true : false,
             style: {
-             
               color: selectedNode === rowInfo?.node?.id ? 'darkred' : 'green',
-              // borderColor: 2px solid ${selectedNode === rowInfo?.node?.id ? 'darkblue' : ''},
+             
+              border: rowInfo.node.className === 'icon-a' ? '2px solid #575765' : (rowInfo.node.className === 'icon-b' ? 'none' : 'none'), // Add border to parent nodes
+                // Conditionally apply styles based on the class name
+              color: rowInfo.node.className === 'icon-a' ? '#5DA64E' : (rowInfo.node.className === 'icon-b' ? 'black' : 'yellow'),
+              fontSize: rowInfo.node.className === 'icon-a' ? '24px' : (rowInfo.node.className === 'icon-b' ? '16px' : '12px'),
+              // margin: rowInfo.node.className === 'icon-a' ? '0px' : (rowInfo.node.className === 'icon-b' ? '15px' : '15px'),
+             
+           
             },
-            
           })}
-
           ref={inputEl}
-
-          onClick={()=> alert('hii')}
+          onClick={() => alert('hii')}
         />
       </div>
     </div>

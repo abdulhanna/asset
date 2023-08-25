@@ -5,7 +5,7 @@ import {Text1} from "@/components/atoms/field";
 import Button from '../../../../components/atoms/button';
 import DialogPage, {DialogPage1} from '../../../../components/molecules/dialog';
 import AddInputDiv from '../../../testComponents/addInputDiv'
-import groupview from './subgroupview';
+import Groupview from './subgroupview';
 
 
 
@@ -65,7 +65,7 @@ const FieldOverview = () => {
         </div>
 
         {
-          show ? <groupview/> : <div className='border rounded-md flex items-center h-[100vh] justify-center bg-[#F7F7F7] overflow-hidden'>
+          show ? <Groupview/> : <div className='border rounded-md flex items-center h-[100vh] justify-center bg-[#F7F7F7] overflow-hidden'>
           <div className='text-center'>
               <Nodata className={'flex justify-center'}/>
               <div className='mt-3'>

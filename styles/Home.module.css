@@ -108,6 +108,23 @@
   margin-left: 0.5rem;
 }
 
+.rst__moveHandle
+ {
+	background-image : none;
+	padding-top : 6px;
+	text-align: center;
+}
+.icon-a> .rst__moveHandle::before {
+	content : "\f0e8";
+	color : red;
+	font : normal normal normal 24px FontAwesome;
+}
+.icon-b> .rst__moveHandle::before {
+	content : "\f0e8";
+	color : blue;
+	font : normal normal normal 24px FontAwesome;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

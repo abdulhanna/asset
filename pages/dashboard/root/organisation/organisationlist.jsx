@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
 import Overview from '../../overview'
-import { EmptyData, Verified } from '../../../../components/atoms/icons'
+import { EmptyData, Verified, ResendEmail } from '../../../../components/atoms/icons'
 import TableComp from '../../../../components//organism/tablecomp'
 import {Text1} from "../../../../components/atoms/field";
 import Button from '../../../../components/atoms/button';
@@ -27,7 +27,7 @@ const OrganisationList = () => {
   const Headerbody = [
     { _id: 1, name: "prince", types: "employe",verification:<Verified/>, batch: "B", id: "234" },
     { _id: 2, name: "siddhu", types: "employe", verification:<Verified/>,batch: "B", id: "231" },
-    { _id: 3, name: "john", types: "employe", verification:<Verified/>,batch: "C", id: "3241" },
+    { _id: 3, name: "john", types: "employe", verification:<ResendEmail/>,batch: "C", id: "3241" },
   ];
 
   const handleAddButtonClick = () => {

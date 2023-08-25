@@ -5,10 +5,79 @@ import { Text1 } from '@/components/atoms/field'
 import { AddIcon, LeftArrowIcon } from '@/components/atoms/icons'
 import { useRouter } from 'next/router'
 import { TextField, CustomSelect } from "@/components/atoms/field";
+import { DialogPage1 } from "@/components/molecules/dialog";
+import { UpArrow } from "@/components/atoms/icons";
+import { FileUploader } from "react-drag-drop-files";
+
+
+
+
+const AddCompanyLogo = ({ open, close }) => {
+  const fileTypes = ["JPEG", "PNG", "JPG"];
+  const [file, setFile] = useState(null);
+  const handleChange = (file) => {
+    setFile(file);
+  };
+  return (
+    <DialogPage1 open={open} close={close} width="w-[510px]">
+      <div className=" text-center flex flex-col gap-6">
+        <div className="flex flex-col gap-8 justify-center items-center">
+          <div>
+            <p className="text-2xl font-body leading-8 text-[#3B5FDA] mb-[14px]">
+              Add Profile Picture
+            </p>
+            <Button variant="transparent">
+              <div className="w-[60px] h-[60px] rounded-[50%] bg-[#3B5FDA] flex justify-center items-center">
+                <UpArrow />
+              </div>
+            </Button>
+          </div>
+          <FileUploader
+          multiple={true}
+          handleChange={handleChange}
+          name="file"
+          types={fileTypes}
+          hoverTitle="Drop Here"
+          children={<div><p>Drag and Drop File here,<br></br> <button className="text-[#3B5FDA] w-auto h-[60px] py-1">Browse File</button></p></div>}
+        />
+          <div className="w-auto">
+            <p>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
+          </div>
+          <div>
+            <p className="text-[12px] leading-[14px] font-normal text-[#666]">
+              Supported files
+            </p>
+            <p>
+              <label
+                htmlFor=""
+                className="text-[12px] leading-[14px] font-normal text-[#A4A4A4]  border-r-2 border-slate-400">
+                Upto 2MB max
+              </label>{" "}
+              <label
+                htmlFor=""
+                className="text-[12px] leading-[14px] font-normal text-[#A4A4A4] ">
+                JPG, JPEG, PNG
+              </label>
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-2 justify-center">
+          <Button variant="primary" onClick={close}>
+            CANCEL
+          </Button>
+          <Button variant="contained" onClick={close}>FINISH</Button>
+        </div>
+      </div>
+    </DialogPage1>
+  );
+};
+
+
 
 
 const SingleUser = () => {
   const[showSave, setShowsave] = useState(true)
+  const [logoHigh, setLogoHigh] = useState(false)
   const router = useRouter()
 
   const handleshow = () => {
@@ -36,6 +105,14 @@ const SingleUser = () => {
                <div className="h-[120px] w-[120px] border rounded-full">
                  pic
                </div>
+               <div>
+                  <Button onClick={() => setLogoHigh(true)}>
+                    <div className="flex =">
+                      <AddIcon />
+                      <span className="ms-3">ADD PHOTO</span>
+                    </div>
+                  </Button>
+                </div>
                <div>
                </div>
              </div>
@@ -96,6 +173,7 @@ const SingleUser = () => {
         </div>
        
       </div>
+      <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} />
       </MainLayout>
     </>
   )
