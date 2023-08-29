@@ -14,7 +14,7 @@ export const SampleTableCheckBox = ({data, bodyData})=>{
         <span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
   <rect x="0.5" y="0.5" width="15" height="15" rx="1.5" stroke="#121212"/>
-  <path d="M13 4L6 12.3333L3 9" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M13 4L6 12.3333L3 9" stroke="black" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
   
   
