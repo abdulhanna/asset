@@ -14,8 +14,9 @@ const seed = [
     subtitle: "zzz",
     isDirectory: true,
     expanded: true,
+    className:"icon-a",
     children: [
-      { id: "456", title: "Human Resource", subtitle: "zzz" },
+      { id: "456", title: "Human Resource", subtitle: "zzz",  },
       {
         id: "789",
         title: "Bussiness",
@@ -288,6 +289,7 @@ function Tree() {
           generateNodeProps={(rowInfo) => ({
             // title: rowInfo.node.label,
             // subtitle: rowInfo.node.subTitle,
+            className:  `${rowInfo.className}`,
             buttons: [
               <div className="space-x-2"> 
                 <button

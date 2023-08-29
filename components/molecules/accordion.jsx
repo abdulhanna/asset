@@ -3,7 +3,7 @@ import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from 'react'
-import { ToggleButton,ToggleOnButton } from '../atoms/icons';
+import { ToggleButton,ToggleOnButton,ToggleRemoveOnButton } from '../atoms/icons';
 import { Text1 } from '../atoms/field';
 
 
@@ -48,7 +48,7 @@ export const Accordin = (props) => {
             <AnimatePresence>
                 <motion.div
                     key="question"
-                    className="  rounded-t-md shadow-sm px-2 py-3 bg-transparent cursor-pointer font-body border border-black w-full"
+                    className={`rounded-t-md shadow-sm px-2 py-3 bg-transparent cursor-pointer font-body border border-slate-300 w-full ${isActive ? 'border-b-0' : 'rounded-b-lg'}`}
                     
                 >
                   
@@ -56,7 +56,7 @@ export const Accordin = (props) => {
                         
                         {/* <p> {props.label} </p> */}
                         <Text1 size='lg'>{props.label}</Text1>
-                <div className='flex gap-4'>
+                      <div className='flex gap-4'>
                         <div className='flex gap-4'>
                                 <div className='flex items-center gap-1'>
                                     <Text1>All Access</Text1>
@@ -70,7 +70,7 @@ export const Accordin = (props) => {
                                 </div>
                                 <div className='flex items-center gap-1'>
                                     <Text1>Remove Access</Text1>
-                                    <div> {props.data.removeAccess ? <ToggleOnButton  onClick={()=>{
+                                    <div> {props.data.removeAccess ? <ToggleRemoveOnButton  onClick={()=>{
                                           handleToggle({removeAccess:(!props.data.removeAccess),id:props.id})
                                     }}/> : <ToggleButton  onClick={()=>{
                                         handleToggle({removeAccess:(!props.data.removeAccess),id:props.id})
@@ -79,7 +79,7 @@ export const Accordin = (props) => {
                         </div>
                         <ChevronUpIcon
                   className={`${
-                    isActive ? 'rotate-180 transform' : ''
+                    isActive ? '' : 'rotate-180 transform'
                   } h-5 w-5 text-slate-300`}
                   onClick={toggle}
                 />
@@ -99,7 +99,7 @@ export const Accordin = (props) => {
                                 },
                             }}
                             exit={{ opacity: 0 }}
-                            className=" px-2 py-4  text-sm text-gray-700 border border-black rounded-b-md "
+                            className=" px-2 py-4  text-sm text-gray-700 border border-slate-300 rounded-b-md "
                             >
                             {props.children}
                         </motion.div>
@@ -123,8 +123,7 @@ export const AccordinRead = (props) => {
           <AnimatePresence>
               <motion.div
                   key="question"
-                  className="  rounded-t-md shadow-sm px-2 py-3 bg-transparent cursor-pointer font-body border border-black w-full"
-                  
+                  className="  rounded-t-md shadow-sm px-2 py-3 bg-transparent cursor-pointer font-body border border-black w-full  "  
               >
                 
                   <motion.div className="flex justify-between capitalize items-center space-x-2 w-full ml-1">
@@ -139,7 +138,7 @@ export const AccordinRead = (props) => {
                               </div>
                               <div className='flex items-center gap-1'>
                                   <Text1>Remove Access</Text1>
-                                  <div> {props.data.removeAccess ? <ToggleOnButton  /> : <ToggleButton  />} </div>
+                                  <div> {props.data.removeAccess ? <ToggleRemoveOnButton  /> : <ToggleButton  />} </div>
                               </div>
                       </div>
                       <ChevronUpIcon

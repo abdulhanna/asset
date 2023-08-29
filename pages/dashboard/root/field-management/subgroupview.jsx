@@ -28,6 +28,8 @@ const groupview =() => {
 
   const [textHigh, setTextHigh] = useState(false);
 
+ 
+
   const data = [
     {
       id: 1,
@@ -46,7 +48,7 @@ const groupview =() => {
     }
   ]
 
-  const router = useRouter();
+
 
   const AddFieldbtn = () => {
       setTextHigh(true)
@@ -56,7 +58,7 @@ const groupview =() => {
     router.push('/dashboard/root/field-management/editGroup');
   }
 
-  // Manage Group Functions:-
+  // Manage Group Functions:
 
   const ManageGroup =(id) => {
       console.log(id,"this is id")
@@ -83,7 +85,7 @@ const groupview =() => {
           <Button onClick={editGroup} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform hover:scale-110 ">
             Edit Group
           </Button> */}
-             <Button  onClick={ManageGroup} href={`/dashboard/root/field-management/fieldgroupdescription?id=${component?.id}`} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
+             <Button  onClick={ManageGroup} href={`/dashboard/root/field-management/fieldgroupdescription?id=${component?.id}&name=${component?.title}`} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
               Manage Group
            </Button>
            </div>

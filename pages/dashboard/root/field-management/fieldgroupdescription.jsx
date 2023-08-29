@@ -6,6 +6,7 @@ import AddInputDiv from '../../../testComponents/addInputDiv'
 import MainLayout from 'proj-components/MainLayout';
 import AddField from 'pages/testComponents/addField';
 import { CloseIcon } from '@/components/atoms/icons';
+import { useRouter } from 'next/router';
 
 // Add field Modal
 const AddInputField = ({ open, close, showData, setShow }) => {
@@ -52,6 +53,10 @@ const fieldgroupdescription = () => {
   const [inputHigh, setInputHigh] = useState(false);
   const [show, setShow] = useState(true)
   const [textHigh, setTextHigh] = useState(false);
+
+  const router = useRouter();
+
+  const {id,name} = router.query
   
   const data = [
     {
@@ -79,7 +84,7 @@ const fieldgroupdescription = () => {
   const handleAddButtonClick = () => {
     setInputHigh(true)
  }
-
+  
   const editgroup = () => {
     console.log("this is edit page")
   }
@@ -89,7 +94,7 @@ const fieldgroupdescription = () => {
       <MainLayout>
         <div className='flex justify-between mb-4 px-2'>
          <Text1 size="2xl" weight="medium">
-            Field Management
+         {name}   
          </Text1>
           <div>
           <Button onClick={handleAddButtonClick} variant="contained" className="mr-1.5"> CREACT SUB GROUP</Button>
