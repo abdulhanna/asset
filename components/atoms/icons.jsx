@@ -2263,4 +2263,6 @@ export const DropDownIcon = ({classname}) =>{
      </span>
    </>)
  }
+
+
 export default InventoryFillIcon;

@@ -171,6 +171,7 @@ return (
 
       {headers.map((item, index) => (
       <th
+      key={index}
       className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
       index === lastIndex && 'rounded-tr-lg'
       }`}
@@ -191,11 +192,11 @@ return (
     {sortedData.map((dataRow, index) => {
     return (
 
-    <tr>
+    <tr key={index}>
     {headers.map((item,index) => {
     return (
     <td
-      key={item.name}
+          key={item.name}
       className={`${classes.td} ${extra}`}
       onClick={() => {
           if(index === 0){
