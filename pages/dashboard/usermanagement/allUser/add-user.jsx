@@ -9,6 +9,8 @@ import { UpArrow } from "@/components/atoms/icons";
 import { useRouter } from "next/router";
 import { FileUploader } from "react-drag-drop-files";
 
+
+
 const AddCompanyLogo = ({ open, close }) => {
   const fileTypes = ["JPEG", "PNG", "JPG"];
   const [file, setFile] = useState(null);
