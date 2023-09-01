@@ -103,6 +103,7 @@ const onNewCheck=(data)=>{
                         checkedData={checkedNewData}
                         responseData={(e) => onNewCheck(e)}
                         clickAll={clickAll}
+                        href={`/dashboard/usermanagement/manage/edit?`}
                         onClick={(e)=> console.log(e,'onclick') }
                         checkAllStatus={allClick}
                       />

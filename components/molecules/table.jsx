@@ -879,8 +879,9 @@ return (
           // console.log('check')
           responseData && responseData(dataRow);
         }else if(id !== 0 && id !==lastIndex){
-          alert('route')
+          // alert('route')
           // router.push('')
+          onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
         }
     }}
     >
