@@ -73,7 +73,7 @@ const AddOganisation = () => {
 {/* Company Profile---------------------------------------------------------------------------------- */}
 <form action="" onSubmit={handleSubmit}>
 <div className='flex justify-between mb-4 overflow-y-auto'>
-          <div className='flex items-center cursor-pointer' onClick={()=> router.back()}>
+          <div className='flex items-center cursor-pointer space-x-2' onClick={()=> router.back()}>
           <LeftArrowIcon/>
            <Text1 size="2xl" weight="medium">
               Add Organizations
