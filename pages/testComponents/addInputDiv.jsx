@@ -16,7 +16,6 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
   };
 
  
-
   const handleChange = (e,index)=>{
     // console.log(e.target.value,index)
     let data = [...inputData]
@@ -28,7 +27,6 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
   const handlesaveall = () => {
     handleSave(inputData)
   }
-
 
   console.log(inputData);
   return (

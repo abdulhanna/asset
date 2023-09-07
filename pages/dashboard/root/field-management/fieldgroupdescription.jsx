@@ -102,7 +102,7 @@ const fieldgroupdescription = () => {
               ADD FIELD
            </Button>
            <Button onClick={editgroup} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform hover:scale-110 ">
-            EDIT SUB-GROUP
+            EDIT GROUP
           </Button>
           </div>
         </div>
