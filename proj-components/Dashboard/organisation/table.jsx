@@ -1,7 +1,7 @@
 import React from 'react'
 import { ColClickTable } from '@/components/molecules/table'
 import { SampleTableCheckBox } from '../tableItem';
-
+import Paging from '@/components/molecules/paging';
 
 const classes = {
     table: 'w-full text-sm text-left  ',
@@ -118,13 +118,13 @@ export const OrganisationTableComponent = ({ headers,
             // ),
           }))}
         />
-          {/* <Paging
-              chemicalItems ={chemicalPaginationData}
-              microItems ={microPaginationData}
-              type ={type}
+          <Paging
+              // chemicalItems ={chemicalPaginationData}
+              // microItems ={microPaginationData}
+              // type ={type}
               currentPage={currentPage} // 1
               pageSize={pageSize} // 10
-              onPageChange={onPageChange}/> */}
+              onPageChange={onPageChange}/>
   
       </>
     );

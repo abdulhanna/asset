@@ -2293,5 +2293,25 @@ export const DropDownIcon = ({classname}) =>{
    </>)
  }
 
+ export const PaginationLeft =  ({className,onClick})=>{
+     return <>
+      <span className={className} onClick={onClick}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15.375 5.25L8.625 12L15.375 18.75" stroke="#A4A4A4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+      </span>
+     </>
+ }
+
+ export const PaginationRight = ({className,onClick})=>{
+   return (<>
+       <span className={className} onClick={onClick}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.625 5.25L15.375 12L8.625 18.75" stroke="#3B5FDA" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+       </span>
+   </>)
+ }
+
 
 export default InventoryFillIcon;

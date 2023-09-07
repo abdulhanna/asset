@@ -6,7 +6,7 @@ import { TrashOutline } from '../atoms/icons';
 import { EditIcon,DeleteIcon } from '../atoms/icons';
 import { ToggleButton, ToggleOnButton } from '../atoms/icons';
 import { Text1 } from '../atoms/field';
-
+import Paging from '../molecules/paging';
 
 // const classes = {
 //   table: 'w-full text-sm text-left  ',
@@ -169,13 +169,13 @@ export const SampleTableNew = ({
           // ),
         }))}
       />
-        {/* <Paging
-            chemicalItems ={chemicalPaginationData}
-            microItems ={microPaginationData}
-            type ={type}
+        <Paging
+            // chemicalItems ={chemicalPaginationData}
+            // microItems ={microPaginationData}
+            // type ={type}
             currentPage={currentPage} // 1
             pageSize={pageSize} // 10
-            onPageChange={onPageChange}/> */}
+            onPageChange={onPageChange}/>
 
     </>
   );

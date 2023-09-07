@@ -13,6 +13,7 @@ import { TableComp1, FieldActionTable }  from '@/components/organism/tablecomp'
 
 
 const Test1 = () => {
+ 
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
   const [data1,setData1] = useState()
@@ -218,7 +219,9 @@ const Test1 = () => {
     useEffect(()=>{
       // console.log(data1,'data1')
     },[data1])
-    // console.log(allClick,'aa')
+
+ 
+
   return (
     <div className='p-8'>
       <p>this is test1</p>

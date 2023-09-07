@@ -4,27 +4,35 @@ import Text, { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { LoginImg } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
+import { hostedAuthAxios } from "@/utils/backendAxios";
+import { useRouter } from "next/router";
 
-// import "../styles/globals.css";
 
 function Login() {
   const [register, setRegister] = useState({
-    EmailAddress: "",
-    Password: "",
+    email: "",
+    password: "",
   });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const router = useRouter()
   const onChange = (e) => {
     const { name, value } = e.target;
     setRegister({ ...register, [name]: value });
-    console.log(register, "fdfff");
+    // console.log(register, "fdfff");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    setFormErrors(validate(register));
-    setIsSubmit(true);
+  const res =  await  hostedAuthAxios.post('/login',register)
+   
+        if(res.status =='200'){
+          router.push('/dashboard')
+        }
+        // console.log(res.status);
+    // console.log("submit", register,"reg")
+    // setFormErrors(validate(register));
+    // setIsSubmit(true);
   };
   useEffect(() => {
     console.log(formErrors);
@@ -92,7 +100,7 @@ function Login() {
                     bgColor="white"
                     type="text"
                     textSize="lg"
-                    name="EmailAddress"
+                    name="email"
                     onChange={onChange}
                   />
                   <p className="text-red-500">{formErrors.EmailAddress}</p>
@@ -102,7 +110,7 @@ function Login() {
                     label={"Password"}
                     bgColor="white"
                     type="password"
-                    name="Password"
+                    name="password"
                     textSize="lg"
                     onChange={onChange}
                   />

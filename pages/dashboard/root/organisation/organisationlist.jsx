@@ -88,6 +88,9 @@ useEffect(()=>{
            clickAll={clickAll}
            onClick={(e)=> console.log(e,'onclick') }
            checkAllStatus={allClick}
+           currentPage={1}
+           pageSize={20}
+           onPageChange={(page)=> console.log(page)}
         />
    
    </>

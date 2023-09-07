@@ -94,6 +94,10 @@ useEffect(()=>{
                   onClick={(e)=> console.log(e,'onclick') }
                   href={`/dashboard/usermanagement/allUser/single?`}
                   checkAllStatus={allClick}
+                  currentPage={2}
+                  pageSize={10}
+                  onPageChange={(e)=> console
+                  .log(e)}
             />
           </div>}
          </div>
