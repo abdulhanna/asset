@@ -1,6 +1,9 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
 import { SampleTableNew } from '@/components/organism/tablecomp'
+import { PaginationLeft,PaginationRight } from '@/components/atoms/icons'
+import { Text1 } from '@/components/atoms/field'
+import Button from '@/components/atoms/button'
 const Test2 = () => {
     const [checkedNewData, setCheckedNewData] = useState([])
     const [allClick, setAllClick] = useState(false)
@@ -109,6 +112,12 @@ const Test2 = () => {
                 //   type ={type}
 
               />
+              {/* <div className='flex items-center gap-2'>
+                 <PaginationLeft className={'cursor-pointer'} onClick={()=> alert('left')}/>
+                 <Button variant='contained' size='sm'> 2</Button>
+                 <Text1 size='lg'>  <span className='text-slate-400 mx-2'>of</span> 24</Text1>
+                 <PaginationRight className={'cursor-pointer'} onClick={()=> alert('right')}/>
+              </div> */}
     </div>
   )
 }

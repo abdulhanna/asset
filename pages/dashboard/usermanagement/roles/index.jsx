@@ -87,6 +87,10 @@ const RolesPerimission = () => {
            clickAll={clickAll}
            onClick={(e)=> console.log(e,'onclick') }
            checkAllStatus={allClick} 
+           currentPage={'1'}
+           pageSize={10}
+           onPageChange={(e)=> console.log(e)}
+           
        />
                     </>
                 )}
