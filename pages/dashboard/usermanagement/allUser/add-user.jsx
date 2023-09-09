@@ -17,6 +17,7 @@ const AddCompanyLogo = ({ open, close }) => {
   const handleChange = (file) => {
     setFile(file);
   };
+  console.log(file,'file')
   return (
     <DialogPage1 open={open} close={close} width="w-[510px]">
       <div className=" text-center flex flex-col gap-6">
@@ -118,7 +119,7 @@ const AddUser = () => {
                   />
                 </div>
                 <div className="w-3/12">
-                  <CustomSelect label={"User Roll"}>
+                  <CustomSelect label={"User Role"}>
                     <option value="">Select</option>
                     <option value="admin">Admin</option>
                   </CustomSelect>
