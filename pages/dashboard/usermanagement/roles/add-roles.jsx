@@ -83,7 +83,7 @@ data[e.id] = {...data[e.id],[`${key}`]:e[key],removeAccess:false}
 }
 
 useEffect(()=>{
-    // console.log(role,'d')
+    console.log(role,'d')
 },[role])
 
 

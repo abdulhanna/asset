@@ -53,7 +53,7 @@ const Permission = () => {
                    <div className='flex items-center gap-4 mt-6'>
                    <TextField className='w-1/4' label='Module Name' value={permission.modlueName} onChange={(e)=> setPermission({...permission,modlueName:e.target.value})}/>
                    <CustomSelect className='w-1/4' label="Dashboard Type" onChange={(e)=> setPermission({...permission,dashboardType:e.target.value})}>
-                        <option value={""}>Choose City</option>
+                        <option value={""}>Choose one</option>
                         <option value={'root'}>Root</option>
                         <option value={'superadmin'}>SuperAdmin</option>
                       

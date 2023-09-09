@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import InventoryFillIcon from '../../../components/atoms/icons';
 import { FillOverview,FillUserManagment,FillOrganization,FillFieldMangment,
    SampleIcon ,QrIcon,Overview, Location,AssetMangment,AssetGroup,Departments,UserManagment,
-   Reports,RootMangment,FieldMangment,Organizations ,AccountManagement, AccountManagementFill} from '../../../components/atoms/icons';
+   Reports,RootMangment,FieldMangment,Organizations ,AccountManagement, AccountManagementFill,FillLocations} from '../../../components/atoms/icons';
 import Image from 'next/image';
 
 
@@ -16,19 +16,19 @@ const SidebarComp = () => {
     const defultColor = '#A3A3A3';
 const whiteColor = '#FFFFFF';
 const currentPath = router.pathname;
- let user  = 'root'
+ let user  = 'super_admin'
     const superAdmin = [
-        {
-          label: 'Overview',
-          url: '/dashboard/root',
-          icon: <Overview />,
-          fillIcon: <FillOverview />,
-        },
+      {
+        label: 'Overview',
+        url: '/dashboard/overview',
+        icon: <Overview />,
+        fillIcon:<FillOverview />,
+      },
         {
           label: 'locations',
-          url: '/dashboard/user-management',
+          url: '/dashboard/locations',
           icon: <Location />,
-          fillIcon: <InventoryFillIcon />,
+          fillIcon: <FillLocations/>,
         },
         {
           label: 'Asset Management',
@@ -60,16 +60,17 @@ const currentPath = router.pathname;
           fillIcon: <InventoryFillIcon />,
         },
         {
-            label: 'User Mangement',
-            url: '/dashboard/qr-code' ,
-            submenu: [
-              { label: 'All Users', url: '/dashboard/sample/viewSample' },
-              { label: 'Roles & Permission', url: '/dashboard/sample/viewScheduler' },
-              { label: 'Generate QR Code', url: '/dashboard/qr-code' },
-            ],
-            icon: <UserManagment/>,
-            fillIcon: <QrIcon/>,
-          }
+          label: 'User Management',
+          url: '/dashboard/usermanagement', 
+          submenu: [
+            { label: 'Member & Access', url: '/dashboard/usermanagement/allUser' },
+            { label: 'Roles & Permissions', url: '/dashboard/usermanagement/roles' },
+            { label: 'Manage Permissions', url: '/dashboard/usermanagement/manage' },
+  
+          ],
+          icon: <RootMangment />,
+          fillIcon: <FillUserManagment/>,
+        }
       ];
 
     const menuRoot = [
