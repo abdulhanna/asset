@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import { Nodata ,} from '../../../../components/atoms/icons'
+import { Nodata } from '../../../../components/atoms/icons'
 import {Text1} from "@/components/atoms/field";
 import Button from '../../../../components/atoms/button';
 import DialogPage, {DialogPage1} from '../../../../components/molecules/dialog';
@@ -8,7 +8,7 @@ import AddInputDiv from '../../../testComponents/addInputDiv'
 import Groupview from './subgroupview';
 
 
-
+// AddInput Pop UP ------------------------------------------------------------------------------------------------
 const AddInputField = ({ open, close, showData, setShow }) => {
 
   const getData = ({data}) => {
@@ -32,7 +32,7 @@ const AddInputField = ({ open, close, showData, setShow }) => {
   };
 
 
-
+// FeildOverview Page-----------------------------------------------------------------------------------------------
 const FieldOverview = () => {
     const [inputHigh, setInputHigh] = useState(false);
     const [dataList,setDataList] = useState(["Assest Description","Asset Acquisition","UOM"])

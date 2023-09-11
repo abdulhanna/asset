@@ -135,9 +135,8 @@ const AddField = () => {
           </>
         );
       })}
-      <div className="flex gap-[50px] pb-6 justify-center">
-      
 
+      <div className="flex gap-[50px] pb-6 justify-center">
         <Button
           onClick={handleSave}
           size="lg"
@@ -146,6 +145,7 @@ const AddField = () => {
           Save
         </Button>
       </div>
+      
     </div>
   );
 };

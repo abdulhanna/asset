@@ -13,10 +13,10 @@ import Image from 'next/image';
 const SidebarComp = () => {
     const router = useRouter();
 
-    const defultColor = '#A3A3A3';
+const defultColor = '#A3A3A3';
 const whiteColor = '#FFFFFF';
 const currentPath = router.pathname;
- let user  = 'super_admin'
+ let user  = 'root'
     const superAdmin = [
       {
         label: 'Overview',

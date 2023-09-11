@@ -13,7 +13,6 @@ export const TextInput = ({ label,text,number, value, onChange }) => {
     );
 }
 
-
 export const TextArea = ({label,onChange}) => {
     return (
         <div>
