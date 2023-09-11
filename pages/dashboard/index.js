@@ -11,7 +11,9 @@ const Dashboard = () => {
 }
 
 export const getServerSideProps = async (appCtx) => {
-
+  // const cookie =
+  // 'cookie' in appCtx.req.headers ? appCtx.req.headers.access_token : null;
+  // console.log(cookie,'cookie')
     const auth = await doCheckAuth(appCtx)
     console.log(auth,'auth')
     // const { cookie } = appCtx.req.headers
