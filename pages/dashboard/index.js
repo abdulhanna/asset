@@ -22,7 +22,7 @@ export const getServerSideProps = async (appCtx) => {
 // });
 // console.log(user,'user')
     const auth = await doCheckAuth(appCtx)
-    console.log(auth,'auth')
+     
     // const { cookie } = appCtx.req.headers
     
    

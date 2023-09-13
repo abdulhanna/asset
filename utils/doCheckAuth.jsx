@@ -5,7 +5,6 @@ export const doCheckAuth = async (appCtx) => {
     const cookie =
         'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
 
-    // console.log(user)
     try {
         // console.log(cookie, 'cookie')
         if (appCtx && appCtx.req) {

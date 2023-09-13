@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import InventoryFillIcon from '../../../components/atoms/icons';
 import { FillOverview,FillUserManagment,FillOrganization,FillFieldMangment,
    SampleIcon ,QrIcon,Overview, Location,AssetMangment,AssetGroup,Departments,UserManagment,
-   Reports,RootMangment,FieldMangment,Organizations ,AccountManagement, AccountManagementFill,FillLocations} from '../../../components/atoms/icons';
+   Reports,RootMangment,FieldMangment,Organizations ,AccountManagement, AccountManagementFill,FillLocations, FillDepartment} from '../../../components/atoms/icons';
 import Image from 'next/image';
 
 
@@ -13,7 +13,7 @@ import Image from 'next/image';
 const SidebarComp = () => {
     const router = useRouter();
 
-    const defultColor = '#A3A3A3';
+const defultColor = '#A3A3A3';
 const whiteColor = '#FFFFFF';
 const currentPath = router.pathname;
  let user  = 'super_admin'
@@ -49,9 +49,9 @@ const currentPath = router.pathname;
         },
         {
           label: 'Department',
-          url: '/dashboard/user-management',
+          url: '/dashboard/department',
           icon: <Departments />,
-          fillIcon: <InventoryFillIcon />,
+          fillIcon: <FillDepartment />,
         },
         {
           label: 'Reports',

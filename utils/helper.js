@@ -13,7 +13,6 @@ export const TextInput = ({ label,text,number, value, onChange }) => {
     );
 }
 
-
 export const TextArea = ({label,onChange}) => {
     return (
         <div>
@@ -26,13 +25,6 @@ export const TextArea = ({label,onChange}) => {
     )
 }
 
-export const RadioButton = ({}) => {
-    return (
-        <div>
-            <label>{lable}</label>
-            
-        </div>
-    )
-}
+
 
 
