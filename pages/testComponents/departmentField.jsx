@@ -14,24 +14,32 @@ const DepartmentField = ({Heading,labelName,getData}) => {
      DepartmentId: "",
      DepartmentName: "",
      ChargingType: "",  
-     Status: ""
+     Status: "",
+     
  }])
 
  const options = ["Automatic"  , "Manual"]
  const [selectedOption, setSelectedOption] = useState(options[0])
 
 
+
  const handleOptionChange = (options) => {
     setSelectedOption(options)
  }
 
- const handleSave = (options) => {
+ const handleChange = (e, index) => {
+   const data = [...inputData];
+   const { name, value } = e.target;
+   data[index][name] = value;
+ };
 
+ const handleSave = (e) => {
+   setInputData(e.target.value)
  }
 
  return (
     <>
-            <div className="w-full flex justify-center py-[22px]">
+            <div className="w-full flex justify-center ">
                  <div className="w-[488px]  h-auto max-h-[650px] flex flex-col p-6 overflow-y-auto">         
 
                   {inputData?.map((item, index) => {
@@ -58,16 +66,28 @@ const DepartmentField = ({Heading,labelName,getData}) => {
                   type="text"
                   placeholder="Name Of Department"
                   className=" h-[48px] w-full border-2 p-2 rounded"
-                  name="fieldName"
+                  name="DepartmentName"
                   onChange={(e) => handleChange(e, index)}
                 />
               </div>
+              {selectedOption === 'Manual'  &&  <div className=" flex flex-col gap-1 py-2">
+                <label htmlFor="" className="text-textColor">
+                  Department Id
+                </label>
+                <input
+                  type="text"
+                  placeholder="Department Id"
+                  className=" h-[48px] w-full border-2 p-2 rounded"
+                  name="DepartmentId"
+                  onChange={(e) => handleChange(e, index)}
+                />
+              </div>}
               <div className=" justify-center items-center py-2">
                 <CustomSelect
                   onChange={(e) => handleChange(e, index)}
                   label={"Charging Type"}
                   selectHeight="h-[48px]"
-                  name="Charging Type">
+                  name="ChargingType">
                   <option value="Direct">Direct</option>
                   <option value="InDirect">InDirect</option>
                 </CustomSelect>
@@ -76,7 +96,7 @@ const DepartmentField = ({Heading,labelName,getData}) => {
               <div className=" justify-center items-center py-2">
                 <CustomSelect
                   onChange={(e) => handleChange(e, index)}
-                  label={"Status "}
+                  label={"Status"}
                   selectHeight="h-[48px]"
                   name="Status">
                   <option value="Active">Active</option>
