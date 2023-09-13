@@ -302,6 +302,8 @@ const currentPath = router.pathname;
         </div>
       </div>
     </SidebarList>
+
+    
   </Sidebar>
   )
 }
