@@ -25,13 +25,6 @@ export const TextArea = ({label,onChange}) => {
     )
 }
 
-export const RadioButton = ({}) => {
-    return (
-        <div>
-            <label>{lable}</label>
-            
-        </div>
-    )
-}
+
 
 

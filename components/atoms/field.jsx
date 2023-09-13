@@ -345,4 +345,59 @@ export const CustomSelect = ({
   );
 };
 
+
+export const RadioButton = ({ label, options, selectedOption, onChange, 
+  name = "",
+  id = "",
+  height = "h-auto",
+  textsize = "text-sm",
+  type = "text",
+  required = null,
+  bgColor = "",
+  labelColor = "#666666",
+  roundedText = "rounded-[4px]",
+  roundedPassword = "rounded-lg",
+  placeHolder = "",
+  className = "",
+  value,
+  disabled = false,
+  max = "2030-01-01",
+  min = "1980-01-01",
+  error = null,
+  isRead = false,
+}) => {
+  console.log(selectedOption);
+
+  return (
+    <>
+      <div className="p-6"> 
+        <label className='text-slate-400 text-xs '>{label}</label>
+
+        <div className="flex">
+          {options.map((option) => (
+            <label key={option} className="flex items-center mr-8 mt-2">
+              <motion.input
+                className={classNames(
+                  `${bgColor}  ${height}  ${textsize} focus:outline-none   focus:border-transparent mr-2`,
+                )}
+                type="radio"
+                value={option}
+                checked={selectedOption === option}
+                onChange={() => onChange(option)}
+              />
+              {option}
+            </label>
+          ))}
+        </div>
+     </div>
+     </>
+  )
+                }
+     
+
+
+
+
+
+
 export default Text;

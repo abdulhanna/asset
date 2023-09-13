@@ -7,8 +7,8 @@ const local = "http://localhost:4000";
 
 
 export const hostedAuthAxios = axios.create({
-    // baseURL: `${liveUrl}/auth`,
-    baseURL: 'http://localhost:3000/auth',
+    baseURL: `${liveUrl}/auth`,
+    // baseURL: 'http://localhost:3000/auth',
 
     withCredentials: true,
     headers: {
