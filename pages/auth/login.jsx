@@ -59,15 +59,17 @@ function Login() {
 
   return (
     <>
-        <div className="h-screen">
-        <div className="h-[7%]">
+        <div className="">
+        <div className="">
           <Headerouter />
         </div>
-        <div className="w-full h-[93%] flex   items-center">
+        <div className="w-full h-[90vh] flex   items-center">
         <div className="flex h-full flex-col md:flex-row  border-1 rounded-lg">
-          <div className="xl:px-40   lg:py-48 lg:pb-48 bg-[#F1F5FD] flex flex-col lg:gap-32">
-            <LoginImg className={"hidden sm:block"} />
-            <div className="w-72 sm:w-[432px] mx-auto text-center flex flex-col  gap-5">
+        <div className="grid grid-cols-2 gap-4">
+
+          <div className=" bg-[#F1F5FD] h-full w-full flex flex-col items-center justify-center gap-8">
+            <LoginImg />
+            <div className="w-72 mx-auto text-center flex flex-col  gap-5">
               <Text1 size="2xl" weight="medium" className="text-[#283995]">
                 Lorem Ipsum
               </Text1>
@@ -77,6 +79,7 @@ function Login() {
               </Text1>
             </div>
           </div>
+            
           <div className=" bg-white  md:flex item-center justify-center">
             <form
               onSubmit={handleSubmit}
@@ -126,6 +129,7 @@ function Login() {
               </p>
             </form>
           </div>
+        </div>
         </div>
       </div>
       </div>
