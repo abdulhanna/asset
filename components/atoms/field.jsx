@@ -335,7 +335,7 @@ export const CustomSelect = ({
       id={id}
       name={name}
       value={value}
-      className={` px-1 ${selectHeight} rounded border-[1px]  py-[12px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
+      className={` px-1 ${selectHeight} rounded border-[1px] p-6 py-[12px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
       onChange={onChange}
       disabled={disabled}
       >
@@ -370,7 +370,7 @@ export const RadioButton = ({ label, options, selectedOption, onChange,
 
   return (
     <>
-      <div className="p-6"> 
+      <div > 
         <label className='text-slate-400 text-xs '>{label}</label>
 
         <div className="flex">
