@@ -68,15 +68,15 @@ function Register() {
 
   return (
     <>
-      <div className="h-screen">
-        <div className="h-[7%]">
+      <div className="">
+        <div className="">
           <Headerouter />
         </div>
-        <div className="w-full h-[93%] flex item-center ">
+        <div className="w-full h-[90vh]  flex item-center ">
           <div className="flex flex-col lg:flex-row  rounded-lg w-full">
             <div className="w-full  py-44 xl:py-52  2xl:py-48 bg-[#F1F5FD] flex flex-col justify-center items-center gap-28">
-              <p className="w-[331px] xl:w-[409px] text-base xl:text-xl font-light text-center">
-                Track and Manage your Assets at the comfort of your screen.
+              <p className="text-base xl:text-xl font-light text-center">
+                Track and Manage your Assets at the comfort of your screen.<br/>
                 Anytime! Anywhere!
               </p>
               <RegisterImg
@@ -85,6 +85,7 @@ function Register() {
                 }
               />
             </div>
+
             <div className="w-full  bg-white  flex items-center justify-center ">
               <form
                 onSubmit={handleSubmit}

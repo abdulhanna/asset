@@ -64,9 +64,9 @@ const currentPath = router.pathname;
           url: '/dashboard/usermanagement', 
           submenu: [
             { label: 'Member & Access', url: '/dashboard/usermanagement/allUser' },
+            { label: 'Administration', url: '/dashboard/usermanagement/administration' },
             { label: 'Roles & Permissions', url: '/dashboard/usermanagement/roles' },
-            { label: 'Manage Permissions', url: '/dashboard/usermanagement/manage' },
-  
+           
           ],
           icon: <RootMangment />,
           fillIcon: <FillUserManagment/>,
