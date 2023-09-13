@@ -25,7 +25,7 @@ function Login() {
   const handleSubmit = async(e) => {
     e.preventDefault();
   const res =  await  hostedAuthAxios.post('/login',register)
-   
+          console.log(res)
         if(res.status =='200'){
           router.push('/dashboard')
         }

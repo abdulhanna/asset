@@ -69,8 +69,15 @@ const AddLocation = () => {
     const router = useRouter()
     const [isOpen,setIsOpen] = useState(false)
     const [data,setData] = useState({
-        locationName:"",
-        locationType:"",
+        name:"",
+        codeGenerationType:"",
+        address:{
+           address1:'',
+           city:'',
+           state:"",
+           country:"",
+           pinCode:''
+        },
         locationId:'',
         industryType:"",
         address1:"",
