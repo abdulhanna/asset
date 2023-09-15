@@ -91,8 +91,8 @@ useEffect(()=>{
   <>
     <MainLayout isScroll={true}>
         <div>
-            <div className='flex justify-between items-center cursor-pointer'>
-                <div className='flex items-center' onClick={()=> router.back()}>
+            <div className='flex justify-between items-center py-4'>
+                <div className='flex items-center cursor-pointer' onClick={()=> router.back()}>
                   <LeftArrowIcon/>
                   <Text1 size='2xl'>Create Roles</Text1>
                 </div>
