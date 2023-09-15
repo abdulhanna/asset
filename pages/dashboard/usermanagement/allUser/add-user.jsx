@@ -8,7 +8,7 @@ import { DialogPage1 } from "@/components/molecules/dialog";
 import { UpArrow } from "@/components/atoms/icons";
 import { useRouter } from "next/router";
 import { FileUploader } from "react-drag-drop-files";
-
+import ButtonAction from "@/components/molecules/button";
 
 
 const AddCompanyLogo = ({ open, close }) => {
@@ -93,17 +93,10 @@ const AddUser = () => {
             <div className="flex flex-col gap-6">
               <Text1 weight="semibold">Profile Pic</Text1>
               <div className="flex items-center gap-8">
-                <div className="h-[120px] w-[120px] border rounded-full">
-                  pic
-                </div>
-                <div>
-                  <Button onClick={() => setLogoHigh(true)}>
-                    <div className="flex =">
-                      <AddIcon />
-                      <span className="ms-3">ADD PHOTO</span>
-                    </div>
-                  </Button>
-                </div>
+                
+                <img className='w-[112px] h-[112px]' src='/images/Ellipse 2.png' width={'100'} height={'200'} alt='avtar'/>
+                <ButtonAction label={'ADD PHOTO'} onClick={()=> setLogoHigh(true)}/>
+                  
               </div>
             </div>
             <div className="flex flex-col gap-6">

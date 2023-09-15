@@ -289,7 +289,7 @@ const currentPath = router.pathname;
       <div className="py-6  p-4 px-4">
         <div className="flex flex-row bg-white p-2 rounded-lg gap-4">
           <Image
-            src="/wazirabad/girl.jpg"
+            src="/images/user.png"
             alt="user"
             width={40}
             height={40}

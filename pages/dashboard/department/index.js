@@ -45,12 +45,13 @@ const Index = () =>{
     {label:'Department Name', name:'departmentName'},
     {label:'Charging Type', name:'chargingType'},
     {label:'Status', name:'Status'},
-    {label:'created on', name:'created'}
+    {label:'created on', name:'created'},
+    {label:"Custom",name:"custom"}
   ]
 
   const body = [
     {
-     _id:"011", departmentId:'34564', departmentName:"DEPT01", chargingType : "Direct", Status :"Active",created:'1/12/22'
+     _id:"011", departmentId:'34564', departmentName:"DEPT01", chargingType : "Direct",custom:"test", Status :"Active",created:'1/12/22'
     },
     {
       _id:"012",departmentId:'342553', departmentName:"DEPT02",chargingType:'Direct',Status:'Inactive',created:'2/03/23'
