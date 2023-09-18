@@ -321,9 +321,10 @@ function Tree(props) {
           }}
         //   theme={FileExplorerTheme}
           canDrag={({ node }) => !node.dragDisabled}
-          generateNodeProps={(rowInfo) => ({
+          generateNodeProps={(rowInfo,id) => ({
             name: rowInfo.node.label,
             subtitle: rowInfo.node.subtitle,
+            keys:id,
             buttons: [
               <div className="space-x-2"> 
                 {/* <button

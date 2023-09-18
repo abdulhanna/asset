@@ -168,9 +168,9 @@ function Register() {
                   Get Started
                 </Button>
                 <div className=" mx-auto my-[-40px]">
-                  <a href="/auth/login" className="text-blue-600 text-sm font-body">
+                  <Link href="/auth/login" className="text-blue-600 text-sm font-body">
                     Already have an Account ? Log in
-                  </a>
+                  </Link>
                 </div>
               </form>
             </div>

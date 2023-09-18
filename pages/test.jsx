@@ -131,7 +131,7 @@ const AddtextField = ({ open, close }) => {
   );
 };
 
-const Test = () => {
+const Test = (props) => {
   const [data, setData] = useState("");
   const [data1, setData1] = useState("");
   const [isOpen, setIsOpen] = useState(false);

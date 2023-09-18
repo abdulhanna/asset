@@ -220,7 +220,7 @@ const AddAccount = () => {
 
                </div>
            </div>
-           <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} />
+           <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} ></AddCompanyLogo>
         </MainLayout>
       </>
     </div>

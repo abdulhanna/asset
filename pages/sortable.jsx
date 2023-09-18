@@ -286,9 +286,10 @@ function Tree(props) {
             );
           }}
           canDrag={({ node }) => !node.dragDisabled}
-          generateNodeProps={(rowInfo) => ({
+          generateNodeProps={(rowInfo,id) => ({
             // title: rowInfo.node.label,
             // subtitle: rowInfo.node.subTitle,
+            keys:id,
             className:  `${rowInfo.className}`,
             buttons: [
               <div className="space-x-2"> 

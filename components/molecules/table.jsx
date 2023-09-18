@@ -313,7 +313,8 @@ return (
     <tr className={classes.tr}>
 
       {headers.map((item, index) => (
-      <th
+      <th 
+      key={index}
       className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
       index === lastIndex && 'rounded-tr-lg'
       }`}
@@ -334,7 +335,7 @@ return (
     {sortedData.map((dataRow, index) => {
     return (
 
-    <tr>
+    <tr key={index}>
     {headers.map((item,index) => {
     return (
     <td
@@ -457,7 +458,7 @@ return (
     <tr className={classes.tr}>
 
       {headers.map((item, index) => (
-      <th
+      <th key={index}
       className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
       index === lastIndex && 'rounded-tr-lg'
       }`}
@@ -478,7 +479,7 @@ return (
     {sortedData.map((dataRow, index) => {
     return (
 
-    <tr>
+    <tr key={index}>
     {headers.map((item,index) => {
     return (
     <td

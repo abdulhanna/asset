@@ -39,7 +39,7 @@ const AddCompanyLogo = ({ open, close }) => {
           types={fileTypes}
           hoverTitle="Drop Here"
           children={<div><p>Drag and Drop File here,<br></br> <button className="text-[#3B5FDA] w-auto h-[60px] py-1">Browse File</button></p></div>}
-        />
+        ></FileUploader>
           <div className="w-auto">
             <p>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
           </div>
