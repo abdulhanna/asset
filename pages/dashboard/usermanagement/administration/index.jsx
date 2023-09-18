@@ -16,7 +16,7 @@ const Administration = () => {
                     <Button variant='contained' href={'/dashboard/usermanagement/administration/addAdministration'}>ADD ADMINISTRATION</Button>
                 </div>
                 {data.length === 0 ? <NodataPage text={'No data yet'}/> :<div>
-
+                       
                 </div>}
             </div>
         </MainLayout>

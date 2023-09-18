@@ -11,18 +11,19 @@ const Dashboard = () => {
 }
 
 export const getServerSideProps = async (appCtx) => {
-//   const cookie =
+//  const cookie =
 //   'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-//   // console.log(cookie.split('=')[1],'cookie')
+//   console.log(cookie.split('=')[1],'cookie')
 //  let user = await hostedAuthAxios.get('/who-am-i', {
 //     headers: {
-//         cookie: cookie[1]
+//         Cookie: cookie
 //     }
 
 // });
+// console.log(cookie,'cookie')
 // console.log(user,'user')
     const auth = await doCheckAuth(appCtx)
-     
+     console.log(auth,'ss')
     // const { cookie } = appCtx.req.headers
     
    
