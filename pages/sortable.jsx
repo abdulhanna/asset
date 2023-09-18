@@ -292,7 +292,7 @@ function Tree(props) {
             keys:id,
             className:  `${rowInfo.className}`,
             buttons: [
-              <div className="space-x-2"> 
+              <div className="space-x-2" key={'button'}> 
                 <button
                 key={1}
                   className="border-2 py-1 " label="Add Sibling"
