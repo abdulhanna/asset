@@ -35,7 +35,7 @@ const seed = [
   }
 ];
 
-function Tree() {
+function Tree(props) {
   const [searchString, setSearchString] = useState("");
   const [searchFocusIndex, setSearchFocusIndex] = useState(0);
   const [searchFoundCount, setSearchFoundCount] = useState(null);

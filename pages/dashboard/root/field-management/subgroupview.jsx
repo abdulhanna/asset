@@ -24,7 +24,7 @@ import { useRouter } from 'next/router';
 //   );
 // };
 
-const groupview =() => {
+const Groupview =() => {
 
   const [textHigh, setTextHigh] = useState(false);
 
@@ -98,4 +98,4 @@ const groupview =() => {
   )
 }
 
-export default groupview
+export default Groupview

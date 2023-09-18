@@ -191,7 +191,7 @@ const AddLocation = () => {
                     </div>
                 </div>
              </div>  
-             <AddUserDialog open={isOpen} close={()=> setIsOpen(!isOpen)}/> 
+             <AddUserDialog open={isOpen} close={()=> setIsOpen(!isOpen)}></AddUserDialog> 
        </div>
     </MainLayout>
   </>

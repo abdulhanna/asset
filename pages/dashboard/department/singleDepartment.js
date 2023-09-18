@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 
 
-const singleDepartment = ()=> {
+const SingleDepartment = ()=> {
  const router = useRouter()
  const[showSave, setShowSave] = useState(true)
  const[logoHigh, setLogoHigh] = useState(false)
@@ -66,4 +66,4 @@ const singleDepartment = ()=> {
   )
 }
 
-export default singleDepartment
+export default SingleDepartment

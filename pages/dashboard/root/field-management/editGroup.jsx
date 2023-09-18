@@ -162,7 +162,7 @@ const EditDataComp = ({ open, close, data }) => {
   );
 };
 
-function editGroup(props) {
+function EditGroup(props) {
   const [data1, setData1] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -273,4 +273,4 @@ function editGroup(props) {
   );
 }
 
-export default editGroup;
+export default EditGroup;
