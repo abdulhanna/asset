@@ -294,24 +294,27 @@ function Tree(props) {
             buttons: [
               <div className="space-x-2"> 
                 <button
+                key={1}
                   className="border-2 py-1 " label="Add Sibling"
                   onClick={(event) => addNodeSibling(rowInfo)}
                 >
                   Add Sibling
                 </button>
                 <button
+                key={2}
                   className="border-2 py-1 " label="Add Child"
                   onClick={(event) => addNodeChild(rowInfo)}
                 >
                   Add Child
                 </button>
-                <button className="border-2 py-1 " label="Update" onClick={(event) => updateNode(rowInfo)}>
+                <button key={3} className="border-2 py-1 " label="Update" onClick={(event) => updateNode(rowInfo)}>
                   Update
                 </button>
-                <button className="border-2 py-1 " label="Delete" onClick={(event) => removeNode(rowInfo)}>
+                <button key={4} className="border-2 py-1 " label="Delete" onClick={(event) => removeNode(rowInfo)}>
                   Remove
                 </button>
                 <button
+                key={5}
                   className="border-2 py-1 " label="Alert"
                   onClick={(event) => alertNodeInfo(rowInfo)}
                 >

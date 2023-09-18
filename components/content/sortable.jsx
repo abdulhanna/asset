@@ -349,7 +349,7 @@ function Tree() {
             className: `${rowInfo.className} ${rowInfo.node.isDirectory ? "parent-node" : "child-node"}`,
             buttons: [
               <div className="space-x-2">
-                <button className="border-1 rounded px-2" label="Add Child">
+                <button key={1} className="border-1 rounded px-2" label="Add Child">
                   📄
                 </button>
               </div>

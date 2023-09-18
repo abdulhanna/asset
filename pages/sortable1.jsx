@@ -334,6 +334,7 @@ function Tree(props) {
                   Add Sibling
                 </button> */}
                 <button
+                key={1}
                   className="border-2 rounded-full px-2 " label="Add Child"
                   onClick={(event) => addNodeChild(rowInfo)}
 
