@@ -348,7 +348,7 @@ function Tree() {
             onClick: () => handleNodeClick(rowInfo),
             className: `${rowInfo.className} ${rowInfo.node.isDirectory ? "parent-node" : "child-node"}`,
             buttons: [
-              <div className="space-x-2">
+              <div className="space-x-2" key={'button'}>
                 <button key={1} className="border-1 rounded px-2" label="Add Child">
                   📄
                 </button>

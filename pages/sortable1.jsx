@@ -326,7 +326,7 @@ function Tree(props) {
             subtitle: rowInfo.node.subtitle,
             keys:id,
             buttons: [
-              <div className="space-x-2"> 
+              <div className="space-x-2" key={'button'}> 
                 {/* <button
                   className="border-2 py-1 " label="Add Sibling"
                   onClick={(event) => addNodeSibling(rowInfo)}
