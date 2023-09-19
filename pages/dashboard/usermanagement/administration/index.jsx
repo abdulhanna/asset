@@ -11,12 +11,12 @@ const Administration = () => {
     <>
         <MainLayout>
             <div>
-                <div className='flex justify-between my-4'>
+                <div className='flex justify-between items-end py-4'>
                     <Text1 size='2xl'>All Administrations</Text1>
                     <Button variant='contained' href={'/dashboard/usermanagement/administration/addAdministration'}>ADD ADMINISTRATION</Button>
                 </div>
                 {data.length === 0 ? <NodataPage text={'No data yet'}/> :<div>
-
+                       
                 </div>}
             </div>
         </MainLayout>

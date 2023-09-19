@@ -49,7 +49,7 @@ const AddtextField = ({ open, close }) => {
 
 
 
-const fieldgroupdescription = () => {
+const Fieldgroupdescription = () => {
   const [inputHigh, setInputHigh] = useState(false);
   const [show, setShow] = useState(true)
   const [textHigh, setTextHigh] = useState(false);
@@ -130,5 +130,5 @@ const fieldgroupdescription = () => {
     )
 }
 
-export default fieldgroupdescription
+export default Fieldgroupdescription
 

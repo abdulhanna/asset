@@ -3,7 +3,7 @@ import { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { RegisterImg } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
-
+import Link from "next/link";
 import { useRouter } from 'next/router';
 
 // import "../styles/globals.css";
@@ -150,17 +150,17 @@ function Register() {
                       htmlFor="link-checkbox"
                       className="ml-2 text-sm font-body text-gray-900 dark:text-gray-300">
                       Accept{" "}
-                      <a
+                      <Link
                         href="#"
                         className="text-blue-600 dark:text-blue-500 hover:underline">
                         Terms of Services
-                      </a>{" "}
+                      </Link>{" "}
                       and{" "}
-                      <a
+                      <Link
                         href="#"
                         className="text-blue-600 dark:text-blue-500 hover:underline">
                         Privacy Policy
-                      </a>
+                      </Link>
                     </label>
                   </div>
                 </div>
@@ -168,9 +168,9 @@ function Register() {
                   Get Started
                 </Button>
                 <div className=" mx-auto my-[-40px]">
-                  <a href="/auth/login" className="text-blue-600 text-sm font-body">
+                  <Link href="/auth/login" className="text-blue-600 text-sm font-body">
                     Already have an Account ? Log in
-                  </a>
+                  </Link>
                 </div>
               </form>
             </div>

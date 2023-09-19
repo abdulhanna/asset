@@ -13,7 +13,7 @@ const AddAdministration = () => {
     <>
         <MainLayout>
             <div>
-                  <div className='flex justify-between items-center'>
+                  <div className='flex justify-between items-center py-4'>
                         <div className='flex gap-4 items-center cursor-pointer' onClick={()=> router.back()}>
                             <LeftArrowIcon/>
                             <Text1 size='2xl'>Add Administrator</Text1>

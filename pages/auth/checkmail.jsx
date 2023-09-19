@@ -4,7 +4,7 @@ import Button from "../../components/atoms/button";
 import { Text1, TextField } from "../../components/atoms/field";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
 
-function checkmail(props) {
+function Checkmail(props) {
   const [mailAddress, setMailAddress] = useState({ EmailAddress: "" });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -104,4 +104,4 @@ function checkmail(props) {
   );
 }
 
-export default checkmail;
+export default Checkmail;

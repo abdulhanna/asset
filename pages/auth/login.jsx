@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 // import img1 from "../../public/images/auth/login.svg";
 import Text, { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
@@ -125,7 +126,7 @@ function Login() {
                 Login
               </Button>
               <p className="text-[#3B5FDA] mx-auto mt-[-20px]  text-sm">
-                <a href="/auth/forgetPassword">Forgot Password ?</a>
+                <Link href="/auth/forgetPassword">Forgot Password ?</Link>
               </p>
             </form>
           </div>

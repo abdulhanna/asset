@@ -35,7 +35,7 @@ const seed = [
   }
 ];
 
-function Tree() {
+function Tree(props) {
   const [searchString, setSearchString] = useState("");
   const [searchFocusIndex, setSearchFocusIndex] = useState(0);
   const [searchFoundCount, setSearchFoundCount] = useState(null);
@@ -286,31 +286,35 @@ function Tree() {
             );
           }}
           canDrag={({ node }) => !node.dragDisabled}
-          generateNodeProps={(rowInfo) => ({
+          generateNodeProps={(rowInfo,id) => ({
             // title: rowInfo.node.label,
             // subtitle: rowInfo.node.subTitle,
+            keys:id,
             className:  `${rowInfo.className}`,
             buttons: [
-              <div className="space-x-2"> 
+              <div className="space-x-2" key={'button'}> 
                 <button
+                key={1}
                   className="border-2 py-1 " label="Add Sibling"
                   onClick={(event) => addNodeSibling(rowInfo)}
                 >
                   Add Sibling
                 </button>
                 <button
+                key={2}
                   className="border-2 py-1 " label="Add Child"
                   onClick={(event) => addNodeChild(rowInfo)}
                 >
                   Add Child
                 </button>
-                <button className="border-2 py-1 " label="Update" onClick={(event) => updateNode(rowInfo)}>
+                <button key={3} className="border-2 py-1 " label="Update" onClick={(event) => updateNode(rowInfo)}>
                   Update
                 </button>
-                <button className="border-2 py-1 " label="Delete" onClick={(event) => removeNode(rowInfo)}>
+                <button key={4} className="border-2 py-1 " label="Delete" onClick={(event) => removeNode(rowInfo)}>
                   Remove
                 </button>
                 <button
+                key={5}
                   className="border-2 py-1 " label="Alert"
                   onClick={(event) => alertNodeInfo(rowInfo)}
                 >

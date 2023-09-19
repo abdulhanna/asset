@@ -91,10 +91,13 @@ export const Text1 = ({
         // `text-${color}-${colorWeight}`,
         color,
         "font-body",
-        "tracking-wide",
+        "tracking-wide leading-4	",
         className
       )}>
+      <p>
+
       {children}
+      </p>
     </div>
   );
 };

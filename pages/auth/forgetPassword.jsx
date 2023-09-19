@@ -5,7 +5,7 @@ import Button from "../../components/atoms/button";
 import { ForgetPasswordIcon } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
 
-function forgetPassword(props) {
+function ForgetPassword(props) {
   const [mailAddress, setMailAddress] = useState({ EmailAddress: "" });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -107,4 +107,4 @@ function forgetPassword(props) {
   );
 }
 
-export default forgetPassword;
+export default ForgetPassword;
