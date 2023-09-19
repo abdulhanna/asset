@@ -4,7 +4,8 @@ import { useRouter } from 'next/router';
 import InventoryFillIcon from '../../../components/atoms/icons';
 import { FillOverview,FillUserManagment,FillOrganization,FillFieldMangment,
    SampleIcon ,QrIcon,Overview, Location,AssetMangment,AssetGroup,Departments,UserManagment,
-   Reports,RootMangment,FieldMangment,Organizations ,AccountManagement, AccountManagementFill,FillLocations, FillDepartment} from '../../../components/atoms/icons';
+   Reports,RootMangment,FieldMangment,Organizations ,AccountManagement,AssetMangementFill,
+    AccountManagementFill,FillLocations, FillDepartment} from '../../../components/atoms/icons';
 import Image from 'next/image';
 
 
@@ -32,14 +33,14 @@ const currentPath = router.pathname;
         },
         {
           label: 'Asset Management',
-          url: '/dashboard/fields',
+          url: '/dashboard/asset-management',
           submenu: [
             { label: 'All Assets', url: '/dashboard/sample/viewSample' },
             { label: 'Asset From Managment', url: '/dashboard/sample/viewScheduler' },
   
           ],
           icon: <AssetMangment />,
-          fillIcon: <InventoryFillIcon />,
+          fillIcon: <AssetMangementFill />,
         },
         {
           label: 'Asset Groups',

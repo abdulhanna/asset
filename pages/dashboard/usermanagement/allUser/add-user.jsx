@@ -18,8 +18,8 @@ const AddCompanyLogo = ({ open, close }) => {
     setFile(file);
   };
   console.log(file,'file')
-  return (
-    <DialogPage1 open={open} close={close} width="w-[510px]">
+  return (<>
+     <DialogPage1 open={open} close={close} width="w-[510px]">
       <div className=" text-center flex flex-col gap-6">
         <div className="flex flex-col gap-8 justify-center items-center">
           <div>
@@ -39,7 +39,7 @@ const AddCompanyLogo = ({ open, close }) => {
           types={fileTypes}
           hoverTitle="Drop Here"
         >
-          <div><p>Drag and Drop File here,<br></br> <button className="text-[#3B5FDA] w-auto h-[60px] py-1">Browse File</button></p></div>
+          
         </FileUploader>
           <div className="w-auto">
             <p>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
@@ -70,6 +70,7 @@ const AddCompanyLogo = ({ open, close }) => {
         </div>
       </div>
     </DialogPage1>
+  </>
   );
 };
 
