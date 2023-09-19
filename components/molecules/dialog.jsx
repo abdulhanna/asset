@@ -12,7 +12,6 @@ const DialogPage = ({
     width = 'max-w-3xl',
   }) => {
     return (
-      <>
         <>
           <Transition appear show={open} as={Fragment}>
             <Dialog
@@ -67,9 +66,8 @@ const DialogPage = ({
               </div>
             </Dialog>
           </Transition>
-        </>
-      </>
-    );
+        </> 
+        );
   };
 
 export const DialogPage1 = ({
