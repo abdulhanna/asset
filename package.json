@@ -1,5 +1,5 @@
 {
-  "name": "compo",
+  "name": "Asset-Monitoring",
   "private": true,
   "scripts": {
     "dev": "PORT=3001 next dev",
@@ -8,14 +8,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.15",
-    "@heroicons/react": "^2.0.18",
+    "@headlessui/react": "^1.4.3",
+    "@heroicons/react": "^2.0.12",
     "axios": "^1.5.0",
     "classnames": "^2.3.2",
-    "framer-motion": "^10.12.17",
+    "framer-motion": "^7.3.5",
     "heroicons": "^2.0.18",
     "lottie-react": "^2.4.0",
-    "next": "12.1.6",
+    "next": "12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-drag-drop-files": "2.3.10",
