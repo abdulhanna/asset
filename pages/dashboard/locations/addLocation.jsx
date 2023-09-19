@@ -3,13 +3,15 @@ import MainLayout from 'proj-components/MainLayout'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
-import DialogPage, { DialogPage1 } from '@/components/molecules/dialog'
+import DialogPage from '@/components/molecules/dialog'
 import { useRouter } from 'next/router'
-import { AddIcon } from '@/components/atoms/icons'
+// import { AddIcon } from '@/components/atoms/icons'
 
 
 const AddUserDialog = ({open,close})=>{
-    return  <DialogPage width='min-w-[60%]' open={open} close={close}>
+
+    return (<>
+          <DialogPage width='min-w-[60%]' open={open} close={close}>
                 <div className='mx-[60px] my-[40px]'>
                 <div className=''>
                 <div className='flex justify-center'>
@@ -62,6 +64,7 @@ const AddUserDialog = ({open,close})=>{
             </div>
                 </div>
             </DialogPage>
+    </>)
 }
 
 
