@@ -57,6 +57,7 @@ const AccountShow = ({ open, close }) => {
   );
 };
 
+
 export const AddCompanyLogo = ({ open, close }) => {
   return (
     <DialogPage1 open={open} close={close} width="w-[510px]">

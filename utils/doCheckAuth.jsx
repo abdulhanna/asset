@@ -33,7 +33,17 @@ export const doCheckAuth = async (appCtx) => {
 
     access_token = access_token ? access_token.slice(13) : access_token;
 
+        const tokenString = cookie.replace('access_token: ', '');
+
+  // Remove quotes and trim spaces
+  const token = tokenString.split('=')[1];
+
+   console.log(token, "this is")
+  
+
     try {
+       
+      
         if (appCtx && appCtx.req) {
             const response = await hostedAuthAxios.get("/who-am-i", {
                 headers: {
