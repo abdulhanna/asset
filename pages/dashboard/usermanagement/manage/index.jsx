@@ -4,10 +4,10 @@ import NodataPage from '@/components/molecules/nodataPage'
 import Button from '@/components/atoms/button'
 import { Text1 } from '@/components/atoms/field'
 import { PermissionActionTable } from '@/components/organism/tablecomp'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 
-
-const Manage = () => {
+const Manage = ({user}) => {
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
     const [data,setData] = useState([ {
@@ -85,7 +85,7 @@ const onNewCheck=(data)=>{
 
   return (
     <>
-        <MainLayout>
+        <MainLayout User={user}>
              <div className='space-y-2'>
                 <div className='flex items-center justify-between'>
                     <Text1 size="lg">All Permissions</Text1>
@@ -114,5 +114,28 @@ const onNewCheck=(data)=>{
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default Manage

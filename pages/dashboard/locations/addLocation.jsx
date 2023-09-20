@@ -5,7 +5,7 @@ import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import DialogPage from '@/components/molecules/dialog'
 import { useRouter } from 'next/router'
-// import { AddIcon } from '@/components/atoms/icons'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 
 const AddUserDialog = ({open,close})=>{
@@ -68,7 +68,7 @@ const AddUserDialog = ({open,close})=>{
 }
 
 
-const AddLocation = () => {
+const AddLocation = ({user}) => {
     const router = useRouter()
     const [isOpen,setIsOpen] = useState(false)
     const [data,setData] = useState({
@@ -103,7 +103,7 @@ const AddLocation = () => {
 
     // const arr= [2,34,6,7,34,5]
   return (<>
-    <MainLayout isScroll={true}>
+    <MainLayout isScroll={true} User={user}>
        <div> 
             <div className='flex justify-between'>
                 <div className='flex items-center gap-2 cursor-pointer' onClick={()=> router.back()}>

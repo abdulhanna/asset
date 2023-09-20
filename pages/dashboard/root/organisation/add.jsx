@@ -4,9 +4,9 @@ import Text,{Text1,TextField, CustomSelect} from "../../../../components/atoms/f
 import Button from '../../../../components/atoms/button';
 import { useRouter } from 'next/router';
 import { LeftArrowIcon } from '@/components/atoms/icons';
+import { doCheckAuth } from '@/utils/doCheckAuth';
 
-
-const AddOganisation = () => {
+const AddOganisation = ({user}) => {
 
    const router = useRouter();
 
@@ -68,7 +68,7 @@ const AddOganisation = () => {
 
   return (
     <>
-    <MainLayout isScroll={true}>
+    <MainLayout isScroll={true} User={user}>
         
 {/* Company Profile---------------------------------------------------------------------------------- */}
 <form action="" onSubmit={handleSubmit}>
@@ -85,7 +85,7 @@ const AddOganisation = () => {
           <Text size="lg" weight="semibold" classname='mb-3'>
               Company Profile
           </Text>
-              <div class="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                  <div>
                  <TextField label="Email ID"        
                          bgColor="white"
@@ -118,7 +118,7 @@ const AddOganisation = () => {
           <Text size="lg" weight="semibold" classname='mb-3 mt-7'>
              Profile Information
           </Text>
-              <div class="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4">
               <TextField label="Company Name"        
                          bgColor="white"
                          type="text"
@@ -214,7 +214,7 @@ const AddOganisation = () => {
           </Text>
        </div>
 
-           <div class="grid grid-cols-1 gap-0 mb-2">
+           <div className="grid grid-cols-1 gap-0 mb-2">
               <TextField label="Address Line 1"        
                          bgColor="white"
                          type="text"
@@ -225,7 +225,7 @@ const AddOganisation = () => {
                          />
              </div>
 
-             <div class="grid grid-cols-1 gap-0 mb-2">
+             <div className="grid grid-cols-1 gap-0 mb-2">
               <TextField label="Address Line 2"        
                          bgColor="white"
                          type="text"
@@ -236,7 +236,7 @@ const AddOganisation = () => {
                          />
              </div>
 
-             <div class="grid grid-cols-3 gap-4 mb-2">
+             <div className="grid grid-cols-3 gap-4 mb-2">
                       <TextField label="City"        
                          bgColor="white"
                          type="text"
@@ -271,6 +271,29 @@ const AddOganisation = () => {
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+   const auth =await doCheckAuth(appCtx)
+   // console.log(auth,'ddd')
+   if (!auth) {
+     return {
+       redirect: {
+         destination: '/auth/login',
+         permanent: false,
+       },
+     };
+ 
+   } else {
+     return {
+       props:{
+          user:auth
+       }
+     }
+   }
+ 
+ }
+ 
 
 export default AddOganisation
    

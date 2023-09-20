@@ -5,8 +5,9 @@ import { ToggleButton,ToggleOnButton,LeftArrowIcon,AddIcon } from '@/components/
 import { CustomSelect } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import { Text1,TextField } from '@/components/atoms/field'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
-const UpdateAccount  = () => {
+const UpdateAccount  = ({user}) => {
     const [isEdit,setIsEdit] = useState(false)
      
     const [state,setState] = useState({
@@ -87,7 +88,7 @@ const UpdateAccount  = () => {
 
   return (
     <>
-        <MainLayout isScroll={true}>
+        <MainLayout isScroll={true} User={user}>
         <div className='space-y-8'>
                <div className='flex justify-between items-center'>
                     <Text1 size='2xl'>Add Account Manager</Text1>
@@ -167,5 +168,28 @@ const UpdateAccount  = () => {
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default UpdateAccount 

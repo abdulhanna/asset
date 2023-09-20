@@ -35,8 +35,8 @@ const currentPath = router.pathname;
           label: 'Asset Management',
           url: '/dashboard/asset-management',
           submenu: [
-            { label: 'All Assets', url: '/dashboard/sample/viewSample' },
-            { label: 'Asset From Managment', url: '/dashboard/sample/viewScheduler' },
+            { label: 'All Assets', url: '/dashboard/asset-management/allAsset' },
+            { label: 'Asset From Managment', url: '/dashboard/asset-management/assetform' },
   
           ],
           icon: <AssetMangment />,
@@ -205,9 +205,9 @@ const currentPath = router.pathname;
         ? menuRoot
         : user === 'super_admin'
         ? superAdmin
-        : user === 'sub_admin'
-        ? menuAdmin
-        : menu;
+        // : user === 'sub_admin'
+        : menuAdmin
+        
 
   return (
     <Sidebar >

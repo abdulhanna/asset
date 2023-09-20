@@ -4,14 +4,15 @@ import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import { useRouter } from 'next/router'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
-const LocationDetail = () => {
+const LocationDetail = ({user}) => {
     const router = useRouter()
 
 
   return (
    <>
-    <MainLayout isScroll={true}>
+    <MainLayout isScroll={true} User={user}>
         <div>
             <div className='flex justify-between'>
                 <div className='flex items-center gap-4 cursor-pointer' onClick={()=> router.back()}>
@@ -71,5 +72,28 @@ const LocationDetail = () => {
    </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+    const auth =await doCheckAuth(appCtx)
+    // console.log(auth,'ddd')
+    if (!auth) {
+      return {
+        redirect: {
+          destination: '/auth/login',
+          permanent: false,
+        },
+      };
+  
+    } else {
+      return {
+        props:{
+           user:auth
+        }
+      }
+    }
+  
+  }
+  
 
 export default LocationDetail

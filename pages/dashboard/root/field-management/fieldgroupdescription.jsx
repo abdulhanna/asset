@@ -7,7 +7,7 @@ import MainLayout from 'proj-components/MainLayout';
 import AddField from 'pages/testComponents/addField';
 import { CloseIcon } from '@/components/atoms/icons';
 import { useRouter } from 'next/router';
-
+import { doCheckAuth } from '@/utils/doCheckAuth';
 // Add field Modal
 const AddInputField = ({ open, close, showData, setShow }) => {
 
@@ -49,7 +49,7 @@ const AddtextField = ({ open, close }) => {
 
 
 
-const Fieldgroupdescription = () => {
+const Fieldgroupdescription = ({user}) => {
   const [inputHigh, setInputHigh] = useState(false);
   const [show, setShow] = useState(true)
   const [textHigh, setTextHigh] = useState(false);
@@ -91,7 +91,7 @@ const Fieldgroupdescription = () => {
 
     return(
       <>
-      <MainLayout>
+      <MainLayout User={user}>
         <div className='flex justify-between mb-4 px-2'>
          <Text1 size="2xl" weight="medium">
          {name}   
@@ -129,6 +129,29 @@ const Fieldgroupdescription = () => {
       </>
     )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default Fieldgroupdescription
 

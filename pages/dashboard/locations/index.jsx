@@ -4,8 +4,10 @@ import NodataPage from '@/components/molecules/nodataPage'
 import { Text1 } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import { SampleTableNew } from '@/components/organism/tablecomp'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
-const Locations = () => {
+
+const Locations = ({user}) => {
   const [allClick,setAllClick] = useState(false)
   const [checkedNewData,setCheckednewData] = useState([])
   const [locations,setLocations] = useState([
@@ -51,7 +53,7 @@ const Locations = () => {
 
   }
   return (<>
-    <MainLayout>
+    <MainLayout User={user}>
      <div>
         <div className='flex justify-between my-3'>
             <Text1 size='2xl'>All Locations</Text1>
@@ -76,5 +78,28 @@ const Locations = () => {
   </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default Locations
