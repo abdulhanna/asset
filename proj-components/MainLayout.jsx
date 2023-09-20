@@ -2,13 +2,14 @@ import React from 'react'
 import SidebarComp from './Layout/sub-components/navbar-components'
 import Header from './Layout/sub-components/header'
 
-const MainLayout = ({children,isScroll}) => {
-  // console.log(isScroll,'isscrlll')
+const MainLayout = ({children,isScroll,User}) => {
+  // console.log(isScroll,'isscrlll',User.role)
+  
   return (
     <div className="h-screen flex flex-col  overflow-hidden">
     <div className="flex flex-row h-screen">
       <div className="w-auto bg-background">
-        <SidebarComp user={'user'} />
+        <SidebarComp user={User?User.role:''} />
       </div>
       <div className="flex flex-col w-full  ">
         <Header />
@@ -21,5 +22,6 @@ const MainLayout = ({children,isScroll}) => {
   </div>
   )
 }
+
 
 export default MainLayout

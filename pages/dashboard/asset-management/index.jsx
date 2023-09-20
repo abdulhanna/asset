@@ -2,6 +2,8 @@ import React from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import Button from '@/components/atoms/button'
 import { Text1 } from '@/components/atoms/field'
+
+
 const AssetMangement = () => {
   return (
    <>
@@ -15,6 +17,16 @@ const AssetMangement = () => {
     </MainLayout>
    </>
   )
+}
+
+export const getServerSideProps = async (appCtx) => {
+  
+  return {
+    redirect:{
+      destination:'/dashboard/asset-management/allAsset',
+    }
+  }
+
 }
 
 export default AssetMangement

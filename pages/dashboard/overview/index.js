@@ -3,12 +3,12 @@ import MainLayout from '../../../proj-components/MainLayout'
 import { Nodata } from '../../../components/atoms/icons'
 import {Text1} from "../../../components/atoms/field";
 import Button from '../../../components/atoms/button';
-
+import { doCheckAuth } from '@/utils/doCheckAuth';
 import { useRouter } from 'next/router';
 
-const Overview = () => {
+const Overview = ({user}) => {
   const router = useRouter();
-    
+    console.log(user,'user')
   const {id,name} = router.query
 
   let loginRole = 'root'
@@ -25,10 +25,7 @@ const Overview = () => {
     <>
 
     {/* This is Overview of root */}
-    {
-      loginRole === 'root' && 
-
-      <MainLayout>
+    <MainLayout User={user}>
        
        {
         id ? <> 
@@ -72,24 +69,32 @@ const Overview = () => {
      
 
       </MainLayout>
-    }
-
-  
-    {
-      loginRole === 'admin' && 
-
-      <MainLayout user="super_admin">
-      <div className='flex justify-between mb-4'>
-          This is Admin Overview
-       </div>
-      </MainLayout>
-    }
-
-    
 
     
     </>
   )
+}
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
 }
 
 export default Overview

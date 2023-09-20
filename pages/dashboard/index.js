@@ -11,50 +11,28 @@ const Dashboard = () => {
 }
 
 export const getServerSideProps = async (appCtx) => {
-//  const cookie =
-//   'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-//   console.log(cookie.split('=')[1],'cookie')
-//  let user = await hostedAuthAxios.get('/who-am-i', {
-//     headers: {
-//         Cookie: cookie
-//     }
 
-// });
-// console.log(cookie,'cookie')
-// console.log(user,'user')
     const auth = await doCheckAuth(appCtx)
-     console.log(auth,'ss')
-    // const { cookie } = appCtx.req.headers
-    
-   
-    // if (auth) {
-    //   return {
-    //     redirect: {
-    //       destination: '/dashboard/home',
-    //       permanent: false,
-    //     },
-    //   };
-  
-    // } else {
-    //   return {
-    //     redirect: {
-    //       destination: '/auth/login'
-    //     }
-    //   }
-    // }
-  
-    
-    return {
-      props: {
-        data: [
-  
-        ],
-        // cookie: cookie ? cookie : null
+    // console.log(auth,'auth')
+    if(!auth){
+      return {
+        redirect:{
+          destination:'/auth/login',
+          permanent:false
+        }
       }
-    }
+    }else{
+  
+    return {
+      redirect:{
+        permanent:false,
+        destination:`${auth.role === 'root' ?'/dashboard/root/organisation':'/dashboard/locations'}`
+      }
   
   
   }
+}
+}
 
 
 export default Dashboard

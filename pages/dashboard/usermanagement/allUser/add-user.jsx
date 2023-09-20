@@ -9,7 +9,7 @@ import { UpArrow } from "@/components/atoms/icons";
 import { useRouter } from "next/router";
 import { FileUploader } from "react-drag-drop-files";
 import ButtonAction from "@/components/molecules/button";
-
+import { doCheckAuth } from "@/utils/doCheckAuth";
 
 const AddCompanyLogo = ({ open, close }) => {
   const fileTypes = ["JPEG", "PNG", "JPG"];
@@ -75,12 +75,12 @@ const AddCompanyLogo = ({ open, close }) => {
 };
 
 
-const AddUser = () => {
+const AddUser = ({user}) => {
   const [logoHigh, setLogoHigh] = useState(false);
   const router = useRouter()
   return (
     <>
-      <MainLayout isScroll={true}>
+      <MainLayout isScroll={true} User={user}>
         <div className="flex flex-col gap-10">
           <div className="w-full flex justify-between py-4">
             <div className="flex items-center cursor-pointer" onClick={()=> router.back()}>
@@ -159,5 +159,28 @@ const AddUser = () => {
     </>
   );
 };
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default AddUser;

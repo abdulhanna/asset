@@ -7,7 +7,7 @@ import { Text1 } from '@/components/atoms/field'
 import DepartmentField from 'pages/testComponents/departmentField'
 import { useRouter } from 'next/router'
 import { SampleTableNew } from '@/components/organism/tablecomp'
-
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 const AddDepartment = ({open, close, showData, setShow}) => {
     
@@ -33,7 +33,7 @@ const AddDepartment = ({open, close, showData, setShow}) => {
 
 
 //  Main Index file
-const Index = () =>{
+const Index = ({user}) =>{
   const[inputDepartment, setInputDepartment] = useState(false)
   const [allClick, setAllClick] = useState(false)
   const [checkedNewData, setCheckedNewData] = useState([])
@@ -107,7 +107,7 @@ useEffect(()=>{
  }
 
   return (
-    <MainLayout>
+    <MainLayout User={user}>
        <div>
           <div className='flex justify-between my-3'> 
                 <Text1 size='2xl'> All Department </Text1>
@@ -139,5 +139,28 @@ useEffect(()=>{
     </MainLayout>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default Index

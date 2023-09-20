@@ -6,8 +6,9 @@ import Button from '@/components/atoms/button'
 import { useRouter } from 'next/router'
 import { TextField, CustomSelect } from '@/components/atoms/field'
 import PermissionToggle from 'proj-components/Dashboard/user-management/permissionItem'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
-const Permission = () => {
+const Permission = ({user}) => {
   const router = useRouter()
   const [permission,setPermission] = useState({
      modlueName :"",
@@ -37,7 +38,7 @@ const Permission = () => {
 
   return (
     <>
-        <MainLayout>
+        <MainLayout User={user}>
              <div>
                <div className='flex justify-between items-center'>
                     <div className='flex items-center space-x-2 cursor-pointer' onClick={()=> router.back()}>
@@ -77,5 +78,28 @@ const Permission = () => {
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default Permission

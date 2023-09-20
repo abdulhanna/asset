@@ -8,7 +8,7 @@ import { TextField, CustomSelect } from "@/components/atoms/field";
 import { DialogPage1 } from "@/components/molecules/dialog";
 import { UpArrow } from "@/components/atoms/icons";
 import { FileUploader } from "react-drag-drop-files";
-
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 
 
@@ -74,9 +74,7 @@ const AddCompanyLogo = ({ open, close }) => {
 };
 
 
-
-
-const SingleUser = () => {
+const SingleUser = ({user}) => {
   const[showSave, setShowsave] = useState(true)
   const [logoHigh, setLogoHigh] = useState(false)
   const router = useRouter()
@@ -87,7 +85,7 @@ const SingleUser = () => {
   }
   return (
     <>
-      <MainLayout>
+      <MainLayout User={user}>
       <div>
         <div className='flex flex-col justify-between'>
            <div className='flex justify-between'>
@@ -179,5 +177,28 @@ const SingleUser = () => {
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default SingleUser

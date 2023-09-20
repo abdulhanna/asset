@@ -9,6 +9,7 @@ import { ToggleButton, ToggleOnButton } from '@/components/atoms/icons'
 import { FileUploader } from "react-drag-drop-files";
 import { DialogPage1 } from '@/components/molecules/dialog'
 import { UpArrow } from '@/components/atoms/icons'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 const AddCompanyLogo = ({ open, close }) => {
   const fileTypes = ["JPEG", "PNG", "JPG"];
@@ -71,7 +72,7 @@ const AddCompanyLogo = ({ open, close }) => {
   );
 };
 
-const AddAccount = () => {
+const AddAccount = ({user}) => {
   const [logoHigh, setLogoHigh] = useState(false);
   const [state,setState] = useState({
     name: '',
@@ -149,7 +150,7 @@ const AddAccount = () => {
   return (
     <div>
       <>
-        <MainLayout isScroll={true}>
+        <MainLayout isScroll={true} User={user}>
            <div className='space-y-8'>
                <div className='flex justify-between items-center'>
                     <Text1 size='2xl'>Add Account Manager</Text1>
@@ -227,5 +228,28 @@ const AddAccount = () => {
     </div>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default AddAccount

@@ -5,9 +5,9 @@ import { Text1 } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import { useRouter } from 'next/router'
 import { SampleTableNew } from '@/components/organism/tablecomp'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
-
-const AllUser = () => {
+const AllUser = ({user}) => {
   const [data,setData] = useState([])
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
@@ -78,7 +78,7 @@ useEffect(()=>{
 
   return (
     <>
-        <MainLayout>
+        <MainLayout User={user}>
          <div className=''>
          <div className='flex justify-between items-end py-4'>
          <Text1 size='2xl'>All Member</Text1>
@@ -105,5 +105,28 @@ useEffect(()=>{
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default AllUser
