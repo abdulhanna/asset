@@ -32,7 +32,7 @@ export const doCheckAuth = async (appCtx) => {
     let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
 
     access_token = access_token ? access_token.slice(13) : access_token;
-
+     console.log(access_token,'accress_token')
         // const tokenString = cookie.replace('access_token: ', '');
 
   // Remove quotes and trim spaces
