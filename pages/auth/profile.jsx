@@ -8,23 +8,41 @@ import {
 import Button from "../../components/atoms/button";
 import { ProfileIcon } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
+import authApi from "helpers/use-api/auth";
+
 
 function Profile(props) {
   const initialValue = {
-    companyName: "",
-    industryType: "",
-    companyRegistrationNumber: "",
+    organizationName: "",
+    organizationType: "",
+    organizationRegistrationNumber: "",
     country: "",
-    panNumber: "",
-    gstinNumber: "",
+    pan: "",
+    gstin: "",
     addressLine1: "",
     addressLine2: "",
     city: "",
     state: "",
     zipCode: "",
     countryCode: "",
-    contactNumber: "",
+    contactNo: "",
   };
+  const [form,setForm] = useState({
+    organizationName: "Jay333 Oracle Technologies",
+    organizationRegistrationNumber: "Oracle123456",
+    organizationType: "IT",
+    pan: "234554dER437",
+    gstin: "9988988",
+    contactNo: "7766838218",
+    mainAddress: {
+        address1: "Kensington Oracle Technologies",
+        address2: "",
+        city: "Noida",
+        state: "Uttar Pradesh",
+        country: "India",
+        pinCode: "201304"
+    }
+  })
   const [profileData, setProfileData] = useState(initialValue);
   const [profileErrors, setProfileErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -72,19 +90,29 @@ function Profile(props) {
 
   useEffect(() => {
     if (Object.keys(profileErrors).length === 0 && isSubmit) {
-      alert("succesfull");
-      console.log("profile data submit");
+      profileSubmit()
     }
   }, [profileErrors]);
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    // alert("data submit");
     console.log(profileData);
     setProfileErrors(validate(profileData));
     setIsSubmit(true);
-    console.log(profileErrors);
+
   };
+
+  const profileSubmit = async()=>{
+
+    try{
+      const res = await authApi.CompanyProfile(profileData)
+      console.log(res,'res')
+    }catch(err){
+      console.log(err,'eerrr')
+    }
+    
+  }
 
   const profileHandle = () => {
   const scrollPosition = 0;
@@ -98,24 +126,24 @@ function Profile(props) {
  
   const validate = () => {
     const errors = {};
-    if (!profileData.companyRegistrationNumber) {
-      errors.companyRegistrationNumber =
+    if (!profileData.organizationRegistrationNumber) {
+      errors.organizationRegistrationNumber =
         " Company registration number is required!";
     }
-    if (!profileData.companyName) {
-      errors.companyName = " Company name is required !";
+    if (!profileData.organizationName) {
+      errors.organizationName = " Company name is required !";
     }
-    if (!profileData.industryType) {
-      errors.industryType = "Industry name is required !";
+    if (!profileData.organizationType) {
+      errors.organizationType = "Industry name is required !";
     }
     if (!profileData.country) {
       errors.country = "country name is required !";
     }
-    if (!profileData.panNumber) {
-      errors.panNumber = "Pan number is required !";
+    if (!profileData.pan) {
+      errors.pan = "Pan number is required !";
     }
-    if (!profileData.gstinNumber) {
-      errors.gstinNumber = "GST number is required !";
+    if (!profileData.gstin) {
+      errors.gstin = "GST number is required !";
     }
     if (!profileData.addressLine1) {
       errors.addressLine1 = "address Line 1 is required !";
@@ -135,8 +163,8 @@ function Profile(props) {
     if (!profileData.countryCode) {
       errors.countryCode = "country code is required !";
     }
-    if (!profileData.contactNumber) {
-      errors.contactNumber = "Contact number is required !";
+    if (!profileData.contactNo) {
+      errors.contactNo = "Contact number is required !";
     }
 
     return errors;
@@ -223,26 +251,27 @@ function Profile(props) {
                     <TextField
                       bgColor="white"
                       label="Company Name"
-                      name="companyName"
+                      name="organizationName"
                       // required={true}
                       placeHolder="input text"
                       onChange={handleChange}
                       roundedText="rounded-[4px]"
                     />
-                    <p className="text-red-500">{profileErrors.companyName}</p>
+                    <p className="text-red-500">{profileErrors.organizationName}</p>
                   </div>
                   <div>
                     <CustomSelect
                       label={"Industry"}
                       selectHeight="h-[48px]"
-                      name="industryType"
+                      name="organizationType"
                       onChange={handleChange}>
                       <option value="">Select</option>
                       <option value="Reaserch and development ">
                         Reaserch And Development
                       </option>
+                      <option value="Reaserch and development ">IT</option>
                     </CustomSelect>
-                    <p className="text-red-500">{profileErrors.industryType}</p>
+                    <p className="text-red-500">{profileErrors.organizationType}</p>
                   </div>
                   <div>
                     <CustomSelect
@@ -262,24 +291,24 @@ function Profile(props) {
                       placeHolder="input text"
                       // required={true}
                       onChange={handleChange}
-                      name="companyRegistrationNumber"
+                      name="organizationRegistrationNumber"
                       roundedText="rounded-[4px]"
                     />
                     <p className="text-red-500">
-                      {profileErrors.companyRegistrationNumber}
+                      {profileErrors.organizationRegistrationNumber}
                     </p>
                   </div>
                   <div>
                     <TextField
                       bgColor="white"
-                      label="PAN No."
+                      label="Pan Number"
                       placeHolder="input text"
                       // required={true}
                       onChange={handleChange}
                       roundedText="rounded-[4px]"
-                      name="panNumber"
+                      name="pan"
                     />
-                    <p className="text-red-500">{profileErrors.panNumber}</p>
+                    <p className="text-red-500">{profileErrors.pan}</p>
                   </div>
                   <div>
                     <TextField
@@ -287,11 +316,11 @@ function Profile(props) {
                       label="GSTIN No."
                       // required={true}
                       onChange={handleChange}
-                      name="gstinNumber"
+                      name="gstin"
                       placeHolder="input text"
                       roundedText="rounded-[4px]"
                     />
-                    <p className="text-red-500">{profileErrors.gstinNumber}</p>
+                    <p className="text-red-500">{profileErrors.gstin}</p>
                   </div>
                 </div>
               </div>
@@ -347,6 +376,8 @@ function Profile(props) {
                         onChange={handleChange}>
                         <option value="">select</option>
                         <option value="mumbai">Mumbai</option>
+                        <option value={'delhi'}>Delhi</option>
+                        <option value={'lucknow'}>Lucknow</option>
                       </CustomSelect>
                       <p className="text-red-500">{profileErrors.city}</p>
                     </div>
@@ -385,7 +416,7 @@ function Profile(props) {
                         <div className=" grid grid-cols-6 md:grid-cols-12 gap-[12px]">
                           <div className="col-span-3">
                             <InputField
-                              placeHolder="+00"
+                              placeHolder="+91"
                               name="countryCode"
                               onChange={handleChange}
                             />
@@ -394,7 +425,7 @@ function Profile(props) {
                             <InputField
                               placeHolder="00000 00000"
                               onChange={handleChange}
-                              name="contactNumber"
+                              name="contactNo"
                             />
                           </div>
                         </div>

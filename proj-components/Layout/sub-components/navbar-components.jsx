@@ -203,7 +203,7 @@ const currentPath = router.pathname;
       const menuItem =
       user === 'root'
         ? menuRoot
-        : user === 'super_admin'
+        : user === 'superadmin'
         ? superAdmin
         // : user === 'sub_admin'
         : menuAdmin
