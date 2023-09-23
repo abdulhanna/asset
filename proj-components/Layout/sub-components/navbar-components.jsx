@@ -203,7 +203,7 @@ const currentPath = router.pathname;
       const menuItem =
       user === 'root'
         ? menuRoot
-        : user === 'super_admin'
+        : user === 'superadmin'
         ? superAdmin
         // : user === 'sub_admin'
         : menuAdmin
@@ -297,7 +297,7 @@ const currentPath = router.pathname;
             className="peer cursor-pointer rounded-lg object-cover"
           />
           <div className="flex flex-col">
-            <p className="text-sm">{'abdul'}</p>
+            <p className="text-sm">{user}</p>
             <p className="text-xs text-gray-400">{"userDesignation"}</p>
           </div>
         </div>

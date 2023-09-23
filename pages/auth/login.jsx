@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-// import img1 from "../../public/images/auth/login.svg";
 import Text, { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { LoginImg } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
-import { hostedAuthAxios } from "@/utils/backendAxios";
+import authApi from "helpers/use-api/auth";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Login() {
@@ -17,24 +18,33 @@ function Login() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const router = useRouter()
+   const notify = (msg) => toast.error(msg)
+   
   const onChange = (e) => {
+
     const { name, value } = e.target;
     setRegister({ ...register, [name]: value });
-    // console.log(register, "fdfff");
+  
   };
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-  const res =  await  hostedAuthAxios.post('/login',register)
-          console.log(res)
-        if(res.status =='200'){
-          router.push('/dashboard')
-        }
-        // console.log(res.status);
-    // console.log("submit", register,"reg")
-    // setFormErrors(validate(register));
-    // setIsSubmit(true);
+     try{
+      const res =  await  authApi.doLogin(register)
+          console.log(res.data,'data')
+          if(!res?.data?.is_profile_completed){
+            router.push('/auth/profile')
+          }else{
+            router.push('/dashboard')
+          }
+       
+     }catch(err){
+        notify(err.response.data.error)
+        console.log(err.response.data.error,'err')
+     }
   };
+
+
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -133,9 +143,31 @@ function Login() {
         </div>
         </div>
       </div>
+      <ToastContainer/>
       </div>
     </>
   );
+}
+
+export const getServerSideProps = async (appCtx) => {
+
+  const auth = await authApi.WhoAmI(appCtx)
+  // console.log(auth,'auth')
+  if(auth){
+    return {
+      redirect:{
+        destination:'/dashboard',
+        permanent:false
+      }
+    }
+  }else{
+
+    return {
+     props :{
+
+     }
+    }
+  }
 }
 
 export default Login;

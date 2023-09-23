@@ -6,12 +6,14 @@ import { useRouter } from 'next/router'
 import Button from '@/components/atoms/button'
 import ButtonAction from '@/components/molecules/button'
 import { DialogPage1 } from '@/components/molecules/dialog'
+import authApi from 'helpers/use-api/auth'
 
-const AddAdministration = () => {
+
+const AddAdministration = ({user}) => {
     const router = useRouter()
   return (
     <>
-        <MainLayout>
+        <MainLayout User={user}>
             <div>
                   <div className='flex justify-between items-center py-4'>
                         <div className='flex gap-4 items-center cursor-pointer' onClick={()=> router.back()}>
@@ -65,6 +67,29 @@ const AddAdministration = () => {
         </MainLayout>
     </>
   )
+}
+
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await authApi.WhoAmI(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
 }
 
 export default AddAdministration

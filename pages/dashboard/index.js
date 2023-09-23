@@ -1,6 +1,7 @@
 import React from 'react'
 import { hostedAuthAxios } from '@/utils/backendAxios'
 import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
 
 const Dashboard = () => {
   return (
@@ -12,7 +13,7 @@ const Dashboard = () => {
 
 export const getServerSideProps = async (appCtx) => {
 
-    const auth = await doCheckAuth(appCtx)
+    const auth = await authApi.WhoAmI(appCtx)
     // console.log(auth,'auth')
     if(!auth){
       return {
