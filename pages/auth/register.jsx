@@ -7,10 +7,10 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import authApi from "helpers/use-api/auth";
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-// import "../styles/globals.css";
+
 
 function Register() {
 

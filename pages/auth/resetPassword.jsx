@@ -5,14 +5,22 @@ import Button from "../../components/atoms/button";
 import { ResetImg } from "../../components/atoms/icons";
 import { Text1 } from "../../components/atoms/field";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
+import authApi from "helpers/use-api/auth";
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
 
 function ResetPassword(props) {
   const [mailAddress, setMailAddress] = useState({
+    token:"",
     password: "",
     confirmPassword: "",
   });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const router = useRouter()
+  const {resetToken} = router.query
+  const notify = (msg)=> toast.success(msg)
+  const Error = (msg)=> toast.error(msg)
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +37,8 @@ function ResetPassword(props) {
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      alert("Password Updated !");
+   
+      submitReset()
     }
   }, [formErrors]);
 
@@ -47,13 +56,44 @@ function ResetPassword(props) {
     return error;
   };
 
+  const submitReset = async()=>{
+       
+    try{
+      const res= await authApi.resetPassword(mailAddress)
+      notify(res.data.msg)
+      setMailAddress({password:"",confirmPassword:""})
+
+      setTimeout(()=>{
+        router.push('/auth/login')
+      },1500)
+     
+    }catch(err){
+
+      Error(err.response.data.data.error)
+
+    }
+  
+  }
+
+  useEffect(()=>{
+      if(resetToken){
+        setMailAddress((prevState)=> ({...prevState ,token : resetToken}))
+      }  
+  },[resetToken])
+
+  // useEffect(()=>{
+  //     if(mailAddress){
+  //       console.log(mailAddress,'dfgfg')
+  //     }
+  // },[mailAddress])
+
   return (
     <>
-        <div className="h-screen">
-           <div className="h-[7%]">
+        <div className="">
+           <div className="">
            <Headerouter />
            </div>
-      <div className="w-full h-[93%] lg:flex items-center">
+      <div className="w-full h-[90hv] lg:flex items-center">
         <div className="flex h-full flex-col lg:flex-row">
           <div className="px-[108px] py-40 2xl:pt-56 bg-[#F1F5FD] flex flex-col gap-[95px] 2xl:gap-[120px]">
             <ResetImg className={"flex justify-center"} />
@@ -116,6 +156,7 @@ function ResetPassword(props) {
           </div>
         </div>
       </div>
+      <ToastContainer/>
         </div>
     </>
   );

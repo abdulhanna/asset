@@ -1,50 +1,57 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Text1, TextField } from "../../components/atoms/field";
-import Button from "../../components/atoms/button";
-import { ForgetPasswordIcon } from "../../components/atoms/icons";
+import { Text1,TextField } from "@/components/atoms/field";
+import Button from "@/components/atoms/button";
+import { ForgetPasswordIcon } from "@/components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
+import authApi from "helpers/use-api/auth";
+import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from "next/router";
 
 function ForgetPassword(props) {
   const [mailAddress, setMailAddress] = useState({ EmailAddress: "" });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const router= useRouter()
+ const notify =(msg)=> toast.success(msg)
+ const Error = (msg)=> toast.error(msg)
+
 
   const onChange = (e) => {
     const { name, value } = e.target;
     setMailAddress({ ...mailAddress, [name]: value });
-    console.log(mailAddress);
+
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    setFormErrors(validate(mailAddress));
-    setIsSubmit(true);
-    console.log(formErrors);
+    setIsSubmit(true)
+    if(mailAddress.EmailAddress){
+        //  alert('email not fll')
+        try{
+          const res = await  authApi.forgotPassword({email:mailAddress.EmailAddress})
+          notify(res.data.msg)
+          setTimeout(()=>{
+            router.push('/auth/login')
+          },1500)
+          console.log(res.data,'res')
+        }catch(err){
+          console.log(err,'err')
+          Error(err.response.data.error)
+        }
+    }else{
+      Error('please add Email Adderess')
+  
+    }
+
+    setIsSubmit(false)
   };
 
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      alert("email send");
-    }
-  }, [formErrors]);
 
-  const validate = (value) => {
-    const error = {};
-    const regex =
-      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (!value.EmailAddress) {
-      error.EmailAddress = "Email address is required !";
-    } else if (!regex.test(value.EmailAddress)) {
-      error.EmailAddress = "Enter a valid email address ! ";
-    }
-    return error;
-  };
 
   return (
     <>
-      <div className="h-screen">
-        <div className="h-[7%]">
+      <div className="">
+        <div className="">
           <Headerouter />
         </div>
 
@@ -92,7 +99,7 @@ function ForgetPassword(props) {
                   <p className="text-red-500">{formErrors.EmailAddress}</p>
                 </div>
 
-                <Button type="submit" variant="contained">
+                <Button type="submit" variant="contained" isDisabled={isSubmit}>
                   CONFIRM
                 </Button>
                 <p className="text-[#3B5FDA] mx-auto mt-5 text-sm">
@@ -102,6 +109,7 @@ function ForgetPassword(props) {
             </div>
           </div>
         </div>
+        <ToastContainer/>
       </div>
     </>
   );

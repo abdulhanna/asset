@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-// import img1 from "../../public/images/auth/login.svg";
 import Text, { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { LoginImg } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
-// import { hostedAuthAxios } from "@/utils/backendAxios";
 import authApi from "helpers/use-api/auth";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from 'react-toastify';
@@ -33,18 +31,17 @@ function Login() {
     e.preventDefault();
      try{
       const res =  await  authApi.doLogin(register)
-          console.log(res)
-        if(res.status =='200'){
-          router.push('/dashboard')
-        }
+          console.log(res.data,'data')
+          if(!res?.data?.is_profile_completed){
+            router.push('/auth/profile')
+          }else{
+            router.push('/dashboard')
+          }
+       
      }catch(err){
         notify(err.response.data.error)
         console.log(err.response.data.error,'err')
      }
-        // console.log(res.status);
-    // console.log("submit", register,"reg")
-    // setFormErrors(validate(register));
-    // setIsSubmit(true);
   };
 
 
@@ -146,6 +143,7 @@ function Login() {
         </div>
         </div>
       </div>
+      <ToastContainer/>
       </div>
     </>
   );
@@ -153,7 +151,6 @@ function Login() {
 
 export const getServerSideProps = async (appCtx) => {
 
-  // const auth = await doCheckAuth(appCtx)
   const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'auth')
   if(auth){

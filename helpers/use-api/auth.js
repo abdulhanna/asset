@@ -42,4 +42,12 @@ authApi.WhoAmI = async(appCtx)=>{
 
 authApi.CompanyProfile = (data)=> hostedAuthAxios.post('/company-profile',data)
 
+authApi.ResendMail = (data)=> hostedAuthAxios.post('/resen-verification-email',data)
+
+authApi.verifyToken = (token) => hostedAuthAxios.get(`/confirm/${token}`)
+
+authApi.forgotPassword = (data) => hostedAuthAxios.post('/request-forgot-password',data)
+
+authApi.resetPassword = (data) => hostedAuthAxios.post('/reset-password',data)
+
 export default authApi
