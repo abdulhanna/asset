@@ -50,4 +50,8 @@ authApi.forgotPassword = (data) => hostedAuthAxios.post('/request-forgot-passwor
 
 authApi.resetPassword = (data) => hostedAuthAxios.post('/reset-password',data)
 
+authApi.setPassword = (data) => hostedAuthAxios.post('/setPassword',data)
+
+authApi.changePassword = (data)=> hostedAuthAxios.post('/change-password',data)
+
 export default authApi

@@ -1,23 +1,35 @@
 import React from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
-import OrganisationList from './organisationlist'
-import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
+import orgApi from 'helpers/use-api/organisations'
+import Organisations from 'proj-components/Dashboard/organisation/organisations'
+import { Text1 } from '@/components/atoms/field'
+import Button from '@/components/atoms/button'
 
-const Page = ({user}) => {
-  console.log(user,'user')
+const Page = ({user,organisationList}) => {
+  // console.log(user,'user',organisationList)
+
   return (
    <>
     <MainLayout User={user}>
-        <OrganisationList/>
+    <div className='flex justify-between items-center 2xl:my-8 my-0'>
+      <Text1 size='2xl'>All Organizations</Text1>
+      <Button variant='contained'>ADD  ORGANIZATION</Button>
+    </div>
+    <Organisations organisationList={organisationList}/>
+   
     </MainLayout>
    </>
   )
 }
 
 export const getServerSideProps = async (appCtx) => {
-   
-  const auth =await doCheckAuth(appCtx)
-  // console.log(auth,'ddd')
+  let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
+
+  const auth =await authApi.WhoAmI(appCtx)
+  const res  = await orgApi.getAll(access_token)
+  // console.log(res.data,'res')
+  
   if (!auth) {
     return {
       redirect: {
@@ -29,7 +41,8 @@ export const getServerSideProps = async (appCtx) => {
   } else {
     return {
       props:{
-         user:auth
+         user:auth,
+          organisationList:res.data|| []
       }
     }
   }

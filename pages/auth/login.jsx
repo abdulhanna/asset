@@ -32,7 +32,7 @@ function Login() {
      try{
       const res =  await  authApi.doLogin(register)
           console.log(res.data,'data')
-          if(!res?.data?.is_profile_completed){
+          if(!res?.data?.is_profile_completed && res.data.role !== "root"){
             router.push('/auth/profile')
           }else{
             router.push('/dashboard')
@@ -81,7 +81,7 @@ function Login() {
           <div className=" bg-[#F1F5FD] h-full w-full flex flex-col items-center justify-center gap-8">
             <LoginImg />
             <div className="w-72 mx-auto text-center flex flex-col  gap-5">
-              <Text1 size="2xl" weight="medium" className="text-[#283995]">
+              <Text1 size="2xl"  weight="medium" className="text-[#283995]">
                 Lorem Ipsum
               </Text1>
               <Text1>
