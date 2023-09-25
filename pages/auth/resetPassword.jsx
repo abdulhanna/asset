@@ -93,67 +93,65 @@ function ResetPassword(props) {
            <div className="">
            <Headerouter />
            </div>
-      <div className="w-full h-[90hv] lg:flex items-center">
-        <div className="flex h-full flex-col lg:flex-row">
-          <div className="px-[108px] py-40 2xl:pt-56 bg-[#F1F5FD] flex flex-col gap-[95px] 2xl:gap-[120px]">
-            <ResetImg className={"flex justify-center"} />
-            <div className=" flex flex-col items-center gap-6">
-              <Text1 size="2xl" color="text-primary">
-                Lorem Ipsum
-              </Text1>
-              <p className="w-[432px]  2xl:w-[525px] text-center text-base font-normal">
-                Lorem ipsum dolor sit amet consectetur. Senectus enim ultricies
-                tellus mauris sapien dignissim ut tempor urna.
-              </p>
+      <div className="w-full h-[90vh] lg:flex items-center">
+        <div className="flex h-full flex-col md:flex-row rounded-lg w-full">
+          <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="bg-[#F1F5FD] h-full w-full flex flex-col items-center justify-center">
+              <ResetImg className={"flex justify-center"} />
+              <div className=" flex flex-col items-center gap-6 mt-8">
+                <Text1 size="2xl" color="text-primary">
+                  Lorem Ipsum
+                </Text1>
+                <p className="w-[432px]  2xl:w-[525px] text-center text-base font-normal">
+                  Lorem ipsum dolor sit amet consectetur. Senectus enim ultricies
+                  tellus mauris sapien dignissim ut tempor urna.
+                </p>
+              </div>
             </div>
-          </div>
+            {/* form */}
+            <div className="w-full flex items-center justify-center ">
+              <form
+                action=""
+                onSubmit={handleSubmit}
+                className="w-[344px] xl:w-[488px] 2xl:w-[528px] flex flex-col space-y-8">
+                <div className="space-y-8">
+                 <Text1 size="2xl" weight="semibold"  className="text-[#283995]">Reset Password</Text1>
+                 <Text1> Lorem ipsum dolor sit amet consectetur. Senectus enim
+                    ultricies tellus mauris sapien sit ut dignissim ut tempor
+                    urna.</Text1>
+                </div>
 
-          <div className=" flex items-center ms-[40px] xl:ms-[140px] 2xl:ms-[220px]">
-            <form
-              action=""
-              onSubmit={handleSubmit}
-              className="w-[344px] xl:w-[488px] 2xl:w-[528px] flex flex-col">
-              <div className="mb-[100px]">
-                <p className="xl:w-[344px] text-[24px] font-semibold text-[#3B5FDA] mb-[32px] leading-8">
-                  Reset Password
-                </p>
-                <p className="text-sm font-normal text-[#121212]">
-                  Lorem ipsum dolor sit amet consectetur. Senectus enim
-                  ultricies tellus mauris sapien sit ut dignissim ut tempor
-                  urna.
-                </p>
-              </div>
+                <div className="">
+                  <TextField
+                    label={"Password"}
+                    bgColor="bg-white"
+                    type="text"
+                    textSize="lg"
+                    labelColor="[#121212]"
+                    name="password"
+                    onChange={onChange}
+                  />
+                  <p className="text-red-500">{formErrors.password}</p>
+                </div>
+                <div className="">
+                  <TextField
+                    label={"Confirm Password"}
+                    bgColor="bg-white"
+                    type="text"
+                    textSize="lg"
+                    labelColor="[#121212]"
+                    name="confirmPassword"
+                    onChange={onChange}
+                  />
+                  <p className="text-red-500">{formErrors.confirmPassword}</p>
+                </div>
 
-              <div className="mb-[52px]">
-                <TextField
-                  label={"Password"}
-                  bgColor="bg-white"
-                  type="text"
-                  textSize="lg"
-                  labelColor="[#121212]"
-                  name="password"
-                  onChange={onChange}
-                />
-                <p className="text-red-500">{formErrors.password}</p>
-              </div>
-              <div className="mb-[100px]">
-                <TextField
-                  label={"Confirm Password"}
-                  bgColor="bg-white"
-                  type="text"
-                  textSize="lg"
-                  labelColor="[#121212]"
-                  name="confirmPassword"
-                  onChange={onChange}
-                />
-                <p className="text-red-500">{formErrors.confirmPassword}</p>
-              </div>
-
-              <Button type="submit" variant="contained">
-                CONFIRM
-              </Button>
-            </form>
-          </div>
+                <Button type="submit" variant="contained">
+                  CONFIRM
+                </Button>
+              </form>
+            </div>
+           </div>
         </div>
       </div>
       <ToastContainer/>

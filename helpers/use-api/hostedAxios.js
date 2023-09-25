@@ -18,3 +18,15 @@ export const hostedAuthAxios = axios.create({
     },
 });
 
+export const hostedAxios = axios.create({
+    baseURL: `${liveUrl}/auth`,
+    // baseURL:`${local}`,
+    // baseURL: 'http://localhost:3000/auth',
+    // baseURL:'http://10.0.0.26:4000/auth',
+
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+

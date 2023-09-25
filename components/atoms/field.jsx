@@ -75,7 +75,7 @@ export const Text1 = ({
         {
           "font-light": weight === "light",
           "font-normal": weight === "normal",
-          "font-body": weight === "medium",
+          "font-medium": weight === "medium",
           "font-semibold": weight === "semibold",
           "font-bold": weight === "bold",
         },
