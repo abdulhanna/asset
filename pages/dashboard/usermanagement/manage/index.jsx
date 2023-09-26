@@ -86,9 +86,9 @@ const onNewCheck=(data)=>{
   return (
     <>
         <MainLayout User={user}>
-             <div className='space-y-2'>
+             <div className='xl:space-y-2 space-y-0'>
                 <div className='flex items-center justify-between'>
-                    <Text1 size="lg">All Permissions</Text1>
+                    <Text1 size="xl">All Permissions</Text1>
 
                     <Button href={'/dashboard/usermanagement/manage/permission'} variant='contained'>
                         CREATE PERMISSION
