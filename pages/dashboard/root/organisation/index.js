@@ -14,7 +14,7 @@ const Page = ({user,organisationList}) => {
     <MainLayout User={user}>
     <div className='flex justify-between items-center 2xl:my-8 my-0'>
       <Text1 size='2xl'>All Organizations</Text1>
-      <Button variant='contained'>ADD  ORGANIZATION</Button>
+      <Button href={'/dashboard/root/organisation/add'} variant='contained'>ADD  ORGANIZATION</Button>
     </div>
     <Organisations organisationList={organisationList}/>
    
@@ -26,10 +26,7 @@ const Page = ({user,organisationList}) => {
 export const getServerSideProps = async (appCtx) => {
   let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
 
-  const auth =await authApi.WhoAmI(appCtx)
-  const res  = await orgApi.getAll(access_token)
-  // console.log(res.data,'res')
-  
+  const auth =await authApi.WhoAmI(appCtx)  
   if (!auth) {
     return {
       redirect: {
@@ -38,27 +35,17 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
 
-  } else {
-    return {
-      props:{
-         user:auth,
-          organisationList:res.data|| []
-      }
+  } 
+
+  const res  = await orgApi.getAll(access_token)
+
+  return {
+    props:{
+       user:auth,
+        organisationList:res.data|| []
     }
   }
 
-  // if(!auth){
-  //   return
-  // }
-
-  // return {
-  //   props:{
-
-  //   }
-  //   // redirect:{
-  //   //   destination:'/dashboard/asset-management/allAsset',
-  //   // }
-  // }
 
 }
 
