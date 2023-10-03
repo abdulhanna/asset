@@ -9,6 +9,7 @@ import { ToggleButton, ToggleOnButton } from '@/components/atoms/icons'
 import { FileUploader } from "react-drag-drop-files";
 import { DialogPage1 } from '@/components/molecules/dialog'
 import { UpArrow } from '@/components/atoms/icons'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 const AddCompanyLogo = ({ open, close }) => {
   const fileTypes = ["JPEG", "PNG", "JPG"];
@@ -36,8 +37,9 @@ const AddCompanyLogo = ({ open, close }) => {
           name="file"
           types={fileTypes}
           hoverTitle="Drop Here"
-          children={<div><p>Drag and Drop File here,<br></br> <button className="text-[#3B5FDA] w-auto h-[60px] py-1">Browse File</button></p></div>}
-        />
+        >
+        <div><p>Drag and Drop File here,<br></br> <button className="text-[#3B5FDA] w-auto h-[60px] py-1">Browse File</button></p></div>
+        </FileUploader>
           <div className="w-auto">
             <p>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
           </div>
@@ -70,7 +72,7 @@ const AddCompanyLogo = ({ open, close }) => {
   );
 };
 
-const AddAccount = () => {
+const AddAccount = ({user}) => {
   const [logoHigh, setLogoHigh] = useState(false);
   const [state,setState] = useState({
     name: '',
@@ -148,7 +150,7 @@ const AddAccount = () => {
   return (
     <div>
       <>
-        <MainLayout isScroll={true}>
+        <MainLayout isScroll={true} User={user}>
            <div className='space-y-8'>
                <div className='flex justify-between items-center'>
                     <Text1 size='2xl'>Add Account Manager</Text1>
@@ -220,11 +222,34 @@ const AddAccount = () => {
 
                </div>
            </div>
-           <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} />
+           <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} ></AddCompanyLogo>
         </MainLayout>
       </>
     </div>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default AddAccount

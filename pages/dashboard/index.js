@@ -1,6 +1,7 @@
 import React from 'react'
 import { hostedAuthAxios } from '@/utils/backendAxios'
 import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
 
 const Dashboard = () => {
   return (
@@ -11,49 +12,28 @@ const Dashboard = () => {
 }
 
 export const getServerSideProps = async (appCtx) => {
-//   const cookie =
-//   'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-//   // console.log(cookie.split('=')[1],'cookie')
-//  let user = await hostedAuthAxios.get('/who-am-i', {
-//     headers: {
-//         cookie: cookie[1]
-//     }
 
-// });
-// console.log(user,'user')
-    const auth = await doCheckAuth(appCtx)
-     
-    // const { cookie } = appCtx.req.headers
-    
-   
-    // if (auth) {
-    //   return {
-    //     redirect: {
-    //       destination: '/dashboard/home',
-    //       permanent: false,
-    //     },
-    //   };
-  
-    // } else {
-    //   return {
-    //     redirect: {
-    //       destination: '/auth/login'
-    //     }
-    //   }
-    // }
-  
-    
-    return {
-      props: {
-        data: [
-  
-        ],
-        // cookie: cookie ? cookie : null
+    const auth = await authApi.WhoAmI(appCtx)
+    // console.log(auth,'auth')
+    if(!auth){
+      return {
+        redirect:{
+          destination:'/auth/login',
+          permanent:false
+        }
       }
-    }
+    }else{
+  
+    return {
+      redirect:{
+        permanent:false,
+        destination:`${auth.role === 'root' ?'/dashboard/root/organisation':'/dashboard/locations'}`
+      }
   
   
   }
+}
+}
 
 
 export default Dashboard

@@ -7,7 +7,7 @@ import { Text1 } from '@/components/atoms/field'
 import DepartmentField from 'pages/testComponents/departmentField'
 import { useRouter } from 'next/router'
 import { SampleTableNew } from '@/components/organism/tablecomp'
-
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 const AddDepartment = ({open, close, showData, setShow}) => {
     
@@ -33,7 +33,7 @@ const AddDepartment = ({open, close, showData, setShow}) => {
 
 
 //  Main Index file
-const Index = () =>{
+const Index = ({user}) =>{
   const[inputDepartment, setInputDepartment] = useState(false)
   const [allClick, setAllClick] = useState(false)
   const [checkedNewData, setCheckedNewData] = useState([])
@@ -45,12 +45,13 @@ const Index = () =>{
     {label:'Department Name', name:'departmentName'},
     {label:'Charging Type', name:'chargingType'},
     {label:'Status', name:'Status'},
-    {label:'created on', name:'created'}
+    {label:'created on', name:'created'},
+    {label:"Custom",name:"custom"}
   ]
 
   const body = [
     {
-     _id:"011", departmentId:'34564', departmentName:"DEPT01", chargingType : "Direct", Status :"Active",created:'1/12/22'
+     _id:"011", departmentId:'34564', departmentName:"DEPT01", chargingType : "Direct",custom:"test", Status :"Active",created:'1/12/22'
     },
     {
       _id:"012",departmentId:'342553', departmentName:"DEPT02",chargingType:'Direct',Status:'Inactive',created:'2/03/23'
@@ -106,7 +107,7 @@ useEffect(()=>{
  }
 
   return (
-    <MainLayout>
+    <MainLayout User={user}>
        <div>
           <div className='flex justify-between my-3'> 
                 <Text1 size='2xl'> All Department </Text1>
@@ -138,5 +139,28 @@ useEffect(()=>{
     </MainLayout>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default Index

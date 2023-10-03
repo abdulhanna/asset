@@ -4,10 +4,10 @@ import { LeftArrowIcon } from '@/components/atoms/icons'
 import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import { useRouter } from 'next/router'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 
-
-const singleDepartment = ()=> {
+const SingleDepartment = ({user})=> {
  const router = useRouter()
  const[showSave, setShowSave] = useState(true)
  const[logoHigh, setLogoHigh] = useState(false)
@@ -20,7 +20,7 @@ const singleDepartment = ()=> {
 
   return (
     <div>
-      <MainLayout>
+      <MainLayout User={user}>
       <div className='flex flex-col justify-between'>
            <div className='flex justify-between'>
             <div className='flex items-center cursor-pointer' onClick={()=>router.back()}> <LeftArrowIcon/>
@@ -66,4 +66,27 @@ const singleDepartment = ()=> {
   )
 }
 
-export default singleDepartment
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
+
+export default SingleDepartment

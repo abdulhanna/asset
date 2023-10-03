@@ -65,17 +65,17 @@ export const Text1 = ({
       className={classNames(
         {
           "text-xs": size === "xs",
-          "text-sm": size === "sm",
-          "text-base": size === "md",
-          "text-lg": size === "lg",
-          "text-xl": size === "xl",
-          "text-2xl": size === "2xl",
-          "text-3xl": size === "3xl",
+          "text-[12px] 2xl:text-[14px]": size === "sm",
+          "text-[14px] 2xl:text-[16px]": size === "md",
+          "text-[16px] 2xl:text-[18px]": size === "lg",
+          "text-[18px] 2xl:text-[22px]": size === "xl",
+          "text-[22px] 2xl:text-[26px]": size === "2xl",
+          "text-[24px] 2xl:text-[28px]": size === "3xl",
         },
         {
           "font-light": weight === "light",
           "font-normal": weight === "normal",
-          "font-body": weight === "medium",
+          "font-medium": weight === "medium",
           "font-semibold": weight === "semibold",
           "font-bold": weight === "bold",
         },
@@ -91,10 +91,13 @@ export const Text1 = ({
         // `text-${color}-${colorWeight}`,
         color,
         "font-body",
-        "tracking-wide",
+        "tracking-wide leading-4	",
         className
       )}>
+      <p>
+
       {children}
+      </p>
     </div>
   );
 };

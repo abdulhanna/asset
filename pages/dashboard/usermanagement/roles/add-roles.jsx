@@ -5,10 +5,10 @@ import { LeftArrowIcon, ToggleButton,ToggleOnButton,DropDownIcon } from '@/compo
 import Button from '@/components/atoms/button'
 import { Accordin } from '@/components/molecules/accordion'
 // import Text from '@/components/atoms/field'
-
+import { doCheckAuth } from '@/utils/doCheckAuth'
 import { useRouter } from 'next/router'
 
-const AddRoles = () => {
+const AddRoles = ({user}) => {
 
   const router = useRouter()
   const [role,setRole] = useState({
@@ -89,10 +89,10 @@ useEffect(()=>{
 
   return (
   <>
-    <MainLayout isScroll={true}>
+    <MainLayout isScroll={true} User={user}>
         <div>
-            <div className='flex justify-between items-center cursor-pointer'>
-                <div className='flex items-center' onClick={()=> router.back()}>
+            <div className='flex justify-between items-center py-4'>
+                <div className='flex items-center cursor-pointer' onClick={()=> router.back()}>
                   <LeftArrowIcon/>
                   <Text1 size='2xl'>Create Roles</Text1>
                 </div>
@@ -147,6 +147,28 @@ useEffect(()=>{
     </MainLayout>
   </>
   )
+}
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
 }
 
 export default AddRoles

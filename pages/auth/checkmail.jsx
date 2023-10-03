@@ -3,12 +3,15 @@ import { CheckMail } from "../../components/atoms/icons";
 import Button from "../../components/atoms/button";
 import { Text1, TextField } from "../../components/atoms/field";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
+import authApi from "helpers/use-api/auth";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function checkmail(props) {
+function Checkmail(props) {
   const [mailAddress, setMailAddress] = useState({ EmailAddress: "" });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const notify = (msg) => toast.success(msg)
   const onChange = (e) => {
     const { name, value } = e.target;
     setMailAddress({ ...mailAddress, [name]: value });
@@ -24,7 +27,7 @@ function checkmail(props) {
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      alert("email send");
+        resendEmail()
     }
   }, [formErrors]);
 
@@ -39,6 +42,19 @@ function checkmail(props) {
     }
     return error;
   };
+
+  const resendEmail = async()=>{
+      try{
+        const res  = await authApi.ResendMail({email:mailAddress.EmailAddress})
+        console.log(res.data.msg)
+        notify(res.data.msg)
+        
+      }catch(err){
+        console.log(err)
+      }
+      
+    // alert(mailAddress.EmailAddress)
+  }
 
   return (
     <>
@@ -99,9 +115,10 @@ function checkmail(props) {
             </div>
           </div>
         </div>
+        <ToastContainer/>
       </div>
     </>
   );
 }
 
-export default checkmail;
+export default Checkmail;

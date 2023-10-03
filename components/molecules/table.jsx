@@ -245,13 +245,13 @@ const sortData = (field, ascending) => {
       const dateB = b.createdAt;
       return ascending ? (dateA - dateB) : (dateB - dateA);
     } else if(field === 'locationData'){
-      const valueA = a[field].props.children.toString().toLowerCase();
-      const valueB = b[field].props.children.toString().toLowerCase();
-      return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      const valueA = a[field]?.props.children.toString().toLowerCase();
+      const valueB = b[field]?.props.children.toString().toLowerCase();
+      return ascending ? valueA?.localeCompare(valueB) : valueB?.localeCompare(valueA);
     }else {
-      const valueA = a[field].toString().toLowerCase();
-      const valueB = b[field].toString().toLowerCase();
-      return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      const valueA = a[field]?.toString().toLowerCase();
+      const valueB = b[field]?.toString().toLowerCase();
+      return ascending ? valueA?.localeCompare(valueB) : valueB?.localeCompare(valueA);
     }
   });
 };
@@ -313,7 +313,8 @@ return (
     <tr className={classes.tr}>
 
       {headers.map((item, index) => (
-      <th
+      <th 
+      key={index}
       className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
       index === lastIndex && 'rounded-tr-lg'
       }`}
@@ -334,7 +335,7 @@ return (
     {sortedData.map((dataRow, index) => {
     return (
 
-    <tr>
+    <tr key={index}>
     {headers.map((item,index) => {
     return (
     <td
@@ -457,7 +458,7 @@ return (
     <tr className={classes.tr}>
 
       {headers.map((item, index) => (
-      <th
+      <th key={index}
       className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
       index === lastIndex && 'rounded-tr-lg'
       }`}
@@ -478,7 +479,7 @@ return (
     {sortedData.map((dataRow, index) => {
     return (
 
-    <tr>
+    <tr key={index}>
     {headers.map((item,index) => {
     return (
     <td

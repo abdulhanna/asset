@@ -5,8 +5,9 @@ import { LeftArrowIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import PermissionToggle,{PermissionToggleRead} from 'proj-components/Dashboard/user-management/permissionItem'
 import { useRouter } from 'next/router'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
-const Edit = () => {
+const Edit = ({user}) => {
     const [isEdit,setIsEdit] = useState(false)
     const [permission,setPermission] = useState({
         modlueName :'Admin',
@@ -21,7 +22,7 @@ const Edit = () => {
 
   return (
    <>
-   <MainLayout>
+   <MainLayout User={user}>
        <div className='space-y-10'>
             <div className='flex justify-between items-center'>
                 <div className='flex items-center gap-3 cursor-pointer' onClick={()=> router.back()}>
@@ -59,5 +60,28 @@ const Edit = () => {
    </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+    const auth =await doCheckAuth(appCtx)
+    // console.log(auth,'ddd')
+    if (!auth) {
+      return {
+        redirect: {
+          destination: '/auth/login',
+          permanent: false,
+        },
+      };
+  
+    } else {
+      return {
+        props:{
+           user:auth
+        }
+      }
+    }
+  
+  }
+  
 
 export default Edit

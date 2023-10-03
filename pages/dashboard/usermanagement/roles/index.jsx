@@ -5,8 +5,10 @@ import Button from '@/components/atoms/button'
 import NodataPage from '@/components/molecules/nodataPage'
 import { SampleTableNew } from '@/components/organism/tablecomp'
 import { useEffect } from 'react'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
-const RolesPerimission = () => {
+
+const RolesPerimission = ({user}) => {
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
   const header = [
@@ -69,9 +71,9 @@ const RolesPerimission = () => {
   
   return (
     <>
-        <MainLayout>
+        <MainLayout User={user}>
             <div className='space-y-2'>
-               <div className='flex justify-between items-center'>
+               <div className='flex justify-between items-end py-4'>
                 <Text1 size='2xl'>All Roles</Text1>
                  <Button href={'/dashboard/usermanagement/roles/add-roles'} variant='contained' >CREATE ROLE</Button>
                </div>
@@ -100,5 +102,28 @@ const RolesPerimission = () => {
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default RolesPerimission 

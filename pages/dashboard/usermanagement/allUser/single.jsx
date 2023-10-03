@@ -8,7 +8,7 @@ import { TextField, CustomSelect } from "@/components/atoms/field";
 import { DialogPage1 } from "@/components/molecules/dialog";
 import { UpArrow } from "@/components/atoms/icons";
 import { FileUploader } from "react-drag-drop-files";
-
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 
 
@@ -38,8 +38,9 @@ const AddCompanyLogo = ({ open, close }) => {
           name="file"
           types={fileTypes}
           hoverTitle="Drop Here"
-          children={<div><p>Drag and Drop File here,<br></br> <button className="text-[#3B5FDA] w-auto h-[60px] py-1">Browse File</button></p></div>}
-        />
+        >
+          <div><p>Drag and Drop File here,<br></br> <button className="text-[#3B5FDA] w-auto h-[60px] py-1">Browse File</button></p></div>
+        </FileUploader>
           <div className="w-auto">
             <p>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
           </div>
@@ -73,9 +74,7 @@ const AddCompanyLogo = ({ open, close }) => {
 };
 
 
-
-
-const SingleUser = () => {
+const SingleUser = ({user}) => {
   const[showSave, setShowsave] = useState(true)
   const [logoHigh, setLogoHigh] = useState(false)
   const router = useRouter()
@@ -86,7 +85,7 @@ const SingleUser = () => {
   }
   return (
     <>
-      <MainLayout>
+      <MainLayout User={user}>
       <div>
         <div className='flex flex-col justify-between'>
            <div className='flex justify-between'>
@@ -173,10 +172,33 @@ const SingleUser = () => {
         </div>
        
       </div>
-      <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} />
+      <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} ></AddCompanyLogo>
       </MainLayout>
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default SingleUser

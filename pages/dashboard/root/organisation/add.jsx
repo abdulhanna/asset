@@ -4,9 +4,11 @@ import Text,{Text1,TextField, CustomSelect} from "../../../../components/atoms/f
 import Button from '../../../../components/atoms/button';
 import { useRouter } from 'next/router';
 import { LeftArrowIcon } from '@/components/atoms/icons';
+import { doCheckAuth } from '@/utils/doCheckAuth';
+import { ToastContainer, toast } from 'react-toastify';
+import orgApi from 'helpers/use-api/organisations';
 
-
-const AddOganisation = () => {
+const AddOganisation = ({user}) => {
 
    const router = useRouter();
 
@@ -33,6 +35,9 @@ const AddOganisation = () => {
    const[isSubmit, setIsSubmit] = useState(false);
 
 
+   const notify = (msg) => toast.success(msg);
+   const errorNotify = (msg) => toast.error(msg)
+
    // Checking if profilerrors have 0 length and isSubmit true then show me an action
    useEffect(() => {
       if(Object.keys(profileErrors).length === 0 && isSubmit){
@@ -58,9 +63,20 @@ const AddOganisation = () => {
    }
 
    // Submitbutton 
-   const handleSubmit = (e) => {
+   const handleSubmit = async(e) => {
       e.preventDefault();
       setProfileErrors(validate(companyprofileData))
+   try{ 
+       const res  = await orgApi.add(companyprofileData)
+       console.log(res, 'resPONSE ADDED')
+       notify('Added company Organization')
+      //  setTimeout(() => {
+      //     router.push('/organisations')
+      //  },1000)
+   }catch(err){
+      console.log(err)
+      errorNotify(err)
+   }
       setIsSubmit(true)
       console.log("hiih", companyprofileData)
       router.push('/dashboard/root/organisation'); 
@@ -68,7 +84,7 @@ const AddOganisation = () => {
 
   return (
     <>
-    <MainLayout isScroll={true}>
+    <MainLayout isScroll={true} User={user}>
         
 {/* Company Profile---------------------------------------------------------------------------------- */}
 <form action="" onSubmit={handleSubmit}>
@@ -85,7 +101,7 @@ const AddOganisation = () => {
           <Text size="lg" weight="semibold" classname='mb-3'>
               Company Profile
           </Text>
-              <div class="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                  <div>
                  <TextField label="Email ID"        
                          bgColor="white"
@@ -118,7 +134,7 @@ const AddOganisation = () => {
           <Text size="lg" weight="semibold" classname='mb-3 mt-7'>
              Profile Information
           </Text>
-              <div class="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4">
               <TextField label="Company Name"        
                          bgColor="white"
                          type="text"
@@ -214,7 +230,7 @@ const AddOganisation = () => {
           </Text>
        </div>
 
-           <div class="grid grid-cols-1 gap-0 mb-2">
+           <div className="grid grid-cols-1 gap-0 mb-2">
               <TextField label="Address Line 1"        
                          bgColor="white"
                          type="text"
@@ -225,7 +241,7 @@ const AddOganisation = () => {
                          />
              </div>
 
-             <div class="grid grid-cols-1 gap-0 mb-2">
+             <div className="grid grid-cols-1 gap-0 mb-2">
               <TextField label="Address Line 2"        
                          bgColor="white"
                          type="text"
@@ -236,7 +252,7 @@ const AddOganisation = () => {
                          />
              </div>
 
-             <div class="grid grid-cols-3 gap-4 mb-2">
+             <div className="grid grid-cols-3 gap-4 mb-2">
                       <TextField label="City"        
                          bgColor="white"
                          type="text"
@@ -266,11 +282,34 @@ const AddOganisation = () => {
              </div>
     </form>
 
-
+    <ToastContainer/>
     </MainLayout>
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+   const auth = await doCheckAuth(appCtx)
+   // console.log(auth,'ddd')
+   if (!auth) {
+     return {
+       redirect: {
+         destination: '/auth/login',
+         permanent: false,
+       },
+     };
+ 
+   } else {
+     return {
+       props:{
+          user:auth
+       }
+     }
+   }
+ 
+ }
+ 
 
 export default AddOganisation
    

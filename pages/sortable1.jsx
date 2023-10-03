@@ -42,7 +42,7 @@ const seed = [
   }
 ];
 
-function Tree() {
+function Tree(props) {
   const [searchString, setSearchString] = useState("");
   const [searchFocusIndex, setSearchFocusIndex] = useState(0);
   const [searchFoundCount, setSearchFoundCount] = useState(null);
@@ -321,11 +321,12 @@ function Tree() {
           }}
         //   theme={FileExplorerTheme}
           canDrag={({ node }) => !node.dragDisabled}
-          generateNodeProps={(rowInfo) => ({
+          generateNodeProps={(rowInfo,id) => ({
             name: rowInfo.node.label,
             subtitle: rowInfo.node.subtitle,
+            keys:id,
             buttons: [
-              <div className="space-x-2"> 
+              <div className="space-x-2" key={'button'}> 
                 {/* <button
                   className="border-2 py-1 " label="Add Sibling"
                   onClick={(event) => addNodeSibling(rowInfo)}
@@ -333,6 +334,7 @@ function Tree() {
                   Add Sibling
                 </button> */}
                 <button
+                key={1}
                   className="border-2 rounded-full px-2 " label="Add Child"
                   onClick={(event) => addNodeChild(rowInfo)}
 

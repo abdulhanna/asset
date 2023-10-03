@@ -3,23 +3,30 @@ import { Text1, TextField } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 import { RegisterImg } from "../../components/atoms/icons";
 import { Headerouter } from "../../proj-components/Layout/sub-components/header";
-
+import Link from "next/link";
 import { useRouter } from 'next/router';
+import authApi from "helpers/use-api/auth";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-// import "../styles/globals.css";
+
+
 
 function Register() {
 
   const router = useRouter();
 
   const [register, setRegister] = useState({
-    EmailAddress: "",
-    Password: "",
-    ConfirmPassword: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    acceptedTAndC: false,
+    acceptedPrivacyPolicy: false
   });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const notify = (msg) => toast.success(msg);
+  const errorNotify = (msg) => toast.error(msg)
   const onChange = (e) => {
     const { name, value } = e.target;
     setRegister({ ...register, [name]: value });
@@ -29,38 +36,58 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(register));
-    setIsSubmit(true);
+    setIsSubmit(true)
   };
 
   useEffect(() => {
     console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(register);
-      alert("form submit");
+    if (Object.keys(formErrors).length === 0 && isSubmit && register.acceptedPrivacyPolicy ) {
+      handleLoginButtonClick()
+      setIsSubmit(false)
     }
   }, [formErrors]);
 
 
-  const handleLoginButtonClick = () => {
-    router.push('/auth/login')
+  const handleLoginButtonClick = async() => {
+    
+    try{
+        
+         const res = await authApi.doRegister(register)
+          console.log(res,'res')
+          notify('account created successfully')
+          setTimeout(()=>{
+            router.push('/auth/login')
+          },1000)
+          
+
+    }catch(err){
+      console.log(err.response.data.error,'err')
+      errorNotify(err.response.data.error)
+      setTimeout(()=>{
+        router.reload() 
+    },1000)
+    }
+  
+    // setRegister({ email: "", password: "", confirmPassword: "", acceptedTAndC: false, acceptedPrivacyPolicy: false})
+
   }
 
   const validate = (value) => {
     const error = {};
     const regex =
       /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (!value.EmailAddress) {
+    if (!value.email) {
       error.EmailAddress = "Email address is required !";
-    } else if (!regex.test(value.EmailAddress)) {
-      error.EmailAddress = "Enter a valid email address ! ";
+    } else if (regex.test(value.EmailAddress)) {
+      error.email = "Enter a valid email address ! ";
     }
-    if (!value.Password) {
-      error.Password = "Password is required !";
+    if (!value.password) {
+      error.password = "Password is required !";
     }
-    if (!value.ConfirmPassword) {
-      error.ConfirmPassword = "Confirm Password is required !";
-    } else if (value.ConfirmPassword !== value.Password) {
-      error.ConfirmPassword =
+    if (!value.confirmPassword) {
+      error.confirmPassword = "Confirm Password is required !";
+    } else if (value.confirmPassword !== value.password) {
+      error.confirmPassword =
         "Confirm Password should be match with password !";
     }
     return error;
@@ -112,73 +139,106 @@ function Register() {
                       bgColor="white"
                       type="text"
                       textSize="lg"
-                      name="EmailAddress"
+                      name="email"
                       onChange={onChange}
                     />
-                    <p className="text-red-500">{formErrors.EmailAddress}</p>
+                    <p className="text-red-500">{formErrors.email}</p>
                   </div>
                   <div>
                     <TextField
                       label={"Password"}
                       bgColor="white"
                       type="text"
-                      name="Password"
+                      name="password"
                       textSize="lg"
                       onChange={onChange}
                     />
-                    <p className="text-red-500">{formErrors.Password}</p>
+                    <p className="text-red-500">{formErrors.password}</p>
                   </div>
                   <div>
                     <TextField
                       label={"Confirm Password"}
                       bgColor="white"
                       type="text"
-                      name="ConfirmPassword"
+                      name="confirmPassword"
                       textSize="lg"
                       onChange={onChange}
                     />
-                    <p className="text-red-500">{formErrors.ConfirmPassword}</p>
+                    <p className="text-red-500">{formErrors.confirmPassword}</p>
                   </div>
+                  <div>
                   <div className="flex items-center">
                     <input
                       id="link-checkbox"
                       type="checkbox"
-                      value=""
+                      checked={register.acceptedTAndC}
+                      // checked={'acceptedTAndC'}
+                      // value="acceptedTAndC"
+                      onChange={(e)=> setRegister({...register,acceptedTAndC:e.target.checked,acceptedPrivacyPolicy:e.target.checked}) }
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label
                       htmlFor="link-checkbox"
                       className="ml-2 text-sm font-body text-gray-900 dark:text-gray-300">
                       Accept{" "}
-                      <a
+                      <Link
                         href="#"
                         className="text-blue-600 dark:text-blue-500 hover:underline">
                         Terms of Services
-                      </a>{" "}
+                      </Link>{" "}
                       and{" "}
-                      <a
+                      <Link
                         href="#"
                         className="text-blue-600 dark:text-blue-500 hover:underline">
                         Privacy Policy
-                      </a>
+                      </Link>
                     </label>
+
                   </div>
+                  {!register.acceptedTAndC && <p className=" ml-2 text-red-500">Plaese accept Term & condition</p>}
+                  </div>
+                
                 </div>
                 <Button type="submit" variant="contained" >
                   Get Started
                 </Button>
                 <div className=" mx-auto my-[-40px]">
-                  <a href="/auth/login" className="text-blue-600 text-sm font-body">
+                  <Link href="/auth/login" className="text-blue-600 text-sm font-body">
                     Already have an Account ? Log in
-                  </a>
+                  </Link>
                 </div>
               </form>
             </div>
           </div>
         </div>
+        <ToastContainer/>
       </div>
     </>
   );
+}
+
+export const getServerSideProps = async (appCtx) => {
+
+
+  const auth = await authApi.WhoAmI(appCtx)
+
+  if(auth){
+    return {
+      redirect:{
+        destination:'/dashboard',
+        permanent:false
+      }
+    }
+  }else{
+
+  return {
+    props:{
+
+    }
+
+
+   }
+  }
 }
 
 export default Register;

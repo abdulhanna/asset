@@ -3,13 +3,15 @@ import MainLayout from 'proj-components/MainLayout'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
-import DialogPage, { DialogPage1 } from '@/components/molecules/dialog'
+import DialogPage from '@/components/molecules/dialog'
 import { useRouter } from 'next/router'
-import { AddIcon } from '@/components/atoms/icons'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
 
 const AddUserDialog = ({open,close})=>{
-    return  <DialogPage width='min-w-[60%]' open={open} close={close}>
+
+    return (<>
+          <DialogPage width='min-w-[60%]' open={open} close={close}>
                 <div className='mx-[60px] my-[40px]'>
                 <div className=''>
                 <div className='flex justify-center'>
@@ -62,10 +64,11 @@ const AddUserDialog = ({open,close})=>{
             </div>
                 </div>
             </DialogPage>
+    </>)
 }
 
 
-const AddLocation = () => {
+const AddLocation = ({user}) => {
     const router = useRouter()
     const [isOpen,setIsOpen] = useState(false)
     const [data,setData] = useState({
@@ -100,7 +103,7 @@ const AddLocation = () => {
 
     // const arr= [2,34,6,7,34,5]
   return (<>
-    <MainLayout isScroll={true}>
+    <MainLayout isScroll={true} User={user}>
        <div> 
             <div className='flex justify-between'>
                 <div className='flex items-center gap-2 cursor-pointer' onClick={()=> router.back()}>
@@ -191,7 +194,7 @@ const AddLocation = () => {
                     </div>
                 </div>
              </div>  
-             <AddUserDialog open={isOpen} close={()=> setIsOpen(!isOpen)}/> 
+             <AddUserDialog open={isOpen} close={()=> setIsOpen(!isOpen)}></AddUserDialog> 
        </div>
     </MainLayout>
   </>

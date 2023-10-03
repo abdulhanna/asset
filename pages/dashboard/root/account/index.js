@@ -3,12 +3,12 @@ import MainLayout from 'proj-components/MainLayout'
 import NodataPage from '@/components/molecules/nodataPage'
 import { Text1 } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
-
-const Account = () => {
+import { doCheckAuth } from '@/utils/doCheckAuth'
+const Account = ({user}) => {
   const [data,setData] = useState([])
   return (
     <>
-      <MainLayout>
+      <MainLayout User={user}>
          <div className='space-y-4'>
                <div className='flex justify-between items-center'>
                 <Text1 size='2xl'>All Account Manager</Text1>
@@ -25,5 +25,28 @@ const Account = () => {
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default Account

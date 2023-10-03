@@ -8,8 +8,9 @@ import { TextField,TextInputArea } from '@/components/atoms/field'
 import { useRouter } from 'next/router'
 import TableComp from '@/components/organism/tablecomp'
 import { AssignedUserTable } from '@/components/organism/tablecomp'
+import { doCheckAuth } from '@/utils/doCheckAuth'
 
-const Single = () => {
+const Single = ({user}) => {
   const [isEdit, setIsEdit] = useState(false)
   const [data,setData] = useState([])
     const router=useRouter()
@@ -125,7 +126,7 @@ const Single = () => {
         },[data])
   return (
     <>
-        <MainLayout isScroll={true}>
+        <MainLayout isScroll={true} User={user}>
         <div>
             <div className='flex justify-between items-center cursor-pointer'>
                 <div className='flex items-center' onClick={()=> router.back()}>
@@ -207,5 +208,28 @@ const Single = () => {
     </>
   )
 }
+
+export const getServerSideProps = async (appCtx) => {
+   
+  const auth =await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+
+  } else {
+    return {
+      props:{
+         user:auth
+      }
+    }
+  }
+
+}
+
 
 export default Single

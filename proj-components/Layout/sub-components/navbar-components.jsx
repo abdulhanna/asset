@@ -4,19 +4,20 @@ import { useRouter } from 'next/router';
 import InventoryFillIcon from '../../../components/atoms/icons';
 import { FillOverview,FillUserManagment,FillOrganization,FillFieldMangment,
    SampleIcon ,QrIcon,Overview, Location,AssetMangment,AssetGroup,Departments,UserManagment,
-   Reports,RootMangment,FieldMangment,Organizations ,AccountManagement, AccountManagementFill,FillLocations, FillDepartment} from '../../../components/atoms/icons';
+   Reports,RootMangment,FieldMangment,Organizations ,AccountManagement,AssetMangementFill,
+    AccountManagementFill,FillLocations, FillDepartment} from '../../../components/atoms/icons';
 import Image from 'next/image';
 
 
 
 
-const SidebarComp = () => {
+const SidebarComp = ({user}) => {
     const router = useRouter();
 
 const defultColor = '#A3A3A3';
 const whiteColor = '#FFFFFF';
 const currentPath = router.pathname;
- let user  = 'super_admin'
+//  let user  = 'super_admin'
     const superAdmin = [
       {
         label: 'Overview',
@@ -32,14 +33,14 @@ const currentPath = router.pathname;
         },
         {
           label: 'Asset Management',
-          url: '/dashboard/fields',
+          url: '/dashboard/asset-management',
           submenu: [
-            { label: 'All Assets', url: '/dashboard/sample/viewSample' },
-            { label: 'Asset From Managment', url: '/dashboard/sample/viewScheduler' },
+            { label: 'All Assets', url: '/dashboard/asset-management/allAsset' },
+            { label: 'Asset From Managment', url: '/dashboard/asset-management/assetform' },
   
           ],
           icon: <AssetMangment />,
-          fillIcon: <InventoryFillIcon />,
+          fillIcon: <AssetMangementFill />,
         },
         {
           label: 'Asset Groups',
@@ -202,11 +203,11 @@ const currentPath = router.pathname;
       const menuItem =
       user === 'root'
         ? menuRoot
-        : user === 'super_admin'
+        : user === 'superadmin'
         ? superAdmin
-        : user === 'sub_admin'
-        ? menuAdmin
-        : menu;
+        // : user === 'sub_admin'
+        : menuAdmin
+        
 
   return (
     <Sidebar >
@@ -289,14 +290,14 @@ const currentPath = router.pathname;
       <div className="py-6  p-4 px-4">
         <div className="flex flex-row bg-white p-2 rounded-lg gap-4">
           <Image
-            src="/wazirabad/girl.jpg"
+            src="/images/user.png"
             alt="user"
             width={40}
             height={40}
             className="peer cursor-pointer rounded-lg object-cover"
           />
           <div className="flex flex-col">
-            <p className="text-sm">{'abdul'}</p>
+            <p className="text-sm">{user}</p>
             <p className="text-xs text-gray-400">{"userDesignation"}</p>
           </div>
         </div>
