@@ -7,7 +7,7 @@ import authApi from 'helpers/use-api/auth';
 
 const ResetVerify = () =>{
     const router = useRouter();
-    const {resetToken} = router.query();
+    const {resetToken} = router.query;
 
     // useEffect(() => {
 
