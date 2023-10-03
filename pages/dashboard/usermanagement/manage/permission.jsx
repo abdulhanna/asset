@@ -14,7 +14,7 @@ const Permission = ({user,access_token}) => {
   const [permission,setPermission] = useState({
      moduleName :"",
      dashboardType:"",
-     read:false,
+     read:true,
      readWrite:false,
      actions:false,
      allAccess:false,
@@ -38,6 +38,9 @@ const handleSubmit = async()=>{
        try{
           const res  = await userManageApi.addPermission(access_token,permission)
           console.log(res,'res')
+          if(res.status == '201'){
+            router.push('/dashboard/usermanagement/manage')
+          }
        }catch(err){
         console.error('Error', err);
        }

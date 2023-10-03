@@ -779,13 +779,13 @@ const sortData = (field, ascending) => {
       const dateB = b.createdAt;
       return ascending ? (dateA - dateB) : (dateB - dateA);
     } else if(field === 'locationData'){
-      const valueA = a[field].props.children.toString().toLowerCase();
-      const valueB = b[field].props.children.toString().toLowerCase();
-      return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      const valueA = a[field]?.props.children.toString().toLowerCase();
+      const valueB = b[field]?.props.children.toString().toLowerCase();
+      return ascending ? valueA?.localeCompare(valueB) : valueB?.localeCompare(valueA);
     }else {
-      const valueA = a[field].toString().toLowerCase();
-      const valueB = b[field].toString().toLowerCase();
-      return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      const valueA = a[field]?.toString().toLowerCase();
+      const valueB = b[field]?.toString().toLowerCase();
+      return ascending ? valueA?.localeCompare(valueB) : valueB?.localeCompare(valueA);
     }
   });
 };

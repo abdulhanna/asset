@@ -4,42 +4,20 @@ import NodataPage from '@/components/molecules/nodataPage'
 import Button from '@/components/atoms/button'
 import { Text1 } from '@/components/atoms/field'
 import { PermissionActionTable } from '@/components/organism/tablecomp'
-import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
+import userManageApi from 'helpers/use-api/user-managent'
 
-
-const Manage = ({user}) => {
+const Manage = ({user,list}) => {
+  const [permissionList,setPermissionList] = useState(list.permissions)
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
-    const [data,setData] = useState([ {
-      _id:'0934',
-      modlueName :"admin",
-      dashboardType:"root",
-      view:false,
-      edit:true,
-      action:false,
-      created:"1/2/23",
-      allAccess:true,
-      removeAccess:false,
-     
-   },
-   {
-    _id:'2345',
-    modlueName :"user",
-    dashboardType:"root",
-    view:false,
-    edit:true,
-    created:'1/4/23',
-    action:false,
-    allAccess:false,
-    removeAccess:true,
-   
- }])
+ 
 
 
  const headers = [
   {
     label:'Module Name',
-    name:'modlueName',
+    name:'moduleName',
   },
   {
     label:'Dashboard Type',
@@ -62,7 +40,7 @@ const clickAll = ()=>{
 
 useEffect(()=>{
   if(allClick === true){
-    setCheckedNewData(data)
+    setCheckedNewData(permissionList)
   }else {
     setCheckedNewData([])
   }
@@ -83,10 +61,12 @@ const onNewCheck=(data)=>{
   }
 }
 
+// console.log(permissionList,'list')
+
   return (
     <>
         <MainLayout User={user}>
-             <div className='xl:space-y-2 space-y-0'>
+             <div className='lg:mt-4 mt-0'>
                 <div className='flex items-center justify-between'>
                     <Text1 size="xl">All Permissions</Text1>
 
@@ -95,15 +75,15 @@ const onNewCheck=(data)=>{
                     </Button>
                 </div>
                 <div>
-                  {data.length === 0 ? <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'} /> 
+                  {permissionList.length === 0 ? <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'} /> 
                   :<div>
                   <PermissionActionTable
-                        response={data}
+                        response={permissionList}
                         headers={[{name:'check',label:''},...headers]} 
                         checkedData={checkedNewData}
                         responseData={(e) => onNewCheck(e)}
                         clickAll={clickAll}
-                        href={`/dashboard/usermanagement/manage/edit?`}
+                        href={`/dashboard/usermanagement/manage/edit?id=`}
                         onClick={(e)=> console.log(e,'onclick') }
                         checkAllStatus={allClick}
                       />
@@ -116,8 +96,8 @@ const onNewCheck=(data)=>{
 }
 
 export const getServerSideProps = async (appCtx) => {
-   
-  const auth =await doCheckAuth(appCtx)
+  let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null; 
+  const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -126,14 +106,15 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
-
-  } else {
+  } 
+  const res = await userManageApi.getAllPermission(access_token)
     return {
       props:{
-         user:auth
+         user:auth,
+         list:res?.data || [],
       }
     }
-  }
+  
 
 }
 

@@ -1,24 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import { Text1, CustomSelect, TextField } from '@/components/atoms/field'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import PermissionToggle,{PermissionToggleRead} from 'proj-components/Dashboard/user-management/permissionItem'
 import { useRouter } from 'next/router'
-import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
+import userManageApi from 'helpers/use-api/user-managent'
+import { ToastContainer, toast } from 'react-toastify';
 
-const Edit = ({user}) => {
+const Edit = ({user,access_token,singlePermission}) => {
+
     const [isEdit,setIsEdit] = useState(false)
-    const [permission,setPermission] = useState({
-        modlueName :'Admin',
-        dashboardType:'Root',
-        view:false,
-        edit:true,
-       //  readWrite:true,
-        action:false,
-        allAccess:false
-     })
+    const [permission,setPermission] = useState(singlePermission.permission)
      const router = useRouter()
+    const {id} = router.query
+    const notify = (msg)=> toast.success(msg)
+    // console.log(permission,'prer');
+
+    const handleToggle = useCallback((e)=>{
+      // console.log(e,'e')
+       let obj = {...permission,[e.name]:e.status}
+       if(obj.actions && obj.read && obj.readWrite){
+        obj['allAccess'] =  true
+       }else{
+          obj['allAccess'] = false
+       }
+       setPermission(obj)
+    },[permission])
+
+    const submitPermission = async()=>{
+
+      try{
+         const res = await userManageApi.updatePermission(access_token,id,permission)
+         console.log(res.status,'res')
+         if(res.status== '200'){
+          notify('permission update')
+         }
+      }catch(err){
+        console.error('submit permission err',err); 
+      }
+            console.log('submit', permission);
+    }
 
   return (
    <>
@@ -30,12 +53,12 @@ const Edit = ({user}) => {
                     <Text1 size='2xl'>Permission</Text1>
                 </div>
                 <div className='flex gap-5'>
-                    {isEdit ? <Button variant='contained'>SAVE</Button> :<Button variant='contained' onClick={()=>setIsEdit(!isEdit)}>EDIT</Button>}
+                    {isEdit ? <Button variant='contained' onClick={submitPermission}>SAVE</Button> :<Button variant='contained' onClick={()=>setIsEdit(!isEdit)}>EDIT</Button>}
                     <Button variant='danger'>DEACTIVATE</Button>
                 </div>
             </div>
             <div className='flex gap-11'>
-                <TextField className='w-1/4' label='Module Name' value={permission.modlueName} onChange={(e)=> setPermission({...permission,modlueName:e.target.value})} disabled={!isEdit}/>
+                <TextField className='w-1/4' label='Module Name' value={permission.moduleName} onChange={(e)=> setPermission({...permission,moduleName:e.target.value})} disabled={!isEdit}/>
                 <CustomSelect className={'w-1/4'} label={'Dashboard Type'} disabled={!isEdit}>
                     <option value={permission.dashboardType}>{permission.dashboardType}</option>
                     <option value={'root'}>Root</option>
@@ -45,16 +68,29 @@ const Edit = ({user}) => {
             <div className='space-y-10'>
                 <Text1>Permissions</Text1>
                 <div className='flex gap-10'>
-                    {isEdit ? <PermissionToggle label={'VIEW'} status={permission.view} handleClick={(e)=>setPermission({...permission,view:e.status})}/>:<PermissionToggleRead label={'VIEW'} status={permission.view}/>}
-                    {isEdit ? <PermissionToggle label={'EDIT'} status={permission.edit} handleClick={(e)=>setPermission({...permission,edit:e.status})}/>:<PermissionToggleRead label={'EDIT'} status={permission.edit}/>}
-                    {isEdit ? <PermissionToggle label={'ACTION'} status={permission.action} handleClick={(e)=>setPermission({...permission,action:e.status})}/>:<PermissionToggleRead label={'ACTION'} status={permission.action}/>}   
+                    {isEdit ? <PermissionToggle label={'VIEW'} value={'read'} status={permission.read} handleClick={(e)=>handleToggle(e)}/>:<PermissionToggleRead label={'VIEW'} status={permission.read}/>}
+                    {isEdit ? <PermissionToggle label={'EDIT'} value={'readWrite'} status={permission.readWrite} handleClick={(e)=>handleToggle(e)}/>:<PermissionToggleRead label={'EDIT'} status={permission.readWrite}/>}
+                    {isEdit ? <PermissionToggle label={'ACTION'} value={'actions'} status={permission.actions} handleClick={(e)=>handleToggle(e)}/>:<PermissionToggleRead label={'ACTION'} status={permission.actions}/>}   
                 </div>
 
             </div>
-            <div className='my-10 flex space-x-4'>
+            {/* <div className='my-10 flex space-x-4'>
                 <input type='checkbox' checked={permission.allAccess} value={permission.allAccess} onChange={(e)=> setPermission({...permission,allAccess:e.target.checked})} disabled={!isEdit}/>
                 <Text1>show All Access/Remove All Access</Text1>
+               </div> */}
+
+               <div className='my-10 flex space-x-4'>
+                <input type='checkbox' checked={permission.allAccess} value={permission.allAccess} onChange={(e)=>{
+                  // console.log(e.target.checked?"checked":"unChecked",'ss')
+                   if(e.target.checked){
+                    setPermission({...permission,allAccess:e.target.checked,actions:true,read:true,readWrite:true,removeAccess:false})
+                   }else{
+                    setPermission({...permission,allAccess:e.target.checked,actions:false,read:false,readWrite:false,removeAccess:true})
+                   }
+                } } disabled={!isEdit}/>
+                <Text1>show All Access/Remove All Access</Text1>
                </div>
+               <ToastContainer/>
        </div>
    </MainLayout>
    </>
@@ -62,9 +98,12 @@ const Edit = ({user}) => {
 }
 
 export const getServerSideProps = async (appCtx) => {
-   
-    const auth =await doCheckAuth(appCtx)
-    // console.log(auth,'ddd')
+    let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
+
+    const {id }= appCtx.query
+  
+    const auth = await authApi.WhoAmI(appCtx)
+  
     if (!auth) {
       return {
         redirect: {
@@ -73,11 +112,17 @@ export const getServerSideProps = async (appCtx) => {
         },
       };
   
-    } else {
-      return {
-        props:{
-           user:auth
-        }
+    } 
+
+
+    const {data} = await userManageApi.getPermission(access_token,id)
+
+    return {
+      props:{
+         user:auth,
+         access_token,
+         singlePermission :data
+
       }
     }
   

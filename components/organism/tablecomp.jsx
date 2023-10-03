@@ -309,6 +309,7 @@ export const PermissionActionTable = ({
               href:row._id,
               check:<SampleTableCheckBox data={checkedData} bodyData={row}/>,
               action :<ToggleComp data={row} onEdit={onEdit} onDelete={onDelete}/>
+              
             }
           })}
           classes={classes}
