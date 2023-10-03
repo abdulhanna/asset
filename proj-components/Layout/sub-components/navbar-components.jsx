@@ -1,22 +1,87 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Sidebar, { SidebarItem ,SidebarList,SidebarSubItem,SidebarSubList} from "../../../components/organism/sidebar";
 import { useRouter } from 'next/router';
-import InventoryFillIcon from '../../../components/atoms/icons';
+import {InventoryFillIcon, Logout, CompanyProfile, Setting, Document, Legal, CloseIcon} from '../../../components/atoms/icons';
 import { FillOverview,FillUserManagment,FillOrganization,FillFieldMangment,
    SampleIcon ,QrIcon,Overview, Location,AssetMangment,AssetGroup,Departments,UserManagment,
    Reports,RootMangment,FieldMangment,Organizations ,AccountManagement,AssetMangementFill,
     AccountManagementFill,FillLocations, FillDepartment} from '../../../components/atoms/icons';
 import Image from 'next/image';
+import authApi from 'helpers/use-api/auth';
+import DialogPage1 from '@/components/molecules/dialog';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
+const ConfirmLogout = ({ open, close }) => {
+
+  const router = useRouter();
+  const notify = (msg) => toast.success(msg)
+
+  const confirmLogout = async() => {
+       try{
+        const res = await authApi.doLogout()
+         notify("Logged out successfully")
+         setTimeout(()=> {
+          if(res.status == 200){
+            router.push('/auth/login')
+          }
+         },1000)
+      
+       }
+
+     catch(err){
+      console.log(err,'err')
+      }
+  }
+   
+  return (
+    <>
+      <DialogPage1 open={open} close={close} width="w-auto">
+        <div className="w-auto text-center content-start  pb-3 pr-8">
+          <div className='flex justify-center'>
+          <Logout height={"48"} width={"100"}/>
+          </div>
+          <p className='text-2xl p-2 text-primary'>Are you Leaving ?</p>
+          <p className='text-slate-500'>
+            Are you sure you want to logout ? All your unsaved data will be lost.
+          </p>
+        </div>
+
+         <div className='flex justify-around'>
+           <button onClick={confirmLogout}>Yes, Logout</button>
+           <button>NO</button>
+         </div>
+        
+      </DialogPage1>
+      <ToastContainer/>
+    </>
+  );
+};
 
 
 const SidebarComp = ({user}) => {
-    const router = useRouter();
 
-const defultColor = '#A3A3A3';
-const whiteColor = '#FFFFFF';
-const currentPath = router.pathname;
+  const [isOpen, setOpen] = useState(true);
+  const [textHigh, setTextHigh] = useState(false);
+  const toggleMenu = () => setOpen(!isOpen);
+
+
+  const router = useRouter();
+
+
+
+  const defultColor = '#A3A3A3';
+  const whiteColor = '#FFFFFF';
+  const currentPath = router.pathname;
+
+
+  const logout = async(e) => {
+
+    setTextHigh(true)
+  
+   }
+
 //  let user  = 'super_admin'
     const superAdmin = [
       {
@@ -207,6 +272,10 @@ const currentPath = router.pathname;
         ? superAdmin
         // : user === 'sub_admin'
         : menuAdmin
+
+    const handleChange = (e) => {
+      !isOpen ? setOpen(true) : setOpen(false)
+    }
         
 
   return (
@@ -287,7 +356,26 @@ const currentPath = router.pathname;
 
       <div className="flex-1" />
       <div className="bg-gray-300 h-px" />
-      <div className="py-6  p-4 px-4">
+     
+
+    {
+      isOpen ? (<div onClick={handleChange} className="py-6 transition-opacity duration-700 ease-in-out  p-4 px-2">
+      <div className="flex flex-row cursor-pointer bg-white p-2 rounded-lg gap-4">
+        <Image
+          src="/images/user.png"
+          alt="user"
+          width={40}
+          height={40}
+          className="peer cursor-pointer rounded-lg object-cover"
+        />
+        <div className="flex flex-col">
+          <p className="text-sm">{user}</p>
+          <p className="text-xs text-gray-400">{"userDesignation"}</p>
+        </div>
+      </div>
+    </div>) : (<> 
+        <div className='w-[300px]  grid grid-cols-1  divide-slate-200 border shadow-md bg-white absolute bottom-0 ml-2 mb-2 p-4 h-max cursor-pointer transition-opacity duration-700 ease-in-out' onClick={handleChange}>
+        <div className="py-6 ">
         <div className="flex flex-row bg-white p-2 rounded-lg gap-4">
           <Image
             src="/images/user.png"
@@ -301,10 +389,43 @@ const currentPath = router.pathname;
             <p className="text-xs text-gray-400">{"userDesignation"}</p>
           </div>
         </div>
-      </div>
+       </div>
+       <div className="py-2 text-slate-500 px-2"> 
+           <div className='flex pt-4'>
+            <p className='px-2'><CompanyProfile/></p>
+            <p>Company Profile</p>
+           </div>
+       </div>
+       <div className="py-2 text-slate-500 px-2"> 
+           <div className='flex pt-4'>
+            <p className='px-2'><Document/></p>
+            <p>Document</p>
+           </div>
+       </div>
+       <div className="py-2 text-slate-500 px-2"> 
+           <div className='flex pt-4'>
+            <p className='px-2'><Setting/></p>
+            <p>Setting</p>
+           </div>
+       </div>
+       <div className="py-2 text-slate-500 px-2"> 
+          <div className='flex pt-4'>
+            <p className='px-2'><Legal/></p>
+            <p>Legal</p>
+           </div>
+       </div>
+       <div className="py-2 text-slate-500 px-2"> 
+           <div className='flex pt-4' onClick={logout}>
+            <p className='px-2'><Logout width={"24"} height={"24"}/></p>
+            <p>Logout</p>
+           </div>
+       </div>
+     </div></>)
+    }
+    <ConfirmLogout  open={textHigh} close={() => setTextHigh(false)}/>
     </SidebarList>
 
-    
+    <ToastContainer/>
   </Sidebar>
   )
 }
