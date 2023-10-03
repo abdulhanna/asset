@@ -9,11 +9,11 @@ const ResetVerify = () =>{
     const router = useRouter();
     const {resetToken} = router.query();
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        resetToken ?  resetverify() : router.replace('/auth/login') 
+    //     resetToken ?  resetverify() : router.push('/auth/login') 
 
-    }, [resetToken])
+    // }, [resetToken])
 
     const resetverify = async() => {
     try{
