@@ -8,25 +8,17 @@ import { Headerouter } from "../../proj-components/Layout/sub-components/header"
 import authApi from "helpers/use-api/auth";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from 'react-toastify';
-import Test from "pages/test";
 
 function ResetPassword(props) {
-
-
   const [mailAddress, setMailAddress] = useState({
     token:"",
     password: "",
     confirmPassword: "",
   });
-
-
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
   const router = useRouter()
-
   const {resetToken} = router.query
-
   const notify = (msg)=> toast.success(msg)
   const Error = (msg)=> toast.error(msg)
 
@@ -35,7 +27,6 @@ function ResetPassword(props) {
     setMailAddress({ ...mailAddress, [name]: value });
     console.log(mailAddress);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(mailAddress));
@@ -78,50 +69,17 @@ function ResetPassword(props) {
      
     }catch(err){
 
-      Error(err.response.data.error)
-     
+      Error(err.response.data.data.error)
+
     }
   
   }
 
   useEffect(()=>{
-    if(resetToken){
-      setMailAddress((prevState)=> ({...prevState ,token : resetToken})) 
-    }
-  
-},[resetToken, ])
-
-
-useEffect(() => {
-  // Perform client-side redirection here
-   setTimeout(() => {
-    if (!resetToken) {
-      router.push('/auth/login');
-      console.log("yes this exist")
-    }
-   },3000)
-}, [resetToken, router]);
-
-
-  
-
-
-
-
-   const verifyPassword = async()=>{
-      // try{
-      //   const res= await authApi.verifyPassword(resetToken)
-      //   console.log(res.data.msg)
-      //   notify(res.data.msg)
-     
-      // }catch(err){
-      //     Error(err)
-      // }
-     
-   }
-
-
- 
+      if(resetToken){
+        setMailAddress((prevState)=> ({...prevState ,token : resetToken}))
+      }  
+  },[resetToken])
 
   // useEffect(()=>{
   //     if(mailAddress){
@@ -131,8 +89,7 @@ useEffect(() => {
 
   return (
     <>
-      
-     <div className="">
+        <div className="">
            <div className="">
            <Headerouter />
            </div>
@@ -198,37 +155,9 @@ useEffect(() => {
         </div>
       </div>
       <ToastContainer/>
-       </div>
-      
+        </div>
     </>
   );
 }
 
-
-
 export default ResetPassword;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
