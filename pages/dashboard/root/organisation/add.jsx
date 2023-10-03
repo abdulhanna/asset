@@ -5,8 +5,6 @@ import Button from '../../../../components/atoms/button';
 import { useRouter } from 'next/router';
 import { LeftArrowIcon } from '@/components/atoms/icons';
 import { doCheckAuth } from '@/utils/doCheckAuth';
-import { ToastContainer, toast } from 'react-toastify';
-import orgApi from 'helpers/use-api/organisations';
 
 const AddOganisation = ({user}) => {
 
@@ -35,9 +33,6 @@ const AddOganisation = ({user}) => {
    const[isSubmit, setIsSubmit] = useState(false);
 
 
-   const notify = (msg) => toast.success(msg);
-   const errorNotify = (msg) => toast.error(msg)
-
    // Checking if profilerrors have 0 length and isSubmit true then show me an action
    useEffect(() => {
       if(Object.keys(profileErrors).length === 0 && isSubmit){
@@ -63,20 +58,9 @@ const AddOganisation = ({user}) => {
    }
 
    // Submitbutton 
-   const handleSubmit = async(e) => {
+   const handleSubmit = (e) => {
       e.preventDefault();
       setProfileErrors(validate(companyprofileData))
-   try{ 
-       const res  = await orgApi.add(companyprofileData)
-       console.log(res, 'resPONSE ADDED')
-       notify('Added company Organization')
-      //  setTimeout(() => {
-      //     router.push('/organisations')
-      //  },1000)
-   }catch(err){
-      console.log(err)
-      errorNotify(err)
-   }
       setIsSubmit(true)
       console.log("hiih", companyprofileData)
       router.push('/dashboard/root/organisation'); 
@@ -282,7 +266,7 @@ const AddOganisation = ({user}) => {
              </div>
     </form>
 
-    <ToastContainer/>
+
     </MainLayout>
     </>
   )
@@ -290,7 +274,7 @@ const AddOganisation = ({user}) => {
 
 export const getServerSideProps = async (appCtx) => {
    
-   const auth = await doCheckAuth(appCtx)
+   const auth =await doCheckAuth(appCtx)
    // console.log(auth,'ddd')
    if (!auth) {
      return {

@@ -24,16 +24,16 @@ import { useRouter } from 'next/router';
 //   );
 // };
 
-const Groupview =(allgroups) => {
+const Groupview =() => {
 
   const [textHigh, setTextHigh] = useState(false);
 
- console.log(allgroups.allgroups?.fieldGroups, "this is daaa field managment")
+ 
 
   const data = [
     {
       id: 1,
-      title: 'Asset test',
+      title: 'Asset Description',
     },{
       id: 2,
       title: 'Asset Acquisition',
@@ -73,10 +73,10 @@ const Groupview =(allgroups) => {
     <div className="w-full ">
       {/* Add Field Button */}
       {/* Display Text */}
-      {allgroups.allgroups?.fieldGroups?.map((component) => (
-        <div key={component._id} className="flex justify-between pl-2 py-4 mb-2">
+      {data.map((component) => (
+        <div key={component.id} className="flex justify-between pl-2 py-4 mb-2">
            <Text1 size='lg' weight='medium'> 
-             {component.groupName}
+             {component.title}
            </Text1>
            <div>
            {/* <Button  onClick={() => setTextHigh(true)} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
@@ -85,7 +85,7 @@ const Groupview =(allgroups) => {
           <Button onClick={editGroup} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform hover:scale-110 ">
             Edit Group
           </Button> */}
-             <Button  onClick={ManageGroup} href={`/dashboard/root/field-management/fieldgroupdescription?id=${component?._id}&name=${component?.groupName}`} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
+             <Button  onClick={ManageGroup} href={`/dashboard/root/field-management/fieldgroupdescription?id=${component?.id}&name=${component?.title}`} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
               Manage Group
            </Button>
            </div>

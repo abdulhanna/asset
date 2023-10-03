@@ -46,8 +46,6 @@ authApi.ResendMail = (data)=> hostedAuthAxios.post('/resen-verification-email',d
 
 authApi.verifyToken = (token) => hostedAuthAxios.get(`/confirm/${token}`)
 
-authApi.verifyPassword = (token) => hostedAuthAxios.get(`/reset-password/${token}`)
-
 authApi.forgotPassword = (data) => hostedAuthAxios.post('/request-forgot-password',data)
 
 authApi.resetPassword = (data) => hostedAuthAxios.post('/reset-password',data)

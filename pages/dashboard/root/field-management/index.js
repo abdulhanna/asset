@@ -1,14 +1,13 @@
 import React from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
 import FieldOverview from './fieldoverview'
-import field from '../../../../helpers/use-api/fieldmanagment'
 import SubGroupview from './subgroupview'
 import Fieldgroupdescription from './fieldgroupdescription'
 import { doCheckAuth } from '@/utils/doCheckAuth'
 
 
 
-const FieldMangment = ({user, allgroups}) => {
+const FieldMangment = ({user}) => {
   const handleAddButtonClick = () => {
     console.log("thhh")
   }
@@ -16,15 +15,13 @@ const FieldMangment = ({user, allgroups}) => {
     <>
         <MainLayout User={user}>
                 <FieldOverview/>
-                <SubGroupview allgroups={allgroups}/>
+                <SubGroupview/>
         </MainLayout>
     </>
   )
 }
 
 export const getServerSideProps = async (appCtx) => {
-
-  let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
    
   const auth = await doCheckAuth(appCtx)
   // console.log(auth,'ddd')
@@ -36,13 +33,10 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
 
-  } 
-  const getAllgroups = await field.getAllGroups(access_token)
-  {
+  } else {
     return {
       props:{
-         user:auth,
-         allgroups:getAllgroups.data || []
+         user:auth
       }
     }
   }
