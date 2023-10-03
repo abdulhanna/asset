@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {useRouter} from 'next-router'
+import { useRouter } from "next/router";
 import authApi from 'helpers/use-api/auth';
 
 
