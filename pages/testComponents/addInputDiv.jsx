@@ -1,34 +1,59 @@
 import {useState } from "react";
 import Button from "../../components/atoms/button";
 import {Text1} from "../../components/atoms/field";
+import field from "helpers/use-api/fieldmanagment";
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
+
+
+  const notify = (msg) => toast.success(msg);
+  const errorNotify = (msg) => toast.error(msg)
+
   const [inputData, setInputData] = useState([
     {
-      label: ""
+      subgroupName: ""
     }
   ]);
 
-  const handleSubmit = () => {
-    setInputData([...inputData, { label: "" }]);
-  
+  const [groups, setGroups] = useState({
+    subgroups:[]
+  })
+
+
+  const handleSubmit = async(e) => {
+    setInputData([...inputData, { subgroupName: "" }]);
+    setGroups({
+      subgroups:[inputData]
+    })
     // console.log(inputData);
+    console.log(groups, "this is ggg")
   };
 
  
   const handleChange = (e,index)=>{
     // console.log(e.target.value,index)
     let data = [...inputData]
-     data[index]['label'] = e.target.value 
+     data[index]['subgroupName'] = e.target.value 
      setInputData(data)
      
   }
 
-  const handlesaveall = () => {
+  const handlesaveall = async(e) => {
     handleSave(inputData)
+    console.log(groups, "this is ")
+    try{
+      const res = await field.addGroup(groups)
+      console.log(res,"res data")
+      notify('Added Group')
+    }
+    catch(err){
+      console.log(err)
+      errorNotify(err)
+    }
   }
 
-  console.log(inputData);
+ 
   return (
     <div className="w-full flex justify-center py-[22px]">
       <div className="w-[488px]  h-auto max-h-[550px] flex flex-col items-center overflow-y-auto">
@@ -46,7 +71,7 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
                   placeholder="Add Description"
                   className="w-full border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   name="inputText"
-                  value={item.label}
+                  value={item.subgroupName}
                   onChange={(e) => handleChange(e,index)}
                 />
               </div>
@@ -71,7 +96,10 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
           </Button>
         </div>
       </div>
+
+    <ToastContainer/>
     </div>
+    
   );
 };
 
