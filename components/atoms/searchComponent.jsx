@@ -3,13 +3,13 @@ import React from "react";
 export default function SearchComponent() {
     return (
         <form className="max-w-sm flex px-4">
-            <div className="relative">
+            <div className="relative border border-indigo-600 rounded-md">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
+                    className="absolute top-0  bottom-0  w-6 h-6 my-auto text-gray-400 left-3"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    stroke="lightblue"
                 >
                     <path
                         strokeLinecap="round"
@@ -21,12 +21,12 @@ export default function SearchComponent() {
                 <input
                     type="text"
                     placeholder="Search..."
-                    className="xl:w-[500px] h-10 py-3 pl-12 pr-4 text-primary border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
+                    className="xl:w-[500px] placeholder-blue-600 2xl:w-[550px] h-10 py-3 pl-12 pr-4 text-primary border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
                 />
             </div>
 
             <button className="px-4 relative -ms-8 text-white bg-primary border-l rounded ">
-                    Search
+                    SEARCH
             </button>
 
         </form>

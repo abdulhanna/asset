@@ -9,6 +9,7 @@ import { FillOverview,FillUserManagment,FillOrganization,FillFieldMangment,
 import Image from 'next/image';
 import authApi from 'helpers/use-api/auth';
 import DialogPage1 from '@/components/molecules/dialog';
+import { RightArrow } from '../../../components/atoms/icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -168,6 +169,7 @@ const SidebarComp = ({user}) => {
 
         ],
         icon: <RootMangment />,
+        iconlast:<RightArrow/>,
         fillIcon: <FillUserManagment/>,
       },{
         label:'Account Management',
@@ -285,6 +287,7 @@ const SidebarComp = ({user}) => {
         {menuItem.map((item, index) => {
           const Icon = item.icon;
           const FillIcon = item.fillIcon;
+          const lastIcon = item?.iconlast;
           return item.submenu ? (
             <SidebarSubList
               label={item.label}
@@ -292,6 +295,7 @@ const SidebarComp = ({user}) => {
               open={currentPath.startsWith(item.url)}
               icon={Icon}
               fillIcon={FillIcon}
+              lastIcon={lastIcon}
               key={index}
             >
              
@@ -360,7 +364,7 @@ const SidebarComp = ({user}) => {
 
     {
       isOpen ? (<div onClick={handleChange} className="py-6 transition-opacity duration-700 ease-in-out  p-4 px-2">
-      <div className="flex flex-row cursor-pointer bg-white p-2 rounded-lg gap-4">
+      <div className="flex flex-row cursor-pointer items-center  p-3 rounded-lg gap-4">
         <Image
           src="/images/user.png"
           alt="user"
@@ -371,6 +375,9 @@ const SidebarComp = ({user}) => {
         <div className="flex flex-col">
           <p className="text-sm">{user}</p>
           <p className="text-xs text-gray-400">{"userDesignation"}</p>
+        </div>
+        <div className='py-2 px-2'>
+        <RightArrow/>
         </div>
       </div>
     </div>) : (<> 
@@ -389,6 +396,7 @@ const SidebarComp = ({user}) => {
             <p className="text-xs text-gray-400">{"userDesignation"}</p>
           </div>
         </div>
+    
        </div>
        <div className="py-2 text-slate-500 px-2"> 
            <div className='flex pt-4'>

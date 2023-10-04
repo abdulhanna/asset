@@ -73,7 +73,7 @@ const RolesPerimission = ({user}) => {
     <>
         <MainLayout User={user}>
             <div className='space-y-2'>
-               <div className='flex justify-between items-end py-4'>
+               <div className='flex justify-between '>
                 <Text1 size='2xl'>All Roles</Text1>
                  <Button href={'/dashboard/usermanagement/roles/add-roles'} variant='contained' >CREATE ROLE</Button>
                </div>

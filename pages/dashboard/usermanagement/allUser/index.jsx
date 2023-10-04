@@ -80,7 +80,7 @@ useEffect(()=>{
     <>
         <MainLayout User={user}>
          <div className=''>
-         <div className='flex justify-between items-end py-4'>
+         <div className='flex justify-between i'>
          <Text1 size='2xl'>All Member</Text1>
          <Button variant='contained' onClick={()=>router.push('/dashboard/usermanagement/allUser/add-user')}>ADD MEMBER</Button>
          </div>
