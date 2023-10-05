@@ -3,24 +3,26 @@ import Button from "../../components/atoms/button";
 import {Text1} from "../../components/atoms/field";
 
 const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
-  const [inputData, setInputData] = useState([
-    {
-      label: ""
-    }
-  ]);
+  const [inputData, setInputData] = useState({
+    groupNames:[""]
+  });
 
   const handleSubmit = () => {
-    setInputData([...inputData, { label: "" }]);
-  
-    // console.log(inputData);
+    setInputData({
+      ...inputData,
+      groupNames:[...inputData.groupNames, ""]
+    });
   };
 
  
   const handleChange = (e,index)=>{
     // console.log(e.target.value,index)
-    let data = [...inputData]
-     data[index]['label'] = e.target.value 
-     setInputData(data)
+    let data = [...inputData.groupNames]
+     data[index] = e.target.value 
+     setInputData({
+      ...inputData,
+      groupNames:data,
+     })
      
   }
 
@@ -28,12 +30,12 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
     handleSave(inputData)
   }
 
-  console.log(inputData);
+  console.log(inputData, "this");
   return (
     <div className="w-full flex justify-center py-[22px]">
       <div className="w-[488px]  h-auto max-h-[550px] flex flex-col items-center overflow-y-auto">
         <Text1 size="2xl" weight="medium"> {Heading}</Text1>
-        {inputData?.map((item,index) => {
+        {inputData?.groupNames?.map((item,index) => {
           console.log(item);
           return (
             <>
@@ -46,7 +48,7 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
                   placeholder="Add Description"
                   className="w-full border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   name="inputText"
-                  value={item.label}
+                  value={item}
                   onChange={(e) => handleChange(e,index)}
                 />
               </div>

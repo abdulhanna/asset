@@ -10,7 +10,7 @@ const Account = ({user}) => {
     <>
       <MainLayout User={user}>
          <div className='space-y-4'>
-               <div className='flex justify-between items-center'>
+               <div className='flex justify-between '>
                 <Text1 size='2xl'>All Account Manager</Text1>
                  <Button href={'/dashboard/root/account/add'} variant='contained' >ADD ACCOUNT MEMBER</Button>
                </div>
