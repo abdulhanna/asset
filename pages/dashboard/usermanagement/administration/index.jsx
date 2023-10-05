@@ -13,7 +13,7 @@ const Administration = ({user}) => {
     <>
         <MainLayout User={user}>
             <div>
-                <div className='flex justify-between items-end py-4'>
+                <div className='flex justify-between '>
                     <Text1 size='2xl'>All Administrations</Text1>
                     <Button variant='contained' href={'/dashboard/usermanagement/administration/addAdministration'}>ADD ADMINISTRATION</Button>
                 </div>

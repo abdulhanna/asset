@@ -12,7 +12,7 @@ const Page = ({user,organisationList}) => {
   return (
    <>
     <MainLayout User={user}>
-    <div className='flex justify-between items-center 2xl:my-8 my-0'>
+    <div className='flex justify-between   my-0'>
       <Text1 size='2xl'>All Organizations</Text1>
       <Button href={'/dashboard/root/organisation/add'} variant='contained'>ADD  ORGANIZATION</Button>
     </div>

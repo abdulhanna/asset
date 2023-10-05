@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FinbitLogo } from '../atoms/icons';
 
- const Sidebar = ({ children }) => {
+export const Sidebar = ({ children }) => {
     return (
       <div className="bg-[#F7F7F7] min-w-[16rem] text-primary-lightest flex flex-col h-screen  overflow-y-auto border-r">
         <div className="flex flex-row p-6  items-center justify-center gap-4">

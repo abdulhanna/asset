@@ -19,7 +19,7 @@ export const OrganisationTableComponent = ({ headers,
     responseData,
     extraclasses,clickAll,checkAllStatus}) =>{
     return (
-        <div className="h-auto py-8">
+        <div className="h-auto py-4">
               <div className="relative overflow-x-auto rounded-lg">
                   <ColClickTable
                   headers={headers}

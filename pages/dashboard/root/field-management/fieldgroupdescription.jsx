@@ -8,6 +8,7 @@ import AddField from 'pages/testComponents/addField';
 import { CloseIcon } from '@/components/atoms/icons';
 import { useRouter } from 'next/router';
 import { doCheckAuth } from '@/utils/doCheckAuth';
+import { ToastContainer, toast } from 'react-toastify';
 // Add field Modal
 const AddInputField = ({ open, close, showData, setShow }) => {
 
@@ -16,7 +17,7 @@ const AddInputField = ({ open, close, showData, setShow }) => {
   }
 
   const handleSave = (data) => {
-  
+     console.log(data, "this is inputdata")
      showData(data)
      setShow(true)
      close()
@@ -56,6 +57,9 @@ const Fieldgroupdescription = ({user}) => {
 
   const router = useRouter();
 
+  const notify = (msg) => toast.success(msg)
+  const error = (msg) => toast.danger(msg)
+
   const {id,name} = router.query
   
   const data = [
@@ -77,7 +81,7 @@ const Fieldgroupdescription = ({user}) => {
   ]
 
 
-  const showData = ({data}) => {
+  const showData = (data) => {
     console.log(data, "ths is fieldoverview")
  }
 
@@ -91,7 +95,7 @@ const Fieldgroupdescription = ({user}) => {
 
     return(
       <>
-      <MainLayout User={user}>
+      <MainLayout User={user} isScroll='true'>
         <div className='flex justify-between mb-4 px-2'>
          <Text1 size="2xl" weight="medium">
          {name}   
@@ -125,13 +129,14 @@ const Fieldgroupdescription = ({user}) => {
 
       <AddInputField open={inputHigh} close={() => setInputHigh(false)} showData={showData} setShow={setShow}/>  
       <AddtextField open={textHigh} close={() => setTextHigh(false)} />
+      <ToastContainer/>
       </MainLayout>
       </>
     )
 }
 
 export const getServerSideProps = async (appCtx) => {
-   
+  
   const auth =await doCheckAuth(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
