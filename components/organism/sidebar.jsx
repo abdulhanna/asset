@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { FinbitLogo } from '../atoms/icons';
 
- const Sidebar = ({ children }) => {
+export const Sidebar = ({ children }) => {
     return (
       <div className="bg-[#F7F7F7] min-w-[16rem] text-primary-lightest flex flex-col h-screen  overflow-y-auto border-r">
         <div className="flex flex-row p-6  items-center justify-center gap-4">
@@ -25,7 +25,6 @@ export const SidebarItem = ({
     active,
     classname = '',
     fillIcon,
-    lastIcon,
   }) => {
     return (
       <Link href={href}>
@@ -33,9 +32,9 @@ export const SidebarItem = ({
           <div
             className={cn(
               `${classname}`,
-              'w-full  p-3 font-medium flex flex-row items-center cursor-pointer text-sm rounded',
+              'w-full inline-block p-2 flex flex-row items-center cursor-pointer text-sm rounded',
               {
-                'bg-white text-primary font-body': active,
+                'bg-menuBG text-primary font-body': active,
               },
               {
                 'hover:bg-gray-100 hover:text-gray-400 text-gray-400': !active,
@@ -45,7 +44,6 @@ export const SidebarItem = ({
             <span className="px-2">{active ? fillIcon : icon}</span>
             <span className="px-2 flex-grow text-sm truncate">{label}</span>
             {accessoryIcon}
-            <span className="px-2 py-2">{lastIcon}</span>
           </div>
         </a>
       </Link>
