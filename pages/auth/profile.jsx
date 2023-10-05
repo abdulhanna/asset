@@ -20,22 +20,22 @@ function Profile(props) {
     gstin: "",
     contactNo: "",
     mainAddress: {
-        address1: "",
-        address2: "",
-        city: "",
-        state: "",
-        country: "",
-        pinCode: ""
-    }
+      address1: "",
+      address2: "",
+      city: "",
+      state: "",
+      country: "",
+      pinCode: "",
+    },
   };
   const [profileData, setProfileData] = useState(initialValue);
   const [profileErrors, setProfileErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
   const [activeSection, setActiveSection] = useState("");
   const profileInfoRef = useRef(null);
   const addressRef = useRef(null);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = [
@@ -65,64 +65,73 @@ function Profile(props) {
     };
   }, []);
 
- 
-
   const handleChange = (e) => {
     // e.preventDefault();
     const { name, value } = e.target;
-    console.log(name,value,'checlk')
+    console.log(name, value, "checlk");
     setProfileData({ ...profileData, [name]: value });
   };
 
-  const handleChange1 = (e)=>{
+  const handleChange1 = (e) => {
     const { name, value } = e.target;
-    setProfileData({...profileData,mainAddress:{...profileData.mainAddress,[name]:value}})
-  }
-  
+    setProfileData({
+      ...profileData,
+      mainAddress: { ...profileData.mainAddress, [name]: value },
+    });
+  };
 
   useEffect(() => {
     if (Object.keys(profileErrors).length === 0 && isSubmit) {
-      profileSubmit()
+      profileSubmit();
     }
   }, [profileErrors]);
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(profileData);
     setProfileErrors(validate(profileData));
     setIsSubmit(true);
-
   };
 
-  const profileSubmit = async()=>{
- 
-    try{
-      const res = await authApi.CompanyProfile(profileData)
-      console.log(res.status,'res')
-      if(res.status == 200){
-         router.push('/dashboard')
+  const profileSubmit = async () => {
+    try {
+      const res = await authApi.CompanyProfile(profileData);
+      console.log(res.status, "res");
+      if (res.status == 200) {
+        router.push("/dashboard");
       }
-    
-      setProfileData({ organizationName: "",  organizationRegistrationNumber: "",  organizationType: "",  pan: "", gstin: "", contactNo: "",  mainAddress: {     address1: "",      address2: "",    city: "",  state: "",  country: "",  pinCode: "" }})
-    }catch(err){
-      console.log(err,'eerrr')
+
+      setProfileData({
+        organizationName: "",
+        organizationRegistrationNumber: "",
+        organizationType: "",
+        pan: "",
+        gstin: "",
+        contactNo: "",
+        mainAddress: {
+          address1: "",
+          address2: "",
+          city: "",
+          state: "",
+          country: "",
+          pinCode: "",
+        },
+      });
+    } catch (err) {
+      console.log(err, "eerrr");
     }
-    
-  }
+  };
 
   const profileHandle = () => {
-  const scrollPosition = 0;
+    const scrollPosition = 0;
 
-  window.scrollTo({
-    top: scrollPosition,
-    behavior: "smooth", 
-  });
-  } 
+    window.scrollTo({
+      top: scrollPosition,
+      behavior: "smooth",
+    });
+  };
 
- 
   const validate = () => {
-
     const errors = {};
     if (!profileData.organizationRegistrationNumber) {
       errors.organizationRegistrationNumber =
@@ -168,9 +177,9 @@ function Profile(props) {
     return errors;
   };
 
-   useEffect(()=>{
-       console.log(profileData,'profile')
-   },[profileData])
+  useEffect(() => {
+    console.log(profileData, "profile");
+  }, [profileData]);
 
   return (
     <>
@@ -178,7 +187,7 @@ function Profile(props) {
 
       <div className="flex mx-[180px] gap-[50px] lg:gap-[100px] xl:gap-[150px] 2xl:gap-[371px]">
         <div className="w-[288px] my-[100px]">
-        <div className="flexflex-col justify-between w-[288px] h-[888px] fixed">
+          <div className="flexflex-col justify-between w-[288px] h-[888px] fixed">
             <div className=" flex flex-col gap-[52px]">
               <div className=" flex flex-col gap-5">
                 <p className="text-2xl font-normal w-[285px]">
@@ -190,7 +199,7 @@ function Profile(props) {
                 </p>
               </div>
               <div className="flex flex-col gap-5">
-              <p
+                <p
                   className={`text-base cursor-pointer font-body ${
                     activeSection === "profile-information"
                       ? "text-blue-600 border-l-2 border-blue-600 p-2.5"
@@ -213,12 +222,12 @@ function Profile(props) {
                 <p className="text-base font-body text-[#515151]">
                   Billing & Plans
                 </p>
-            </div>
-            <div>
-              <ProfileIcon />
+              </div>
+              <div>
+                <ProfileIcon />
+              </div>
             </div>
           </div>
-        </div>
         </div>
 
         <div className="w-full my-[100px]">
@@ -236,8 +245,8 @@ function Profile(props) {
               </div>
               <div className="border-b-2 border-dashed"> </div>
 
-{/* Profile INformation Section------------------------------------------------------------------------------------- */}
-               <div
+              {/* Profile INformation Section------------------------------------------------------------------------------------- */}
+              <div
                 ref={profileInfoRef}
                 className={`flex flex-col gap-5 ${
                   activeSection === "profile-information"
@@ -248,7 +257,9 @@ function Profile(props) {
                 {/* <button className="text-xl text-[#3B5FDA]" id="section1" >
                   Profile Information
                 </button> */}
-                <Text1 size="xl" weight="medium">Profile Information</Text1>
+                <Text1 size="xl" weight="medium">
+                  Profile Information
+                </Text1>
                 <div className=" grid md:grid-cols-2  gap-x-[52px] gap-y-[40px]">
                   <div>
                     <TextField
@@ -260,28 +271,34 @@ function Profile(props) {
                       onChange={handleChange}
                       roundedText="rounded-[4px]"
                     />
-                    <p className="text-red-500">{profileErrors.organizationName}</p>
+                    <p className="text-red-500">
+                      {profileErrors.organizationName}
+                    </p>
                   </div>
                   <div>
                     <CustomSelect
                       label={"Industry"}
                       selectHeight="h-[48px]"
                       name="organizationType"
-                      onChange={handleChange}>
+                      onChange={handleChange}
+                    >
                       <option value="">Select</option>
                       <option value="Reaserch and development ">
                         Reaserch And Development
                       </option>
                       <option value="Reaserch and development ">IT</option>
                     </CustomSelect>
-                    <p className="text-red-500">{profileErrors.organizationType}</p>
+                    <p className="text-red-500">
+                      {profileErrors.organizationType}
+                    </p>
                   </div>
                   <div>
                     <CustomSelect
                       label={"Country"}
                       selectHeight="h-[48px] "
                       name="country"
-                      onChange={handleChange1}>
+                      onChange={handleChange1}
+                    >
                       <option value="">select</option>
                       <option value="india">India</option>
                     </CustomSelect>
@@ -328,8 +345,8 @@ function Profile(props) {
                 </div>
               </div>
               <div className="border-b-2 border-dashed"> </div>
-            {/* Address Contact Deatails Page------------------------------------------------------------------------------------------------- */}
-            <div
+              {/* Address Contact Deatails Page------------------------------------------------------------------------------------------------- */}
+              <div
                 ref={addressRef}
                 className={`flex flex-col gap-5 ${
                   activeSection === "address-contact-details"
@@ -337,7 +354,12 @@ function Profile(props) {
                     : ""
                 }`}
               >
-                <Text1 size="xl" weight="medium" color="text-[#3B5FDA]" id="section2" >
+                <Text1
+                  size="xl"
+                  weight="medium"
+                  color="text-[#3B5FDA]"
+                  id="section2"
+                >
                   Address & Contact Details
                 </Text1>
 
@@ -376,11 +398,12 @@ function Profile(props) {
                         label={"City"}
                         selectHeight="h-[48px] "
                         name="city"
-                        onChange={handleChange1}>
+                        onChange={handleChange1}
+                      >
                         <option value="">select</option>
                         <option value="mumbai">Mumbai</option>
-                        <option value={'delhi'}>Delhi</option>
-                        <option value={'lucknow'}>Lucknow</option>
+                        <option value={"delhi"}>Delhi</option>
+                        <option value={"lucknow"}>Lucknow</option>
                       </CustomSelect>
                       <p className="text-red-500">{profileErrors.city}</p>
                     </div>
@@ -389,7 +412,8 @@ function Profile(props) {
                         label={"State"}
                         selectHeight="h-[48px] "
                         name="state"
-                        onChange={handleChange1}>
+                        onChange={handleChange1}
+                      >
                         <option value="">select</option>
                         <option value="maharashtra">Maharashtra</option>
                       </CustomSelect>
@@ -412,7 +436,8 @@ function Profile(props) {
                       <div>
                         <label
                           htmlFor=""
-                          className="text-[12px] text-textColor">
+                          className="text-[12px] text-textColor"
+                        >
                           Contact No
                         </label>
                       </div>
@@ -427,7 +452,7 @@ function Profile(props) {
                           </div>
                           <div className="col-span-9">
                             <InputField
-                            type={'number'}
+                              type={"number"}
                               placeHolder="00000 00000"
                               onChange={handleChange}
                               name="contactNo"
