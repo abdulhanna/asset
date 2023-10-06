@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Text1 from '@/components/atoms/field'
 import Button from '../../../../components/atoms/button';
 import AddField from 'pages/testComponents/addField';
 import { CloseIcon } from '@/components/atoms/icons';
-import {DialogPage1} from "@/components/molecules/dialog";
+import { DialogPage1 } from "@/components/molecules/dialog";
 import { useRouter } from 'next/router';
 
 
 
 // const AddtextField = ({ open, close }) => {
-   
+
 //   return (
 //     <>
 //       <DialogPage1 open={open} close={close} width="w-[1288px]">
@@ -24,17 +24,17 @@ import { useRouter } from 'next/router';
 //   );
 // };
 
-const Groupview =(allgroups) => {
+const Groupview = (allgroups) => {
 
   const [textHigh, setTextHigh] = useState(false);
 
- console.log(allgroups.allgroups?.fieldGroups, "this is daaa field managment")
+  console.log(allgroups.allgroups?.fieldGroups, "this is daaa field managment")
 
   const data = [
     {
       id: 1,
       title: 'Asset test',
-    },{
+    }, {
       id: 2,
       title: 'Asset Acquisition',
     },
@@ -51,7 +51,7 @@ const Groupview =(allgroups) => {
 
 
   const AddFieldbtn = () => {
-      setTextHigh(true)
+    setTextHigh(true)
   }
 
   const editGroup = () => {
@@ -60,40 +60,40 @@ const Groupview =(allgroups) => {
 
   // Manage Group Functions:
 
-  const ManageGroup =(id) => {
-      console.log(id,"this is id")
+  const ManageGroup = (id) => {
+    console.log(id, "this is id")
   }
 
 
   return (
     <div>
-  
-    <div className="flex h-screen">
-    {/* Left Side */}
-    <div className="w-full ">
-      {/* Add Field Button */}
-      {/* Display Text */}
-      {allgroups.allgroups?.fieldGroups?.map((component) => (
-        <div key={component._id} className="flex justify-between pl-2 py-4 mb-2">
-           <Text1 size='lg' weight='medium'> 
-             {component.groupName}
-           </Text1>
-           <div>
-           {/* <Button  onClick={() => setTextHigh(true)} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
+
+      <div className="flex">
+        {/* Left Side */}
+        <div className="w-full h-[80vh] overflow-auto">
+          {/* Add Field Button */}
+          {/* Display Text */}
+          {allgroups.allgroups?.fieldGroups?.map((component) => (
+            <div key={component._id} className="flex justify-between pl-2 py-4 mb-2">
+              <Text1 size='lg' weight='medium'>
+                {component.groupName}
+              </Text1>
+              <div>
+                {/* <Button  onClick={() => setTextHigh(true)} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
               Add Field
            </Button>
           <Button onClick={editGroup} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform hover:scale-110 ">
             Edit Group
           </Button> */}
-             <Button  onClick={ManageGroup} href={`/dashboard/root/field-management/fieldgroupdescription?id=${component?._id}&name=${component?.groupName}`} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
-              Manage Group
-           </Button>
-           </div>
+                <Button onClick={ManageGroup} href={`/dashboard/root/field-management/fieldgroupdescription?id=${component?._id}&name=${component?.groupName}`} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
+                  Manage Group
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-    {/* <AddtextField open={textHigh} close={() => setTextHigh(false)} /> */}
-     </div>
+        {/* <AddtextField open={textHigh} close={() => setTextHigh(false)} /> */}
+      </div>
     </div>
   )
 }

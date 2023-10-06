@@ -1,3 +1,4 @@
+const plugin = require('tailwindcss/plugin')
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx,vue}",
@@ -5,6 +6,8 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./proj-components/**/*.{js,ts,jsx,tsx}",
   ],
+
+  
 
   theme: {
     extend: {
@@ -21,6 +24,7 @@ module.exports = {
         menuText: "#076DA9",
         fieldBg: "rgba(196,196,196,0.25)",
       },
+      
 
       screens: {
         sm: "640px",
@@ -57,5 +61,22 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+      plugin(function({ addUtilities }) {
+      addUtilities({
+        '.content-auto': {
+          'content-visibility': 'auto',
+        },
+        '.content-hidden': {
+          'content-visibility': 'hidden',
+        },
+        '.content-visible': {
+          'content-visibility': 'visible',
+        },
+
+      })
+    })
+  ],
+     
+
 };
