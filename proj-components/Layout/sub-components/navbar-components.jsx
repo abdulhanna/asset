@@ -6,8 +6,7 @@ import Sidebar, {
   SidebarSubList,
 } from "../../../components/organism/sidebar";
 import { useRouter } from "next/router";
-import {
-  InventoryFillIcon,
+import InventoryFillIcon, {
   Logout,
   CompanyProfile,
   Setting,
