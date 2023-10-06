@@ -1,13 +1,21 @@
-import Table from '../molecules/table';
-import { useState } from 'react';
-import { SampleTableCheckBox,ClickCheckBoxComp } from 'proj-components/Dashboard/tableItem';
-import { ActionTable, CheckWithLinkTable , Table1,Table2} from '../molecules/table';
-import { TrashOutline } from '../atoms/icons';
-import { EditIcon,DeleteIcon } from '../atoms/icons';
-import { ToggleButton, ToggleOnButton } from '../atoms/icons';
-import { Text1 } from '../atoms/field';
-import Paging from '../molecules/paging';
-
+import Table from "../molecules/table";
+import { useState } from "react";
+import {
+  SampleTableCheckBox,
+  ClickCheckBoxComp,
+} from "proj-components/Dashboard/tableItem";
+import {
+  ActionTable,
+  CheckWithLinkTable,
+  Table1,
+  Table2,
+} from "../molecules/table";
+import { TrashOutline } from "../atoms/icons";
+import { EditIcon, DeleteIcon } from "../atoms/icons";
+import { ToggleButton, ToggleOnButton } from "../atoms/icons";
+import { Text1 } from "../atoms/field";
+import Paging from "../molecules/paging";
+import { DateTime } from "luxon";
 // const classes = {
 //   table: 'w-full text-sm text-left  ',
 //   thead: 'text-sm  uppercase bg-[#F7F7F7] border-b text-gray-500  font-semibold',
@@ -18,12 +26,13 @@ import Paging from '../molecules/paging';
 // };
 
 const classes = {
-  table: 'w-full text-sm text-left  ',
-  thead: 'text-sm  uppercase bg-[#F7F7F7] border-b text-gray-500  font-semibold',
-  tbody: 'bg-white cursor-pointer',
-  tr: 'text-[#121212] font-body text-sm text-left',
-  th: 'px-6 py-4  truncate',
-  td: 'px-6 py-4 text-sm font-normal  tracking-tighter turncate text-[#121212] border-t border-white',
+  table: "w-full text-sm text-left  ",
+  thead:
+    "text-sm  uppercase bg-[#F7F7F7] border-b text-gray-500  font-semibold",
+  tbody: "bg-white cursor-pointer",
+  tr: "text-[#121212] font-body text-sm text-left",
+  th: "px-6 py-4  truncate",
+  td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate text-[#121212] border-t border-white",
 };
 
 const TableComp = ({
@@ -34,8 +43,6 @@ const TableComp = ({
   responseData,
   extraclasses,
 }) => {
-
-
   return (
     <div className="h-auto py-8">
       <div className="relative overflow-x-auto rounded-lg">
@@ -53,7 +60,6 @@ const TableComp = ({
   );
 };
 
-
 export const TableComp1 = ({
   headers,
   body,
@@ -65,13 +71,10 @@ export const TableComp1 = ({
   responseData,
   extraclasses,
 }) => {
-
-
   return (
     <div className="h-auto py-8">
       <div className="relative overflow-x-auto rounded-lg">
         <Table2
-
           headers={headers}
           data={body}
           classes={classes}
@@ -94,20 +97,17 @@ export const SampleTableNew = ({
   onClick,
   responseData,
   href,
-  
 
-                                   checkedData,
-                                   clickAll,
-                                   checkAllStatus,
-                                   currentPage,
-                                   pageSize,
-                                   onPageChange,
-                                   chemicalPaginationData,
-                                   microPaginationData,
-                                   type
-
-                               }) => {
-
+  checkedData,
+  clickAll,
+  checkAllStatus,
+  currentPage,
+  pageSize,
+  onPageChange,
+  chemicalPaginationData,
+  microPaginationData,
+  type,
+}) => {
   return (
     <>
       <NewSampleReceivingTableComponent
@@ -120,8 +120,8 @@ export const SampleTableNew = ({
         body={response.map((row) => ({
           ...row,
 
-            check:<SampleTableCheckBox data={checkedData} bodyData={row}/>,
-            href :`id=${row._id}`
+          check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+          href: `id=${row._id}`,
           //   type: <p>{row.isFieldSample && row.isFieldSample === true ? 'Field Sample':'Lab Sample'}</p>,
           //   href: row.sampleStatus === '2New'?`/dashboard/sample/sampleDetails/?sampleId=${row._id}`:'',
           //   sampleId: row.sample_id.toUpperCase(),
@@ -140,12 +140,12 @@ export const SampleTableNew = ({
           // subSourceData: row.subSource
           //   ? row.subSource.label
           //   : '-',
-            // sampleForData: row.sample_for.checklabel,
-            // locationData: <p className='truncate'>{row.plant
-            //     ? row.plant.name
-            //     : row.schedulePlant
-            //         ? row.schedulePlant.name
-            //         : row.location.name}</p>,
+          // sampleForData: row.sample_for.checklabel,
+          // locationData: <p className='truncate'>{row.plant
+          //     ? row.plant.name
+          //     : row.schedulePlant
+          //         ? row.schedulePlant.name
+          //         : row.location.name}</p>,
           // status: (
           //     <Badge
           //         className={`text-light font-normal py-1 px-4 ${
@@ -169,44 +169,48 @@ export const SampleTableNew = ({
           // ),
         }))}
       />
-        <Paging
-            // chemicalItems ={chemicalPaginationData}
-            // microItems ={microPaginationData}
-            // type ={type}
-            currentPage={currentPage} // 1
-            pageSize={pageSize} // 10
-            onPageChange={onPageChange}/>
-
+      <Paging
+        // chemicalItems ={chemicalPaginationData}
+        // microItems ={microPaginationData}
+        // type ={type}
+        currentPage={currentPage} // 1
+        pageSize={pageSize} // 10
+        onPageChange={onPageChange}
+      />
     </>
   );
 };
 
-export const NewSampleReceivingTableComponent = ({ headers,
+export const NewSampleReceivingTableComponent = ({
+  headers,
   body,
   href,
   onClick,
   responseData,
-  extraclasses,clickAll,checkAllStatus}) =>{
+  extraclasses,
+  clickAll,
+  checkAllStatus,
+}) => {
   return (
-      <div className="h-auto py-8">
-            <div className="relative overflow-x-auto rounded-lg">
-                <CheckWithLinkTable
-                headers={headers}
-                data={body}
-                classes={classes}
-                href={href}
-                extra={extraclasses}
-                onClick={onClick}
-                responseData={responseData}
-                clickAll={clickAll}
-                checkAllStatus={checkAllStatus}
-                />
-            </div>
+    <div className="h-auto py-8">
+      <div className="relative overflow-x-auto rounded-lg">
+        <CheckWithLinkTable
+          headers={headers}
+          data={body}
+          classes={classes}
+          href={href}
+          extra={extraclasses}
+          onClick={onClick}
+          responseData={responseData}
+          clickAll={clickAll}
+          checkAllStatus={checkAllStatus}
+        />
       </div>
+    </div>
   );
-}
+};
 
-export  const AssignedUserTable = ({
+export const AssignedUserTable = ({
   headers,
   response,
   href,
@@ -214,19 +218,16 @@ export  const AssignedUserTable = ({
   responseData,
   extraclasses,
 }) => {
-
-
   return (
     <div className="h-auto py-8">
       <div className="relative overflow-x-auto rounded-lg">
         <ActionTable
           headers={headers}
-          data={response.map((item)=>{
-
+          data={response.map((item) => {
             return {
               ...item,
-              action :<TrashOutline/>
-            }
+              action: <TrashOutline />,
+            };
           })}
           classes={classes}
           href={href}
@@ -237,10 +238,9 @@ export  const AssignedUserTable = ({
       </div>
     </div>
   );
-}
+};
 
 export const FieldActionTable = ({
-  
   headers,
   response,
   href,
@@ -252,21 +252,20 @@ export const FieldActionTable = ({
   checkAllStatus,
   responseData,
   extraclasses,
-
-})=>{
+}) => {
   return (
     <div className="h-auto py-8">
       <div className="relative overflow-x-auto rounded-lg">
         <TableComp1
-
           headers={headers}
-          body={response.map((row)=>{
-
+          body={response.map((row) => {
             return {
               ...row,
-              check:<SampleTableCheckBox data={checkedData} bodyData={row}/>,
-              action :<EditDelete data={row} onEdit={onEdit} onDelete={onDelete}/>
-            }
+              check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+              action: (
+                <EditDelete data={row} onEdit={onEdit} onDelete={onDelete} />
+              ),
+            };
           })}
           classes={classes}
           href={href}
@@ -278,11 +277,10 @@ export const FieldActionTable = ({
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const PermissionActionTable = ({
-  
   headers,
   response,
   href,
@@ -294,23 +292,27 @@ export const PermissionActionTable = ({
   checkAllStatus,
   responseData,
   extraclasses,
-
-})=>{
+}) => {
   return (
-    <div className="h-auto py-8">
+    <div className="h-auto py-4">
       <div className="relative overflow-x-auto rounded-lg">
         <TableComp1
-
           headers={headers}
-          body={response.map((row)=>{
-
+          body={response.map((row) => {
+            // console.log(row, "s");
             return {
               ...row,
-              href:row._id,
-              check:<SampleTableCheckBox data={checkedData} bodyData={row}/>,
-              action :<ToggleComp data={row} onEdit={onEdit} onDelete={onDelete}/>
-              
-            }
+              href: row._id,
+              createdAt: DateTime.fromISO(row.createdAt).toLocaleString(
+                // DateTime.DATE_MED
+                DateTime.DATETIME_SHORT
+              ),
+              isDeactivated: row.isDeactivated ? "InActive" : "Active",
+              check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+              action: (
+                <ToggleComp data={row} onEdit={onEdit} onDelete={onDelete} />
+              ),
+            };
           })}
           classes={classes}
           href={href}
@@ -322,42 +324,56 @@ export const PermissionActionTable = ({
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-const EditDelete = ({data,onEdit,onDelete})=>{
+const EditDelete = ({ data, onEdit, onDelete }) => {
   // console.log(data,'e')
-    return (    <div className='flex items-center space-x-4'>
-    <EditIcon
-      onClick={()=>onEdit(data)}
-      style={{ cursor: 'pointer' }}
-    />
-    <DeleteIcon
-      className={"mx-2"}
-      style={{ cursor: 'pointer' }}
-      onClick={()=> onDelete(data._id)} // Add delete functionality here
-   />
-</div>)
+  return (
+    <div className="flex items-center space-x-4">
+      <EditIcon onClick={() => onEdit(data)} style={{ cursor: "pointer" }} />
+      <DeleteIcon
+        className={"mx-2"}
+        style={{ cursor: "pointer" }}
+        onClick={() => onDelete(data._id)} // Add delete functionality here
+      />
+    </div>
+  );
+};
 
-}
-
-const ToggleComp = ({data})=>{
-
-  const handleClick= (e)=>{
-      console.log(e)
-  }
-      // console.log(data.allAccess,'data')
-  return (<div className='flex items-center gap-6'>
-         <div className='flex items-center gap-2'>
-          <Text1>All Access</Text1>
-          {data.allAccess ? <ToggleOnButton onClick={()=>handleClick({allAccess:!data.allAccess})}/>:<ToggleButton onClick={()=>handleClick({allAccess
-          :!data.allAccess})}/>} 
-         </div>
-         <div className='flex items-center gap-2'>
-          <Text1>Remove Access</Text1>
-          {data.removeAccess ? <ToggleOnButton onClick={()=> handleClick({removeAccess:!data.removeAccess})}/>: <ToggleButton onClick={()=> handleClick({removeAccess:!data.removeAccess})}/>}
-         </div>
-  </div>)
-}
+const ToggleComp = ({ data }) => {
+  const handleClick = (e) => {
+    console.log(e);
+  };
+  // console.log(data.allAccess,'data')
+  return (
+    <div className="flex items-center gap-6">
+      <div className="flex items-center gap-2">
+        <Text1>All Access</Text1>
+        {data.allAccess ? (
+          <ToggleOnButton
+            onClick={() => handleClick({ allAccess: !data.allAccess })}
+          />
+        ) : (
+          <ToggleButton
+            onClick={() => handleClick({ allAccess: !data.allAccess })}
+          />
+        )}
+      </div>
+      <div className="flex items-center gap-2">
+        <Text1>Remove Access</Text1>
+        {data.removeAccess ? (
+          <ToggleOnButton
+            onClick={() => handleClick({ removeAccess: !data.removeAccess })}
+          />
+        ) : (
+          <ToggleButton
+            onClick={() => handleClick({ removeAccess: !data.removeAccess })}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default TableComp;

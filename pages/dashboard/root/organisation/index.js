@@ -40,13 +40,18 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
   }
-
+ let organizationList
+ try{
   const res = await orgApi.getAll(access_token);
+  organizationList=res?.data
+ }catch(err){
+  console.log(err,'err')
+ }
 
   return {
     props: {
       user: auth,
-      organisationList: res.data || [],
+      organisationList: organizationList|| [],
       access_token,
     },
   };

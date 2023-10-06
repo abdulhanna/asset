@@ -36,22 +36,22 @@ authApi.WhoAmI = async (appCtx) => {
   return user; // Return the user data
 };
 
-authApi.CompanyProfile = (data) =>
-  hostedAuthAxios.post("/company-profile", data);
-
-authApi.ResendMail = (data) =>
-  hostedAuthAxios.post("/resen-verification-email", data);
-
+authApi.CompanyProfile = (data) => {
+  return hostedAuthAxios.post("/company-profile", data);
+};
+authApi.ResendMail = (data) => {
+  return hostedAuthAxios.post("/resen-verification-email", data);
+};
 authApi.verifyToken = (token) => hostedAuthAxios.get(`/confirm/${token}`);
 
-authApi.forgotPassword = (data) =>
-  hostedAuthAxios.post("/request-forgot-password", data);
-
+authApi.forgotPassword = (data) => {
+  return hostedAuthAxios.post("/request-forgot-password", data);
+};
 authApi.resetPassword = (data) => hostedAuthAxios.post("/reset-password", data);
 
 authApi.setPassword = (data) => hostedAuthAxios.post("/setPassword", data);
 
-authApi.changePassword = (data) =>
-  hostedAuthAxios.post("/change-password", data);
-
+authApi.changePassword = (data) => {
+  return hostedAuthAxios.post("/change-password", data);
+};
 export default authApi;
