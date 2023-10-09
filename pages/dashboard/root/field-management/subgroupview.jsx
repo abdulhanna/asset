@@ -28,7 +28,7 @@ const Groupview = (allgroups) => {
 
   const [textHigh, setTextHigh] = useState(false);
 
-  console.log(allgroups.allgroups?.fieldGroups, "this is daaa field managment")
+  // console.log(allgroups?.allgroups, "this is daaa field managment")
 
   const data = [
     {
@@ -73,7 +73,7 @@ const Groupview = (allgroups) => {
         <div className="w-full h-[80vh] overflow-auto">
           {/* Add Field Button */}
           {/* Display Text */}
-          {allgroups.allgroups?.fieldGroups?.map((component) => (
+          {allgroups.allgroups?.map((component) => (
             <div key={component._id} className="flex justify-between pl-2 py-4 mb-2">
               <Text1 size='lg' weight='medium'>
                 {component.groupName}

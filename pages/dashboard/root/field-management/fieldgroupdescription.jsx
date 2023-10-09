@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text1 } from "@/components/atoms/field";
 import Button from '../../../../components/atoms/button';
 import DialogPage, { DialogPage1 } from '../../../../components/molecules/dialog';
@@ -66,6 +66,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   const [inputHigh, setInputHigh] = useState(false);
   const [show, setShow] = useState(true)
   const [textHigh, setTextHigh] = useState(false);
+  const [getsubGroup, setgetsubGroup] = useState();
 
   const router = useRouter();
 
@@ -79,7 +80,8 @@ const Fieldgroupdescription = ({ user, access_token }) => {
     {
       id: 1,
       title: 'Asset Description',
-    }, {
+    },
+    {
       id: 2,
       title: 'Asset Acquisition',
     },
@@ -94,6 +96,23 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   ]
 
 
+  const getAllsubgroup = async () => {
+    try {
+      const res = await field.getSubgroupsbyId(access_token, id)
+      setgetsubGroup(res?.data?.subgroups)
+      // console.log(res?.data?.subgroups, "hihihihihihiihihihihih")
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  console.log(getsubGroup, "hihihihihihiihihihihih")
+
+  useEffect(() => {
+    getAllsubgroup()
+  }, [])
+
+
   const showData = async (data) => {
     try {
       const res = await field.addSubgroupbyID(access_token, id, data)
@@ -106,6 +125,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
     console.log(data, "this is data")
   }
 
+
   const handleAddButtonClick = () => {
     setInputHigh(true)
   }
@@ -113,6 +133,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   const editgroup = () => {
     console.log("this is edit page")
   }
+
 
   return (
     <>
@@ -130,10 +151,10 @@ const Fieldgroupdescription = ({ user, access_token }) => {
           </div>
         </div>
 
-        {data.map((component) => (
+        {getsubGroup?.map((component) => (
           <div key={component.id} className="flex justify-between py-4 mb-2">
             <Text1 size='lg' weight='medium'>
-              {component.title}
+              {component.subgroupName}
             </Text1>
             <div>
               <Button onClick={() => setTextHigh(true)} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
@@ -165,8 +186,9 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
+  }
 
-  } else {
+  else {
     return {
       props: {
         user: auth,
