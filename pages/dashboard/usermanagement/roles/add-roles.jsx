@@ -205,7 +205,7 @@ const AddRoles = ({ user, access_token, permissions }) => {
                {Object.entries(item).map((val,id) => {
                  const [key, value] = val;
                   if ( key === "actions" || key === 'read' || key === "readWrite") {
-                     return<div className="flex gap-1"> <Text1 className="capitalize" size="lg">{key}</Text1>
+                     return<div className="flex gap-1" key={id}> <Text1 className="capitalize" size="lg">{key}</Text1>
                                {value  ? <ToggleOnButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>:<ToggleButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>}
                           </div>
                       
