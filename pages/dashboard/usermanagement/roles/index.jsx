@@ -27,7 +27,7 @@ const RolesPerimission = ({user,roles}) => {
       name:'createdAt'
     },{
       label :"Total Users",
-      name:'permission'
+      name:'userCount'
     }
 
   ]

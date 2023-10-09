@@ -121,19 +121,19 @@ const AddRoles = ({ user, access_token, permissions }) => {
   const handleSubmit =async()=>{
      try{
          const res = await  userRolesApi.addRole(access_token,role)
-         if(res.status == "200"){
+         if(res.status == "201"){
           notify('role added')
           setTimeout(()=>{
             router.push('/dashboard/usermanagement/roles')
           },2000)
          }
-         console.log(res,'res')
+        //  console.log(res,'res')
      }catch(err){
       console.log(err,'err')
      }
   }
   useEffect(() => {
-    console.log(role, "d");
+    // console.log(role, "d");
   }, [role]);
 
   return (

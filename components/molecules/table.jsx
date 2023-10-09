@@ -773,7 +773,7 @@ const [sortOrder, setSortOrder] = useState('none'); // State to track the sort o
 const router = useRouter()
 
 const sortData = (field, ascending) => {
-  return data.sort((a, b) => {
+  return data?.sort((a, b) => {
     if (field === 'date') {
       const dateA = a.createdAt;
       const dateB = b.createdAt;
@@ -866,7 +866,7 @@ return (
     </thead>
 
     <tbody className={classes.tbody}>
-    {sortedData.map((dataRow, index) => {
+    {sortedData?.map((dataRow, index) => {
     return (
 
     <tr key={index}>

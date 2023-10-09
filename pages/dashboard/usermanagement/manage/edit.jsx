@@ -44,6 +44,10 @@ const Edit = ({ user, access_token, singlePermission }) => {
       if (res.status == "200") {
         notify("permission update");
       }
+
+      setTimeout(() => {
+        router.push("/dashboard/usermanagement/manage");
+      }, 2000);
     } catch (err) {
       console.error("submit permission err", err);
     }

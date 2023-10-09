@@ -8,7 +8,7 @@ import authApi from "helpers/use-api/auth";
 import userManageApi from "helpers/use-api/user-management/manage";
 
 const Manage = ({ user, list }) => {
-  const [permissionList, setPermissionList] = useState(list.permissions);
+  const [permissionList, setPermissionList] = useState(list?.permissions);
   const [checkedNewData, setCheckedNewData] = useState([]);
   const [allClick, setAllClick] = useState(false);
 
@@ -28,11 +28,7 @@ const Manage = ({ user, list }) => {
     {
       label: "created on",
       name: "createdAt",
-    },
-    {
-      label: "Action",
-      name: "action",
-    },
+    }
   ];
 
   const clickAll = () => {
@@ -79,7 +75,7 @@ const Manage = ({ user, list }) => {
             </Button>
           </div>
           <div>
-            {permissionList.length === 0 ? (
+            {permissionList?.length === 0 ? (
               <NodataPage
                 text={
                   "We have nothing here yet. Start by adding a Location. Know how?"
@@ -119,11 +115,26 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
   }
-  const res = await userManageApi.getAllPermission(access_token);
+  let page = 1
+  let pageSize = 5
+  let sort = {"createdAt":-1};
+  let permissionList
+  
+ 
+  try{
+    const {data} = await userManageApi.getAllPermission(access_token,page,pageSize,JSON.stringify(sort));
+    
+    permissionList = data;
+   
+
+  }catch(err){
+    console.log(err,'err')
+  }
+// console.log(permissionList,'list')
   return {
     props: {
       user: auth,
-      list: res?.data || [],
+      list:permissionList|| [],
     },
   };
 };
