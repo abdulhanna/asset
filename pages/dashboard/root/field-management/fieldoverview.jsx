@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import { Nodata } from '../../../../components/atoms/icons'
-import {Text1} from "@/components/atoms/field";
+import { Text1 } from "@/components/atoms/field";
 import Button from '../../../../components/atoms/button';
-import DialogPage, {DialogPage1} from '../../../../components/molecules/dialog';
+import DialogPage, { DialogPage1 } from '../../../../components/molecules/dialog';
 import AddInputDiv from '../../../testComponents/addInputDiv'
 import Groupview from './subgroupview';
 import field from 'helpers/use-api/fieldmanagment';
@@ -14,73 +14,73 @@ import { ToastContainer, toast } from 'react-toastify';
 // AddInput Pop UP ------------------------------------------------------------------------------------------------
 const AddInputField = ({ open, close, showData, setShow }) => {
 
-  const getData = ({data}) => {
-    
-    console.log(data,"yes this dta")
+  const getData = ({ data }) => {
+
+    console.log(data, "yes this dta")
   }
 
   const handleSave = (data) => {
-     console.log(data, "this is data")
-     showData(data)
-     setShow(true)
-     close()
+    console.log(data, "this is data")
+    showData(data)
+    setShow(true)
+    close()
   };
-    return (
-      <>
-        <DialogPage open={open} close={close}>
-          <AddInputDiv Heading="Add Group" labelName="Group Name" getData={getData} handleSave={handleSave}/>
-        </DialogPage>
-      </>
-    );
-  };
+  return (
+    <>
+      <DialogPage open={open} close={close}>
+        <AddInputDiv Heading="Add Group" labelName="Group Name" getData={getData} handleSave={handleSave} />
+      </DialogPage>
+    </>
+  );
+};
 
 
 // FeildOverview Page-----------------------------------------------------------------------------------------------
-const FieldOverview = ({user, access_token}) => {
-    const [inputHigh, setInputHigh] = useState(false);
-    const [dataList,setDataList] = useState(["Assest Description","Asset Acquisition","UOM"])
-    const [show, setShow] = useState(true)
-  
-    const router = useRouter();
+const FieldOverview = ({ user, access_token }) => {
+  const [inputHigh, setInputHigh] = useState(false);
+  const [dataList, setDataList] = useState(["Assest Description", "Asset Acquisition", "UOM"])
+  const [show, setShow] = useState(true)
 
-    const notify = (msg) => toast.success(msg)
-    const error = (msg) => toast.danger(msg)
+  const router = useRouter();
 
-    const handleAddButtonClick = () => {
-        setInputHigh(true)
+  const notify = (msg) => toast.success(msg)
+  const error = (msg) => toast.danger(msg)
+
+  const handleAddButtonClick = () => {
+    setInputHigh(true)
+  }
+
+  const showData = async (data) => {
+    //  console.log(data, "ths is fieldoverview")
+    try {
+      const res = await field.addGroup(access_token, data)
+      console.log(res)
+      notify(res.data.message)
+      router.push('/dashboard/root/field-management')
+    } catch (e) {
+      console.log(e)
     }
 
-    const showData = async(data) => {
-      //  console.log(data, "ths is fieldoverview")
-        try{
-          const res = await field.addGroup(access_token, data)
-          console.log(res)
-          notify(res.data.message)
-          router.push('/dashboard/root/field-management')
-        }catch(e){
-          console.log(e)
-        }
+  }
 
-    }
+  const addfield = () => {
 
-    const addfield = () => {
-        
-    }
+  }
 
-    const editGroup = () => {
+  const editGroup = () => {
 
-    }
+  }
 
-      return (
-        <>
-        <div className='flex justify-between mb-4 px-2'>
-         <Text1 size="2xl" weight="medium">
-            Field Management
-         </Text1>
-         <Button onClick={handleAddButtonClick} variant="contained"> ADD FIELD GROUP</Button>
-        </div>
+  return (
+    <>
+      <div className='flex justify-between mb-4 px-2'>
+        <Text1 size="2xl" weight="medium">
+          Field Management
+        </Text1>
+        <Button onClick={handleAddButtonClick} variant="contained"> ADD FIELD GROUP</Button>
+      </div>
 
-        {/* {
+      {/* {
           show ? <Groupview/> : <div className='border rounded-md flex items-center h-[100vh] justify-center bg-[#F7F7F7] overflow-hidden'>
           <div className='text-center'>
               <Nodata className={'flex justify-center'}/>
@@ -92,18 +92,18 @@ const FieldOverview = ({user, access_token}) => {
           </div>
       </div>
         } */}
-    
 
-         <AddInputField open={inputHigh} close={() => setInputHigh(false)} showData={showData} setShow={setShow}/>
-         <ToastContainer/>
-        </>
-      )
+
+      <AddInputField open={inputHigh} close={() => setInputHigh(false)} showData={showData} setShow={setShow} />
+      <ToastContainer />
+    </>
+  )
 }
 
 export const getServerSideProps = async (appCtx) => {
-  let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null; 
+  let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
   const auth = await authApi.WhoAmI(appCtx)
- 
+
   if (!auth) {
     return {
       redirect: {
@@ -112,12 +112,12 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
 
-  } 
-  
+  }
+
   return {
-    props:{
-       user:auth,
-       access_token
+    props: {
+      user: auth,
+      access_token
     }
   }
 

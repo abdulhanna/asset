@@ -359,6 +359,9 @@ const AddOganisation = ({ user, access_token }) => {
                 onChange={handleChange1}
               />
             </div>
+
+
+            
           </form>
         </div>
       </MainLayout>
