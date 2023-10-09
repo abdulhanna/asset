@@ -72,7 +72,7 @@ export const TableComp1 = ({
   extraclasses,
 }) => {
   return (
-    <div className="h-auto py-8">
+    <div className="h-auto py-4">
       <div className="relative overflow-x-auto rounded-lg">
         <Table2
           headers={headers}
@@ -192,7 +192,7 @@ export const NewSampleReceivingTableComponent = ({
   checkAllStatus,
 }) => {
   return (
-    <div className="h-auto py-8">
+    <div className="h-auto py-8 min-h-[590px]">
       <div className="relative overflow-x-auto rounded-lg">
         <CheckWithLinkTable
           headers={headers}
@@ -294,7 +294,7 @@ export const PermissionActionTable = ({
   extraclasses,
 }) => {
   return (
-    <div className="h-auto py-4">
+    <div className="h-auto py-4 min-h-[600px]">
       <div className="relative overflow-x-auto rounded-lg">
         <TableComp1
           headers={headers}

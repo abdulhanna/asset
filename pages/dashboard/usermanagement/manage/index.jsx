@@ -66,9 +66,11 @@ const Manage = ({ user, list }) => {
     <>
       <MainLayout User={user}>
         <div className="">
-          <div className="flex items-end justify-between">
+          <div className="flex items-center justify-between">
+            <div>
             <Text1 size="2xl">All Permissions</Text1>
-
+            <Text1 size="sm" className="text-lightGray">We have nothing here yet. Start by adding a Field Group.</Text1>
+            </div>
             <Button
               href={"/dashboard/usermanagement/manage/permission"}
               variant="contained"
