@@ -145,9 +145,10 @@ const AddUser = ({user}) => {
               <Text1 weight="semibold">User Status</Text1>
               <div className="flex gap-10 ">
                 <div className="w-3/12">
-                  <CustomSelect label={"User Role"}>
+                  <CustomSelect label={"User Status"}>
                     <option value="">Select</option>
-                    <option value="admin">Admin</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">InActive</option>
                   </CustomSelect>
                 </div>
               </div>

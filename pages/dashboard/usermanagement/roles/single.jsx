@@ -8,43 +8,17 @@ import { TextField,TextInputArea } from '@/components/atoms/field'
 import { useRouter } from 'next/router'
 import TableComp from '@/components/organism/tablecomp'
 import { AssignedUserTable } from '@/components/organism/tablecomp'
-import { doCheckAuth } from '@/utils/doCheckAuth'
-
-const Single = ({user}) => {
+import authApi from 'helpers/use-api/auth'
+import userRolesApi from 'helpers/use-api/user-management/roles'
+import { ToastContainer, toast } from "react-toastify";
+const Single = ({user,roleSingle,access_token}) => {
   const [isEdit, setIsEdit] = useState(false)
   const [data,setData] = useState([])
     const router=useRouter()
-    const [role,setRole] = useState({
-        roleName:'Jack',
-        desc:'jack is workings',
-        Permissions:[
-            {
-                moduleName:"Organisation Mangament",
-                allAccess:false,
-                removeAccess:true,
-                read:false,
-                readWrite:false,
-                delete:false
-            },
-            {
-
-                moduleName:"fields Mangament",
-                allAccess:false,
-                removeAccess:false,
-                read:false,
-                readWrite:false,
-                delete:false
-            },
-            {
-              moduleName:"user Mangament",
-              allAccess:false,
-              removeAccess:false,
-              read:false,
-              readWrite:false,
-              delete:false
-          }
-         ]
-      })
+    const [role,setRole] = useState(roleSingle)
+    const {id} = router.query
+    const notify = (msg)=> toast.success(msg)
+    // console.log(router.query,'ee')
       const header = [
         {
           label:'User Name',
@@ -78,42 +52,128 @@ const Single = ({user}) => {
       ]
 
       const handleClick = (e)=>{
-        const data = [...role.Permissions]
+        const data = [...role.permissions];
+        const d = data[e.id]
+       let key = Object.keys(e)[0];
+     
+     if (key === "removeAccess" && e[key] === true) {
+       let obj = {}
+           Object.entries(d).map((val,id) => {
+         const [key, value] = val;
+          
+         if ( key === "actions" || key === 'read' || key === "readWrite"|| key === "allAccess" ) {
+             console.log(key, value, 'val');
+             obj[`${key}`]=false
+         }
+     });
+     console.log(obj,'obj')
+       data[e.id] = {
+         ...data[e.id],
+         [`${key}`]: e[key],
+         ...obj
+         // allAccess: false,
+         // read: false,
+         // readWrite: false,
+         // delete: false,
+         // actions:false
+       };
+       // console.log(obj,'ss')
+     } else if (key === "allAccess" && e[key] === true) {
+       let obj = {}
+           Object.entries(d).map((val,id) => {
+         const [key, value] = val;
+         
+         if ( key === "actions" || key === 'read' || key === "readWrite" ) {
+             console.log(key, value, 'val');
+             obj[`${key}`]=true
+         }
+       });
+       data[e.id] = {
+         ...data[e.id],
+         [`${key}`]: e[key],
+         removeAccess: false,
+         ...obj
+         // read: true,
+         // readWrite: true,
+         // delete: true,
+         // actions:true
+       };
+     } else {
+       let obj = {}
+           Object.entries(d).map((val,id) => {
+         const [key, value] = val;
+         
+         if ( key === "actions" || key === 'read' || key === "readWrite"|| key ==='removeAccesss' ) {
+             console.log(key, value, 'val');
+             obj[`${key}`]=false
+         }
+       });
+       data[e.id] = {
+         ...data[e.id],
+         [`${key}`]: e[key],
+         ...obj
+         // removeAccess: false,
+         // read: false,
+         // readWrite: false,
+         // delete: false,
+         // actions:false
+       };
+     }
+       setRole({
+         ...role,
+         permissions: data,
+       });
+        // const data = [...role.permissions]
         
-        let key = Object.keys(e)[0]
+        // let key = Object.keys(e)[0]
         
-        if(key === 'removeAccess' && e[key] === true){
+        // if(key === 'removeAccess' && e[key] === true){
         
-          data[e.id] = {...data[e.id],[`${key}`]:e[key],allAccess:false,read:false,readWrite:false,delete:false}
+        //   data[e.id] = {...data[e.id],[`${key}`]:e[key],allAccess:false,read:false,readWrite:false,delete:false}
         
-        }else if(key === 'allAccess' && e[key]=== true){
+        // }else if(key === 'allAccess' && e[key]=== true){
         
-           data[e.id] = {...data[e.id],[`${key}`]:e[key],removeAccess:false,read:true,readWrite:true,delete:true}
+        //    data[e.id] = {...data[e.id],[`${key}`]:e[key],removeAccess:false,read:true,readWrite:true,delete:true}
         
-        }else{
-           data[e.id] = {...data[e.id],[`${key}`]:e[key],removeAccess:false,read:false,readWrite:false,delete:false}
-        }
+        // }else{
+        //    data[e.id] = {...data[e.id],[`${key}`]:e[key],removeAccess:false,read:false,readWrite:false,delete:false}
+        // }
         
-            setRole({
-                ...role,Permissions:data
-            })
+        //     setRole({
+        //         ...role,Permissions:data
+        //     })
         }
         
         const handleToggle = (e)=>{
-        const data = [...role.Permissions]
-        const key = Object.keys(e)[0]
-        data[e.id] = {...data[e.id],[`${key}`]:e[key],removeAccess:false}
-        
-          if(data[e.id].read && data[e.id].readWrite && data[e.id].delete){
+          const data = [...role.permissions];
+          const key = Object.keys(e)[0];
+          data[e.id] = { ...data[e.id], [`${key}`]: e[key], removeAccess: false };
+      
+          if (data[e.id].read && data[e.id].readWrite && data[e.id].actions) {
             // console.log('allacess')
-            data[e.id] = {...data[e.id],allAccess:true}
-          }else{
-            data[e.id] = {...data[e.id],allAccess:false}
+            data[e.id] = { ...data[e.id], allAccess: true };
+          } else {
+            data[e.id] = { ...data[e.id], allAccess: false };
           }
+      
+          setRole({
+            ...role,
+            permissions: data,
+          });
+        // const data = [...role.Permissions]
+        // const key = Object.keys(e)[0]
+        // data[e.id] = {...data[e.id],[`${key}`]:e[key],removeAccess:false}
+        
+        //   if(data[e.id].read && data[e.id].readWrite && data[e.id].delete){
+        //     // console.log('allacess')
+        //     data[e.id] = {...data[e.id],allAccess:true}
+        //   }else{
+        //     data[e.id] = {...data[e.id],allAccess:false}
+        //   }
           
-            setRole({
-              ...role,Permissions:data
-            })
+        //     setRole({
+        //       ...role,Permissions:data
+        //     })
         
         }
 
@@ -124,6 +184,29 @@ const Single = ({user}) => {
               console.log(data,'data')
             }
         },[data])
+
+        // console.log(roleSingle,'role')
+        useEffect(()=>{
+            // console.log(role,'role');
+        },[role])
+
+        const handleSubmit = async()=>{
+              try{
+                 const res = await userRolesApi.update(access_token,id,role)
+
+                 if(res.status == "200"){
+                  notify('Role updated')
+                    setTimeout(()=>{
+                         router.push('/dashboard/usermanagement/roles')
+                    },2000)
+                 }
+                 console.log(res,'res')
+              } catch(err){
+                console.log(err,'err')
+              } 
+        }
+
+
   return (
     <>
         <MainLayout isScroll={true} User={user}>
@@ -134,7 +217,7 @@ const Single = ({user}) => {
                   <Text1 size='2xl'> Roles Description</Text1>
                 </div>
                <div className='space-x-4'> 
-               <Button variant='contained' onClick={()=> setIsEdit(!isEdit)} isDisabled={false}>EDIT</Button>
+               {isEdit ? <Button variant='contained' onClick={handleSubmit}>SAVE</Button> :<Button variant='contained' onClick={()=> setIsEdit(!isEdit)} isDisabled={false}>EDIT</Button>}
                 <Button variant='danger'>DEACTIVATE</Button>
                </div>
             </div>
@@ -145,40 +228,43 @@ const Single = ({user}) => {
                  </div>
                  <div className='space-y-3'>
                     <Text1>Role Description</Text1>
-                    <TextInputArea value={role.desc} label='Description' onChange={(e)=>setRole({...role,desc:e.target.value})} disabled={!isEdit}/>
+                    <TextInputArea value={role.description} label='Description' onChange={(e)=>setRole({...role,description:e.target.value})} disabled={!isEdit}/>
                  </div>
                  <div>
                      <div className='flex justify-between items-center'>
                         <Text1>Role Permissions</Text1>
                         <Button onClick={()=>{
-                            role.Permissions.map((item,id)=>{
+                            role.permissions?.map((item,id)=>{
                                  role.Permissions[id] = {...role.Permissions[id],removeAccess:true,read:false,readWrite:false,allAccess:false,delete:false}
                              }) 
                              setRole({...role,Permissions:role.Permissions})
                         }} isDisabled={!isEdit}>RESTORE DEFAULTS</Button>
                      </div>
                      <div>
-                      {role.Permissions.map((item,index)=>{
+                      {role.permissions?.map((item,index)=>{
 
-                      return ( !isEdit ?<AccordinRead label={item.moduleName} data={item} key={index} id={index}></AccordinRead>: <Accordin label={item.moduleName} handleClick={handleClick} data={item} key={index} id={index}>
-                            <div className='flex items-center gap-6'>
-                                <div className='flex items-center gap-1'>
-                              
-                                <Text1 size='lg'>READ</Text1>
-                                {item.read ? <ToggleOnButton onClick={()=>handleToggle({read:(!item.read),id:index})}/> :<ToggleButton onClick={()=>handleToggle({read:(!item.read),id:index})}/>}
-                                </div>
-                                <div className='flex items-center gap-1'>
-                                <Text1 size='lg'>READ WRITE</Text1>
-                                {item.readWrite ? <ToggleOnButton onClick={()=>handleToggle({readWrite:(!item.readWrite),id:index})}/> :<ToggleButton onClick={()=>handleToggle({readWrite:(!item.readWrite),id:index})}/>}
-                                </div>
-                                <div className='flex items-center gap-1'>
-                                <Text1 size='lg'>DELETE</Text1>
-                                {item.delete ? <ToggleOnButton onClick={()=>handleToggle({delete:(!item.delete),id:index})}/> :<ToggleButton onClick={()=>handleToggle({delete:(!item.delete),id:index})}/>}
-                                </div>
-                             </div>
-                          </Accordin>)
-                        
-                      })}
+                        return <Accordin  label={item.moduleName}
+                      handleClick={handleClick}
+                      data={item}
+                      key={index}
+                      id={index}>
+                       
+               <div className="flex gap-6 items-center">
+               {Object.entries(item).map((val,id) => {
+                 const [key, value] = val;
+                  if ( key === "actions" || key === 'read' || key === "readWrite") {
+                     return<div className="flex gap-1" key={id}> <Text1 className="capitalize" size="lg">{key}</Text1>
+                               {value  ? <ToggleOnButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>:<ToggleButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>}
+                          </div>
+                      
+                      }
+               })}
+               </div>
+
+                     </Accordin>
+
+                    
+                 })}
                      </div>
                     
                  </div>
@@ -194,13 +280,6 @@ const Single = ({user}) => {
                        responseData={(e)=>setData([e])}
                        onClick={(e)=> console.log(data,'dd')}
                     />}
-
-                    {/* <AssignedUserTable 
-                     response={headerbody}
-                       headers={[...header,{name:'action',label:'action'}]} 
-                       responseData={(e)=>setData([e])}
-                       onClick={(e)=> console.log(data,'dd')}
-                    /> */}
                  </div>
             </div>
         </div>
@@ -210,9 +289,11 @@ const Single = ({user}) => {
 }
 
 export const getServerSideProps = async (appCtx) => {
-   
-  const auth =await doCheckAuth(appCtx)
-  // console.log(auth,'ddd')
+  let access_token =
+  "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
+  const {id } = appCtx.query
+  const auth = await authApi.WhoAmI(appCtx)
+
   if (!auth) {
     return {
       redirect: {
@@ -221,11 +302,20 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
 
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  } 
+  let role
+  try{
+      const {data} = await userRolesApi.getRole(access_token,id)
+      role  = data
+      // console.log('role data ',data);
+  }catch(err){
+    console.log(err,'err')
+  }
+  return {
+    props:{
+       user:auth,
+       roleSingle:role.role || {},
+       access_token
     }
   }
 
