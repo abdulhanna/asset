@@ -7,7 +7,8 @@ import MainLayout from 'proj-components/MainLayout';
 import AddField from 'pages/testComponents/addField';
 import { CloseIcon } from '@/components/atoms/icons';
 import { useRouter } from 'next/router';
-import { doCheckAuth } from '@/utils/doCheckAuth';
+import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from "../../../../helpers/use-api/auth";
 import { ToastContainer, toast } from 'react-toastify';
 import field from 'helpers/use-api/fieldmanagment';
 // Add field Modal
@@ -71,6 +72,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
 
   const router = useRouter();
 
+  console.log(user, "tis is user")
   const notify = (msg) => toast.success(msg)
   const error = (msg) => toast.danger(msg)
 
@@ -101,6 +103,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
     try {
       const res = await field.getSubgroupsbyId(access_token, id)
       setgetsubGroup(res?.data?.subgroups)
+
       // console.log(res?.data?.subgroups, "hihihihihihiihihihihih")
     } catch (e) {
       console.log(e)
@@ -132,13 +135,13 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   }
 
   const editgroup = () => {
-    console.log("this is edit page")
+     router.push(`/dashboard/root/field-management/editGroup?id=${id}`)
   }
 
 
   return (
     <>
-      <MainLayout User={user} isScroll='true'>
+      <MainLayout User={user} isScroll={true}>
         <div className='flex justify-between mb-4 px-2'>
           <Text1 size="2xl" weight="medium">
             {name}
@@ -146,10 +149,11 @@ const Fieldgroupdescription = ({ user, access_token }) => {
           <div>
             <Button onClick={handleAddButtonClick} variant="contained" className="mr-1.5"> CREACT SUB GROUP</Button>
 
-            <Button onClick={editgroup} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform hover:scale-110 ">
+            <Button onClick={editgroup}  className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform  ">
               EDIT GROUP
             </Button>
           </div>
+
         </div>
 
         {getsubGroup?.map((component) => (
@@ -202,7 +206,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
 export const getServerSideProps = async (appCtx) => {
 
   let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-  const auth = await doCheckAuth(appCtx)
+  const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -213,12 +217,11 @@ export const getServerSideProps = async (appCtx) => {
     };
   }
 
-  else {
-    return {
-      props: {
-        user: auth,
-        access_token
-      }
+
+  return {
+    props: {
+      user: auth,
+      access_token
     }
   }
 
