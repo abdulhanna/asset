@@ -1,7 +1,7 @@
 // import { TextInput } from '@/utils/helper'
 // import React, { useState } from 'react'
 // import { TextField, CustomSelect, Dropdown } from '@/components/atoms/field'
-
+//
 // function DynamicImages() {
 //   const Data = {
 //     "success": true,
@@ -371,27 +371,27 @@
 //       }
 //     ]
 //   }
-
-
+//
+//
 //   const [formData, setFormData] = useState({})
-
-
+//
+//
 // //  const handleInputChange = (fieldId, value) =>{
 // //   setFormData(prevData => ({
 // //     ...prevData,
 // //     [fieldId]: value
 // //   }));
 // //  }
-
+//
 // const handleInputChange = (fieldId, value) => {
- 
+//
 //   setFormData(prevData => ({
 //     ...prevData,
 //     [fieldId]: value // Make sure value is a string, not an object
 //   }));
- 
+//
 // };
- 
+//
 //   return (
 //     <div>
 //       THis is Dynamic Images
@@ -399,20 +399,20 @@
 //         Data.fieldGroups.map((field) => {
 //           return(
 //             <>
-//             <div> 
+//             <div>
 //             {field.groupName}
-          
+//
 //             {field.subgroups.map((sub) => {
 //                  return(
 //                   <>
 //                     {sub.subgroupName}
 //                     {sub.fields.map((newfield) =>{
-                      
+//
 //                           switch(newfield.fieldType){
 //                                     case 'Input text':
-                                    
+//
 //                                       return(
-                                        
+//
 //                                         <TextField
 //                                          key={newfield._id}
 //                                          label={newfield.name}
@@ -420,10 +420,10 @@
 //                                          onChange={(e) => handleInputChange(newfield._id, e.target.value)}
 //                                         />
 //                                       );
-                          
+//
 //                                     case 'Dropdown':
-                                     
-//                                       return( 
+//
+//                                       return(
 //                                         <Dropdown
 //                                           key={newfield._id}
 //                                           label={newfield.name}
@@ -440,10 +440,10 @@
 //                  )
 //             })}
 //             </div>
-
+//
 //             {/* {
 //               field.fields.map((newfield) => {
-                
+//
 //                 // switch(newfield.fieldType){
 //                 //       case 'Input text':
 //                 //         return(
@@ -454,7 +454,7 @@
 //                 //            onChange={(value) => handleInputChange(field._id, value)}
 //                 //           />
 //                 //         );
-                      
+//
 //                 //       case 'Dropdown':
 //                 //         return(
 //                 //           <Dropdown
@@ -470,7 +470,7 @@
 //                 // }
 //               })
 //             } */}
-           
+//
 //             </>
 //           )
 //         })
@@ -478,9 +478,9 @@
 //     </div>
 //   )
 // }
-
+//
 // export default DynamicImages
-
+//
 import React from 'react'
 
 const DynamicImages = () => {

@@ -2,34 +2,64 @@ import { useState } from "react";
 import { CustomSelect, Text1 } from "../../components/atoms/field";
 import Button from "../../components/atoms/button";
 
-const AddField = () => {
-  
+import { useRouter } from "next/router";
+import field from "helpers/use-api/fieldmanagment";
+
+const AddField = ({ user, access_token, close, id }) => {
+
+
   const initialValue = {
-    fieldName: "",
+    name: "",
+    dataType: "",
     fieldType: "",
     fieldLength: "",
-    invalidName: "",
-    validName: "",
-    validName: "",
-    DataType:"",
+    fieldRelation: "",
+    errorMessage: "",
+    fieldInfo: "",
+    isMandatory: true,
+
   };
-  const [inputData, setInputData] = useState([initialValue]);
+
+  const [fields, setFields] = useState([initialValue]);
+
+
+
+  const router = useRouter();
+
+
 
   const handleAddField = () => {
-    // setInputData([...inputData, initialValue]);
+
     console.log("test---")
   };
 
   const handleChange = (e, index) => {
-    const data = [...inputData];
+    const data = [...fields];
     const { name, value } = e.target;
     data[index][name] = value;
   };
 
-  const handleSave = () => {
-    setInputData([initialValue]);
-    console.log(inputData);
-    
+  const handleSave = async () => {
+    setFields([initialValue]);
+
+    let object = {
+      fields
+    }
+
+    try {
+      const res = await field.addField(access_token, id, object)
+      if (res.status === 200) {
+        close()
+      }
+
+
+    } catch (e) {
+      console.log("This is an error");
+    }
+
+    console.log(object);
+
+
   };
 
   return (
@@ -38,7 +68,7 @@ const AddField = () => {
         <Text1 size="2xl" className="py-2">Add Field</Text1>
         <Text1>Asset Description</Text1>
       </div>
-      {inputData?.map((item, index) => {
+      {fields?.map((item, index) => {
         return (
           <>
             <div
@@ -52,9 +82,23 @@ const AddField = () => {
                   type="text"
                   placeholder="Name Of The Asset"
                   className=" h-[48px] w-full border-2 p-1 rounded"
-                  name="fieldName"
+                  name="name"
                   onChange={(e) => handleChange(e, index)}
                 />
+              </div>
+              <div className=" justify-center items-center ">
+                <CustomSelect
+                  onChange={(e) => handleChange(e, index)}
+                  label={"Data Type"}
+                  selectHeight="h-[48px]"
+                  name="dataType">
+                  <option value="">option</option>
+                  <option value="String">String</option>
+                  <option value="Number">Number</option>
+                  <option value="Characters">List</option>
+                  <option value="Date">Date</option>
+                </CustomSelect>
+
               </div>
               <div className=" justify-center items-center ">
                 <CustomSelect
@@ -63,7 +107,12 @@ const AddField = () => {
                   selectHeight="h-[48px]"
                   name="fieldType">
                   <option value="">option</option>
-                  <option value="Characters">Characters</option>
+                  <option value="Input text">Input text</option>
+                  <option value="Input number">Input number</option>
+                  <option value="Dropdown">Dropdown</option>
+                  <option value="Textarea">Textarea</option>
+
+                  Textarea
                 </CustomSelect>
               </div>
               <div className="flex flex-col gap-1">
@@ -78,54 +127,57 @@ const AddField = () => {
                   onChange={(e) => handleChange(e, index)}
                 />
               </div>
-              
-              <div className="flex flex-col gap-1">
-              <label htmlFor="" className="">
-                Data Type
-              </label>
-              <input
-                type="number"
-                placeholder="number"
-                className="w-full h-[48px] border-2 p-1 rounded"
-                name="DataType"
-                onChange={(e) => handleChange(e, index)}
-              />
-            </div>
 
-              <div className="flex flex-col gap-1  ">
+              <div className=" justify-center items-center ">
+                <CustomSelect
+                  onChange={(e) => handleChange(e, index)}
+                  label={"Field Relation"}
+                  selectHeight="h-[48px]"
+                  name="fieldRelation">
+                  <option value="">option</option>
+                  <option value="Dependent">Dependent</option>
+                  <option value="InDependent">InDependent</option>
+
+                </CustomSelect>
+              </div>
+
+              <div className="flex flex-col gap-1">
                 <label htmlFor="" className="">
-                  List Option
+                  Error message
                 </label>
                 <input
                   type="text"
-                  placeholder="Invalid Asset Name"
+                  placeholder="Error message"
                   className="w-full h-[48px] border-2 p-1 rounded"
-                  name="invalidName"
+                  name="errorMessage"
                   onChange={(e) => handleChange(e, index)}
                 />
               </div>
-              <div className="flex flex-col gap-1  ">
+
+              <div className="flex flex-col gap-1">
                 <label htmlFor="" className="">
-                  Error Title
+                  Field Info
                 </label>
                 <input
                   type="text"
-                  placeholder="Please Enter a Valid Asset Name"
+                  placeholder="Help text"
                   className="w-full h-[48px] border-2 p-1 rounded"
-                  name="validName"
+                  name="fieldInfo"
                   onChange={(e) => handleChange(e, index)}
                 />
               </div>
+
+
               <div className="flex items-center  ">
                 <div className="flex items-center h-[48px]">
                   <input
                     id="link-checkbox"
                     type="checkbox"
-                    value=""
+                    name="isMandatory"
                     className=" h-[48px] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
-                   
+
                     className="ml-2 text-sm font-body text-gray-900 dark:text-gray-300">
                     Mendatory Field ?
                   </label>
@@ -145,9 +197,34 @@ const AddField = () => {
           Save
         </Button>
       </div>
-      
+
     </div>
   );
 };
+
+export const getServerSideProps = async (appCtx) => {
+
+  let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
+
+  const auth = await doCheckAuth(appCtx)
+  // console.log(auth,'ddd')
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    }
+
+  }
+  else {
+    return {
+      props: {
+        user: auth,
+        access_token,
+      },
+    }
+  }
+}
 
 export default AddField;

@@ -1,29 +1,29 @@
-import {useState } from "react";
+import { useState } from "react";
 import Button from "../../components/atoms/button";
-import {Text1} from "../../components/atoms/field";
+import { Text1 } from "../../components/atoms/field";
 
-const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
+const AddInputDiv = ({ Heading, labelName, getData, handleSave }) => {
   const [inputData, setInputData] = useState({
-    groupNames:[""]
+    groupNames: [""]
   });
 
   const handleSubmit = () => {
     setInputData({
       ...inputData,
-      groupNames:[...inputData.groupNames, ""]
+      groupNames: [...inputData.groupNames, ""]
     });
   };
 
- 
-  const handleChange = (e,index)=>{
+
+  const handleChange = (e, index) => {
     // console.log(e.target.value,index)
     let data = [...inputData.groupNames]
-     data[index] = e.target.value 
-     setInputData({
+    data[index] = e.target.value
+    setInputData({
       ...inputData,
-      groupNames:data,
-     })
-     
+      groupNames: data,
+    })
+
   }
 
   const handlesaveall = () => {
@@ -35,13 +35,13 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
     <div className="w-full flex justify-center py-[22px]">
       <div className="w-[488px]  h-auto max-h-[550px] flex flex-col items-center overflow-y-auto">
         <Text1 size="2xl" weight="medium"> {Heading}</Text1>
-        {inputData?.groupNames?.map((item,index) => {
+        {inputData?.groupNames?.map((item, index) => {
           console.log(item);
           return (
             <>
               <div className="flex flex-col w-[368px] gap-1  2xl:w-[700] mx-auto py-3" key={index}>
                 <label htmlFor="" className="">
-                <Text1 size="xs"> {labelName}</Text1>
+                  <Text1 size="xs"> {labelName}</Text1>
                 </label>
                 <input
                   type="text"
@@ -49,13 +49,13 @@ const AddInputDiv = ({Heading, labelName, getData, handleSave}) => {
                   className="w-full border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   name="inputText"
                   value={item}
-                  onChange={(e) => handleChange(e,index)}
+                  onChange={(e) => handleChange(e, index)}
                 />
               </div>
             </>
           );
         })}
-         <div className="w-[368px] mx-auto">
+        <div className="w-[368px] mx-auto">
           <button
             type="button"
             onClick={handleSubmit}

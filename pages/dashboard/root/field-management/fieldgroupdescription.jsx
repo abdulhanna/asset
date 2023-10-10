@@ -44,7 +44,7 @@ const AddInputField = ({ open, close, showData, setShow }) => {
 };
 
 
-const AddtextField = ({ open, close }) => {
+const AddtextField = ({ open, close, id }) => {
 
   return (
     <>
@@ -54,7 +54,7 @@ const AddtextField = ({ open, close }) => {
             <CloseIcon />
           </button>
         </div>
-        <AddField />
+        <AddField close={close} id={id} />
       </DialogPage1>
     </>
   );
@@ -67,6 +67,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   const [show, setShow] = useState(true)
   const [textHigh, setTextHigh] = useState(false);
   const [getsubGroup, setgetsubGroup] = useState();
+  const [selectedId, setSelectedId] = useState()
 
   const router = useRouter();
 
@@ -118,7 +119,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
       const res = await field.addSubgroupbyID(access_token, id, data)
       console.log(res, "this is data")
       notify("Added Successfully")
-      router.push('/dashboard/root/field-management')
+      router.push(`/dashboard/root/field-management`)
     } catch (e) {
       console.log(e)
     }
@@ -152,22 +153,46 @@ const Fieldgroupdescription = ({ user, access_token }) => {
         </div>
 
         {getsubGroup?.map((component) => (
-          <div key={component.id} className="flex justify-between py-4 mb-2">
-            <Text1 size='lg' weight='medium'>
-              {component.subgroupName}
-            </Text1>
-            <div>
-              <Button onClick={() => setTextHigh(true)} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
-                ADD FIELD
-              </Button>
+          <>
+            <div key={component._id} className=" py-4 mb-2">
+               <div className="flex justify-between">
+                 <Text1 size='lg' weight='medium'>
+                   {component.subgroupName}
+                 </Text1>
+                 <div>
+                   <Button id={component._id} onClick={() => {
+                     setSelectedId(component._id);
+                     setTextHigh(true)
+                   }} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
+                     ADD FIELD
+                   </Button>
 
+                 </div>
+               </div>
+              <div>
+
+                <div className="grid grid-cols-4 gap-4">
+                {
+                  component?.fields?.map((groupField) => {
+                    return(
+                        <>
+                           <div className="border rounded-md p-3 bg-[#F7F7F7]">
+                             {groupField?.name }
+                           </div>
+                        </>
+                    )
+                  })
+                }
+                </div>
+              </div>
             </div>
-          </div>
+
+          </>
         ))}
 
 
         <AddInputField open={inputHigh} close={() => setInputHigh(false)} showData={showData} setShow={setShow} />
-        <AddtextField open={textHigh} close={() => setTextHigh(false)} />
+        <AddtextField open={textHigh} close={() => setTextHigh(false)} id={selectedId} />
         <ToastContainer />
       </MainLayout>
     </>
