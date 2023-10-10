@@ -17,8 +17,8 @@ const AllUser = ({user}) => {
     {label:'User Name', name:'user'},
     {label:'User Role', name:'role'},
     {label:'Branch', name:'branch'},
-    {label:'Email Id', name:'email'},
-    {label:'Contact No', name:'contact'},
+    // {label:'Email Id', name:'email'},
+    // {label:'Contact No', name:'contact'},
     {label:'Status',name:'status'}, 
     {label:'created on', name:'created'}
   ]
