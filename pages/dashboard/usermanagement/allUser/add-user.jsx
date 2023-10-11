@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useMemo, useEffect, useCallback } from "react";
 import MainLayout from "../../../../proj-components/MainLayout";
 import { AddIcon, LeftArrowIcon } from "@/components/atoms/icons";
 import { Text1 } from "@/components/atoms/field";
@@ -10,14 +10,21 @@ import { useRouter } from "next/router";
 import { FileUploader } from "react-drag-drop-files";
 import ButtonAction from "@/components/molecules/button";
 import { doCheckAuth } from "@/utils/doCheckAuth";
+import authApi from "helpers/use-api/auth";
+import memberAccessApi from "helpers/use-api/user-management/member";
+import userRolesApi from "helpers/use-api/user-management/roles";
 
-const AddCompanyLogo = ({ open, close }) => {
+
+const AddCompanyLogo = ({ open, close,handleFile,profilePic }) => {
+
   const fileTypes = ["JPEG", "PNG", "JPG"];
-  const [file, setFile] = useState(null);
-  const handleChange = (file) => {
-    setFile(file);
-  };
-  console.log(file,'file')
+  const [file, setFile] = useState(profilePic);
+  const handleChange = useCallback((file) => {
+    setFile(file[0]);
+    handleFile(file[0])
+  },[file]);
+  console.log(profilePic,'pic')
+  
   return (<>
      <DialogPage1 open={open} close={close} width="w-[510px]">
       <div className=" text-center flex flex-col gap-6">
@@ -42,7 +49,7 @@ const AddCompanyLogo = ({ open, close }) => {
           
         </FileUploader>
           <div className="w-auto">
-            <p>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
+            <p>{file ? `File name: ${file?.name}` : "No files uploaded yet"}</p>
           </div>
           <div>
             <p className="text-[12px] leading-[14px] font-normal text-[#666]">
@@ -74,96 +81,160 @@ const AddCompanyLogo = ({ open, close }) => {
   );
 };
 
+const MemoizedAddCompanyLogo = React.memo(AddCompanyLogo);
 
-const AddUser = ({user}) => {
+const AddUser = ({user,access_token,roles}) => {
   const [logoHigh, setLogoHigh] = useState(false);
+  const [roleList,setRoleList] = useState(roles)
+  const [member,setMember]  = useState({
+    email:"",
+    name:"",
+    userType:'team',
+    userId:"",
+    teamRoleId:"",
+    phone:"",
+    isDeactivated:false,
+    image:""
+
+  })
+  const [profilePic,setProfilePic] = useState()
   const router = useRouter()
+
+  const handleChange = (e)=>{
+    const {name,value} = e.target
+    // console.log(name,value)
+       setMember({...member,[name]:value})
+  }
+  useEffect(()=>{
+       console.log(member,'member')
+  },[member])
+  const handleSubmit = async()=>{
+    const formData = new FormData();
+    formData.append('email',member.email)
+    formData.append('userProfile.name',member.name)
+    formData.append('userProfile.userIdentificationNo',member.userId)
+    formData.append('image', member.image )
+
+    for (const [key, value] of formData) {
+      console.log(`${key}: ${value}`)
+      // output.textContent += `${key}: ${value}\n`;
+    }
+      //  try{
+      //      const res = await memberAccessApi.add(access_token)
+      //  }catch(err){
+      //   console.log(err,'err')
+      //  }
+  }
+
+  // const memoizedAddCompanyLogo = useMemo(
+  //   () => <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} />,
+  //   [logoHigh]
+  // );
+  const handleFile = (e)=>{
+   const file =  URL.createObjectURL(e)
+   setProfilePic(file)
+   setMember({...member,image:e})
+
+      console.log(file,'file')
+  }
+  console.log(roleList,'roles');
+
   return (
     <>
       <MainLayout isScroll={true} User={user}>
         <div className="flex flex-col gap-10">
-          <div className="w-full flex justify-between py-4">
+          <div className="w-full flex justify-between items-center py-4">
+          <div>
             <div className="flex items-center cursor-pointer" onClick={()=> router.back()}>
               <LeftArrowIcon />
               <Text1 size="2xl" >
                 Add Member
               </Text1>
             </div>
-            <Button variant="contained">SAVE</Button>
+            <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
+           </div>
+            <Button variant="contained" onClick={handleSubmit}>SAVE</Button>
           </div>
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-5">
+
             <div className="flex flex-col gap-6">
-              <Text1 weight="semibold">Profile Pic</Text1>
+              <Text1 weight="normal">Profile Pic</Text1>
               <div className="flex items-center gap-8">
                 
-                <img className='w-[112px] h-[112px]' src='/images/Ellipse 2.png' width={'100'} height={'200'} alt='avtar'/>
+                <img className='w-[112px] h-[112px] rounded-full' src={`${profilePic?`${profilePic}`:"/images/Ellipse 2.png"}`} width={'100'} height={'200'} alt='avtar'/>
                 <ButtonAction label={'ADD PHOTO'} onClick={()=> setLogoHigh(true)}/>
                   
               </div>
             </div>
+
+            {/* User Information */}
             <div className="flex flex-col gap-6">
-              <Text1 weight="semibold">User Information</Text1>
+              <Text1 >User Information</Text1>
               <div className="flex gap-10 ">
                 <div className="w-3/12">
-                  <TextField label={"Username"} placeHolder="Input Text" />
+                  <TextField label={"Username"} name="name" placeHolder="Input Text" onChange={handleChange}/>
                 </div>
                 <div className="w-3/12">
                   <TextField
                     label={"User Identification Number"}
                     placeHolder="Input Text"
+                    name="userId"
+                    onChange={handleChange}
                   />
                 </div>
-                <div className="w-3/12">
-                  <CustomSelect label={"User Role"}>
-                    <option value="">Select</option>
-                    <option value="admin">Admin</option>
+                <div className="w-3/12" >
+                  <CustomSelect label={"User Role"} name={'teamRoleId'} onChange={handleChange}>
+                  <option value="">Select</option>
+                  {roleList.map((role,index)=>{
+                    return <option value={role._id} key={index}>{role.roleName}</option>
+                  })}
+                    {/* <option value="">Select</option>
+                    <option value="admin">Admin</option> */}
                   </CustomSelect>
                 </div>
+              </div>
+            </div>
 
-                <div className="w-3/12 flex">
-                  <Button className={"my-auto"}>
-                    <div className="flex ">
-                      <AddIcon />
-                      <span className="ms-3 ">ADD ROLE</span>
-                    </div>
-                  </Button>
+             {/* contact Information */}
+            <div className="flex flex-col gap-6">
+              <Text1 weight="">Contact Information</Text1>
+              <div className="flex gap-10 ">
+                <div className="w-3/12">
+                  <TextField label={"User Email ID"} name="email" placeHolder="Input Email Id" onChange={handleChange}/>
+                </div>
+                <div className="w-3/12">
+                  <TextField label={"Contact No."} name="phone" placeHolder="Input contact No" onChange={handleChange}/>
                 </div>
               </div>
             </div>
+
+            {/* User Status */}
             <div className="flex flex-col gap-6">
-              <Text1 weight="semibold">Contact Information</Text1>
+              <Text1 weight="">User Status</Text1>
               <div className="flex gap-10 ">
                 <div className="w-3/12">
-                  <TextField label={"User Email ID"} placeHolder="Input Text" />
-                </div>
-                <div className="w-3/12">
-                  <TextField label={"Contact No."} placeHolder="Input Text" />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-6">
-              <Text1 weight="semibold">User Status</Text1>
-              <div className="flex gap-10 ">
-                <div className="w-3/12">
-                  <CustomSelect label={"User Status"}>
+                  <CustomSelect label={"User Status"} name="isDeactivated" onChange={handleChange}>
                     <option value="">Select</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">InActive</option>
+                    <option value="false">Active</option>
+                    <option value="true">InActive</option>
                   </CustomSelect>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} ></AddCompanyLogo>
+        {logoHigh && <AddCompanyLogo open={logoHigh} profilePic={member.image} close={() => setLogoHigh(false)} handleFile={handleFile}></AddCompanyLogo>}
+        {/* <MemoizedAddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} /> */}
+        {/* {memoizedAddCompanyLogo} */}
       </MainLayout>
     </>
   );
 };
 
 export const getServerSideProps = async (appCtx) => {
-   
-  const auth =await doCheckAuth(appCtx)
+  let access_token =
+  "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
+  const auth =await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -172,12 +243,20 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
+  } 
 
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  let roles 
+  try{
+    const {data} = await userRolesApi.getRoles(access_token)
+    roles  =  data
+  }catch(err){
+    console.log(err,'err')
+  }
+  return {
+    props:{
+       user:auth,
+       access_token,
+       roles:roles||[]
     }
   }
 

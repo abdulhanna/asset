@@ -1494,6 +1494,22 @@ export const MasterTable = () => {
   );
 };
 
+export const MasterTableFill =()=>{
+   
+  return <>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19.5 10.3711V19.5C19.5 20.0967 19.2629 20.669 18.841 21.091C18.419 21.5129 17.8467 21.75 17.25 21.75H6.75C6.15326 21.75 5.58097 21.5129 5.15901 21.091C4.73705 20.669 4.5 20.0967 4.5 19.5V4.5C4.5 3.90326 4.73705 3.33097 5.15901 2.90901C5.58097 2.48705 6.15326 2.25 6.75 2.25H11.3789C11.7766 2.25006 12.158 2.40804 12.4392 2.68922L19.0608 9.31078C19.342 9.59202 19.4999 9.97341 19.5 10.3711Z" fill="#3B5FDA" stroke="#3B5FDA" strokeLinejoin="round"/>
+<path d="M12 2.625V8.25C12 8.64782 12.158 9.02936 12.4393 9.31066C12.7206 9.59196 13.1022 9.75 13.5 9.75H19.125" stroke="#FEFEFE" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M6.5 12.25H17.5C17.6381 12.25 17.75 12.3619 17.75 12.5V19.5C17.75 19.6381 17.6381 19.75 17.5 19.75H6.5C6.36193 19.75 6.25 19.6381 6.25 19.5V12.5C6.25 12.3619 6.36193 12.25 6.5 12.25Z" stroke="#FEFEFE" strokeWidth="0.5"/>
+<path d="M6 13.5H18" stroke="#FEFEFE" strokeWidth="0.5"/>
+<path d="M10 13.5V20M14 13.5V20" stroke="#FEFEFE" strokeWidth="0.5"/>
+<path d="M7 16H9" stroke="#FEFEFE" strokeWidth="0.5"/>
+<path d="M7 18H9M11 16H13M11 18H13M15 16H17M15 18H17" stroke="#FEFEFE" strokeWidth="0.5"/>
+</svg>
+
+  </>
+}
+
 export const Nodata = ({ className }) => {
   return (
     <span className={className}>
