@@ -185,8 +185,8 @@ const AddUser = ({user,access_token,roles}) => {
                 <div className="w-3/12" >
                   <CustomSelect label={"User Role"} name={'teamRoleId'} onChange={handleChange}>
                   <option value="">Select</option>
-                  {roleList.map((role)=>{
-                    return <option value={role._id}>{role.roleName}</option>
+                  {roleList.map((role,index)=>{
+                    return <option value={role._id} key={index}>{role.roleName}</option>
                   })}
                     {/* <option value="">Select</option>
                     <option value="admin">Admin</option> */}
