@@ -167,15 +167,14 @@ const EditDataComp = ({ open, close, data }) => {
   );
 };
 
-function EditGroup({user, access_token}) {
+function EditGroup({user, access_token, groupOverview}) {
   const [data1, setData1] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [groupData, setGroupdata] = useState();
-  const [groupName, setGroupname] = useState()
-  const [subGroupname, setSubgroupname] = useState()
+  const [editGroup, setEditgroup] = useState(groupOverview)
 
+
+console.log(editGroup, "this is group")
   const router = useRouter();
-
 
   const { id } = router.query
 
@@ -248,25 +247,11 @@ function EditGroup({user, access_token}) {
     },
   ];
 
-  // Getting the Group Data by ID
-  const groupDetails = async () => {
-    try{
-      const res = await field.getSubgroupsbyId(access_token, id)
-       setGroupdata(res?.data)
-       setGroupname(res?.data?.groupName)
 
-    }catch (err){
-      console.log(err, "This is error")
-    }
-  }
 
-  useEffect(() => {
-    groupDetails()
-  }, []);
-
-  console.log(groupName, "this is REs data of subgroupby Id")
   const handleAddButtonClick = () => {
-    router.push("/dashboard/root/field-management");
+    // router.push("/dashboard/root/field-management");
+    console.log(editGroup, "this is group")
   };
 
   const handleChange = (e) => {
@@ -275,6 +260,23 @@ function EditGroup({user, access_token}) {
       console.log(value, name, "this is handle changes")
 
   }
+
+  const handleFormChangeGroup = (e) => {
+    let data = {...editGroup}
+    data[e.target.name] = [e.target.value]
+    setEditgroup(data)
+  }
+
+  const handleFormChangeSubgroup = (index, e) => {
+    let data = {...editGroup.subgroups}
+    const {name, value} = e.target
+    console.log(name, value, "this is value")
+    data[index][e.target.name] = [e.target.value]
+    setEditgroup({...editGroup,data})
+    console.log(data, "this is data")
+  }
+
+
 
   return (
     <>
@@ -298,33 +300,35 @@ function EditGroup({user, access_token}) {
       <div className="px-4">
         <div className="w-1/5">
 
-          <TextField label={"Group Name"} onChange={handleChange} placeHolder="Asset Description" value={groupName} name="groupName" />
+          <TextField label={"Group Name"}   onChange={e => handleFormChangeGroup(e)} placeHolder="Asset Description" value={editGroup.groupName} name="groupName" />
 
         </div>
         <Text1 size="lg" weight="medium" className="my-4">
           Sub Groups
         </Text1>
         {
-          groupData?.subgroups?.map((group) => {
+          editGroup?.subgroups?.map((group, index) => {
             return(
                 <>
-                  <div className="w-1/5">
-                    <TextField     onChange={handleChange} label={"Sub Group Name"} placeHolder="Sub Group Name " name="subGroupname"  value={group?.subgroupName}/>
+                  <div key={index}>
+                    <div className="w-1/5">
+                      <TextField   onChange={e => handleFormChangeSubgroup(index, e)} label={"Sub Group Name"} placeHolder="Sub Group Name " name="subGroupname"  value={group?.subgroupName}/>
+                    </div>
+                    <TableComp
+                        headers={HeaderGoods}
+                        responseData={(e) => setData1(e)}
+                        body={group?.fields?.map((item, index) => {
+                          return {
+                            ...item,
+                            action:"action",
+                            isMandatory: true? "Yes": "NO",
+                            // href:`/${index}`
+                          };
+                        })}
+                        onClick={(e) => console.log(e)}
+                        editItem={(e) => setIsOpen(true)}
+                    />
                   </div>
-                  <TableComp
-                      headers={HeaderGoods}
-                      responseData={(e) => setData1(e)}
-                      body={group?.fields?.map((item, index) => {
-                        return {
-                          ...item,
-                          action:"action",
-                          isMandatory: true? "Yes": "NO",
-                          // href:`/${index}`
-                        };
-                      })}
-                      onClick={(e) => console.log(e)}
-                      editItem={(e) => setIsOpen(true)}
-                  />
                 </>
             )
           })
@@ -358,7 +362,7 @@ function EditGroup({user, access_token}) {
 export const getServerSideProps = async (appCtx) => {
   let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
   const auth = await authApi.WhoAmI(appCtx)
-  // console.log(auth,'ddd')
+
   if (!auth) {
     return {
       redirect: {
@@ -367,12 +371,25 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
   }
+  let groupOverview;
+  let id = appCtx.query.id
+
+    try{
+      const res = await field.getSubgroupsbyId(access_token, id)
+      groupOverview = res?.data
+      console.log(res?.data, "this is data")
+
+    }catch (err){
+      console.log(err, "This is error")
+    }
+
 
 
   return {
     props: {
       user: auth,
-      access_token
+      access_token,
+      groupOverview:groupOverview || []
     }
   }
 }
