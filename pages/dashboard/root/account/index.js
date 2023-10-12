@@ -3,8 +3,11 @@ import MainLayout from 'proj-components/MainLayout'
 import NodataPage from '@/components/molecules/nodataPage'
 import { Text1 } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
-import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
+
+
 const Account = ({user}) => {
+  console.log(user,'user')
   const [data,setData] = useState([])
   return (
     <>
@@ -28,21 +31,14 @@ const Account = ({user}) => {
 
 export const getServerSideProps = async (appCtx) => {
    
-  const auth =await doCheckAuth(appCtx)
+  const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
-  if (!auth) {
-    return {
-      redirect: {
-        destination: '/auth/login',
-        permanent: false,
-      },
-    };
 
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  
+
+  return {
+    props:{
+       user:auth
     }
   }
 

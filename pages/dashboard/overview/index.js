@@ -3,8 +3,9 @@ import MainLayout from '../../../proj-components/MainLayout'
 import { Nodata } from '../../../components/atoms/icons'
 import {Text1} from "../../../components/atoms/field";
 import Button from '../../../components/atoms/button';
-import { doCheckAuth } from '@/utils/doCheckAuth';
+// import { doCheckAuth } from '@/utils/doCheckAuth';
 import { useRouter } from 'next/router';
+import authApi from 'helpers/use-api/auth';
 
 const Overview = ({user}) => {
   const router = useRouter();
@@ -77,7 +78,7 @@ const Overview = ({user}) => {
 
 export const getServerSideProps = async (appCtx) => {
    
-  const auth =await doCheckAuth(appCtx)
+  const auth =await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
