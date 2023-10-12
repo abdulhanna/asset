@@ -42,14 +42,14 @@ export const getServerSideProps = async (appCtx) => {
 
   }
   const getAllgroups = await field.getAllGroups(access_token)
-  {
-    return {
-      props: {
-        user: auth,
-        allgroups: getAllgroups.data || []
-      }
+
+  return {
+    props: {
+      user: auth,
+      allgroups: getAllgroups.data || []
     }
   }
+
 
 }
 
