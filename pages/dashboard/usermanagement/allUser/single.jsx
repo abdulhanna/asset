@@ -9,7 +9,7 @@ import { DialogPage1 } from "@/components/molecules/dialog";
 import { UpArrow } from "@/components/atoms/icons";
 import { FileUploader } from "react-drag-drop-files";
 import { doCheckAuth } from '@/utils/doCheckAuth'
-
+import authApi from 'helpers/use-api/auth'
 
 
 const AddCompanyLogo = ({ open, close }) => {
@@ -180,7 +180,7 @@ const SingleUser = ({user}) => {
 
 export const getServerSideProps = async (appCtx) => {
    
-  const auth =await doCheckAuth(appCtx)
+  const auth =await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -190,11 +190,10 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
 
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  } 
+  return {
+    props:{
+       user:auth
     }
   }
 

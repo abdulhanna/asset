@@ -9,7 +9,7 @@ import { ToggleButton, ToggleOnButton } from '@/components/atoms/icons'
 import { FileUploader } from "react-drag-drop-files";
 import { DialogPage1 } from '@/components/molecules/dialog'
 import { UpArrow } from '@/components/atoms/icons'
-import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
 
 const AddCompanyLogo = ({ open, close }) => {
   const fileTypes = ["JPEG", "PNG", "JPG"];
@@ -73,6 +73,7 @@ const AddCompanyLogo = ({ open, close }) => {
 };
 
 const AddAccount = ({user}) => {
+  console.log(user,'add')
   const [logoHigh, setLogoHigh] = useState(false);
   const [state,setState] = useState({
     name: '',
@@ -231,7 +232,7 @@ const AddAccount = ({user}) => {
 
 export const getServerSideProps = async (appCtx) => {
    
-  const auth =await doCheckAuth(appCtx)
+  const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -241,11 +242,11 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
 
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  } 
+
+  return {
+    props:{
+       user:auth
     }
   }
 

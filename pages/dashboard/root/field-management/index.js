@@ -5,7 +5,7 @@ import field from '../../../../helpers/use-api/fieldmanagment'
 import SubGroupview from './subgroupview'
 import Fieldgroupdescription from './fieldgroupdescription'
 import { doCheckAuth } from '@/utils/doCheckAuth'
-
+import authApi from 'helpers/use-api/auth'
 
 
 const FieldMangment = ({ user, allgroups }) => {
@@ -30,7 +30,7 @@ export const getServerSideProps = async (appCtx) => {
 
   let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
 
-  const auth = await doCheckAuth(appCtx)
+  const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {

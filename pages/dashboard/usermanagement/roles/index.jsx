@@ -7,7 +7,7 @@ import { SampleTableNew } from '@/components/organism/tablecomp'
 import { useEffect } from 'react'
 import { doCheckAuth } from '@/utils/doCheckAuth'
 import userRolesApi from 'helpers/use-api/user-management/roles'
-
+import authApi from 'helpers/use-api/auth'
 
 const RolesPerimission = ({user,roles}) => {
   const [roleList,setRoleList] = useState(roles)
@@ -112,7 +112,7 @@ const RolesPerimission = ({user,roles}) => {
 export const getServerSideProps = async (appCtx) => {
   let access_token =
   "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-  const auth = await doCheckAuth(appCtx)
+  const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {

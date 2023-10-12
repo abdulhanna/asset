@@ -12,6 +12,7 @@ import { doCheckAuth } from "@/utils/doCheckAuth";
 import authApi from "helpers/use-api/auth";
 import orgApi from "helpers/use-api/organisations";
 
+
 const AddOganisation = ({ user, access_token }) => {
   const router = useRouter();
 
@@ -372,7 +373,7 @@ const AddOganisation = ({ user, access_token }) => {
 export const getServerSideProps = async (appCtx) => {
   let access_token =
     "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-  const auth = await doCheckAuth(appCtx);
+  const auth = await authApi.WhoAmI(appCtx);
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -381,14 +382,13 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
-  } else {
-    return {
-      props: {
-        user: auth,
-        access_token,
-      },
-    };
-  }
+  } 
+  return {
+    props: {
+      user: auth,
+      access_token,
+    },
+  };
 };
 
 export default AddOganisation;

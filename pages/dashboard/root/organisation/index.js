@@ -41,6 +41,7 @@ export const getServerSideProps = async (appCtx) => {
     };
   }
  let organizationList
+
  try{
   const res = await orgApi.getAll(access_token);
   organizationList=res?.data

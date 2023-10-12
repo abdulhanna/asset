@@ -1,6 +1,4 @@
 import React from 'react'
-import { hostedAuthAxios } from '@/utils/backendAxios'
-import { doCheckAuth } from '@/utils/doCheckAuth'
 import authApi from 'helpers/use-api/auth'
 
 const Dashboard = () => {

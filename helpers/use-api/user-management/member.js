@@ -4,13 +4,13 @@ const memberAccessApi = {}
 
  memberAccessApi.add = (access_token,data)=>{
     return hostedAxios.post('/user-management/members/createMember', data,{
-        headers: { cookie: access_token }
+        headers: { Cookie: access_token }
     })
  }
 
  memberAccessApi.getAllMember =(access_token)=>{
     return hostedAxios.get('/user-management/members',{
-        headers: { cookie: access_token }
+        headers: { Cookie: access_token }
     })
  }
 
