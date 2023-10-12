@@ -6,6 +6,12 @@ import { TrashIcon, EditIcon } from "@/components/atoms/icons";
 import DialogPage1 from "@/components/molecules/dialog";
 import Button from "@/components/atoms/button";
 import MainLayout from "proj-components/MainLayout";
+import authApi from "../../../../helpers/use-api/auth";
+import { LeftArrowIcon } from "@/components/atoms/icons";
+import { useRouter } from "next/router";
+import field from "../../../../helpers/use-api/fieldmanagment";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const EditDataComp = ({ open, close, data }) => {
   // const initialValue = {
@@ -162,19 +168,35 @@ const EditDataComp = ({ open, close, data }) => {
   );
 };
 
-function EditGroup(props) {
+function EditGroup({ user, access_token, groupOverview }) {
   const [data1, setData1] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [editGroup, setEditgroup] = useState(groupOverview)
+
+
+  console.log(editGroup, "this is group")
+  const router = useRouter();
+
+  const notify = (msg) => toast.success(msg)
+  const error = (msg) => toast.danger(msg)
+
+  const { id } = router.query
 
   const HeaderGoods = [
-    { label: "Field Name", name: "fieldName" },
-    { label: "Field Type", name: "fieldType" },
+    { label: "Field Name", name: "name" },
+    { label: "Data Type", name: "dataType" },
     { label: "Field Length", name: "fieldLength" },
-    { label: "List Option", name: "listOption" },
-    { label: "Error Message", name: "error" },
-    { label: "Mandatory?", name: "mandatory" },
-    { label: "Action", name: "action" },
+    // // { label: "List Option", name: "listOptions" },
+    // { label: "Error Message", name: "errorMessage" },
+    { label: "Field Type?", name: "fieldType" },
+    { label: "Field Relation", name: "fieldRelation" },
+    // { label: "Dependent Field", name: "dependentFieldId" },
+    { label: "IS Mandatory", name: "isMandatory" },
+    // { label: "Field Info", name: "fieldInfo" },
+    { label: "action", name: "action" }
   ];
+
+
 
   const Headerbody = [
     {
@@ -229,40 +251,126 @@ function EditGroup(props) {
     },
   ];
 
-  const handleAddButtonClick = () => {
-    router.push("/dashboard/root/field-management");
+
+
+  const handleAddButtonClick = async () => {
+    // router.push("/dashboard/root/field-management");
+    try {
+      const res = await field.updateGroup(access_token, id, editGroup)
+      notify("Added Successfully")
+      setTimeout(() => {
+        router.reload()
+      }, 1000)
+      console.log(res, "this is res")
+    } catch (err) {
+      console.log(err, "this is err in updateGroup")
+    }
+
+    console.log(editGroup, "this is group")
   };
+
+
+  const handleFormChangeGroup = (e) => {
+    setEditgroup({ ...editGroup, [e.target.name]: e.target.value })
+
+  }
+
+  // const handleFormChangeSubgroup = (index, e) => {
+  //   let data = { ...editGroup.subgroups }
+  //   const { name, value } = e.target
+  //   console.log(name, value, "this is value")
+  //   data[index][e.target.name] = [e.target.value]
+  //   // setEditgroup({ ...editGroup, subgroupName: data })
+  //   console.log(data, "this is data")
+  // }
+
+  const handleFormChangeSubgroup = (index, e) => {
+    const { name, value } = e.target;
+    setEditgroup(prevEditGroup => {
+      const updatedSubgroups = [...prevEditGroup.subgroups];
+      updatedSubgroups[index][name] = value;
+      return { ...prevEditGroup, subgroups: updatedSubgroups };
+    });
+
+  };
+
+
 
   return (
     <>
-      <MainLayout>
-        <div className="flex justify-between mb-4">
-          <Text1 size="2xl" weight="medium">
-            Edit Group
+      <MainLayout User={user} isScroll={true}>
+        <div className="flex justify-between items-center px-2  mb-4 ">
+          <div className="flex items-center cursor-pointer space-x-2"
+            onClick={() => router.back()}>
+            <LeftArrowIcon />
+            <Text1 size="2xl" weight="medium" >
+              Edit Group
+            </Text1>
+          </div>
+          <div>
+            <Button onClick={handleAddButtonClick} variant="contained">
+              Save Changes
+            </Button>
+          </div>
+        </div>
+
+
+        <div className="px-4">
+          <div className="w-1/5">
+
+            <TextField label={"Group Name"} onChange={e => handleFormChangeGroup(e)} placeHolder="Asset Description" value={editGroup.groupName} name="groupName" />
+
+          </div>
+          <Text1 size="lg" weight="medium" className="my-4">
+            Sub Groups
           </Text1>
-          <Button onClick={handleAddButtonClick} variant="contained">
+          {
+            editGroup?.subgroups?.map((group, index) => {
+              return (
+                <>
+                  <div key={index}>
+                    <div className="w-1/5">
+                      <TextField onChange={e => handleFormChangeSubgroup(index, e)} label={"Sub Group Name"} placeHolder="Sub Group Name " name="subgroupName" value={group?.subgroupName} />
+                    </div>
+                    {group?.fields.length === 0 ? <>
+                      <div className="p-3 text-primary">Field not included </div>
+                    </> : <>
+                      <TableComp
+                        headers={HeaderGoods}
+                        responseData={(e) => setData1(e)}
+                        body={group?.fields?.map((item, index) => {
+                          return {
+                            ...item,
+                            action: "action",
+                            isMandatory: true ? "Yes" : "NO",
+                            // href:`/${index}`
+                          };
+                        })}
+                        onClick={(e) => console.log(e)}
+                        editItem={(e) => setIsOpen(true)}
+                      />
+                    </>}
 
-            Save Changes
-          </Button>
+                  </div>
+                </>
+              )
+            })
+          }
+
+
+          {/*<TableComp*/}
+          {/*    headers={HeaderGoods}*/}
+          {/*    responseData={(e) => setData1(e)}*/}
+          {/*    body={Headerbody.map((item, index) => {*/}
+          {/*      return {*/}
+          {/*        ...item,*/}
+          {/*        // href:`/${index}`*/}
+          {/*      };*/}
+          {/*    })}*/}
+          {/*    onClick={(e) => console.log(e)}*/}
+          {/*    editItem={(e) => setIsOpen(true)}*/}
+          {/*/>*/}
         </div>
-
-        <div className="w-1/5">
-
-          <TextField label={"Group Name"} placeHolder="Asset Description" />
-
-        </div>
-        <TableComp
-          headers={HeaderGoods}
-          responseData={(e) => setData1(e)}
-          body={Headerbody.map((item, index) => {
-            return {
-              ...item,
-              // href:`/${index}`
-            };
-          })}
-          onClick={(e) => console.log(e)}
-          editItem={(e) => setIsOpen(true)}
-        />
         <EditDataComp
           open={isOpen}
           close={() => setIsOpen(!isOpen)}
@@ -270,8 +378,44 @@ function EditGroup(props) {
         />
 
       </MainLayout>
+      <ToastContainer />
     </>
   );
+}
+
+export const getServerSideProps = async (appCtx) => {
+  let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
+  const auth = await authApi.WhoAmI(appCtx)
+
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+  }
+  let groupOverview;
+  let id = appCtx.query.id
+
+  try {
+    const res = await field.getSubgroupsbyId(access_token, id)
+    groupOverview = res?.data
+    console.log(res?.data, "this is data")
+
+  } catch (err) {
+    console.log(err, "This is error")
+  }
+
+
+
+  return {
+    props: {
+      user: auth,
+      access_token,
+      groupOverview: groupOverview || []
+    }
+  }
 }
 
 export default EditGroup;

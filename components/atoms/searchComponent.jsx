@@ -21,12 +21,12 @@ export default function SearchComponent() {
                 <input
                     type="text"
                     placeholder="Search..."
-                    className="xl:w-[500px] placeholder-blue-600 2xl:w-[550px] h-10 py-3 pl-12 pr-4 text-primary border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
+                    className="xl:w-[500px] placeholder-primary 2xl:w-[550px] h-10 py-3 pl-12 pr-4 text-primary border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
                 />
             </div>
 
             <button className="px-4 relative -ms-8 text-white bg-primary border-l rounded ">
-                    SEARCH
+                SEARCH
             </button>
 
         </form>

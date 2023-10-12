@@ -12,4 +12,6 @@ field.addSubgroupbyID = async (access_token, id, data) => hostedAxios.put(`/fiel
 
 field.getSubgroupsbyId = async (access_token, id) => hostedAxios.get(`/field-management/group/${id}`, { headers: { cookie: access_token } })
 
+field.updateGroup = async (access_token, id, data) => hostedAxios.put(`/field-management/update-group/${id}`, data, { headers: { cookie: access_token } })
+
 export default field;
