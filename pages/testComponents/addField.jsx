@@ -4,6 +4,7 @@ import Button from "../../components/atoms/button";
 
 import { useRouter } from "next/router";
 import field from "helpers/use-api/fieldmanagment";
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddField = ({ user, access_token, close, id }) => {
 
@@ -21,6 +22,8 @@ const AddField = ({ user, access_token, close, id }) => {
   };
 
   const [fields, setFields] = useState([initialValue]);
+  const notify = (msg) => toast.success(msg)
+  const error = (msg) => toast.danger(msg)
 
 
 
@@ -49,7 +52,11 @@ const AddField = ({ user, access_token, close, id }) => {
     try {
       const res = await field.addField(access_token, id, object)
       if (res.status === 200) {
+        notify("Added Successfully")
         close()
+        setTimeout(() => {
+          router.reload()
+        }, 1000)
       }
 
 
@@ -197,7 +204,7 @@ const AddField = ({ user, access_token, close, id }) => {
           Save
         </Button>
       </div>
-
+      <ToastContainer />
     </div>
   );
 };

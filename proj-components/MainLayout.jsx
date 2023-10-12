@@ -6,7 +6,7 @@ const MainLayout = ({ children, isScroll, User }) => {
   // console.log(isScroll,'isscrlll',User.role)
 
   return (
-    <div className="h-screen flex flex-col  overflow-hidden">
+    <div className="h-screen flex flex-col relative  overflow-hidden">
       <div className="flex flex-row h-screen">
         <div className="w-auto bg-background">
           <SidebarComp user={User ? User.role : ""} />
@@ -18,7 +18,7 @@ const MainLayout = ({ children, isScroll, User }) => {
               } w-full  h-full  pb-20`}
           >
             <div
-              className={` 3xl:px-12 3xl:py-12 2xl:px-8 2xl:py-12   xl:px-8 xl:py-4 container  overflow-y-auto flex-1`}
+              className={` 3xl:px-12 3xl:py-12 2xl:px-8 2xl:py-12 relative  xl:px-8 xl:py-4 container  overflow-y-auto flex-1`}
             >
               {children}
             </div>
