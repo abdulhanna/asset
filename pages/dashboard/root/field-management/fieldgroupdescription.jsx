@@ -7,11 +7,10 @@ import MainLayout from 'proj-components/MainLayout';
 import AddField from 'pages/testComponents/addField';
 import { CloseIcon, Nodata, LeftArrowIcon } from '@/components/atoms/icons';
 import { useRouter } from 'next/router';
-import { doCheckAuth } from '@/utils/doCheckAuth'
 import authApi from "../../../../helpers/use-api/auth";
 import { ToastContainer, toast } from 'react-toastify';
 import field from 'helpers/use-api/fieldmanagment';
-import authApi from 'helpers/use-api/auth';
+
 // Add field Modal
 const AddInputField = ({ open, close, showData, setShow }) => {
 
