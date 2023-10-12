@@ -26,7 +26,7 @@ const AddOganisation = ({ user, access_token }) => {
     organizationRegistrationNumber: "",
     pan: "",
     gstin: "",
-    contactNo:"",
+    contactNo: "",
     contactPersonName: "",
     contactPersonEmail: "",
     mainAddress: {
@@ -88,31 +88,31 @@ const AddOganisation = ({ user, access_token }) => {
     try {
       const res = await orgApi.saveProfile(access_token, companyprofileData);
       console.log(res, "this is a valid company profile");
-         if (res.status == 201) {
+      if (res.status == 201) {
         router.push("/dashboard/root/organisation");
       }
-  setCompanyprofileData({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    organizationName: "",
-    organizationType: "",
-    country: "",
-    organizationRegistrationNumber: "",
-    pan: "",
-    gstin: "",
-    contactNo:"",
-    contactPersonName: "",
-    contactPersonEmail: "",
-    mainAddress: {
-      address1: "",
-      address2: "",
-      city: "",
-      state: "",
-      pinCode: "",
+      setCompanyprofileData({
+        email: "",
+        password: "",
+        confirmPassword: "",
+        organizationName: "",
+        organizationType: "",
+        country: "",
+        organizationRegistrationNumber: "",
+        pan: "",
+        gstin: "",
+        contactNo: "",
+        contactPersonName: "",
+        contactPersonEmail: "",
+        mainAddress: {
+          address1: "",
+          address2: "",
+          city: "",
+          state: "",
+          pinCode: "",
         },
       })
-      
+
     } catch (err) {
       console.log(err, "error");
     }
@@ -254,8 +254,8 @@ const AddOganisation = ({ user, access_token }) => {
                   onChange={handleChange}
                   name="pan"
                 />
-            
-                  <TextField
+
+                <TextField
                   label="Contact No."
                   bgColor="white"
                   type="text"
@@ -362,7 +362,7 @@ const AddOganisation = ({ user, access_token }) => {
             </div>
 
 
-            
+
           </form>
         </div>
       </MainLayout>
