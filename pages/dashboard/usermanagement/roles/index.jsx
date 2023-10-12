@@ -6,9 +6,11 @@ import NodataPage from '@/components/molecules/nodataPage'
 import { SampleTableNew } from '@/components/organism/tablecomp'
 import { useEffect } from 'react'
 import { doCheckAuth } from '@/utils/doCheckAuth'
+import userRolesApi from 'helpers/use-api/user-management/roles'
 
 
-const RolesPerimission = ({user}) => {
+const RolesPerimission = ({user,roles}) => {
+  const [roleList,setRoleList] = useState(roles)
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
   const header = [
@@ -18,14 +20,14 @@ const RolesPerimission = ({user}) => {
     },
     {
       label:"Status",
-      name:"status"
+      name:"isDeactivated"
     },
     {
       label: "Created On",
-      name:'created_on'
+      name:'createdAt'
     },{
-      label :"Permission",
-      name:'permission'
+      label :"Total Users",
+      name:'userCount'
     }
 
   ]
@@ -48,7 +50,7 @@ const RolesPerimission = ({user}) => {
 
   useEffect(()=>{
     if(allClick === true){
-      setCheckedNewData(data)
+      setCheckedNewData(roleList)
     }else {
       setCheckedNewData([])
     }
@@ -69,29 +71,33 @@ const RolesPerimission = ({user}) => {
     }
   }
   
+  console.log(roleList,'list')
   return (
     <>
         <MainLayout User={user}>
             <div className='space-y-2'>
-               <div className='flex justify-between '>
+               <div className='flex justify-between items-center '>
+                <div className=''>
                 <Text1 size='2xl'>All Roles</Text1>
+                <Text1 className='text-lightGray' size='sm'>We have nothing here yet. Start by adding a Field Group.</Text1>
+                </div>
                  <Button href={'/dashboard/usermanagement/roles/add-roles'} variant='contained' >CREATE ROLE</Button>
                </div>
                <div>
                 {!data.length ? (<NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/>):(
                     <>
                     <SampleTableNew
-        response={data}
-        headerData={[{name:'check',label:''},...header]} 
-        checkedData={checkedNewData}
-          responseData={(e) => onNewCheck(e)}
-           href={`/dashboard/usermanagement/roles/single?`}
-           clickAll={clickAll}
-           onClick={(e)=> console.log(e,'onclick') }
-           checkAllStatus={allClick} 
-           currentPage={'1'}
-           pageSize={10}
-           onPageChange={(e)=> console.log(e)}
+                          response={roleList}
+                          headerData={[{name:'check',label:''},...header]} 
+                          checkedData={checkedNewData}
+                            responseData={(e) => onNewCheck(e)}
+                            href={`/dashboard/usermanagement/roles/single?`}
+                            clickAll={clickAll}
+                            onClick={(e)=> console.log(e,'onclick') }
+                            checkAllStatus={allClick} 
+                            currentPage={'1'}
+                            pageSize={10}
+                            onPageChange={(e)=> console.log(e)}
            
        />
                     </>
@@ -104,8 +110,9 @@ const RolesPerimission = ({user}) => {
 }
 
 export const getServerSideProps = async (appCtx) => {
-   
-  const auth =await doCheckAuth(appCtx)
+  let access_token =
+  "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
+  const auth = await doCheckAuth(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -114,12 +121,22 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
-
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  }
+  
+  let roles  
+  try{
+       const {data } = await userRolesApi.getRoles(access_token) 
+        roles = data
+      //  console.log(data,'data')s
+      // console.log(access_token)
+  }catch(err){
+    console.log(err,'err')
+  }
+  return {
+    props:{
+       user:auth,
+       access_token ,
+       roles : roles || []
     }
   }
 

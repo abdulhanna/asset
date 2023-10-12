@@ -72,7 +72,7 @@ export const TableComp1 = ({
   extraclasses,
 }) => {
   return (
-    <div className="h-auto py-8">
+    <div className="h-auto py-4">
       <div className="relative overflow-x-auto rounded-lg">
         <Table2
           headers={headers}
@@ -122,6 +122,7 @@ export const SampleTableNew = ({
 
           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
           href: `id=${row._id}`,
+          isDeactivated   : row.isDeactivated ? "InActive" :"Active"
           //   type: <p>{row.isFieldSample && row.isFieldSample === true ? 'Field Sample':'Lab Sample'}</p>,
           //   href: row.sampleStatus === '2New'?`/dashboard/sample/sampleDetails/?sampleId=${row._id}`:'',
           //   sampleId: row.sample_id.toUpperCase(),
@@ -192,7 +193,7 @@ export const NewSampleReceivingTableComponent = ({
   checkAllStatus,
 }) => {
   return (
-    <div className="h-auto py-8">
+    <div className="h-auto py-8 min-h-[590px]">
       <div className="relative overflow-x-auto rounded-lg">
         <CheckWithLinkTable
           headers={headers}
@@ -294,11 +295,11 @@ export const PermissionActionTable = ({
   extraclasses,
 }) => {
   return (
-    <div className="h-auto py-4">
+    <div className="h-auto py-4 min-h-[600px]">
       <div className="relative overflow-x-auto rounded-lg">
         <TableComp1
           headers={headers}
-          body={response.map((row) => {
+          body={response?.map((row) => {
             // console.log(row, "s");
             return {
               ...row,

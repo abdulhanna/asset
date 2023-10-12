@@ -5,12 +5,14 @@ import DialogPage, { DialogPage1 } from '../../../../components/molecules/dialog
 import AddInputDiv from '../../../testComponents/addInputDiv'
 import MainLayout from 'proj-components/MainLayout';
 import AddField from 'pages/testComponents/addField';
-import { CloseIcon } from '@/components/atoms/icons';
+import { CloseIcon, Nodata, LeftArrowIcon } from '@/components/atoms/icons';
 import { useRouter } from 'next/router';
 import { doCheckAuth } from '@/utils/doCheckAuth'
 import authApi from "../../../../helpers/use-api/auth";
 import { ToastContainer, toast } from 'react-toastify';
 import field from 'helpers/use-api/fieldmanagment';
+
+
 // Add field Modal
 const AddInputField = ({ open, close, showData, setShow }) => {
 
@@ -44,7 +46,7 @@ const AddInputField = ({ open, close, showData, setShow }) => {
   );
 };
 
-
+// Add group field modal 
 const AddtextField = ({ open, close, id }) => {
 
   return (
@@ -79,6 +81,8 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   const { id, name } = router.query
 
 
+
+  // dummy data
   const data = [
     {
       id: 1,
@@ -99,6 +103,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   ]
 
 
+  // Get subgroup field by id
   const getAllsubgroup = async () => {
     try {
       const res = await field.getSubgroupsbyId(access_token, id)
@@ -117,16 +122,19 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   }, [])
 
 
+  // Adding subgroup by id
   const showData = async (data) => {
     try {
       const res = await field.addSubgroupbyID(access_token, id, data)
       console.log(res, "this is data")
       notify("Added Successfully")
-      router.push(`/dashboard/root/field-management`)
+      setTimeout(() => {
+        router.reload()
+      }, 1000)
     } catch (e) {
       console.log(e)
     }
-    console.log(data, "this is data")
+
   }
 
 
@@ -135,7 +143,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   }
 
   const editgroup = () => {
-     router.push(`/dashboard/root/field-management/editGroup?id=${id}`)
+    router.push(`/dashboard/root/field-management/editGroup?id=${id}`)
   }
 
 
@@ -143,50 +151,73 @@ const Fieldgroupdescription = ({ user, access_token }) => {
     <>
       <MainLayout User={user} isScroll={true}>
         <div className='flex justify-between mb-4 px-2'>
-          <Text1 size="2xl" weight="medium">
-            {name}
-          </Text1>
-          <div>
-            <Button onClick={handleAddButtonClick} variant="contained" className="mr-1.5"> CREACT SUB GROUP</Button>
 
-            <Button onClick={editgroup}  className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform  ">
+          <div className='flex items-center cursor-pointer space-x-2' onClick={() => router.back()}>
+            <LeftArrowIcon />
+            <Text1 size="2xl" weight="medium">
+              {name}
+            </Text1>
+          </div>
+          <div>
+            <Button onClick={handleAddButtonClick} variant="contained" className="mr-1.5"> CREATE SUB GROUP</Button>
+
+            <Button onClick={editgroup} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-[#7CC270] hover:text-white px-6 py-2 rounded transition transform  ">
               EDIT GROUP
             </Button>
           </div>
 
         </div>
 
+        {
+          getsubGroup?.length === 0 ?
+            <>
+              <div className=' rounded-md flex items-center justify-center inset-y-2/4 inset-x-2/4  mt-[350px] overflow-hidden'>
+                <div className='text-center'>
+                  <Nodata className={'flex justify-center'} />
+                  <div className='mt-3'>
+                    <span className='text-gray-600'> No Added Sub-group</span>
+                    {/* <span className='text-blue-600 underline underline-offset-4'>Know how?</span> */}
+                  </div>
+                </div>
+              </div>
+            </> : null
+        }
+
         {getsubGroup?.map((component) => (
           <>
-            <div key={component._id} className=" py-4 mb-2">
-               <div className="flex justify-between">
-                 <Text1 size='lg' weight='medium'>
-                   {component.subgroupName}
-                 </Text1>
-                 <div>
-                   <Button id={component._id} onClick={() => {
-                     setSelectedId(component._id);
-                     setTextHigh(true)
-                   }} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
-                     ADD FIELD
-                   </Button>
+            <div key={component._id} className=" py-2  px- 4 mb-2">
+              <div className="flex justify-between">
+                <Text1 size='lg' weight='medium'>
+                  {component.subgroupName}
+                </Text1>
+                <div>
+                  <Button id={component._id} onClick={() => {
+                    setSelectedId(component._id);
+                    setTextHigh(true)
+                  }} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
+                    ADD FIELD
+                  </Button>
 
-                 </div>
-               </div>
+                </div>
+              </div>
               <div>
 
+
                 <div className="grid grid-cols-4 gap-4">
-                {
-                  component?.fields?.map((groupField) => {
-                    return(
+
+
+
+                  {
+                    component?.fields?.map((groupField) => {
+                      return (
                         <>
-                           <div className="border rounded-md p-3 bg-[#F7F7F7]">
-                             {groupField?.name }
-                           </div>
+                          <div className="border rounded-md p-3 bg-[#F7F7F7]">
+                            {groupField?.name}
+                          </div>
                         </>
-                    )
-                  })
-                }
+                      )
+                    })
+                  }
                 </div>
               </div>
             </div>

@@ -17,8 +17,8 @@ const AllUser = ({user}) => {
     {label:'User Name', name:'user'},
     {label:'User Role', name:'role'},
     {label:'Branch', name:'branch'},
-    {label:'Email Id', name:'email'},
-    {label:'Contact No', name:'contact'},
+    // {label:'Email Id', name:'email'},
+    // {label:'Contact No', name:'contact'},
     {label:'Status',name:'status'}, 
     {label:'created on', name:'created'}
   ]
@@ -80,8 +80,11 @@ useEffect(()=>{
     <>
         <MainLayout User={user}>
          <div className=''>
-         <div className='flex justify-between i'>
+         <div className='flex justify-between items-center'>
+         <div>
          <Text1 size='2xl'>All Member</Text1>
+         <Text1 className='text-lightGray' size='sm'>We have nothing here yet. Start by adding a Field Group.</Text1>
+         </div>
          <Button variant='contained' onClick={()=>router.push('/dashboard/usermanagement/allUser/add-user')}>ADD MEMBER</Button>
          </div>
           {data.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>

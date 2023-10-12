@@ -91,7 +91,7 @@ export const Text1 = ({
         // `text-${color}-${colorWeight}`,
         color,
         "font-body",
-        "tracking-wide leading-4	",
+        "tracking-wide 	",
         className
       )}>
       <p>

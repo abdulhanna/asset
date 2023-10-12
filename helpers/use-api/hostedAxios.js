@@ -30,3 +30,27 @@ export const hostedAxios = axios.create({
     },
 });
 
+// const authAxios = async (a_params) => {
+//     const token = await services.getToken();
+//     const local  = 'http://localhost:8000'
+//     const live = "https://mobile.singlepointgroup.com/api"
+//     var axiosParams = {
+//       ...a_params,
+//       url: live + a_params.url,
+//       headers: {
+//         Authorization: "Bearer " + token,
+//       },
+//     };
+  
+//     return new Promise((resolve, reject) => {
+//       axios(axiosParams)
+//         .then((result) => {
+//           resolve(result);
+//         })
+//         .catch((err) => {
+//           // services.clearToken();
+//           reject(err);
+//         });
+//     });
+//   };
+

@@ -8,8 +8,9 @@ import Button from "@/components/atoms/button";
 import MainLayout from "proj-components/MainLayout";
 import authApi from "../../../../helpers/use-api/auth";
 import { LeftArrowIcon } from "@/components/atoms/icons";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import field from "../../../../helpers/use-api/fieldmanagment";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const EditDataComp = ({ open, close, data }) => {
@@ -167,14 +168,17 @@ const EditDataComp = ({ open, close, data }) => {
   );
 };
 
-function EditGroup({user, access_token, groupOverview}) {
+function EditGroup({ user, access_token, groupOverview }) {
   const [data1, setData1] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [editGroup, setEditgroup] = useState(groupOverview)
 
 
-console.log(editGroup, "this is group")
+  console.log(editGroup, "this is group")
   const router = useRouter();
+
+  const notify = (msg) => toast.success(msg)
+  const error = (msg) => toast.danger(msg)
 
   const { id } = router.query
 
@@ -189,7 +193,7 @@ console.log(editGroup, "this is group")
     // { label: "Dependent Field", name: "dependentFieldId" },
     { label: "IS Mandatory", name: "isMandatory" },
     // { label: "Field Info", name: "fieldInfo" },
-    {label: "action", name: "action"}
+    { label: "action", name: "action" }
   ];
 
 
@@ -249,32 +253,46 @@ console.log(editGroup, "this is group")
 
 
 
-  const handleAddButtonClick = () => {
+  const handleAddButtonClick = async () => {
     // router.push("/dashboard/root/field-management");
+    try {
+      const res = await field.updateGroup(access_token, id, editGroup)
+      notify("Added Successfully")
+      setTimeout(() => {
+        router.reload()
+      }, 1000)
+      console.log(res, "this is res")
+    } catch (err) {
+      console.log(err, "this is err in updateGroup")
+    }
+
     console.log(editGroup, "this is group")
   };
 
-  const handleChange = (e) => {
-      e.preventDefault();
-      const {value, name} = e.target;
-      console.log(value, name, "this is handle changes")
-
-  }
 
   const handleFormChangeGroup = (e) => {
-    let data = {...editGroup}
-    data[e.target.name] = [e.target.value]
-    setEditgroup(data)
+    setEditgroup({ ...editGroup, [e.target.name]: e.target.value })
+
   }
 
+  // const handleFormChangeSubgroup = (index, e) => {
+  //   let data = { ...editGroup.subgroups }
+  //   const { name, value } = e.target
+  //   console.log(name, value, "this is value")
+  //   data[index][e.target.name] = [e.target.value]
+  //   // setEditgroup({ ...editGroup, subgroupName: data })
+  //   console.log(data, "this is data")
+  // }
+
   const handleFormChangeSubgroup = (index, e) => {
-    let data = {...editGroup.subgroups}
-    const {name, value} = e.target
-    console.log(name, value, "this is value")
-    data[index][e.target.name] = [e.target.value]
-    setEditgroup({...editGroup,data})
-    console.log(data, "this is data")
-  }
+    const { name, value } = e.target;
+    setEditgroup(prevEditGroup => {
+      const updatedSubgroups = [...prevEditGroup.subgroups];
+      updatedSubgroups[index][name] = value;
+      return { ...prevEditGroup, subgroups: updatedSubgroups };
+    });
+
+  };
 
 
 
@@ -283,8 +301,8 @@ console.log(editGroup, "this is group")
       <MainLayout User={user} isScroll={true}>
         <div className="flex justify-between items-center px-2  mb-4 ">
           <div className="flex items-center cursor-pointer space-x-2"
-                  onClick={() => router.back()}>
-            <LeftArrowIcon/>
+            onClick={() => router.back()}>
+            <LeftArrowIcon />
             <Text1 size="2xl" weight="medium" >
               Edit Group
             </Text1>
@@ -297,57 +315,62 @@ console.log(editGroup, "this is group")
         </div>
 
 
-      <div className="px-4">
-        <div className="w-1/5">
+        <div className="px-4">
+          <div className="w-1/5">
 
-          <TextField label={"Group Name"}   onChange={e => handleFormChangeGroup(e)} placeHolder="Asset Description" value={editGroup.groupName} name="groupName" />
+            <TextField label={"Group Name"} onChange={e => handleFormChangeGroup(e)} placeHolder="Asset Description" value={editGroup.groupName} name="groupName" />
 
-        </div>
-        <Text1 size="lg" weight="medium" className="my-4">
-          Sub Groups
-        </Text1>
-        {
-          editGroup?.subgroups?.map((group, index) => {
-            return(
+          </div>
+          <Text1 size="lg" weight="medium" className="my-4">
+            Sub Groups
+          </Text1>
+          {
+            editGroup?.subgroups?.map((group, index) => {
+              return (
                 <>
                   <div key={index}>
                     <div className="w-1/5">
-                      <TextField   onChange={e => handleFormChangeSubgroup(index, e)} label={"Sub Group Name"} placeHolder="Sub Group Name " name="subGroupname"  value={group?.subgroupName}/>
+                      <TextField onChange={e => handleFormChangeSubgroup(index, e)} label={"Sub Group Name"} placeHolder="Sub Group Name " name="subgroupName" value={group?.subgroupName} />
                     </div>
-                    <TableComp
+                    {group?.fields.length === 0 ? <>
+                      <div className="p-3 text-primary">Field not included </div>
+                    </> : <>
+                      <TableComp
                         headers={HeaderGoods}
                         responseData={(e) => setData1(e)}
                         body={group?.fields?.map((item, index) => {
                           return {
                             ...item,
-                            action:"action",
-                            isMandatory: true? "Yes": "NO",
+                            action: "action",
+                            isMandatory: true ? "Yes" : "NO",
                             // href:`/${index}`
                           };
                         })}
                         onClick={(e) => console.log(e)}
                         editItem={(e) => setIsOpen(true)}
-                    />
+                      />
+                    </>}
+
                   </div>
                 </>
-            )
-          })
-        }
+              )
+            })
+          }
 
 
-        {/*<TableComp*/}
-        {/*    headers={HeaderGoods}*/}
-        {/*    responseData={(e) => setData1(e)}*/}
-        {/*    body={Headerbody.map((item, index) => {*/}
-        {/*      return {*/}
-        {/*        ...item,*/}
-        {/*        // href:`/${index}`*/}
-        {/*      };*/}
-        {/*    })}*/}
-        {/*    onClick={(e) => console.log(e)}*/}
-        {/*    editItem={(e) => setIsOpen(true)}*/}
-        {/*/>*/}
-      </div>
+          {/*<TableComp*/}
+          {/*    headers={HeaderGoods}*/}
+          {/*    responseData={(e) => setData1(e)}*/}
+          {/*    body={Headerbody.map((item, index) => {*/}
+          {/*      return {*/}
+          {/*        ...item,*/}
+          {/*        // href:`/${index}`*/}
+          {/*      };*/}
+          {/*    })}*/}
+          {/*    onClick={(e) => console.log(e)}*/}
+          {/*    editItem={(e) => setIsOpen(true)}*/}
+          {/*/>*/}
+        </div>
         <EditDataComp
           open={isOpen}
           close={() => setIsOpen(!isOpen)}
@@ -355,6 +378,7 @@ console.log(editGroup, "this is group")
         />
 
       </MainLayout>
+      <ToastContainer />
     </>
   );
 }
@@ -374,14 +398,14 @@ export const getServerSideProps = async (appCtx) => {
   let groupOverview;
   let id = appCtx.query.id
 
-    try{
-      const res = await field.getSubgroupsbyId(access_token, id)
-      groupOverview = res?.data
-      console.log(res?.data, "this is data")
+  try {
+    const res = await field.getSubgroupsbyId(access_token, id)
+    groupOverview = res?.data
+    console.log(res?.data, "this is data")
 
-    }catch (err){
-      console.log(err, "This is error")
-    }
+  } catch (err) {
+    console.log(err, "This is error")
+  }
 
 
 
@@ -389,7 +413,7 @@ export const getServerSideProps = async (appCtx) => {
     props: {
       user: auth,
       access_token,
-      groupOverview:groupOverview || []
+      groupOverview: groupOverview || []
     }
   }
 }

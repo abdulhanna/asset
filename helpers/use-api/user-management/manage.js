@@ -8,8 +8,9 @@ userManageApi.addPermission = (access_token, data) => {
   });
 };
 
-userManageApi.getAllPermission = (access_token) => {
-  return hostedAxios.get("/user-management/permissions/all", {
+userManageApi.getAllPermission = (access_token,page,pageSize,sort) => {
+ 
+  return hostedAxios.get(`/user-management/permissions/all?page=${page}&size=${pageSize}&sort=${sort}`, {
     headers: { cookie: access_token }
   });
 };

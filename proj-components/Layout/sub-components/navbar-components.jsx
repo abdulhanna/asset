@@ -35,7 +35,7 @@ import {
   AssetMangementFill,
   AccountManagementFill,
   FillLocations,
-  FillDepartment,
+  FillDepartment,MasterTable,MasterTableFill
 } from "../../../components/atoms/icons";
 import Image from "next/image";
 import authApi from "helpers/use-api/auth";
@@ -183,6 +183,20 @@ const SidebarComp = ({ user }) => {
       url: "/dashboard/root/field-management",
       icon: <FieldMangment />,
       fillIcon: <FillFieldMangment />,
+    },
+    {
+      label: "Master Table",
+      url: "/dashboard/master-table",
+      submenu: [
+        { label: "Master Tables", url: "/dashboard/master-table/table" },
+        {
+          label: "Master Tables Logs",
+          url: "/dashboard/master-table/logs",
+        } 
+      ],
+      icon: <MasterTable />,
+      iconlast: <RightArrow />,
+      fillIcon: <MasterTableFill />,
     },
     {
       label: "User Management",

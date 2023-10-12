@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PaginationLeft,PaginationRight } from '../atoms/icons'
 import { Text1 } from '../atoms/field'
 
@@ -6,17 +6,35 @@ import { Text1 } from '../atoms/field'
 
 const Paging = ({currentPage,onPageChange,pageSize}) => {
 
+    const [current,setCurent]  = useState(currentPage)
 
+    useEffect(()=>{
+      if(current){
+        // console.log(current)
+      }
+       
+    },[current])
   return (
+    <div className='flex justify-between items-center text-slate-400'>
+    <div className='flex items-center space-x-2'>
+    <Text1>Item per page</Text1>
+
+    <input className='w-[30px] border border-slate-500' value={current} onChange={(e)=> {
+      setCurent(e.target.value)
+      onPageChange((Number(e.target.value)))
+    }}/>
+    <Text1> 1-12 of 200 items</Text1>
+    </div>
     <div className='flex items-center gap-2'>
     <PaginationLeft className={'cursor-pointer'} onClick={()=>{
-        if (currentPage === 1 ) return 
-        onPageChange(currentPage - 1)
+        if (current === 1 ) return 
+        onPageChange(current - 1)
     }}/>
     <Text1 className='bg-primary text-white py-1 px-2 rounded-sm'>{currentPage}</Text1>
-    {/* <Button variant='contained' size='sm'>{currentPage}</Button> */}
+   
     <Text1 size='lg'>  <span className='text-slate-400 mx-2'>of</span>{pageSize}</Text1>
-    <PaginationRight className={'cursor-pointer'} onClick={()=> onPageChange(currentPage+1)}/>
+    <PaginationRight className={'cursor-pointer'} onClick={()=> onPageChange((Number(current)+1))}/>
+ </div>
  </div>
   )
 }

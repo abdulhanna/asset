@@ -12,61 +12,99 @@ import { Accordin } from "@/components/molecules/accordion";
 import userRolesApi from "helpers/use-api/user-management/roles";
 import { useRouter } from "next/router";
 import authApi from "helpers/use-api/auth";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const AddRoles = ({ user, access_token, permissions }) => {
   const router = useRouter();
   const [role, setRole] = useState({
     roleName: "",
-    desc: "",
+    description: "",
     permissions: permissions,
   });
+  const notify  = (msg) => toast.success(msg)
 
   const handleClick = (e) => {
+    // console.log(e,'e')
     const data = [...role.permissions];
-
+     const d = data[e.id]
     let key = Object.keys(e)[0];
-
-    if (key === "removeAccess" && e[key] === true) {
-      data[e.id] = {
-        ...data[e.id],
-        [`${key}`]: e[key],
-        allAccess: false,
-        read: false,
-        readWrite: false,
-        delete: false,
-      };
-    } else if (key === "allAccess" && e[key] === true) {
-      data[e.id] = {
-        ...data[e.id],
-        [`${key}`]: e[key],
-        removeAccess: false,
-        read: true,
-        readWrite: true,
-        delete: true,
-      };
-    } else {
-      data[e.id] = {
-        ...data[e.id],
-        [`${key}`]: e[key],
-        removeAccess: false,
-        read: false,
-        readWrite: false,
-        delete: false,
-      };
-    }
-
+  
+  if (key === "removeAccess" && e[key] === true) {
+    let obj = {}
+        Object.entries(d).map((val,id) => {
+      const [key, value] = val;
+       
+      if ( key === "actions" || key === 'read' || key === "readWrite"|| key === "allAccess" ) {
+          console.log(key, value, 'val');
+          obj[`${key}`]=false
+      }
+  });
+  console.log(obj,'obj')
+    data[e.id] = {
+      ...data[e.id],
+      [`${key}`]: e[key],
+      ...obj
+      // allAccess: false,
+      // read: false,
+      // readWrite: false,
+      // delete: false,
+      // actions:false
+    };
+    // console.log(obj,'ss')
+  } else if (key === "allAccess" && e[key] === true) {
+    let obj = {}
+        Object.entries(d).map((val,id) => {
+      const [key, value] = val;
+      
+      if ( key === "actions" || key === 'read' || key === "readWrite" ) {
+          console.log(key, value, 'val');
+          obj[`${key}`]=true
+      }
+    });
+    data[e.id] = {
+      ...data[e.id],
+      [`${key}`]: e[key],
+      removeAccess: false,
+      ...obj
+      // read: true,
+      // readWrite: true,
+      // delete: true,
+      // actions:true
+    };
+  } else {
+    let obj = {}
+        Object.entries(d).map((val,id) => {
+      const [key, value] = val;
+      
+      if ( key === "actions" || key === 'read' || key === "readWrite"|| key ==='removeAccesss' ) {
+          console.log(key, value, 'val');
+          obj[`${key}`]=false
+      }
+    });
+    data[e.id] = {
+      ...data[e.id],
+      [`${key}`]: e[key],
+      ...obj
+      // removeAccess: false,
+      // read: false,
+      // readWrite: false,
+      // delete: false,
+      // actions:false
+    };
+  }
     setRole({
       ...role,
-      Permissions: data,
+      permissions: data,
     });
   };
 
   const handleToggle = (e) => {
-    const data = [...role.Permissions];
+    const data = [...role.permissions];
     const key = Object.keys(e)[0];
     data[e.id] = { ...data[e.id], [`${key}`]: e[key], removeAccess: false };
 
-    if (data[e.id].read && data[e.id].readWrite && data[e.id].delete) {
+    if (data[e.id].read && data[e.id].readWrite && data[e.id].actions) {
       // console.log('allacess')
       data[e.id] = { ...data[e.id], allAccess: true };
     } else {
@@ -75,12 +113,27 @@ const AddRoles = ({ user, access_token, permissions }) => {
 
     setRole({
       ...role,
-      Permissions: data,
+      permissions: data,
     });
   };
 
+
+  const handleSubmit =async()=>{
+     try{
+         const res = await  userRolesApi.addRole(access_token,role)
+         if(res.status == "201"){
+          notify('role added')
+          setTimeout(()=>{
+            router.push('/dashboard/usermanagement/roles')
+          },2000)
+         }
+        //  console.log(res,'res')
+     }catch(err){
+      console.log(err,'err')
+     }
+  }
   useEffect(() => {
-    console.log(role, "d");
+    // console.log(role, "d");
   }, [role]);
 
   return (
@@ -95,7 +148,7 @@ const AddRoles = ({ user, access_token, permissions }) => {
               <LeftArrowIcon />
               <Text1 size="2xl">Create Roles</Text1>
             </div>
-            <Button variant="contained">SAVE</Button>
+            <Button variant="contained" onClick={handleSubmit}>SAVE</Button>
           </div>
           <div className="mt-8 space-y-8">
             <div className="space-y-3">
@@ -110,9 +163,9 @@ const AddRoles = ({ user, access_token, permissions }) => {
             <div className="space-y-3">
               <Text1>Role Description</Text1>
               <TextInputArea
-                value={role.desc}
+                value={role.description}
                 label="Description"
-                onChange={(e) => setRole({ ...role, desc: e.target.value })}
+                onChange={(e) => setRole({ ...role, description: e.target.value })}
               />
             </div>
             <div>
@@ -120,10 +173,10 @@ const AddRoles = ({ user, access_token, permissions }) => {
                 <Text1>Role Permissions</Text1>
                 <Button
                   onClick={() => {
-                    const data = [...role.Permissions];
-                    role.Permissions.map((item, id) => {
-                      role.Permissions[id] = {
-                        ...role.Permissions[id],
+                    const data = [...role.permissions];
+                    role.permissions.map((item, id) => {
+                      role.permissions[id] = {
+                        ...role.permissions[id],
                         removeAccess: true,
                         read: false,
                         readWrite: false,
@@ -132,7 +185,7 @@ const AddRoles = ({ user, access_token, permissions }) => {
                       };
                     });
 
-                    setRole({ ...role, Permissions: role.Permissions });
+                    setRole({ ...role, permissions: role.permissions });
                   }}
                 >
                   RESTORE DEFAULTS
@@ -140,7 +193,30 @@ const AddRoles = ({ user, access_token, permissions }) => {
               </div>
               <div>
                 {role.permissions.map((item, index) => {
-                  return (
+                  {/* console.log(item,'row') */}
+
+                return <Accordin  label={item.moduleName}
+                      handleClick={handleClick}
+                      data={item}
+                      key={index}
+                      id={index}>
+                       
+               <div className="flex gap-6 items-center">
+               {Object.entries(item).map((val,id) => {
+                 const [key, value] = val;
+                  if ( key === "actions" || key === 'read' || key === "readWrite") {
+                     return<div className="flex gap-1" key={id}> <Text1 className="capitalize" size="lg">{key}</Text1>
+                               {value  ? <ToggleOnButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>:<ToggleButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>}
+                          </div>
+                      
+                      }
+               })}
+               </div>
+
+                     </Accordin>
+   
+
+                  {/* return (
                     <Accordin
                       label={item.moduleName}
                       handleClick={handleClick}
@@ -149,6 +225,7 @@ const AddRoles = ({ user, access_token, permissions }) => {
                       id={index}
                     >
                       <div className="flex items-center gap-6">
+
                         <div className="flex items-center gap-1">
                           <Text1 size="lg">READ</Text1>
                           {item.read ? (
@@ -211,11 +288,12 @@ const AddRoles = ({ user, access_token, permissions }) => {
                         </div>
                       </div>
                     </Accordin>
-                  );
+                  ); */}
                 })}
               </div>
             </div>
           </div>
+          <ToastContainer/>
         </div>
       </MainLayout>
     </>
@@ -238,7 +316,9 @@ export const getServerSideProps = async (appCtx) => {
   let permissions;
   try {
     const { data } = await userRolesApi.getPermissions(access_token);
-    permissions = data;
+    permissions = data && data.map((role)=>{
+      return {...role,moduleId:role._id}
+    })
     // console.log(permissions, "per");
   } catch (err) {
     console.log(err, "err");
