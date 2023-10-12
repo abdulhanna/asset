@@ -5,7 +5,7 @@ import { ToggleButton,ToggleOnButton,LeftArrowIcon,AddIcon } from '@/components/
 import { CustomSelect } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import { Text1,TextField } from '@/components/atoms/field'
-import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
 
 const UpdateAccount  = ({user}) => {
     const [isEdit,setIsEdit] = useState(false)
@@ -171,7 +171,7 @@ const UpdateAccount  = ({user}) => {
 
 export const getServerSideProps = async (appCtx) => {
    
-  const auth =await doCheckAuth(appCtx)
+  const auth =await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -180,12 +180,11 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
+  }
 
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  return {
+    props:{
+       user:auth
     }
   }
 

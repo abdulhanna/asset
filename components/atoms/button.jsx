@@ -2,14 +2,14 @@ import React, { Children } from 'react'
 import classNames from 'classnames'
 import Link from 'next/link'
 
-const Button = ({ href, children, className, size = 'md', variant = "primary", onClick, isDisabled=false }) => {
+const Button = ({ href, id, children, className, size = 'md', variant = "primary", onClick, isDisabled = false }) => {
     const content = <>
         {children}
     </>
     if (href) {
         return (
             <Link href={href}>
-                <button className={classNames(`${{
+                <button id={id} className={classNames(`${{
                     'xs': 'text-[10px] 2xl:text-[12px]',
                     'sm': 'text-[12px] 2xl:text-[14px]',
                     'md': 'text-[14px] 2xl:text-[16px]',
@@ -23,7 +23,7 @@ const Button = ({ href, children, className, size = 'md', variant = "primary", o
                     "border-primary border  bg-transparent text-primary": variant === "primary",
                     "border border-black  bg-transparent ": variant === "primary1",
                     "bg-primary text-white": variant === "contained",
-                    
+
 
                 })} >{content}</button>
             </Link>

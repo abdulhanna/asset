@@ -88,11 +88,10 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
 
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  } 
+  return {
+    props:{
+       user:auth
     }
   }
 

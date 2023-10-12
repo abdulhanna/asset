@@ -6,6 +6,8 @@ import Button from '@/components/atoms/button'
 import { useRouter } from 'next/router'
 import { SampleTableNew } from '@/components/organism/tablecomp'
 import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
+
 
 const AllUser = ({user}) => {
   const [data,setData] = useState([])
@@ -111,7 +113,7 @@ useEffect(()=>{
 
 export const getServerSideProps = async (appCtx) => {
    
-  const auth =await doCheckAuth(appCtx)
+  const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
     return {
@@ -121,11 +123,11 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
 
-  } else {
-    return {
-      props:{
-         user:auth
-      }
+  } 
+
+  return {
+    props:{
+       user:auth
     }
   }
 

@@ -33,7 +33,14 @@ export const getServerSideProps = async (appCtx) => {
    
   const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
-
+  if (!auth) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+  }
   
 
   return {
