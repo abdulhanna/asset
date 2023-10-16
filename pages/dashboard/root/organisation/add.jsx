@@ -22,7 +22,6 @@ const AddOganisation = ({ user, access_token }) => {
     confirmPassword: "",
     organizationName: "",
     organizationType: "",
-    country: "",
     organizationRegistrationNumber: "",
     pan: "",
     gstin: "",
@@ -35,6 +34,7 @@ const AddOganisation = ({ user, access_token }) => {
       city: "",
       state: "",
       pinCode: "",
+      country: "",
     },
   });
 
@@ -97,7 +97,6 @@ const AddOganisation = ({ user, access_token }) => {
         confirmPassword: "",
         organizationName: "",
         organizationType: "",
-        country: "",
         organizationRegistrationNumber: "",
         pan: "",
         gstin: "",
@@ -110,6 +109,7 @@ const AddOganisation = ({ user, access_token }) => {
           city: "",
           state: "",
           pinCode: "",
+          country: "",
         },
       })
 
@@ -182,7 +182,7 @@ const AddOganisation = ({ user, access_token }) => {
                 />
 
                 <TextField
-                  label="Password"
+                  label="Confirm Password"
                   bgColor="white"
                   type="password"
                   textSize="lg"
@@ -223,17 +223,76 @@ const AddOganisation = ({ user, access_token }) => {
                   <option value="Reaserch and development ">
                     Reaserch And Development
                   </option>
+                  <option value="  Technology and Software ">
+                    Technology and Software
+                  </option>
+
+                  <option value=" Finance and Banking ">
+                    Finance and Banking
+                  </option>
+
+                  <option value=" Healthcare and Pharmaceuticals ">
+                    Healthcare and Pharmaceuticals
+                  </option>
+
+                  <option value=" Education ">
+                    Education
+                  </option>
+
+                  <option value="Retail and E-commerce ">
+                    Retail and E-commerce
+                  </option>
+
+                  <option value="Manufacturing and Production">
+                    Manufacturing and Production
+                  </option>
+
+                  <option value=" Real Estate and Construction ">
+                    Real Estate and Construction
+                  </option>
+
+                  <option value=" Hospitality and Tourism ">
+                    Hospitality and Tourism
+                  </option>
+
+                  <option value=" Media and Entertainment ">
+                    Media and Entertainment
+                  </option>
+
+                  <option value="  Government and Public Sector">
+                    Government and Public Sector
+                  </option>
+
+                  <option value="  Government and Public Sector">
+                    Nonprofit and Social Services
+                  </option>
+
+                  <option value="   Transportation and Logistics">
+                    Transportation and Logistics
+                  </option>
+
+                  <option value=" Energy and Utilities">
+                    Energy and Utilities
+                  </option>
+
+                  <option value="  Telecommunications">
+                    Telecommunications
+                  </option>
+
+                  <option value="   Agriculture and Farming">
+                    Agriculture and Farming
+                  </option>
                 </CustomSelect>
 
                 <CustomSelect
                   label="Country"
-                  onChange={handleChange}
+                  onChange={handleChange1}
                   name="country"
                   selectHeight="h-[48px]"
                   bgColor="white"
                 >
                   <option value="">Choose Country</option>
-                  <option value="delhi ">Delhi</option>
+                  <option value="delhi ">India</option>
                 </CustomSelect>
 
                 <TextField
@@ -246,7 +305,7 @@ const AddOganisation = ({ user, access_token }) => {
                   onChange={handleChange}
                 />
                 <TextField
-                  label="Pan No."
+                  label="PAN No."
                   bgColor="white"
                   type="text"
                   textSize="lg"
@@ -266,7 +325,7 @@ const AddOganisation = ({ user, access_token }) => {
                 />
 
                 <TextField
-                  label="GSTIN Num"
+                  label="GSTIN No."
                   bgColor="white"
                   type="text"
                   textSize="lg"
@@ -382,7 +441,7 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
-  } 
+  }
   return {
     props: {
       user: auth,
