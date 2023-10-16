@@ -385,20 +385,99 @@ const ToggleComp = ({ data }) => {
 };
 
 
-export const MasterTableComponent = ({
+// export const MasterTableComponent = ({
+//   headers,
+//   body,
+//   href,
+//   onClick,
+//   responseData,
+//   extraclasses,
+//   clickAll,
+//   checkAllStatus,
+// }) => {
+//   return (
+//     <div className="h-auto py-8 min-h-[590px]">
+//       <div className="relative overflow-x-auto rounded-lg">
+//         <Table4
+//           headers={headers}
+//           data={body}
+//           classes={classes}
+//           href={href}
+//           extra={extraclasses}
+//           onClick={onClick}
+//           responseData={responseData}
+//           // clickAll={clickAll}
+//           // checkAllStatus={checkAllStatus}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export const MasterTableNew = ({
+//   headerData,
+//   response,
+//   onClick,
+//   responseData,
+//   href,
+//   totalDoc,
+//   checkedData,
+//   clickAll,
+//   checkAllStatus,
+//   currentPage,
+//   start,
+//   end,
+//   pageSize,
+//   onPageChange,
+//   chemicalPaginationData,
+//   microPaginationData,
+//   type,
+// }) => {
+//   return (
+//     <>
+//       <MasterTableComponent
+//         headers={headerData}
+//         onClick={onClick}
+//         responseData={responseData}
+//         clickAll={clickAll}
+//         checkAllStatus={checkAllStatus}
+//         href={href}
+//         body={response.map((row) => ({
+//           ...row,
+
+//           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+//           href: `id=${row._id}`,
+//           isDeactivated   : row.isDeactivated ? "InActive" :"Active",
+      
+//         }))}
+//       />
+//       {/* <Paging
+//         // chemicalItems ={chemicalPaginationData}
+//         // microItems ={microPaginationData}
+//         // type ={type}
+//         start={start}
+//         end={end}
+//         totalDoc = {totalDoc}
+//         currentPage={currentPage} // 1
+//         pageSize={pageSize} // 10
+//         onPageChange={onPageChange}
+//       /> */}
+//     </>
+//   );
+// };
+
+export const  MasterTableComponent = ({
   headers,
   body,
   href,
   onClick,
   responseData,
   extraclasses,
-  clickAll,
-  checkAllStatus,
-}) => {
-  return (
-    <div className="h-auto py-8 min-h-[590px]">
+}) =>{
+    return (
+      <div className="h-auto py-8">
       <div className="relative overflow-x-auto rounded-lg">
-        <Table3
+        <Table4
           headers={headers}
           data={body}
           classes={classes}
@@ -406,67 +485,13 @@ export const MasterTableComponent = ({
           extra={extraclasses}
           onClick={onClick}
           responseData={responseData}
-          clickAll={clickAll}
-          checkAllStatus={checkAllStatus}
         />
       </div>
     </div>
-  );
-};
+    )
+}
 
-export const MasterTableNew = ({
-  headerData,
-  response,
-  onClick,
-  responseData,
-  href,
-  totalDoc,
-  checkedData,
-  clickAll,
-  checkAllStatus,
-  currentPage,
-  start,
-  end,
-  pageSize,
-  onPageChange,
-  chemicalPaginationData,
-  microPaginationData,
-  type,
-}) => {
-  return (
-    <>
-      <MasterTableComponent
-        headers={headerData}
-        onClick={onClick}
-        responseData={responseData}
-        clickAll={clickAll}
-        checkAllStatus={checkAllStatus}
-        href={href}
-        body={response.map((row) => ({
-          ...row,
-
-          check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
-          href: `id=${row._id}`,
-          isDeactivated   : row.isDeactivated ? "InActive" :"Active",
-      
-        }))}
-      />
-      {/* <Paging
-        // chemicalItems ={chemicalPaginationData}
-        // microItems ={microPaginationData}
-        // type ={type}
-        start={start}
-        end={end}
-        totalDoc = {totalDoc}
-        currentPage={currentPage} // 1
-        pageSize={pageSize} // 10
-        onPageChange={onPageChange}
-      /> */}
-    </>
-  );
-};
-
-const TableComp2 = ({
+export const TableComp2 = ({
   headers,
   body,
   href,

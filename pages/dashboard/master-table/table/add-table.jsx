@@ -5,7 +5,7 @@ import memberAccessApi from 'helpers/use-api/user-management/member'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
-
+import { useRouter } from 'next/router'
 
 const AddTable = ({access_token,user}) => {
   const [fields,setFields] = useState([
@@ -31,6 +31,7 @@ const AddTable = ({access_token,user}) => {
       options:['WDB','SLM','USAGE']
     }
   ])
+  const router  = useRouter()
 
   const addField = ()=>{
     setFields([...fields,{fieldName:"Rate(%)",

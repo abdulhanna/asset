@@ -18,7 +18,7 @@ const Table = ({
 }) => {
   const lastIndex = headers.length - 1;
 
-     console.log(href,'ref')
+    //  console.log(href,'ref')
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
@@ -735,7 +735,7 @@ export const Table2 = ({
     }
   };
   sortedData = sortData('date', true);
-  console.log(href,'href');
+  // console.log(href,'href');
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
@@ -970,16 +970,17 @@ export const Table4 = ({
 
       <tbody className={classes.tbody}>
         {data.map((dataRow, index) => {
-           {/* console.log(dataRow) */}
+          let codeLen = dataRow['code'].toString().length
+           {/* console.log(codeLen,'row',index) */}
           return (
             <Link href={`${href}${href !== '#' ? dataRow.href : ''}`} key={index}>
               {/* <Link href={`${dataRow.href}`}> */}
-              <tr>
+              <tr className={`${codeLen > 2 ?"":"text-blue-500"} `}>
                 {headers.map((item) => {
                   return (
                     <td
                       key={item.name}
-                      className={`${classes.td} ${extra}`}
+                      className={`px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white`}
                       onClick={() => {
                         onClick && onClick();
 
