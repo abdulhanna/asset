@@ -13,37 +13,34 @@ const Text = ({
   return (
     <div
       className={classNames(`
-        ${
-          {
-            xs: "text-[10px] 2xl:text-[12px]",
-            sm: "text-[12px] 2xl:text-[14px]",
-            md: "text-[14px] 2xl:text-[16px]",
-            lg: "text-[16px] 2xl:text-[18px]",
-            xl: "text-[18px] 2xl:text-[22px]",
-            "2xl": "text-[22px] 2xl:text-[26px]",
-          }[size]
+        ${{
+          xs: "text-[10px] 2xl:text-[12px]",
+          sm: "text-[12px] 2xl:text-[14px]",
+          md: "text-[14px] 2xl:text-[16px]",
+          lg: "text-[16px] 2xl:text-[18px]",
+          xl: "text-[18px] 2xl:text-[22px]",
+          "2xl": "text-[22px] 2xl:text-[26px]",
+        }[size]
         }
-        ${
-          {
-            light: "font-thin",
-            normal: "font-normal",
-            medium: "font-body",
-            semibold: "font-semibold",
-            bold: "font-bold",
-          }[weight]
+        ${{
+          light: "font-thin",
+          normal: "font-normal",
+          medium: "font-body",
+          semibold: "font-semibold",
+          bold: "font-bold",
+        }[weight]
         },
-        ${
-          {
-            "1x": `text-${color}-100`,
-            "2x": `text-${color}-200`,
-            "3x": `text-${color}-300`,
-            "4x": `text-${color}-400`,
-            "5x": `text-${color}-500`,
-            "6x": `text-${color}-600`,
-            "7x": `text-${color}-700`,
-            "8x": `text-${color}-800`,
-            "9x": `text-${color}-900`,
-          }[colorWeight]
+        ${{
+          "1x": `text-${color}-100`,
+          "2x": `text-${color}-200`,
+          "3x": `text-${color}-300`,
+          "4x": `text-${color}-400`,
+          "5x": `text-${color}-500`,
+          "6x": `text-${color}-600`,
+          "7x": `text-${color}-700`,
+          "8x": `text-${color}-800`,
+          "9x": `text-${color}-900`,
+        }[colorWeight]
         }
       font-body tracking-wide ${classname}
     `)}>
@@ -96,7 +93,7 @@ export const Text1 = ({
       )}>
       <p>
 
-      {children}
+        {children}
       </p>
     </div>
   );
@@ -106,7 +103,7 @@ export const InputField = ({
   children,
   type,
   id,
-  onChange = (e) => {},
+  onChange = (e) => { },
   placeHolder,
   name = "",
   defaultValue = "",
@@ -162,17 +159,17 @@ export const TextArea = ({
   );
 };
 export const TextField = ({
-  key="",
+  key = "",
   label = "",
   name = "",
   id = "",
   height = "h-[48px]",
-  width="w-[378px]",
+  width = "w-[378px]",
   textsize = "text-sm",
   type = "text",
   required = null,
   bgColor = "",
-  labelColor ="textColor",
+  labelColor = "textColor",
   roundedText = "rounded-[4px]",
   roundedPassword = "rounded-lg",
   placeHolder = "",
@@ -183,7 +180,8 @@ export const TextField = ({
   min = "1980-01-01",
   error = null,
   isRead = false,
-  onChange = (e) => {},
+
+  onChange = (e) => { },
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const show = (e) => {
@@ -195,7 +193,7 @@ export const TextField = ({
   return (
     <div
       className={`flex flex-col gap-0.5 py-1 2xl:gap-1 2xl:py-2  ${className}`}>
-        <p className={`select-none font-normal flex text-sm text-${labelColor}`}>
+      <p className={`select-none font-normal flex text-sm text-${labelColor}`}>
         {label}
         {required && <div className="text-red-500">*</div>}
       </p>
@@ -208,6 +206,7 @@ export const TextField = ({
             type={showPassword ? "text" : "password"}
             value={value}
             placeholder={placeHolder}
+
             onChange={(e) => onChange(e)}
             className={classNames(
               `${bgColor}  border-[1px] rounded px-3 py-[7.5px] ${height} active:outline-none w-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`,
@@ -279,7 +278,7 @@ export const TextInputArea = ({
   max = "2004-01-01",
   min = "1980-01-01",
   error = null,
-  onChange = (e) => {},
+  onChange = (e) => { },
 }) => {
   return (
     <div
@@ -309,8 +308,8 @@ export const TextInputArea = ({
         // whileTap={{ y: 3 }}
         required={required}
         disabled={disabled}
-        // max={max}
-        // min={min}
+      // max={max}
+      // min={min}
       />
 
       {/* {error && <Error data={error} />} */}
@@ -319,41 +318,38 @@ export const TextInputArea = ({
 };
 
 export const CustomSelect = ({
-    id,
-    children,
-    onChange ,
-    label,
-    name,
-    required = false,
-    bgColor = 'white',
-    disabled = false,
-    className ,
-    selectHeight ="",
-    // defaultValue,
-    value,
-  }) => {
-    // console.log(value,'de')
+  id,
+  children,
+  onChange,
+  label,
+  name,
+  required = false,
+  bgColor = 'white',
+  disabled = false,
+  className,
+  selectHeight = "",
+  value,
+}) => {
   return (
-  <div className={`flex  flex-col py-1 2xl:py-2 gap-0.5 2xl:gap-1 ${className}`}>
-  <div className="font-normal  text-sm text-textColor">{label}</div>
+    <div className={`flex  flex-col py-1 2xl:py-2 gap-0.5 2xl:gap-1 ${className}`}>
+      <div className="font-normal  text-sm text-textColor">{label}</div>
       <select
-      required={required}
-      id={id}
-      // defaultValue={defaultValue}
-      name={name}
-      value={value}
-      className={` px-1 ${selectHeight} rounded border-[1px] p-6 py-[12px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
-      onChange={onChange}
-      disabled={disabled}
+        required={required}
+        id={id}
+        name={name}
+        value={value}
+        className={` px-1 ${selectHeight} rounded border-[1px] p-6 py-[12px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
+        onChange={onChange}
+        disabled={disabled}
       >
-      {children}
+        {children}
       </select>
-  </div>
+    </div>
   );
 };
 
 
-export const RadioButton = ({ label, options, selectedOption, onChange, 
+export const RadioButton = ({ label, options, selectedOption, onChange,
   name = "",
   id = "",
   height = "h-auto",
@@ -377,7 +373,7 @@ export const RadioButton = ({ label, options, selectedOption, onChange,
 
   return (
     <>
-      <div > 
+      <div >
         <label className='text-slate-400 text-xs '>{label}</label>
 
         <div className="flex">
@@ -396,11 +392,11 @@ export const RadioButton = ({ label, options, selectedOption, onChange,
             </label>
           ))}
         </div>
-     </div>
-     </>
+      </div>
+    </>
   )
-                }
-     
+}
+
 
 
 

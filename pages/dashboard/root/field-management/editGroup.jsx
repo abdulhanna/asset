@@ -1,18 +1,102 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment, useRef } from "react";
 import { useState } from "react";
-import TableComp from "@/components/organism/tablecomp";
+import TableComp, { FieldActionTable } from "@/components/organism/tablecomp";
 import { CustomSelect, TextField, Text1 } from "@/components/atoms/field";
 import { TrashIcon, EditIcon } from "@/components/atoms/icons";
 import DialogPage1 from "@/components/molecules/dialog";
 import Button from "@/components/atoms/button";
 import MainLayout from "proj-components/MainLayout";
 import authApi from "../../../../helpers/use-api/auth";
-import { LeftArrowIcon } from "@/components/atoms/icons";
+import { LeftArrowIcon, CloseIcon } from "@/components/atoms/icons";
 import { useRouter } from "next/router";
 import field from "../../../../helpers/use-api/fieldmanagment";
 import { ToastContainer, toast } from 'react-toastify';
+import { Dialog, Transition } from '@headlessui/react'
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import AddField, { EditField } from "pages/testComponents/addField";
 
 
+
+// Confirm Delete MOdal
+const DeleteConfirm = ({ check, close }) => {
+  console.log(check, "Delete Confirm")
+
+
+  const cancelButtonRef = useRef(null)
+
+  return (
+    <Transition.Root show={check} as={Fragment}>
+      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={close}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                      <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
+                    </div>
+                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                        Delete Sub Group
+                      </Dialog.Title>
+                      <div className="mt-2">
+                        <p className="text-sm text-gray-500">
+                          Are you sure you want to delete Sub Group? All of your defined Field will be permanently
+                          removed. This action cannot be undone.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                  // onClick={() => setOpen(false)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="button"
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    onClick={close}
+                    ref={cancelButtonRef}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  )
+}
+
+
+// EDitComponent Component
 const EditDataComp = ({ open, close, data }) => {
   // const initialValue = {
   //     name: "",
@@ -168,10 +252,35 @@ const EditDataComp = ({ open, close, data }) => {
   );
 };
 
+// MOdal Add text field
+const AddtextField = ({ open, close, id }) => {
+
+  return (
+    <>
+      <DialogPage1 open={open} close={close} width="w-[1288px]">
+        {/* <div className="w-full text-right  pb-3 pr-8">
+          <button onClick={close} >
+            <CloseIcon />
+          </button>
+        </div> */}
+        <EditField close={close} id={id} />
+      </DialogPage1>
+    </>
+  );
+};
+
+
+// EDitGRoup Main Component
 function EditGroup({ user, access_token, groupOverview }) {
   const [data1, setData1] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [deleteOPen, setDeleteOpen] = useState(false);
   const [editGroup, setEditgroup] = useState(groupOverview)
+  const [checkedNewData, setCheckedNewData] = useState([]);
+  const [allClick, setAllClick] = useState(false)
+  const [inputHigh, setInputHigh] = useState(false);
+  const [textHigh, setTextHigh] = useState(false);
+  const [fieldData, setFieldData] = useState('');
 
 
   console.log(editGroup, "this is group")
@@ -294,6 +403,34 @@ function EditGroup({ user, access_token, groupOverview }) {
 
   };
 
+  const Delete = () => {
+    setDeleteOpen(!deleteOPen)
+    console.log(deleteOPen, "this is a delete")
+  }
+
+  const clickAll = (e) => {
+
+    // setAllClick(!allClick)
+  }
+
+
+  const edit = (e) => {
+    setFieldData(e)
+    setTextHigh(true)
+  }
+
+
+  console.log(fieldData, "this is a field")
+
+
+
+  useEffect(() => {
+    if (allClick === true) {
+      setCheckedNewData(data)
+    } else {
+      setCheckedNewData([])
+    }
+  }, [allClick])
 
 
   return (
@@ -329,13 +466,34 @@ function EditGroup({ user, access_token, groupOverview }) {
               return (
                 <>
                   <div key={index}>
-                    <div className="w-1/5">
+                    <div className=" flex justify-between items-center ">
                       <TextField onChange={e => handleFormChangeSubgroup(index, e)} label={"Sub Group Name"} placeHolder="Sub Group Name " name="subgroupName" value={group?.subgroupName} />
+                      <Button onClick={Delete} variant='danger' className="mb-2 h-10 mt-3  bg-red-500 hover:border-red-500 hover:bg-red-500 hover:text-white px-3 py-2 rounded transition transform  ">
+                        DELETE SUB-GROUP
+                      </Button>
                     </div>
                     {group?.fields.length === 0 ? <>
                       <div className="p-3 text-primary">Field not included </div>
                     </> : <>
-                      <TableComp
+
+                      <FieldActionTable
+                        headers={[{ name: 'check', label: '' }, ...HeaderGoods]}
+                        response={group?.fields?.map((item, index) => {
+                          return {
+                            ...item,
+                            isMandatory: item.isMandatory ? "Yes" : "NO",
+                            // href:`/${index}`
+                          };
+                        })}
+                        responseData={(e) => setData1(e)}
+                        checkedData={checkedNewData}
+                        clickAll={clickAll}
+                        onClick={(e) => console.log(e)}
+                        checkAllStatus={allClick}
+                        onDelete={(e) => console.log(e, "DEleted")}
+                        onEdit={edit}
+                      />
+                      {/* <TableComp
                         headers={HeaderGoods}
                         responseData={(e) => setData1(e)}
                         body={group?.fields?.map((item, index) => {
@@ -348,7 +506,7 @@ function EditGroup({ user, access_token, groupOverview }) {
                         })}
                         onClick={(e) => console.log(e)}
                         editItem={(e) => setIsOpen(true)}
-                      />
+                      /> */}
                     </>}
 
                   </div>
@@ -371,13 +529,20 @@ function EditGroup({ user, access_token, groupOverview }) {
           {/*    editItem={(e) => setIsOpen(true)}*/}
           {/*/>*/}
         </div>
+        <AddtextField open={textHigh} close={() => setTextHigh(false)} id={fieldData} />
         <EditDataComp
           open={isOpen}
           close={() => setIsOpen(!isOpen)}
           data={data1}
         />
 
+        <DeleteConfirm
+          check={deleteOPen}
+          close={() => setDeleteOpen(!deleteOPen)}
+        />
+
       </MainLayout>
+
       <ToastContainer />
     </>
   );

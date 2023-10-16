@@ -126,8 +126,7 @@ export const SampleTableNew = ({
 
           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
           href: `id=${row._id}`,
-          isDeactivated   : row.isDeactivated ? "InActive" :"Active",
-        
+          isDeactivated: row.isDeactivated ? "InActive" : "Active"
           //   type: <p>{row.isFieldSample && row.isFieldSample === true ? 'Field Sample':'Lab Sample'}</p>,
           //   href: row.sampleStatus === '2New'?`/dashboard/sample/sampleDetails/?sampleId=${row._id}`:'',
           //   sampleId: row.sample_id.toUpperCase(),
