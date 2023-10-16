@@ -59,7 +59,9 @@ const Upload = ({user}) => {
                    <Text1 className='text-textColor'>Upload Document</Text1>
                 </div>
                 
-                <FileUploader  children={<CustomDragDrop fileName={file}/>} handleChange={handleChange} name="file" types={fileTypes} />
+                <FileUploader  handleChange={handleChange} name="file" types={fileTypes} >
+                <CustomDragDrop fileName={file}/>
+                </FileUploader>
 
                </div>
                <div>
