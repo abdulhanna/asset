@@ -1,19 +1,16 @@
 import React, { useState,useMemo, useEffect, useCallback } from "react";
 import MainLayout from "../../../../proj-components/MainLayout";
-import { AddIcon, LeftArrowIcon } from "@/components/atoms/icons";
-import { Text1 } from "@/components/atoms/field";
 import Button from "@/components/atoms/button";
-import { TextField, CustomSelect } from "@/components/atoms/field";
+import { TextField, CustomSelect,Text1 } from "@/components/atoms/field";
 import { DialogPage1 } from "@/components/molecules/dialog";
-import { UpArrow } from "@/components/atoms/icons";
+import { UpArrow,AddIcon, LeftArrowIcon } from "@/components/atoms/icons";
 import { useRouter } from "next/router";
 import { FileUploader } from "react-drag-drop-files";
 import ButtonAction from "@/components/molecules/button";
-import { doCheckAuth } from "@/utils/doCheckAuth";
 import authApi from "helpers/use-api/auth";
 import memberAccessApi from "helpers/use-api/user-management/member";
-import userRolesApi from "helpers/use-api/user-management/roles";
-
+import convertObjectToFormData from "helpers/formdataConverter";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddCompanyLogo = ({ open, close,handleFile,profilePic }) => {
 
@@ -88,17 +85,21 @@ const AddUser = ({user,access_token,roles}) => {
   const [roleList,setRoleList] = useState(roles)
   const [member,setMember]  = useState({
     email:"",
-    name:"",
     userType:'team',
-    userId:"",
+    userProfile:{
+       name:"",
+       userCodeId:'',
+       phone:"",
+       profileImg:null
+    },
     teamRoleId:"",
-    phone:"",
     isDeactivated:false,
-    image:""
-
+    // image:null
   })
   const [profilePic,setProfilePic] = useState()
+  
   const router = useRouter()
+  const notify = (msg)=> toast.success(msg)
 
   const handleChange = (e)=>{
     const {name,value} = e.target
@@ -108,36 +109,48 @@ const AddUser = ({user,access_token,roles}) => {
   useEffect(()=>{
        console.log(member,'member')
   },[member])
-  const handleSubmit = async()=>{
-    const formData = new FormData();
-    formData.append('email',member.email)
-    formData.append('userProfile.name',member.name)
-    formData.append('userProfile.userIdentificationNo',member.userId)
-    formData.append('image', member.image )
 
-    for (const [key, value] of formData) {
-      console.log(`${key}: ${value}`)
-      // output.textContent += `${key}: ${value}\n`;
-    }
-      //  try{
-      //      const res = await memberAccessApi.add(access_token)
-      //  }catch(err){
-      //   console.log(err,'err')
-      //  }
+  
+  const handleSubmit = async()=>{
+    
+  //  const data = convertObjectToFormData(member)
+  const formData= new FormData()
+    formData.append('email',member.email)
+    formData.append('userType',member.userType)
+    formData.append('teamRoleId',member.teamRoleId)
+    formData.append('isDeactivated',member.isDeactivated)
+    formData.append('userProfile[name]',member.userProfile.name)
+    formData.append('userProfile[userCodeId]',member.userProfile.userCodeId)
+    formData.append('userProfile[phone]',member.userProfile.phone)
+    formData.append('image',member.userProfile.profileImg)
+   for (const pair of formData) {
+    console.log(pair[0] + ', ' + pair[1]);
+  }
+  
+       try{
+           const res = await memberAccessApi.add(access_token,formData)
+           
+           if(res.status == '201'){
+            notify('added member')
+             setTimeout(()=>{
+                router.push('/dashboard/usermanagement/allUser')
+             },2000)
+           }
+           console.log(res,'res')
+       }catch(err){
+        console.log(err?.response?.data,'err')
+       }
   }
 
-  // const memoizedAddCompanyLogo = useMemo(
-  //   () => <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} />,
-  //   [logoHigh]
-  // );
+  
   const handleFile = (e)=>{
    const file =  URL.createObjectURL(e)
    setProfilePic(file)
-   setMember({...member,image:e})
-
-      console.log(file,'file')
+   setMember({...member,userProfile:{...member.userProfile,profileImg:e}})
+  // setMember({...member,image:e})
+      // console.log(file,'file')
   }
-  console.log(roleList,'roles');
+  // console.log(roleList,'roles');
 
   return (
     <>
@@ -160,7 +173,7 @@ const AddUser = ({user,access_token,roles}) => {
             <div className="flex flex-col gap-6">
               <Text1 weight="normal">Profile Pic</Text1>
               <div className="flex items-center gap-8">
-                
+                 {/* <input type='file' onChange={(e)=> setMember({...member,userProfile:{...member.userProfile,profileImg:e.target.files[0]}})}/>  */}
                 <img className='w-[112px] h-[112px] rounded-full' src={`${profilePic?`${profilePic}`:"/images/Ellipse 2.png"}`} width={'100'} height={'200'} alt='avtar'/>
                 <ButtonAction label={'ADD PHOTO'} onClick={()=> setLogoHigh(true)}/>
                   
@@ -172,24 +185,23 @@ const AddUser = ({user,access_token,roles}) => {
               <Text1 >User Information</Text1>
               <div className="flex gap-10 ">
                 <div className="w-3/12">
-                  <TextField label={"Username"} name="name" placeHolder="Input Text" onChange={handleChange}/>
+                  <TextField label={"Username"} name="name" placeHolder="Input Text" onChange={(e)=> setMember({...member, userProfile:{...member.userProfile,[e.target.name]:e.target.value}})}/>
                 </div>
                 <div className="w-3/12">
                   <TextField
                     label={"User Identification Number"}
                     placeHolder="Input Text"
-                    name="userId"
-                    onChange={handleChange}
+                    name="userCodeId"
+                    onChange={(e)=> setMember({...member, userProfile:{...member.userProfile,[e.target.name]:e.target.value}})}
                   />
                 </div>
                 <div className="w-3/12" >
                   <CustomSelect label={"User Role"} name={'teamRoleId'} onChange={handleChange}>
                   <option value="">Select</option>
-                  {roleList.map((role,index)=>{
+                  {roleList?.map((role,index)=>{
                     return <option value={role._id} key={index}>{role.roleName}</option>
                   })}
-                    {/* <option value="">Select</option>
-                    <option value="admin">Admin</option> */}
+                  
                   </CustomSelect>
                 </div>
               </div>
@@ -203,7 +215,7 @@ const AddUser = ({user,access_token,roles}) => {
                   <TextField label={"User Email ID"} name="email" placeHolder="Input Email Id" onChange={handleChange}/>
                 </div>
                 <div className="w-3/12">
-                  <TextField label={"Contact No."} name="phone" placeHolder="Input contact No" onChange={handleChange}/>
+                  <TextField label={"Contact No."} name="phone" placeHolder="Input contact No" onChange={(e)=> setMember({...member, userProfile:{...member.userProfile,[e.target.name]:e.target.value}})}/>
                 </div>
               </div>
             </div>
@@ -222,6 +234,7 @@ const AddUser = ({user,access_token,roles}) => {
               </div>
             </div>
           </div>
+          <ToastContainer/>
         </div>
         {logoHigh && <AddCompanyLogo open={logoHigh} profilePic={member.image} close={() => setLogoHigh(false)} handleFile={handleFile}></AddCompanyLogo>}
         {/* <MemoizedAddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} /> */}
@@ -247,7 +260,8 @@ export const getServerSideProps = async (appCtx) => {
 
   let roles 
   try{
-    const {data} = await userRolesApi.getRoles(access_token)
+    // const {data} = await userRolesApi.getRoles(access_token)
+    const {data} = await memberAccessApi.getRoles(access_token)
     roles  =  data
   }catch(err){
     console.log(err,'err')

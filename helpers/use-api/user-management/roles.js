@@ -12,8 +12,8 @@ userRolesApi.addRole = (access_token, data) => {
   });
 };
 
-userRolesApi.getRoles = (access_token) => {
-  return hostedAxios.get("user-management/roles", {
+userRolesApi.getRoles = (access_token,page,pageSize,sort) => {
+  return hostedAxios.get(`/user-management/roles?page=${page}&size=${pageSize}&sort=${sort}`, {
     headers: { Cookie: access_token }
   });
 };

@@ -5,17 +5,39 @@ import memberAccessApi from 'helpers/use-api/user-management/member'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
+
+
 const AddTable = ({access_token,user}) => {
   const [fields,setFields] = useState([
     {
       fieldName:"Code No",
-      type:"Alphanumeric"
+      dataType:"Alphanumeric",
+      type:"text"
     },
     {
       fieldName:"Description",
-      type:"Alphanumeric"
+      dataType:"Alphanumeric",
+      type:"text"
+    },
+    {
+      fieldName:"Parent Code",
+      dataType:"Alphanumeric",
+      type:'text'
+    },
+    {
+      fieldName:"Rate(%)",
+      dataType:"Alphanumeric",
+      type:'list',
+      options:['WDB','SLM']
     }
   ])
+
+  const addField = ()=>{
+    setFields([...fields,{fieldName:"Rate(%)",
+    dataType:"Alphanumeric",
+    type:'list',
+    options:['WDB','SLM']}])
+  }
   const handleSubmit = ()=>{
 
   }
@@ -24,7 +46,7 @@ const AddTable = ({access_token,user}) => {
         <MainLayout User={user}>
             <div className='space-y-5'>
                 {/* HEADING  */}
-               <div className="w-full flex justify-between items-center py-4">
+               <div className="w-full flex justify-between items-center">
                     <div>
                       <div className="flex items-center cursor-pointer" onClick={()=> router.back()}>
                         <LeftArrowIcon />
@@ -34,7 +56,7 @@ const AddTable = ({access_token,user}) => {
                       </div>
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                     </div>
-                    <Button variant="contained" onClick={handleSubmit}>NEXT</Button>
+                    <Button href={'/dashboard/master-table/table/upload'} variant="contained" onClick={handleSubmit}>NEXT</Button>
                </div>
                {/* TABLE Information */}
                <div className=''>
@@ -62,12 +84,20 @@ const AddTable = ({access_token,user}) => {
                {/* TABLE FIELD */}
                 <div>
                   <Text1 weight='semibold'>Table Fields</Text1>
-                  {fields.map((cur,index)=>{
-                    return <>
+                   <div className=''>
+                   {fields.map((cur,index)=>{
+                    return <div className='grid grid-cols-4 gap-4 items-center' key={index}>
                       <TextField label='Filed Name' value={cur.fieldName}/>
-                      <TextField label='Filed Name' value={cur.type}/>
-                    </>
+                       {cur.type === "list" ?<CustomSelect label={`Rate Type`}>
+                       <option value={''}>select</option>
+                        {cur.options.map((option,id)=>{
+                          return <option value={option} key={id}>{option}</option>
+                        })}
+                       </CustomSelect>:  <TextField label='Filed Name' value={cur.dataType}/>}
+                       <div className='col-start-4 flex justify-end w-full pt-2'>{fields.length-1 === index && <Button onClick={addField}>ADD RATE FIELD</Button>}</div>
+                    </div>
                   })}
+                   </div>
                 </div>
                </div>
 

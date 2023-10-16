@@ -5,44 +5,32 @@ import { Text1 } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import { useRouter } from 'next/router'
 import { SampleTableNew } from '@/components/organism/tablecomp'
-import { doCheckAuth } from '@/utils/doCheckAuth'
 import authApi from 'helpers/use-api/auth'
+import memberAccessApi from 'helpers/use-api/user-management/member'
+import { DateTime } from 'luxon'
 
 
-const AllUser = ({user}) => {
+const AllUser = ({user,access_token,memberList}) => {
+  const [members,setMembers] = useState(memberList?.roles)
   const [data,setData] = useState([])
   const [checkedNewData, setCheckedNewData] = useState([])
+  const [page,setPage] = useState(memberList?.currentPage)
+  const [pageSize,setPageSize] = useState(4)
+  const [sort,setSort] = useState({"created":1})
   const [allClick, setAllClick] = useState(false)
   const router = useRouter()
   const headerData = [
-    { label: 'User Identification no',name:'uno'},
-    {label:'User Name', name:'user'},
-    {label:'User Role', name:'role'},
-    {label:'Branch', name:'branch'},
+    { label: 'User Id',name:'userCodeId'},
+    {label:'User Name', name:'name'},
+    {label:'User Role', name:'roleName'},
+    // {label:'Branch', name:'branch'},
     // {label:'Email Id', name:'email'},
     // {label:'Contact No', name:'contact'},
-    {label:'Status',name:'status'}, 
-    {label:'created on', name:'created'}
+    {label:'Status',name:'isDeactivated'}, 
+    {label:'created on', name:'createdAt'}
   ]
 
-  const body = [
-    {
-     _id:'34564', uno:"098765432", user : "Rajesh", role :"Admin", branch :"Mumbai",email:'rajesh@test.com',status:'active',contact:'42536748764',created:'1/12/22'
-    },
-    {
-     _id:'342553', uno:"098765098",user:'jack',role:'Admin', branch:'delhi',email:'jack@test.com',status:'active',contact:'9876543210',created:'2/03/23'
-    }
-  ]
-
-  useEffect(()=>{
-
-    setData(body)
-  },[])
-
-
-
-
-
+ 
   const clickAll = (e)=>{
     setAllClick(!allClick)
   }
@@ -52,7 +40,7 @@ const AllUser = ({user}) => {
     const exist = checkedNewData.find(
         (element) => element._id === data._id
     );
-    console.log(exist,'exit')
+    // console.log(exist,'exit')
     if (exist) {
       setCheckedNewData(
           checkedNewData.filter((single) => single._id !== data._id)
@@ -61,23 +49,25 @@ const AllUser = ({user}) => {
       setCheckedNewData([...checkedNewData, data]);
     }
   }
-//     if(samplePermission.actions === true){
-  
 
-//   }
   
 useEffect(()=>{
-    console.log(checkedNewData,'cehc')
+    // console.log(checkedNewData,'cehc')
 },[checkedNewData])
 
 useEffect(()=>{
     if(allClick === true){
-      setCheckedNewData(data)
+      setCheckedNewData(members)
     }else {
       setCheckedNewData([])
     }
    },[allClick])
+   const handlePage  = async(e)=>{
+     
+    // memberAccessApi.getAllMember(access_token,page,pageSize,JSON.stringify(sort))
 
+   }
+ console.log(memberList,'list',page,pageSize,sort)
   return (
     <>
         <MainLayout User={user}>
@@ -89,9 +79,17 @@ useEffect(()=>{
          </div>
          <Button variant='contained' onClick={()=>router.push('/dashboard/usermanagement/allUser/add-user')}>ADD MEMBER</Button>
          </div>
-          {data.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
+          {members.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
             <SampleTableNew
-               response={data}
+               response={members.map((row)=>{
+                return {...row,  userCodeId:row?.userProfile?.userCodeId,
+                  name:row.userProfile?.name,
+                createdAt: DateTime.fromISO(row.createdAt).toLocaleString(
+                // DateTime.DATE_MED
+                DateTime.DATETIME_SHORT
+              ),
+              roleName:row?.teamRoleId?.roleName}
+               })}
                   headerData={[{ name: 'check', label:'' },...headerData]}
                   checkedData={checkedNewData}
                   responseData={(e) => onNewCheck(e)}
@@ -99,10 +97,12 @@ useEffect(()=>{
                   onClick={(e)=> console.log(e,'onclick') }
                   href={`/dashboard/usermanagement/allUser/single?`}
                   checkAllStatus={allClick}
-                  currentPage={2}
-                  pageSize={10}
-                  onPageChange={(e)=> console
-                  .log(e)}
+                  totalDoc={memberList.totalDocuments}
+                  currentPage={memberList?.currentPage}
+                  start={memberList.startSerialNumber}
+                  end={memberList.endSerialNumber}
+                  pageSize={memberList?.totalPages}
+                  onPageChange={handlePage}
             />
           </div>}
          </div>
@@ -112,7 +112,8 @@ useEffect(()=>{
 }
 
 export const getServerSideProps = async (appCtx) => {
-   
+  let access_token =
+  "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
   const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
   if (!auth) {
@@ -122,12 +123,24 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
-
   } 
+  let page = 1
+  let pageSize = 4
+  let sort = {"createdAt":-1};
+  let memberList 
+  try{
+     
+    const {data} =await memberAccessApi.getAllMember(access_token,page,pageSize,JSON.stringify(sort))
+    memberList = data
+  }catch(err){
+    console.log(err,'err')
+  }
 
   return {
     props:{
-       user:auth
+       user:auth,
+       access_token,
+       memberList : memberList || []
     }
   }
 
