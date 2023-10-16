@@ -10,7 +10,7 @@ import userRolesApi from 'helpers/use-api/user-management/roles'
 import authApi from 'helpers/use-api/auth'
 
 const RolesPerimission = ({user,roles}) => {
-  const [roleList,setRoleList] = useState(roles)
+  const [roleList,setRoleList] = useState(roles?.roles)
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
   const header = [
@@ -71,7 +71,7 @@ const RolesPerimission = ({user,roles}) => {
     }
   }
   
-  console.log(roleList,'list')
+  console.log(roles,'list')
   return (
     <>
         <MainLayout User={user}>
@@ -95,8 +95,8 @@ const RolesPerimission = ({user,roles}) => {
                             clickAll={clickAll}
                             onClick={(e)=> console.log(e,'onclick') }
                             checkAllStatus={allClick} 
-                            currentPage={'1'}
-                            pageSize={10}
+                            currentPage={roles?.startSerialNumber}
+                            pageSize={roles?.totalPages}
                             onPageChange={(e)=> console.log(e)}
            
        />
@@ -122,10 +122,13 @@ export const getServerSideProps = async (appCtx) => {
       },
     };
   }
-  
+
+  let page = 1
+  let pageSize = 10
+  let sort = {"createdAt":-1};
   let roles  
   try{
-       const {data } = await userRolesApi.getRoles(access_token) 
+       const {data } = await userRolesApi.getRoles(access_token,page,pageSize,JSON.stringify(sort)) 
         roles = data
       //  console.log(data,'data')s
       // console.log(access_token)

@@ -776,6 +776,19 @@ export const DropDownIcon = ({ classname }) => {
   );
 };
 
+export const DragDropArrow = ({className})=>{
+   return (<>
+    <span className={className}>
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="26" cy="26" r="26" fill="#527CE5"/>
+      <path d="M16.5 25.25L25.5 16.25L34.5 25.25" stroke="#FEFEFE" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square"/>
+      <path d="M25.5 17.5V35.75" stroke="#FEFEFE" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square"/>
+      </svg>
+
+    </span>
+   </>)
+}
+
 export const EditIcon = ({ classname, onClick }) => {
   return (
     <>

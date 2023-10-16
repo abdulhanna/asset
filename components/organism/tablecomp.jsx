@@ -9,6 +9,8 @@ import {
   CheckWithLinkTable,
   Table1,
   Table2,
+  Table3,
+  Table4
 } from "../molecules/table";
 import { TrashOutline } from "../atoms/icons";
 import { EditIcon, DeleteIcon } from "../atoms/icons";
@@ -30,7 +32,7 @@ const classes = {
   thead:
     "text-sm  uppercase bg-[#F7F7F7] border-b text-gray-500  font-semibold",
   tbody: "bg-white cursor-pointer",
-  tr: "text-[#121212] font-body text-sm text-left",
+  tr: "text-[#121212] font-body text-sm text-left ",
   th: "px-6 py-4  truncate",
   td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate text-[#121212] border-t border-white",
 };
@@ -81,7 +83,7 @@ export const TableComp1 = ({
           href={href}
           clickAll={clickAll}
           checkAllStatus={checkAllStatus}
-          editItem={editItem}
+          // editItem={editItem}
           extra={extraclasses}
           onClick={onClick}
           responseData={responseData}
@@ -97,11 +99,13 @@ export const SampleTableNew = ({
   onClick,
   responseData,
   href,
-
+  totalDoc,
   checkedData,
   clickAll,
   checkAllStatus,
   currentPage,
+  start,
+  end,
   pageSize,
   onPageChange,
   chemicalPaginationData,
@@ -174,6 +178,9 @@ export const SampleTableNew = ({
         // chemicalItems ={chemicalPaginationData}
         // microItems ={microPaginationData}
         // type ={type}
+        start={start}
+        end={end}
+        totalDoc = {totalDoc}
         currentPage={currentPage} // 1
         pageSize={pageSize} // 10
         onPageChange={onPageChange}
@@ -373,6 +380,113 @@ const ToggleComp = ({ data }) => {
             onClick={() => handleClick({ removeAccess: !data.removeAccess })}
           />
         )}
+      </div>
+    </div>
+  );
+};
+
+
+export const MasterTableComponent = ({
+  headers,
+  body,
+  href,
+  onClick,
+  responseData,
+  extraclasses,
+  clickAll,
+  checkAllStatus,
+}) => {
+  return (
+    <div className="h-auto py-8 min-h-[590px]">
+      <div className="relative overflow-x-auto rounded-lg">
+        <Table3
+          headers={headers}
+          data={body}
+          classes={classes}
+          href={href}
+          extra={extraclasses}
+          onClick={onClick}
+          responseData={responseData}
+          clickAll={clickAll}
+          checkAllStatus={checkAllStatus}
+        />
+      </div>
+    </div>
+  );
+};
+
+export const MasterTableNew = ({
+  headerData,
+  response,
+  onClick,
+  responseData,
+  href,
+  totalDoc,
+  checkedData,
+  clickAll,
+  checkAllStatus,
+  currentPage,
+  start,
+  end,
+  pageSize,
+  onPageChange,
+  chemicalPaginationData,
+  microPaginationData,
+  type,
+}) => {
+  return (
+    <>
+      <MasterTableComponent
+        headers={headerData}
+        onClick={onClick}
+        responseData={responseData}
+        clickAll={clickAll}
+        checkAllStatus={checkAllStatus}
+        href={href}
+        body={response.map((row) => ({
+          ...row,
+
+          check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+          href: `id=${row._id}`,
+          isDeactivated   : row.isDeactivated ? "InActive" :"Active",
+      
+        }))}
+      />
+      {/* <Paging
+        // chemicalItems ={chemicalPaginationData}
+        // microItems ={microPaginationData}
+        // type ={type}
+        start={start}
+        end={end}
+        totalDoc = {totalDoc}
+        currentPage={currentPage} // 1
+        pageSize={pageSize} // 10
+        onPageChange={onPageChange}
+      /> */}
+    </>
+  );
+};
+
+const TableComp2 = ({
+  headers,
+  body,
+  href,
+  onClick,
+  responseData,
+  extraclasses,
+}) => {
+  return (
+    <div className="h-auto py-8">
+      <div className="relative overflow-x-auto rounded-lg">
+        <Table4
+          headers={headers}
+          data={body}
+          classes={classes}
+          href={href}
+          extra={extraclasses}
+          onClick={onClick}
+          responseData={responseData}
+        />
       </div>
     </div>
   );

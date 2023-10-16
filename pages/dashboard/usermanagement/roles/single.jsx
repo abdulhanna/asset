@@ -11,13 +11,17 @@ import { AssignedUserTable } from '@/components/organism/tablecomp'
 import authApi from 'helpers/use-api/auth'
 import userRolesApi from 'helpers/use-api/user-management/roles'
 import { ToastContainer, toast } from "react-toastify";
+
+
 const Single = ({user,roleSingle,access_token}) => {
   const [isEdit, setIsEdit] = useState(false)
   const [data,setData] = useState([])
     const router=useRouter()
-    const [role,setRole] = useState(roleSingle)
+    const [role,setRole] = useState(roleSingle.role)
+    const [assignedUser,setAssignedUser] = useState(roleSingle.assignedUsers)
     const {id} = router.query
     const notify = (msg)=> toast.success(msg)
+
     // console.log(router.query,'ee')
       const header = [
         {
@@ -33,7 +37,7 @@ const Single = ({user,roleSingle,access_token}) => {
         },
         {
           label:"Status",
-          name:'status'
+          name:'isDeactivated'
         }
       ]
 
@@ -187,12 +191,15 @@ const Single = ({user,roleSingle,access_token}) => {
 
         // console.log(roleSingle,'role')
         useEffect(()=>{
-            // console.log(role,'role');
+            // console.log(assignedUser,'role');
         },[role])
 
         const handleSubmit = async()=>{
               try{
-                 const res = await userRolesApi.update(access_token,id,role)
+                 const res = await userRolesApi.update(access_token,id,{
+                  role:role,
+                  assignedUser:assignedUser
+                 })
 
                  if(res.status == "200"){
                   notify('Role updated')
@@ -224,24 +231,24 @@ const Single = ({user,roleSingle,access_token}) => {
             <div className='mt-8 space-y-8'>
                  <div className='space-y-3'>
                     <Text1>Role Name</Text1>
-                    <TextField className='w-1/4' value={role.roleName} label='Role Name' onChange={(e)=>setRole({...role,roleName:e.target.value})} disabled={!isEdit}/>
+                    <TextField className='w-1/4' value={role?.roleName} label='Role Name' onChange={(e)=>setRole({...role,roleName:e.target.value})} disabled={!isEdit}/>
                  </div>
                  <div className='space-y-3'>
                     <Text1>Role Description</Text1>
-                    <TextInputArea value={role.description} label='Description' onChange={(e)=>setRole({...role,description:e.target.value})} disabled={!isEdit}/>
+                    <TextInputArea value={role?.description} label='Description' onChange={(e)=>setRole({...role,description:e.target.value})} disabled={!isEdit}/>
                  </div>
                  <div>
                      <div className='flex justify-between items-center'>
                         <Text1>Role Permissions</Text1>
                         <Button onClick={()=>{
-                            role.permissions?.map((item,id)=>{
-                                 role.Permissions[id] = {...role.Permissions[id],removeAccess:true,read:false,readWrite:false,allAccess:false,delete:false}
-                             }) 
-                             setRole({...role,Permissions:role.Permissions})
+                            // role.role?.permissions?.map((item,id)=>{
+                            //      role.Permissions[id] = {...role.Permissions[id],removeAccess:true,read:false,readWrite:false,allAccess:false,delete:false}
+                            //  }) 
+                            //  setRole({...role,Permissions:role.Permissions})
                         }} isDisabled={!isEdit}>RESTORE DEFAULTS</Button>
                      </div>
                      <div>
-                      {role.permissions?.map((item,index)=>{
+                      {role.permissions.map((item,index)=>{
 
                         return <Accordin  label={item.moduleName}
                       handleClick={handleClick}
@@ -249,22 +256,19 @@ const Single = ({user,roleSingle,access_token}) => {
                       key={index}
                       id={index}>
                        
-               <div className="flex gap-6 items-center">
-               {Object.entries(item).map((val,id) => {
-                 const [key, value] = val;
-                  if ( key === "actions" || key === 'read' || key === "readWrite") {
-                     return<div className="flex gap-1" key={id}> <Text1 className="capitalize" size="lg">{key}</Text1>
-                               {value  ? <ToggleOnButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>:<ToggleButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>}
-                          </div>
-                      
-                      }
-               })}
-               </div>
+                 <div className="flex gap-6 items-center">
+                      {Object.entries(item).map((val,id) => {
+                        const [key, value] = val;
+                          if ( key === "actions" || key === 'read' || key === "readWrite") {
+                            return<div className="flex gap-1" key={id}> <Text1 className="capitalize" size="lg">{key}</Text1>
+                                      {value  ? <ToggleOnButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>:<ToggleButton onClick={()=> handleToggle({ [`${key}`]:!value,id:index })}/>}
+                                  </div>
+                              }
+                          })}
+                 </div>
 
-                     </Accordin>
-
-                    
-                 })}
+                     </Accordin>   
+                    })}
                      </div>
                     
                  </div>
@@ -272,10 +276,22 @@ const Single = ({user,roleSingle,access_token}) => {
                     <Text1  size='lg'>Assigned Users</Text1>
                     {!isEdit ?  <TableComp
                       headers={header}
-                      body={headerbody}
+                      body={assignedUser?.map((user)=>{
+                        return {...user,
+                        name:user?.userProfile?.name,
+                        isDeactivated:user?.isDeactivated ? "InActive":"Active",
+                        role:user.teamRoleId.roleName
+                        }
+                      })}
                     />  :
                      <AssignedUserTable 
-                     response={headerbody}
+                     response={assignedUser?.map((user)=>{
+                      return {...user,
+                        name:user?.userProfile?.name,
+                        isDeactivated:user?.isDeactivated ? "InActive":"Active",
+                        role:user.teamRoleId.roleName
+                        }
+                     })}
                        headers={[...header,{name:'action',label:'action'}]} 
                        responseData={(e)=>setData([e])}
                        onClick={(e)=> console.log(data,'dd')}
@@ -301,7 +317,6 @@ export const getServerSideProps = async (appCtx) => {
         permanent: false,
       },
     };
-
   } 
   let role
   try{
@@ -314,7 +329,7 @@ export const getServerSideProps = async (appCtx) => {
   return {
     props:{
        user:auth,
-       roleSingle:role.role || {},
+       roleSingle:role.role || [],
        access_token
     }
   }
