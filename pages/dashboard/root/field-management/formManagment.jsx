@@ -35,7 +35,7 @@ const AddInputField = ({ open, close, showData, setShow }) => {
 };
 
 // Main formMangement Component
-const formManagment = ({ user }) => {
+const FieldGroup = ({ user }) => {
 
     const [inputHigh, setInputHigh] = useState(false);
     const [show, setShow] = useState(true)
@@ -121,4 +121,4 @@ export const getServerSideProps = async (appCtx) => {
 
 
 
-export default formManagment
+export default FieldGroup
