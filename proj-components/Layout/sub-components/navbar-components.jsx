@@ -35,7 +35,7 @@ import {
   AssetMangementFill,
   AccountManagementFill,
   FillLocations,
-  FillDepartment,MasterTable,MasterTableFill
+  FillDepartment, MasterTable, MasterTableFill
 } from "../../../components/atoms/icons";
 import Image from "next/image";
 import authApi from "helpers/use-api/auth";
@@ -192,7 +192,7 @@ const SidebarComp = ({ user }) => {
         {
           label: "Master Tables Logs",
           url: "/dashboard/master-table/logs",
-        } 
+        }
       ],
       icon: <MasterTable />,
       iconlast: <RightArrow />,
@@ -316,8 +316,8 @@ const SidebarComp = ({ user }) => {
     user === "root"
       ? menuRoot
       : user === "superadmin"
-      ? superAdmin
-      : // : user === 'sub_admin'
+        ? superAdmin
+        : // : user === 'sub_admin'
         menuAdmin;
 
   const handleChange = (e) => {

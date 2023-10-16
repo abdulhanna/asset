@@ -21,6 +21,7 @@ const Button = ({ href, id, children, className, size = 'md', variant = "primary
 
                 }[size]}font-body  px-5 py-2 text-center rounded `, className, {
                     "border-primary border  bg-transparent text-primary": variant === "primary",
+
                     "border border-black  bg-transparent ": variant === "primary1",
                     "bg-primary text-white": variant === "contained",
 

@@ -63,12 +63,8 @@ const FieldOverview = ({ user, access_token }) => {
 
   }
 
-  const addfield = () => {
-
-  }
-
-  const editGroup = () => {
-
+  const handleFormMangement = () => {
+    router.push(`/dashboard/root/field-management/formManagment`)
   }
 
   return (
@@ -77,7 +73,10 @@ const FieldOverview = ({ user, access_token }) => {
         <Text1 size="2xl" weight="medium">
           Field Management
         </Text1>
-        <Button onClick={handleAddButtonClick} variant="contained"> ADD FIELD GROUP</Button>
+        <div className='flex'>
+          <Button onClick={handleAddButtonClick} variant="contained"> ADD FIELD GROUP</Button>
+          <Button onClick={handleFormMangement} className="mx-2"> FORM  MANAGEMENT</Button>
+        </div>
       </div>
 
       {/* {
