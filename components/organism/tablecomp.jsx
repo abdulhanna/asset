@@ -76,13 +76,13 @@ export const TableComp1 = ({
   return (
     <div className="h-auto py-4">
       <div className="relative overflow-x-auto rounded-lg">
-        <Table2
+        <Table1
           headers={headers}
           data={body}
           classes={classes}
           href={href}
-          clickAll={clickAll}
-          checkAllStatus={checkAllStatus}
+          // clickAll={clickAll}
+          // checkAllStatus={checkAllStatus}
           // editItem={editItem}
           extra={extraclasses}
           onClick={onClick}
@@ -270,7 +270,7 @@ export const FieldActionTable = ({
           body={response.map((row) => {
             return {
               ...row,
-              check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+              // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
               action: (
                 <EditDelete data={row} onEdit={onEdit} onDelete={onDelete} />
               ),

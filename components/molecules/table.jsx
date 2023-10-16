@@ -18,7 +18,7 @@ const Table = ({
 }) => {
   const lastIndex = headers.length - 1;
 
-
+     console.log(href,'ref')
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
@@ -215,7 +215,7 @@ export const CheckWithLinkTable = ({
     </table>
   );
 };
-
+//working
 export const ColClickTable = ({
   headers,
   data,
@@ -557,7 +557,7 @@ export const ActionTable = ({
 
                           responseData && responseData(dataRow);
                         } else {
-
+                         
                         }
                       }}
                     >
@@ -589,101 +589,24 @@ export const Table1 = ({
   href = '#',
   extra,
   onClick,
-  editItem,
-  clickAll,
-  checkAllStatus,
   responseData,
 }) => {
   const lastIndex = headers.length - 1;
-  let sortedData;
-  const [sortOrder, setSortOrder] = useState('none'); // State to track the sort order
   const router = useRouter()
-
-  const sortData = (field, ascending) => {
-    return data.sort((a, b) => {
-      if (field === 'date') {
-        const dateA = a.createdAt;
-        const dateB = b.createdAt;
-        return ascending ? (dateA - dateB) : (dateB - dateA);
-      } else if (field === 'locationData') {
-        const valueA = a[field].props.children.toString().toLowerCase();
-        const valueB = b[field].props.children.toString().toLowerCase();
-        return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-      } else {
-        const valueA = a[field].toString().toLowerCase();
-        const valueB = b[field].toString().toLowerCase();
-        return ascending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-      }
-    });
-  };
-
-  const handleSortClick = (field) => {
-    let newSortOrder = { ...sortOrder };
-
-    if (!newSortOrder[field]) {
-      newSortOrder[field] = 'asc';
-    } else if (newSortOrder[field] === 'asc') {
-      newSortOrder[field] = 'desc';
-    } else if (newSortOrder[field] === 'desc') {
-      newSortOrder[field] = 'asc';
-    }
-
-    headers.forEach((item) => {
-      if (item.name !== field) {
-        newSortOrder[item.name] = '';
-      }
-    });
-
-    setSortOrder(newSortOrder);
-    const ascending = newSortOrder[field] === 'asc';
-    const sortedData = sortData(field, ascending);
-  };
-  const renderSortIcon = (field) => {
-    // console.log(field,'fis')
-    if (sortOrder[field] === 'none') {
-      return (
-        <div className={"pl-1"}>
-          <SortIcon />
-        </div>
-      )
-    }
-    else if (sortOrder[field] === 'asc') {
-      return (
-        <div className={"pl-1 pt-1"}>
-          <AscenSort />
-        </div>
-      );
-    } else if (sortOrder[field] === 'desc') {
-      return (
-        <div className={"pl-1 pt-1"}>
-          <DescSort />
-        </div>
-      );
-    } else {
-      return (
-        <div className={"pl-1"}>
-          <SortIcon />
-        </div>)
-    }
-  };
-
-  sortedData = sortData('date', true);
-
+  
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
         <tr className={classes.tr}>
           {headers.map((item, index) => (
-
+            
             <th key={index}
-              className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${index === lastIndex && 'rounded-tr-lg'
-                }`}
+              className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
+                index === lastIndex && 'rounded-tr-lg'
+              }`}
               scope="col"
-              onClick={() => index === 0 ? clickAll('click') : handleSortClick(item.name)}
             >
-              {/* {typeof item.label === 'function' ? item.label() : item.label} */}
-              {index === 0 ? <ClickCheckBoxComp status={checkAllStatus === true ? "true" : "false"} /> : typeof item.label === 'function' ? item.label() : item.label}
-              {!(index === 0) && <div className='text-black'>{renderSortIcon(item.name)}</div>}
+              {typeof item.label === 'function' ? item.label() : item.label}
             </th>
           ))}
         </tr>
@@ -691,53 +614,34 @@ export const Table1 = ({
 
       <tbody className={classes.tbody}>
         {data.map((dataRow, index) => {
-          // console.log(dataRow,'ss') 
+           {/* console.log(dataRow) */}
           return (
-            <>
-              {/* <Link href={`${dataRow.href}`}> */}
-              <tr>
-                {headers.map((item, id) => {
+            <tr key={index}>
+                {headers.map((item,id) => {
                   return (
                     <td
                       key={item.name}
                       className={`${classes.td} ${extra}`}
                       onClick={() => {
-
-                        if (id === 0) {
-                          // console.log('check')
-                          responseData && responseData(dataRow);
-                        } else if (id !== 0 && id !== lastIndex) {
-                          alert('route')
-                          // router.push('')
+                        if(id !== lastIndex){
+                        
+                          onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
+                        }else{
+                          // alert('ddd')
+                          // onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
                         }
+                        // onClick && onClick();
 
+                      
                       }}
                     >
                       {typeof dataRow[item.name] === 'function'
                         ? dataRow[item.name]()
                         : dataRow[item.name]}
-                      {/* {dataRow[item.name] === "action" ? (
-                        <div className='flex items-center space-x-4'>
-                          <EditIcon
-                            onClick={(e) => alert('edit')}
-                            style={{ cursor: 'pointer' }}
-                          />
-                          <DeleteIcon
-                            className={"mx-2"}
-                            style={{ cursor: 'pointer' }}
-                            onClick={(e) => alert('delete')} // Add delete functionality here
-                         />
-                  </div>
-                ) : (
-                  dataRow[item.name]
-                )} */}
                     </td>
-
                   );
                 })}
-
               </tr>
-            </>
           );
         })}
       </tbody>
@@ -750,7 +654,7 @@ export const Table2 = ({
   headers,
   data,
   classes,
-  href,
+  href ="#",
   extra,
   onClick,
   responseData,
@@ -831,7 +735,7 @@ export const Table2 = ({
     }
   };
   sortedData = sortData('date', true);
-
+  console.log(href,'href');
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
@@ -872,8 +776,9 @@ export const Table2 = ({
                       } else if (id !== 0 && id !== lastIndex) {
                         // alert('route')
                         // router.push('')
-                        // onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
+                            onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
                       }
+                     
                     }}
                   >
                     {typeof dataRow[item.name] === 'function'
