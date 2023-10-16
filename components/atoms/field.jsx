@@ -329,14 +329,17 @@ export const CustomSelect = ({
     disabled = false,
     className ,
     selectHeight ="",
+    // defaultValue,
     value,
   }) => {
+    // console.log(value,'de')
   return (
   <div className={`flex  flex-col py-1 2xl:py-2 gap-0.5 2xl:gap-1 ${className}`}>
   <div className="font-normal  text-sm text-textColor">{label}</div>
       <select
       required={required}
       id={id}
+      // defaultValue={defaultValue}
       name={name}
       value={value}
       className={` px-1 ${selectHeight} rounded border-[1px] p-6 py-[12px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}

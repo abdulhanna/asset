@@ -4,7 +4,7 @@ import { Text1 } from '../atoms/field'
 
 
 
-const Paging = ({currentPage,onPageChange,pageSize}) => {
+const Paging = ({currentPage,onPageChange,pageSize,totalDoc,end,start}) => {
 
     const [current,setCurent]  = useState(currentPage)
 
@@ -23,7 +23,7 @@ const Paging = ({currentPage,onPageChange,pageSize}) => {
       setCurent(e.target.value)
       onPageChange((Number(e.target.value)))
     }}/>
-    <Text1> 1-12 of 200 items</Text1>
+    <Text1> {`${start}-${end} of ${totalDoc} items`}</Text1>
     </div>
     <div className='flex items-center gap-2'>
     <PaginationLeft className={'cursor-pointer'} onClick={()=>{

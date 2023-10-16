@@ -1,9 +1,12 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
-import { SampleTableNew } from '@/components/organism/tablecomp'
+import TableComp2, { SampleTableNew } from '@/components/organism/tablecomp'
 import { PaginationLeft,PaginationRight } from '@/components/atoms/icons'
 import { Text1 } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
+import { MasterTableNew } from '@/components/organism/tablecomp'
+
+
 const Test2 = () => {
     const [checkedNewData, setCheckedNewData] = useState([])
     const [allClick, setAllClick] = useState(false)
@@ -78,7 +81,18 @@ const Test2 = () => {
       
     
     //   }
-      
+     
+   const headerMaster = [
+    {label:"Code NO" ,name:"code"},
+    {label:"BLock Description", name :"description"},
+    {label: "Rate(SLM)",name:'Rate1'},
+    {label:"Rate(WDB)", name:"Rate2"}
+   ] 
+const master = [
+  {_id:'12143',code:'01',description:"building",Rate1:'10%',Rate2:'11%'},
+  {_id:'12141',code:'01A',description:"building ",Rate1:'4%',Rate2:'3.9%'},
+  {_id:'12140',code:'01B',description:"building material",Rate1:'8%',Rate2:'9%'}
+]
     useEffect(()=>{
         console.log(checkedNewData,'cehc')
     },[checkedNewData])
@@ -91,9 +105,9 @@ const Test2 = () => {
         }
        },[allClick])
   return (
-    <div>
-     
-     <SampleTableNew
+    <div className='p-8'>
+      <h2>Master table</h2>
+      {/* <MasterTableNew
                   response={newFilteredSample}
                   headerData={[{ name: 'check', label:'' },...headerDataNew]}
                   checkedData={checkedNewData}
@@ -104,20 +118,26 @@ const Test2 = () => {
                   clickAll={clickAll}
                   onClick={(e)=> console.log(e,'onclick') }
                   checkAllStatus={allClick}
-                //   currentPage ={currentPage}
-                //   pageSize ={pageSize}
-                //   onPageChange ={onPageChange}
-                //   chemicalPaginationData ={chemicalPaginationData}
-                //   microPaginationData ={microPaginationData}
-                //   type ={type}
+                  currentPage ={currentPage}
+                  pageSize ={pageSize}
+                  onPageChange ={onPageChange}
+                  chemicalPaginationData ={chemicalPaginationData}
+                  microPaginationData ={microPaginationData}
+                  type ={type}
 
+              />  */}
+              <TableComp2
+                 headers={headerMaster}
+          responseData={(e) => console.log(e, "e")}
+          body={master.map((item) => {
+            return {
+              ...item,
+              href: `id=${item.id}`,
+            };
+          })}
+          href={`/testing/?`}
               />
-              {/* <div className='flex items-center gap-2'>
-                 <PaginationLeft className={'cursor-pointer'} onClick={()=> alert('left')}/>
-                 <Button variant='contained' size='sm'> 2</Button>
-                 <Text1 size='lg'>  <span className='text-slate-400 mx-2'>of</span> 24</Text1>
-                 <PaginationRight className={'cursor-pointer'} onClick={()=> alert('right')}/>
-              </div> */}
+         
     </div>
   )
 }

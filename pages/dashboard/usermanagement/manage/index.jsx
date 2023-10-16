@@ -4,6 +4,7 @@ import NodataPage from "@/components/molecules/nodataPage";
 import Button from "@/components/atoms/button";
 import { Text1 } from "@/components/atoms/field";
 import { PermissionActionTable } from "@/components/organism/tablecomp";
+import { SampleTableNew } from "@/components/organism/tablecomp";
 import authApi from "helpers/use-api/auth";
 import userManageApi from "helpers/use-api/user-management/manage";
 
@@ -83,15 +84,18 @@ const Manage = ({ user, list }) => {
               />
             ) : (
               <div>
-                <PermissionActionTable
+                <SampleTableNew
                   response={permissionList}
-                  headers={[{ name: "check", label: "" }, ...headers]}
+                  headerData={[{ name: "check", label: "" }, ...headers]}
                   checkedData={checkedNewData}
                   responseData={(e) => onNewCheck(e)}
                   clickAll={clickAll}
-                  href={`/dashboard/usermanagement/manage/edit?id=`}
+                  href={`/dashboard/usermanagement/manage/edit?`}
                   onClick={(e) => console.log(e, "onclick")}
                   checkAllStatus={allClick}
+                  currentPage={1}
+                    pageSize={1}
+                    onPageChange={(e)=> console.log(e)}
                 />
               </div>
             )}

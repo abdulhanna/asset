@@ -132,6 +132,11 @@ const AddtextField = ({ open, close }) => {
   );
 };
 
+const master = [
+  {_id:'12143',code:'01',description:"building",Rate1:'10%',Rate2:'11%'},
+  {_id:'12141',code:'01A',description:"building ",Rate1:'4%',Rate2:'3.9%'},
+  {_id:'12140',code:'01B',description:"building material",Rate1:'8%',Rate2:'9%'}
+]
 const Test = (props) => {
   const [data, setData] = useState("");
   const [data1, setData1] = useState("");
