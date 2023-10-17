@@ -305,12 +305,12 @@ const Test1 = () => {
        <div>
         <FieldActionTable
                response={data}
-               headers={[{name:'check',label:''},...header]} 
+               headers={header} 
                checkedData={checkedNewData}
                responseData={(e) => onNewCheck(e)}
-               clickAll={clickAll}
+              //  clickAll={clickAll}
                onClick={(e)=> console.log(e,'onclick') }
-               checkAllStatus={allClick}
+              //  checkAllStatus={allClick}
                onDelete={(e)=> console.log(e,'delete')}
                onEdit={(e)=> console.log(e)}
          
