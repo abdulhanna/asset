@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../../components/atoms/button";
 import { Text1 } from "../../components/atoms/field";
 import Chechkbox from "../../components/atoms/checkBox";
+import { CustomSelect } from "../../components/atoms/field";
 
 const AddInputDiv = ({ Heading, labelName, getData, handleSave }) => {
   const [inputData, setInputData] = useState({
@@ -222,14 +223,16 @@ export const AddSubGroupInput = ({ Heading, labelName, getData, handleSave }) =>
 
 
 
-export const AddStep = ({ Heading, getData, subheading, handleSave }) => {
+export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave }) => {
   const [inputData, setInputData] = useState({
-    stepNo: 2,
-    stepName: "Step 2",
+    stepNo: '',
+    stepName: '',
     groups: [
       { groupId: '', orderNo: '' }
     ]
   });
+
+
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
@@ -296,17 +299,18 @@ export const AddStep = ({ Heading, getData, subheading, handleSave }) => {
           <div className="flex-col w-[680px] gap-2 2xl:w-[700] mx-auto py-1" key={index}>
             <div className="grid grid-cols-2 align-bottom">
               <div className="px-1">
-                <label htmlFor="" className="">
-                  <Text1 size="xs" className="text-slate-500 font-normal">Group ID </Text1>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Group ID"
-                  className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  name="groupId"
-                  value={group.groupId}
+
+                <CustomSelect
                   onChange={(e) => handleChange(e, index)}
-                />
+                  label={"Data Type"}
+                  selectHeight="h-[48px]"
+                  name="groupId">
+                  <option value="">option</option>
+                  {getAllgroups?.map(group => (
+                    <option key={group._id} value={group._id}>{group.groupName}</option>
+                  ))}
+                </CustomSelect>
+
               </div>
               <div className="px-1">
                 <label htmlFor="" className="">
@@ -325,21 +329,17 @@ export const AddStep = ({ Heading, getData, subheading, handleSave }) => {
           </div>
         ))}
 
-        <div className="w-[680px] ">
-          <button
-            type="button"
-            onClick={handleAddGroup}
-            className="text-[16px] font-[500] text-[#3B5FDA] ">
-            + Add Another Group
-          </button>
-        </div>
+
 
         <div className="mx-auto py-[30px]">
+          <Button onClick={handleAddGroup} className=" bg-green-500 hover:border-green-500 hover:bg-[#7CC270] hover:text-white px-4 py-2 mr-3 rounded transition transform  ">
+            + Add Another Group
+          </Button>
           <Button
             onClick={handlesaveall}
             size="sm"
             variant="contained"
-            className={"font-body px-8"}>
+            className={"font-body px-8 py-2"}>
             SAVE
           </Button>
         </div>

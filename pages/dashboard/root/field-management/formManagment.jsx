@@ -8,11 +8,13 @@ import { useRouter } from 'next/router'
 import { Nodata } from '@/components/atoms/icons'
 import { AddStep } from 'pages/testComponents/addInputDiv'
 import DialogPage from '@/components/molecules/dialog'
+import field from 'helpers/use-api/fieldmanagment'
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
 // MOdal adding steps
-const AddInputField = ({ open, close, showData, setShow }) => {
+const AddInputField = ({ open, getAllgroups, close, showData, setShow }) => {
 
     const getData = ({ data }) => {
 
@@ -28,17 +30,22 @@ const AddInputField = ({ open, close, showData, setShow }) => {
     return (
         <>
             <DialogPage open={open} close={close}>
-                <AddStep Heading="Create Step" subheading="Add Group" getData={getData} handleSave={handleSave} />
+                <AddStep getAllgroups={getAllgroups} Heading="Create Step" subheading="Add Group" getData={getData} handleSave={handleSave} />
             </DialogPage>
         </>
     );
 };
 
 // Main formMangement Component
-const FieldGroup = ({ user }) => {
+const FieldGroup = ({ user, access_token, allgroups }) => {
+
+
 
     const [inputHigh, setInputHigh] = useState(false);
     const [show, setShow] = useState(true)
+
+    const notify = (msg) => toast.success(msg)
+    const error = (msg) => toast.danger(msg)
 
     const router = useRouter()
 
@@ -48,14 +55,14 @@ const FieldGroup = ({ user }) => {
 
     const showData = async (data) => {
         console.log(data, "ths is stepform")
-        // try {
-        //     const res = await field.addGroup(access_token, data)
-        //     console.log(res)
-        //     notify(res.data.message)
-        //     router.push('/dashboard/root/field-management')
-        // } catch (e) {
-        //     console.log(e)
-        // }
+        try {
+            const res = await field.addStep(access_token, data)
+            console.log(res)
+            notify(res.data.message)
+            // router.push('/dashboard/root/field-management')
+        } catch (e) {
+            console.log(e)
+        }
 
     }
 
@@ -90,7 +97,7 @@ const FieldGroup = ({ user }) => {
                     </div>
                 </div>
 
-                <AddInputField open={inputHigh} close={() => setInputHigh(false)} showData={showData} setShow={setShow} />
+                <AddInputField getAllgroups={allgroups} open={inputHigh} close={() => setInputHigh(false)} showData={showData} setShow={setShow} />
             </MainLayout>
         </>
     )
@@ -110,10 +117,15 @@ export const getServerSideProps = async (appCtx) => {
 
     }
 
+    const getAllgroups = await field.getAllGroups(access_token)
+
+
+
     return {
         props: {
             user: auth,
-            access_token
+            access_token,
+            allgroups: getAllgroups.data || []
         }
     }
 
