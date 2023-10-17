@@ -79,7 +79,7 @@ const AddField = ({ user, access_token, close, id }) => {
         return (
           <>
             <div
-              className=" grid grid-cols-2  gap-x-[32px] gap-y-[32px] pb-[20px]"
+              className=" grid grid-cols-2 items-center  gap-x-[32px] gap-y-[32px] pb-[20px]"
               key={index}>
               <div className=" flex flex-col gap-1 ">
                 <label htmlFor="" className="">
@@ -100,10 +100,10 @@ const AddField = ({ user, access_token, close, id }) => {
                   selectHeight="h-[48px]"
                   name="dataType">
                   <option value="">option</option>
-                  <option value="String">String</option>
-                  <option value="Number">Number</option>
-                  <option value="Characters">List</option>
-                  <option value="Date">Date</option>
+                  <option value="string">String</option>
+                  <option value="number">Number</option>
+                  <option value="list">List</option>
+                  <option value="date">Date</option>
                 </CustomSelect>
 
               </div>
