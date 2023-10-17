@@ -14,4 +14,6 @@ field.getSubgroupsbyId = async (access_token, id) => hostedAxios.get(`/field-man
 
 field.updateGroup = async (access_token, id, data) => hostedAxios.put(`/field-management/update-group/${id}`, data, { headers: { cookie: access_token } })
 
+field.addStep = async (access_token, data) => hostedAxios.post(`/form-step/associateAssetFormStepWithGroups`, data, { headers: { cookie: access_token } })
+
 export default field;

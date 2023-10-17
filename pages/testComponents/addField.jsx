@@ -304,10 +304,10 @@ export const EditField = ({ user, access_token, close, id }) => {
                   selectHeight="h-[48px]"
                   name="dataType">
                   <option value="">option</option>
-                  <option value="String">String</option>
-                  <option value="Number">Number</option>
-                  <option value="Characters">List</option>
-                  <option value="Date">Date</option>
+                  <option value="string">String</option>
+                  <option value="number">Number</option>
+                  <option value="list">List</option>
+                  <option value="date">Date</option>
                 </CustomSelect>
 
               </div>
