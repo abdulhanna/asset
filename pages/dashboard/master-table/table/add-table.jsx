@@ -5,7 +5,7 @@ import memberAccessApi from 'helpers/use-api/user-management/member'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
-
+import { useRouter } from 'next/router'
 
 const AddTable = ({access_token,user}) => {
   const [fields,setFields] = useState([
@@ -28,15 +28,16 @@ const AddTable = ({access_token,user}) => {
       fieldName:"Rate(%)",
       dataType:"Alphanumeric",
       type:'list',
-      options:['WDB','SLM']
+      options:['WDB','SLM','USAGE']
     }
   ])
+  const router  = useRouter()
 
   const addField = ()=>{
     setFields([...fields,{fieldName:"Rate(%)",
     dataType:"Alphanumeric",
     type:'list',
-    options:['WDB','SLM']}])
+    options:['WDB','SLM','USAGE']}])
   }
   const handleSubmit = ()=>{
 
@@ -88,12 +89,12 @@ const AddTable = ({access_token,user}) => {
                    {fields.map((cur,index)=>{
                     return <div className='grid grid-cols-4 gap-4 items-center' key={index}>
                       <TextField label='Filed Name' value={cur.fieldName}/>
-                       {cur.type === "list" ?<CustomSelect label={`Rate Type`}>
+                       {cur.type === "list" ?<CustomSelect label={`Depriciation Method`}>
                        <option value={''}>select</option>
                         {cur.options.map((option,id)=>{
                           return <option value={option} key={id}>{option}</option>
                         })}
-                       </CustomSelect>:  <TextField label='Filed Name' value={cur.dataType}/>}
+                       </CustomSelect>:  <TextField label='Data Type' value={cur.dataType}/>}
                        <div className='col-start-4 flex justify-end w-full pt-2'>{fields.length-1 === index && <Button onClick={addField}>ADD RATE FIELD</Button>}</div>
                     </div>
                   })}

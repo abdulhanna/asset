@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
-import TableComp2, { SampleTableNew } from '@/components/organism/tablecomp'
 import { PaginationLeft,PaginationRight } from '@/components/atoms/icons'
 import { Text1 } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import { MasterTableNew } from '@/components/organism/tablecomp'
+import { TableComp2 } from '@/components/organism/tablecomp'
 
 
 const Test2 = () => {
@@ -128,14 +128,14 @@ const master = [
               />  */}
               <TableComp2
                  headers={headerMaster}
-          responseData={(e) => console.log(e, "e")}
-          body={master.map((item) => {
+             responseData={(e) => console.log(e, "e")}
+            body={master.map((item) => {
             return {
               ...item,
-              href: `id=${item.id}`,
+              // href: `id=${item.id}`,
             };
           })}
-          href={`/testing/?`}
+          // href={`/testing/?`}
               />
          
     </div>
