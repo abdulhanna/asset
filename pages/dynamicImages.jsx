@@ -410,9 +410,7 @@ const DynamicImages = () => {
 
                         switch (newfield.fieldType) {
                           case 'Input text':
-
                             return (
-
                               <TextField
                                 key={newfield._id}
                                 label={newfield.name}
@@ -422,7 +420,6 @@ const DynamicImages = () => {
                             );
 
                           case 'Dropdown':
-
                             return (
                               <CustomSelect
                                 key={newfield._id}

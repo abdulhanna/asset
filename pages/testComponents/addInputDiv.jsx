@@ -359,10 +359,10 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
   console.log(editStep, "this is edit step");
 
   const [inputData, setInputData] = useState({
-    stepNo: '',
-    stepName: '',
+    stepNo: editStep?.stepNo,
+    stepName: editStep?.stepName,
     groups: [
-      { groupId: '', orderNo: '' }
+      { groupId: editStep?.groups[0]?.groupId, orderNo: editStep?.groups[0]?.orderNo }
     ]
   });
 
@@ -404,9 +404,9 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
         <div className="flex-col w-[680px] gap-2 2xl:w-[700] mx-auto py-1">
           <div className="grid grid-cols-2 align-bottom">
             <div className="px-1">
-              <label htmlFor="" className="">
-                <Text1 size="xs" className="text-slate-500 font-normal">Step No. </Text1>
-              </label>
+
+              <Text1 size="xs" className="text-slate-500 font-normal">Step No. </Text1>
+
               <input
                 type="number"
                 placeholder="Step No."
@@ -417,9 +417,9 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
               />
             </div>
             <div className="px-1">
-              <label htmlFor="" className="">
-                <Text1 size="xs" className="text-slate-500 font-normal"> Step Name </Text1>
-              </label>
+
+              <Text1 size="xs" className="text-slate-500 font-normal"> Step Name </Text1>
+
               <input
                 type="text"
                 placeholder="Step Name"
@@ -440,6 +440,7 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
               <div className="px-1">
 
                 <CustomSelect
+                  value={inputData?.groups[0]?.groupId}
                   onChange={(e) => handleChange(e, index)}
                   label={"Data Type"}
                   selectHeight="h-[48px]"
@@ -452,15 +453,15 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
 
               </div>
               <div className="px-1">
-                <label htmlFor="" className="">
-                  <Text1 size="xs" className="text-slate-500 font-normal"> Order No. </Text1>
-                </label>
+
+                <Text1 size="xs" className="text-slate-500 font-normal"> Order No. </Text1>
+
                 <input
                   type="number"
                   placeholder="Order No."
                   className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   name="orderNo"
-                  value={group.orderNo}
+                  value={inputData?.groups[0]?.orderNo}
                   onChange={(e) => handleChange(e, index)}
                 />
               </div>

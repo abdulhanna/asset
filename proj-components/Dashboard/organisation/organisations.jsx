@@ -13,7 +13,7 @@ const Organisations = ({ organisationList }) => {
   const router = useRouter();
 
 
-  console.log(organisations.organizations, 'hed------------------------------')
+  console.log(organisations, 'hed------------------------------')
 
   const HeaderGoods = [
     { label: "Name", name: "name" },
@@ -49,12 +49,12 @@ const Organisations = ({ organisationList }) => {
 
 
   useEffect(() => {
-    // console.log(checkedNewData,'cehc')
+    console.log(checkedNewData, 'cehc')
   }, [checkedNewData])
 
   useEffect(() => {
     if (allClick === true) {
-      setCheckedNewData(organisations)
+      setCheckedNewData(Headerbody)
     } else {
       setCheckedNewData([])
     }
@@ -72,6 +72,7 @@ const Organisations = ({ organisationList }) => {
             gstin: cur?.gstin
           }
         })}
+
         headerData={[{ name: 'check', label: '' }, ...HeaderGoods]}
         checkedData={checkedNewData}
         responseData={(e) => onNewCheck(e)}
@@ -79,8 +80,11 @@ const Organisations = ({ organisationList }) => {
         clickAll={clickAll}
         onClick={(e) => console.log(e, 'onclick')}
         checkAllStatus={allClick}
-        currentPage={1}
-        pageSize={20}
+        totalDoc={organisationList?.totalDocuments}
+        currentPage={organisationList?.currentPage}
+        start={organisationList.startSerialNumber}
+        end={organisationList.endSerialNumber}
+        pageSize={organisationList?.totalPages}
         onPageChange={(page) => console.log(page)}
       />
     </div>

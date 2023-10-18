@@ -234,7 +234,7 @@ export const ColClickTable = ({
   const router = useRouter()
 
   const sortData = (field, ascending) => {
-    return data.sort((a, b) => {
+    return data?.sort((a, b) => {
       if (field === 'date') {
         const dateA = a.createdAt;
         const dateB = b.createdAt;
@@ -307,7 +307,7 @@ export const ColClickTable = ({
       <thead className={classes.thead}>
         <tr className={classes.tr}>
 
-          {headers.map((item, index) => (
+          {headers?.map((item, index) => (
             <th
               key={index}
               className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${index === lastIndex && 'rounded-tr-lg'
@@ -326,11 +326,11 @@ export const ColClickTable = ({
       </thead>
 
       <tbody className={classes.tbody}>
-        {sortedData.map((dataRow, index) => {
+        {sortedData?.map((dataRow, index) => {
           return (
 
             <tr key={index}>
-              {headers.map((item, index) => {
+              {headers?.map((item, index) => {
                 return (
                   <td
                     key={item.name}

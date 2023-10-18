@@ -46,20 +46,14 @@ const AddInputField = ({ open, getAllgroups, close, showData, setShow }) => {
 
 
 // Editing steps
-const EditStepform = ({ open, editStep, getAllgroups, close, setShow }) => {
+const EditStepform = ({ open, editStep, getAllgroups, close, setShow, handleSave }) => {
 
     const getData = ({ data }) => {
 
         console.log(data, "yes this dta")
     }
 
-    const handleSave = (data) => {
-        console.log(data, "this is data")
 
-
-        setShow(true)
-        close()
-    };
 
     return (
         <>
@@ -174,14 +168,15 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
     const [stepData, setStepData] = useState('')
     const [deleteOPen, setDeleteOpen] = useState(false);
     const [deleteid, setDeleteid] = useState('')
+    const [stepId, setStepId] = useState('')
 
     console.log(steps, "this is a step")
 
     const Headersteps = [
         { label: "Step no.", name: "stepNo" },
         { label: "Step Name", name: "stepName" },
-        { label: "Created on", name: "groupsCount" },
-        { label: "Total No of groups under step", name: "createdAt" },
+        { label: "Total No of groups under step", name: "groupsCount" },
+        { label: "Created on", name: "createdAt" },
         { label: "Action", name: "action" },
 
     ];
@@ -210,7 +205,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
     }
 
     const editStep = async (e) => {
-
+        setStepId(e._id)
         try {
             const res = await field.getStepsbyId(access_token, e._id)
             console.log(res?.data?.formStepDataById, "this is a stepdetaild by id")
@@ -225,6 +220,23 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
         setEditPopup(true)
 
     }
+
+    const handleUpdate = async (data) => {
+        console.log(data, stepId, "this is update")
+        try {
+            const res = await field.updateStepbyID(access_token, stepId, data)
+            console.log(res, "this is data")
+            notify("Updated Successfully")
+
+            setTimeout(() => {
+                router.reload()
+            }, 1000)
+        } catch (e) {
+            console.log(e)
+        }
+        setShow(true)
+        close()
+    };
 
     const Delete = async (e) => {
         console.log(e, "delete")
@@ -321,7 +333,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
                         </>
                 }
 
-                <EditStepform getAllgroups={allgroups} open={editPopup} editStep={stepData} close={() => setEditPopup(false)} setShow={setShow} />
+                <EditStepform getAllgroups={allgroups} open={editPopup} editStep={stepData} close={() => setEditPopup(false)} setShow={setShow} handleSave={handleUpdate} />
                 <AddInputField getAllgroups={allgroups} open={inputHigh} close={() => setInputHigh(false)} showData={showData} setShow={setShow} />
                 <DeleteConfirm
                     deleteid={deleteid}

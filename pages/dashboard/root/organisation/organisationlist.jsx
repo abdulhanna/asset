@@ -125,8 +125,11 @@ const OrganisationList = () => {
         clickAll={clickAll}
         onClick={(e) => console.log(e, "onclick")}
         checkAllStatus={allClick}
-        currentPage={1}
-        pageSize={20}
+        totalDoc={checkedNewData?.currentPage}
+        currentPage={checkedNewData?.currentPage}
+        start={checkedNewData.startSerialNumber}
+        end={checkedNewData.endSerialNumber}
+        pageSize={checkedNewData?.totalPages}
         onPageChange={(page) => console.log(page)}
       />
     </>
