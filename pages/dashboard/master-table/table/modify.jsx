@@ -55,7 +55,7 @@ const SingleTable = ({access_token,user}) => {
                <div className="flex items-center cursor-pointer" onClick={()=> router.back()}>
                         <LeftArrowIcon />
                         <Text1 weight='' size="2xl" >
-                         Modify Company's Act Table
+                         {`Modify Company's Act Table`}
                         </Text1>
                       </div>
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
