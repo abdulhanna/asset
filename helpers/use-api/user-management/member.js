@@ -30,6 +30,10 @@ const memberAccessApi = {}
       Cookie: access_token }
  })
 
+ memberAccessApi.deactivate = (access_token,id) => hostedAxios.put(`/user-management/members/deactivate/${id}`,{
+   headers: { Cookie: access_token }
+ })
+
  
 
 export default memberAccessApi

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import Button from '@/components/atoms/button'
@@ -6,9 +6,12 @@ import { Text1 } from '@/components/atoms/field'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import { useRouter } from 'next/router'
 import { MasterTableComponent } from '@/components/organism/tablecomp'
+import { DeleteConfirm } from '@/components/molecules/dialog'
+
 
 const SingleTable = ({access_token,user}) => {
     const router  = useRouter()
+    const [isOpen,setIsOpen] = useState(false)
     const headerMaster = [
         {label:"Code NO" ,name:"code"},
         {label:"BLock Description", name :"description"},
@@ -20,6 +23,10 @@ const SingleTable = ({access_token,user}) => {
       {_id:'12141',code:'01A',description:"building ",Rate1:'4%',Rate2:'3.9%'},
       {_id:'12140',code:'01B',description:"building material",Rate1:'8%',Rate2:'9%'}
     ]
+
+    const callDelete = ()=>{
+      alert('delete')
+    }
   return (
    <MainLayout User={user}>
      <div>
@@ -35,7 +42,7 @@ const SingleTable = ({access_token,user}) => {
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                </div>
                <div className='flex gap-4'>
-                 <Button onClick={()=> alert('delete table')}>DELETE TABLE</Button>
+                 <Button onClick={()=> setIsOpen(true)}>DELETE TABLE</Button>
                  {/* <Button  variant="contained" onClick={()=>console.log('dd')}>NEXT</Button> */}
                </div>
         </div>
@@ -53,6 +60,13 @@ const SingleTable = ({access_token,user}) => {
           })}
            />
         </div>
+        <DeleteConfirm 
+        check={isOpen}
+         close={()=> setIsOpen(!isOpen)}
+          callDelete={callDelete}
+            heading= {'Are sure want to delete Table'}
+            para ={'By deleting this master table it will be permanently removed from all the organisations as well.'}
+          />
      </div>
    </MainLayout>
   )
