@@ -36,7 +36,7 @@ const SingleTable = ({access_token,user}) => {
                </div>
                <div className='flex gap-4'>
                  <Button onClick={()=> alert('delete table')}>DELETE TABLE</Button>
-                 <Button  variant="contained" onClick={()=>console.log('dd')}>NEXT</Button>
+                 {/* <Button  variant="contained" onClick={()=>console.log('dd')}>NEXT</Button> */}
                </div>
         </div>
 

@@ -800,7 +800,7 @@ export const Table3 = ({
   headers,
   data,
   classes,
-  href,
+  href ="#",
   extra,
   onClick,
   responseData,
@@ -881,23 +881,24 @@ export const Table3 = ({
     }
   };
   sortedData = sortData('date', true);
-
+  //  console.log(headers,'ss')
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
         <tr className={classes.tr}>
 
           {headers.map((item, index) => (
+            
             <th
               key={index}
               className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${index === lastIndex && 'rounded-tr-lg'
                 }`}
               scope="col"
-              onClick={() => index === 0 ? clickAll('click') : handleSortClick(item.name)}
+              onClick={() =>  handleSortClick(item.name)}
             >
               <div className="flex flex-row">
-                {index === 0 ? <ClickCheckBoxComp status={checkAllStatus === true ? "true" : "false"} /> : typeof item.label === 'function' ? item.label() : item.label}
-                {!(index === 0) && <div className='text-black'>{renderSortIcon(item.name)}</div>}
+                { typeof item.label === 'function' ? item.label() : item.label}
+                { <div className='text-black'>{index !== lastIndex && renderSortIcon(item.name)}</div>}
               </div>
 
             </th>
@@ -916,11 +917,14 @@ export const Table3 = ({
                     key={item.name}
                     className={`${classes.td} ${extra}`}
                     onClick={() => {
-                      if (index === 0) {
-                        responseData && responseData(dataRow);
-                      } else {
+                      if(index !== lastIndex){
                         onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
                       }
+                      // if (index === lastIndex) {
+                      //   responseData && responseData(dataRow);
+                      // } else {
+                      //   onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
+                      // }
                     }}
                   >
                     {typeof dataRow[item.name] === 'function'
