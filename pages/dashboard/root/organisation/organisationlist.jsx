@@ -12,6 +12,7 @@ import Button from "../../../../components/atoms/button";
 import { SampleTableNew } from "../../../../components//organism/tablecomp";
 import { OrganisationTableNew } from "proj-components/Dashboard/organisation/table";
 import { useRouter } from "next/router";
+import { Nodata } from "../../../../components/atoms/icons";
 
 const OrganisationList = () => {
   const [checkedNewData, setCheckedNewData] = useState([]);
@@ -102,6 +103,17 @@ const OrganisationList = () => {
         >
           Add Organizations
         </Button>
+      </div>
+
+      <div className=' rounded-md flex items-center justify-center inset-y-2/4 inset-x-2/4  mt-[320px] overflow-hidden'>
+        <div className='text-center'>
+          <Nodata className={'flex justify-center'} />
+          <div className='mt-3'>
+            <span className='text-gray-600'> No Added Sub-group</span>
+
+          </div>
+        </div>
+
       </div>
 
       <OrganisationTableNew

@@ -18,7 +18,7 @@ const Table = ({
 }) => {
   const lastIndex = headers.length - 1;
 
-    //  console.log(href,'ref')
+  //  console.log(href,'ref')
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
@@ -53,7 +53,7 @@ const Table = ({
                         responseData && responseData(dataRow);
                       }}
                     >
-                      
+
                       {dataRow[item.name] === "action" ?
                         <div className='flex items-center'>
                           <EditIcon onClick={(e) => editItem(dataRow.id)} />
@@ -557,7 +557,7 @@ export const ActionTable = ({
 
                           responseData && responseData(dataRow);
                         } else {
-                         
+
                         }
                       }}
                     >
@@ -593,17 +593,16 @@ export const Table1 = ({
 }) => {
   const lastIndex = headers.length - 1;
   const router = useRouter()
-  
+
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
         <tr className={classes.tr}>
           {headers.map((item, index) => (
-            
+
             <th key={index}
-              className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
-                index === lastIndex && 'rounded-tr-lg'
-              }`}
+              className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${index === lastIndex && 'rounded-tr-lg'
+                }`}
               scope="col"
             >
               {typeof item.label === 'function' ? item.label() : item.label}
@@ -613,35 +612,35 @@ export const Table1 = ({
       </thead>
 
       <tbody className={classes.tbody}>
-        {data.map((dataRow, index) => {
-           {/* console.log(dataRow) */}
+        {data?.map((dataRow, index) => {
+          {/* console.log(dataRow) */ }
           return (
             <tr key={index}>
-                {headers.map((item,id) => {
-                  return (
-                    <td
-                      key={item.name}
-                      className={`${classes.td} ${extra}`}
-                      onClick={() => {
-                        if(id !== lastIndex){
-                        
-                          onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
-                        }else{
-                          // alert('ddd')
-                          // onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
-                        }
-                        // onClick && onClick();
+              {headers.map((item, id) => {
+                return (
+                  <td
+                    key={item.name}
+                    className={`${classes.td} ${extra}`}
+                    onClick={() => {
+                      if (id !== lastIndex) {
 
-                      
-                      }}
-                    >
-                      {typeof dataRow[item.name] === 'function'
-                        ? dataRow[item.name]()
-                        : dataRow[item.name]}
-                    </td>
-                  );
-                })}
-              </tr>
+                        onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
+                      } else {
+                        // alert('ddd')
+                        // onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
+                      }
+                      // onClick && onClick();
+
+
+                    }}
+                  >
+                    {typeof dataRow[item.name] === 'function'
+                      ? dataRow[item.name]()
+                      : dataRow[item.name]}
+                  </td>
+                );
+              })}
+            </tr>
           );
         })}
       </tbody>
@@ -654,7 +653,7 @@ export const Table2 = ({
   headers,
   data,
   classes,
-  href ="#",
+  href = "#",
   extra,
   onClick,
   responseData,
@@ -776,9 +775,9 @@ export const Table2 = ({
                       } else if (id !== 0 && id !== lastIndex) {
                         // alert('route')
                         // router.push('')
-                            onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
+                        onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
                       }
-                     
+
                     }}
                   >
                     {typeof dataRow[item.name] === 'function'
@@ -949,17 +948,16 @@ export const Table4 = ({
 }) => {
   const lastIndex = headers.length - 1;
 
-  
+
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
         <tr className={classes.tr}>
           {headers.map((item, index) => (
-            
+
             <th key={index}
-              className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${
-                index === lastIndex && 'rounded-tr-lg'
-              }`}
+              className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${index === lastIndex && 'rounded-tr-lg'
+                }`}
               scope="col"
             >
               {typeof item.label === 'function' ? item.label() : item.label}
@@ -971,11 +969,11 @@ export const Table4 = ({
       <tbody className={classes.tbody}>
         {data.map((dataRow, index) => {
           let codeLen = dataRow['code'].toString().length
-           {/* console.log(codeLen,'row',index) */}
+          {/* console.log(codeLen,'row',index) */ }
           return (
             <Link href={`${href}${href !== '#' ? dataRow.href : ''}`} key={index}>
               {/* <Link href={`${dataRow.href}`}> */}
-              <tr className={`${codeLen > 2 ?"":"text-blue-500"} `}>
+              <tr className={`${codeLen > 2 ? "" : "text-blue-500"} `}>
                 {headers.map((item) => {
                   return (
                     <td

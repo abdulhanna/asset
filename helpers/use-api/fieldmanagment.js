@@ -16,4 +16,12 @@ field.updateGroup = async (access_token, id, data) => hostedAxios.put(`/field-ma
 
 field.addStep = async (access_token, data) => hostedAxios.post(`/form-step/associateAssetFormStepWithGroups`, data, { headers: { cookie: access_token } })
 
+field.getAllSteps = async (access_token) => hostedAxios.get('/form-step/listAllSteps', { headers: { cookie: access_token } })
+
+field.updateStepbyID = async (access_token, id, data) => hostedAxios.put(`/form-step/update-form/${id}`, data, { headers: { cookie: access_token } })
+
+field.getStepsbyId = async (access_token, id) => hostedAxios.get(`/form-step/stepDetails/${id}`, { headers: { cookie: access_token } })
+
+field.deleteSteps = async (access_token, id) => hostedAxios.delete(`/form-step/delete-form/${id}`, { headers: { cookie: access_token } })
+
 export default field;

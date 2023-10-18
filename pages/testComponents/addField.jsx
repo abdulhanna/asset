@@ -143,7 +143,7 @@ const AddField = ({ user, access_token, close, id }) => {
                   name="fieldRelation">
                   <option value="">option</option>
                   <option value="Dependent">Dependent</option>
-                  <option value="InDependent">InDependent</option>
+                  <option value="Independent">Independent</option>
 
                 </CustomSelect>
               </div>
@@ -347,7 +347,7 @@ export const EditField = ({ user, access_token, close, id }) => {
                   name="fieldRelation">
                   <option value="">option</option>
                   <option value="Dependent">Dependent</option>
-                  <option value="InDependent">InDependent</option>
+                  <option value="Independent">Independent</option>
 
                 </CustomSelect>
               </div>

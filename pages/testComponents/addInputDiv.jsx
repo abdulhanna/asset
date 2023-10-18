@@ -3,6 +3,8 @@ import Button from "../../components/atoms/button";
 import { Text1 } from "../../components/atoms/field";
 import Chechkbox from "../../components/atoms/checkBox";
 import { CustomSelect } from "../../components/atoms/field";
+import field from "helpers/use-api/fieldmanagment";
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddInputDiv = ({ Heading, labelName, getData, handleSave }) => {
   const [inputData, setInputData] = useState({
@@ -111,6 +113,9 @@ const AddInputDiv = ({ Heading, labelName, getData, handleSave }) => {
     </div>
   );
 };
+
+
+
 
 export const AddSubGroupInput = ({ Heading, labelName, getData, handleSave }) => {
   const [inputData, setInputData] = useState({
@@ -221,8 +226,6 @@ export const AddSubGroupInput = ({ Heading, labelName, getData, handleSave }) =>
 };
 
 
-
-
 export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave }) => {
   const [inputData, setInputData] = useState({
     stepNo: '',
@@ -231,6 +234,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
       { groupId: '', orderNo: '' }
     ]
   });
+
 
 
 
@@ -248,13 +252,15 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
     });
   };
 
-  const handlesaveall = () => {
+  const handlesaveall = async () => {
     const formattedData = {
       stepNo: inputData.stepNo,
       stepName: inputData.stepName,
       groups: inputData.groups.filter(group => group.groupId && group.orderNo)
     };
     handleSave(formattedData);
+
+
   }
 
   return (
@@ -347,6 +353,141 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
     </div>
   );
 };
+
+export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading, handleSave }) => {
+
+  console.log(editStep, "this is edit step");
+
+  const [inputData, setInputData] = useState({
+    stepNo: '',
+    stepName: '',
+    groups: [
+      { groupId: '', orderNo: '' }
+    ]
+  });
+
+
+
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    let groups = [...inputData.groups];
+    groups[index] = { ...groups[index], [name]: value };
+    setInputData({ ...inputData, groups });
+  }
+
+  const handleAddGroup = () => {
+    setInputData({
+      ...inputData,
+      groups: [...inputData.groups, { groupId: '', orderNo: '' }]
+    });
+  };
+
+  const handlesaveall = async () => {
+    const formattedData = {
+      stepNo: inputData.stepNo,
+      stepName: inputData.stepName,
+      groups: inputData.groups.filter(group => group.groupId && group.orderNo)
+    };
+    handleSave(formattedData);
+
+
+  }
+
+  return (
+    <div className="w-full flex justify-center py-[22px]">
+      <div className="w-[700px] h-auto max-h-[550px] flex flex-col items-center overflow-y-auto">
+        <Text1 size="2xl" weight="medium" className="py-3"> {Heading}</Text1>
+
+
+
+        <div className="flex-col w-[680px] gap-2 2xl:w-[700] mx-auto py-1">
+          <div className="grid grid-cols-2 align-bottom">
+            <div className="px-1">
+              <label htmlFor="" className="">
+                <Text1 size="xs" className="text-slate-500 font-normal">Step No. </Text1>
+              </label>
+              <input
+                type="number"
+                placeholder="Step No."
+                className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                name="stepNo"
+                value={inputData.stepNo}
+                onChange={(e) => setInputData({ ...inputData, stepNo: e.target.value })}
+              />
+            </div>
+            <div className="px-1">
+              <label htmlFor="" className="">
+                <Text1 size="xs" className="text-slate-500 font-normal"> Step Name </Text1>
+              </label>
+              <input
+                type="text"
+                placeholder="Step Name"
+                className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                name="stepName"
+                value={inputData.stepName}
+                onChange={(e) => setInputData({ ...inputData, stepName: e.target.value })}
+              />
+            </div>
+          </div>
+        </div>
+
+        <Text1 size="2xl" weight="medium" className="py-3"> {subheading}</Text1>
+
+        {inputData.groups.map((group, index) => (
+          <div className="flex-col w-[680px] gap-2 2xl:w-[700] mx-auto py-1" key={index}>
+            <div className="grid grid-cols-2 align-bottom">
+              <div className="px-1">
+
+                <CustomSelect
+                  onChange={(e) => handleChange(e, index)}
+                  label={"Data Type"}
+                  selectHeight="h-[48px]"
+                  name="groupId">
+                  <option value="">option</option>
+                  {getAllgroups?.map(group => (
+                    <option key={group._id} value={group._id}>{group.groupName}</option>
+                  ))}
+                </CustomSelect>
+
+              </div>
+              <div className="px-1">
+                <label htmlFor="" className="">
+                  <Text1 size="xs" className="text-slate-500 font-normal"> Order No. </Text1>
+                </label>
+                <input
+                  type="number"
+                  placeholder="Order No."
+                  className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  name="orderNo"
+                  value={group.orderNo}
+                  onChange={(e) => handleChange(e, index)}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+
+
+
+        <div className="mx-auto py-[30px]">
+          <Button onClick={handleAddGroup} className=" bg-green-500 hover:border-green-500 hover:bg-[#7CC270] hover:text-white px-4 py-2 mr-3 rounded transition transform  ">
+            + Add Another Group
+          </Button>
+          <Button
+            onClick={handlesaveall}
+            size="sm"
+            variant="contained"
+            className={"font-body px-8 py-2"}>
+            SAVE
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 
 
 
