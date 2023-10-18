@@ -1,18 +1,52 @@
 import React, { useState,useEffect } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
-// import { Nodata } from '@/components/atoms/icons'
 import NodataPage from '@/components/molecules/nodataPage'
 import Button from '@/components/atoms/button'
 import { Text1 } from '@/components/atoms/field'
 import { LeftArrowIcon } from '@/components/atoms/icons'
 import { useRouter } from 'next/router'
 import { SampleTableNew } from '@/components/organism/tablecomp'
+import DialogPage from '@/components/molecules/dialog'
+import { CustomSelect } from '@/components/atoms/field'
+
+const ModifyTableCall =({open,onClose,data})=>{
+     const [list,setList] = useState(data)
+     const [selectedTable,setSelectedTable ] = useState(null)
+
+     const handleSubmit =()=>{
+       const a = '/dashboard/master-table/table/modify?'
+       if(selectedTable !== null || selectedTable !== ""){
+      alert(`${a}${selectedTable}`)
+       }
+     }
+
+  return (
+    <DialogPage width='min-w-[510px]' open={open} close={onClose}>
+     <div className='space-y-4'>
+        <Text1 className='text-center' size='2xl' color='text-primary'>Modify Master Table</Text1>
+       
+        <CustomSelect label={'Table type'} onChange={(e)=>setSelectedTable(e.target.value)}>
+          <option value={''}>select</option>
+         {list.map((cur)=>{
+          return <option key={cur._id} value={cur._id}>{cur.master_name}</option>
+         })}
+        </CustomSelect>
+
+        <div className='text-center'>
+        <Button variant='contained' onClick={handleSubmit}>MODIFY</Button>
+        </div>
+       {/* {JSON.stringify(list)} */}
+     </div>
+   </DialogPage>
+  )
+}
 
 const Page = ({access_token,user}) => {
     const [tableList,setTableList] = useState([])
     const [checkedNewData, setCheckedNewData] = useState([]);
     const [allClick, setAllClick] = useState(false);
+    const [isOpen,setIsOpen] = useState(false)
     const router = useRouter()
     const Header = [
       {label:"Master Table Id",name:"master_table"},
@@ -56,15 +90,16 @@ const Page = ({access_token,user}) => {
     <>
         <MainLayout User={user} >
         <div className=''>
+        {/* HEADER SECTION */}
          <div className='flex justify-between items-center'>
-         <div>
-         <Text1 size='2xl'>All Master Tables</Text1>
-         <Text1 className='text-lightGray' size='sm'>We have nothing here yet. Start by adding a Field Group.</Text1>
-         </div>
-         <div className='flex gap-4'>
-         <Button variant='contained' onClick={()=>router.push('/dashboard/master-table/table/add-table')}>DESIGN MASTER TABLE</Button>
-         <Button>MODIFY MASTER TABLE</Button>
-         </div>
+          <div>
+            <Text1 size='2xl'>All Master Tables</Text1>
+            <Text1 className='text-lightGray' size='sm'>We have nothing here yet. Start by adding a Field Group.</Text1>
+          </div>
+          <div className='flex gap-4'>
+            <Button variant='contained' onClick={()=>router.push('/dashboard/master-table/table/add-table')}>DESIGN MASTER TABLE</Button>
+            <Button onClick={()=> setIsOpen(true)}>MODIFY MASTER TABLE</Button>
+          </div>
          </div>
           {HeaderBody.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
           <SampleTableNew
@@ -76,11 +111,15 @@ const Page = ({access_token,user}) => {
                   href={`/dashboard/master-table/table/single?`}
                   onClick={(e) => console.log(e, "onclick")}
                   checkAllStatus={allClick}
+                  totalDoc={10}
                   currentPage={1}
-                    pageSize={1}
-                    onPageChange={(e)=> console.log(e)}
+                  start={1}
+                  end={1}
+                  pageSize={1}
+                 onPageChange={(e)=> console.log(e)}
                 />
           </div>}
+            <ModifyTableCall open={isOpen} onClose={()=> setIsOpen(!isOpen)} data={HeaderBody}/>
          </div>
         </MainLayout>
     </>

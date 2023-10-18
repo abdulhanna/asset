@@ -191,7 +191,7 @@ const Single = ({user,roleSingle,access_token}) => {
 
         // console.log(roleSingle,'role')
         useEffect(()=>{
-            // console.log(assignedUser,'role');
+            console.log(assignedUser,'role');
         },[role])
 
         const handleSubmit = async()=>{

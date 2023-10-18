@@ -93,8 +93,11 @@ const Manage = ({ user, list }) => {
                   href={`/dashboard/usermanagement/manage/edit?`}
                   onClick={(e) => console.log(e, "onclick")}
                   checkAllStatus={allClick}
-                  currentPage={1}
-                    pageSize={1}
+                  totalDoc={list.totalDocuments}
+                  currentPage={list?.currentPage}
+                  start={list.startSerialNumber}
+                  end={list.endSerialNumber}
+                  pageSize={list?.totalPages}
                     onPageChange={(e)=> console.log(e)}
                 />
               </div>

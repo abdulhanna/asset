@@ -1,5 +1,6 @@
 import Table from "../molecules/table";
 import { useState } from "react";
+import Button from "../atoms/button";
 import {
   SampleTableCheckBox,
   ClickCheckBoxComp,
@@ -385,87 +386,6 @@ const ToggleComp = ({ data }) => {
 };
 
 
-// export const MasterTableComponent = ({
-//   headers,
-//   body,
-//   href,
-//   onClick,
-//   responseData,
-//   extraclasses,
-//   clickAll,
-//   checkAllStatus,
-// }) => {
-//   return (
-//     <div className="h-auto py-8 min-h-[590px]">
-//       <div className="relative overflow-x-auto rounded-lg">
-//         <Table4
-//           headers={headers}
-//           data={body}
-//           classes={classes}
-//           href={href}
-//           extra={extraclasses}
-//           onClick={onClick}
-//           responseData={responseData}
-//           // clickAll={clickAll}
-//           // checkAllStatus={checkAllStatus}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export const MasterTableNew = ({
-//   headerData,
-//   response,
-//   onClick,
-//   responseData,
-//   href,
-//   totalDoc,
-//   checkedData,
-//   clickAll,
-//   checkAllStatus,
-//   currentPage,
-//   start,
-//   end,
-//   pageSize,
-//   onPageChange,
-//   chemicalPaginationData,
-//   microPaginationData,
-//   type,
-// }) => {
-//   return (
-//     <>
-//       <MasterTableComponent
-//         headers={headerData}
-//         onClick={onClick}
-//         responseData={responseData}
-//         clickAll={clickAll}
-//         checkAllStatus={checkAllStatus}
-//         href={href}
-//         body={response.map((row) => ({
-//           ...row,
-
-//           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
-//           href: `id=${row._id}`,
-//           isDeactivated   : row.isDeactivated ? "InActive" :"Active",
-      
-//         }))}
-//       />
-//       {/* <Paging
-//         // chemicalItems ={chemicalPaginationData}
-//         // microItems ={microPaginationData}
-//         // type ={type}
-//         start={start}
-//         end={end}
-//         totalDoc = {totalDoc}
-//         currentPage={currentPage} // 1
-//         pageSize={pageSize} // 10
-//         onPageChange={onPageChange}
-//       /> */}
-//     </>
-//   );
-// };
-
 export const  MasterTableComponent = ({
   headers,
   body,
@@ -491,29 +411,124 @@ export const  MasterTableComponent = ({
     )
 }
 
+// export const MasterTableLogs = ({
+//   headers,
+//   response,
+//   href,
+//   onClick,
+//   onEdit,
+//   onDelete,
+//   checkedData,
+//   clickAll,
+//   checkAllStatus,
+//   responseData,
+//   extraclasses,
+// })=>{
+//     return (
+//       <div className="h-auto py-4">
+//         <div className="relative overflow-x-auto rounded-lg">
+//           <TableComp1
+//             headers={headers}
+//             body={response?.map((row) => {
+//               return {
+//                 ...row,
+//                 // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+//                 action: (
+//                   <EditDelete data={row} onEdit={onEdit} onDelete={onDelete} />
+//                 ),
+//               };
+//             })}
+//             classes={classes}
+//             href={href}
+//             extra={extraclasses}
+//             onClick={onClick}
+//             clickAll={clickAll}
+//             checkAllStatus={checkAllStatus}
+//             responseData={responseData}
+//           />
+//         </div>
+//       </div>
+//     )
+// }
+
 export const TableComp2 = ({
   headers,
   body,
   href,
   onClick,
+  checkedData,
+  clickAll,
+  checkAllStatus,
   responseData,
   extraclasses,
 }) => {
   return (
     <div className="h-auto py-8">
       <div className="relative overflow-x-auto rounded-lg">
-        <Table4
+        <Table3 
           headers={headers}
           data={body}
           classes={classes}
           href={href}
           extra={extraclasses}
           onClick={onClick}
+          clickAll={clickAll}
+          checkAllStatus={checkAllStatus}
           responseData={responseData}
         />
       </div>
     </div>
   );
 };
+
+export const MasterTableLogs =({
+  headerData,
+  response,
+  onClick,
+  responseData,
+  href,
+  totalDoc,
+  checkedData,
+  clickAll,
+  checkAllStatus,
+  onEdit,
+  onDelete,
+  currentPage,
+  start,
+  end,
+  pageSize,
+  onPageChange,
+})=>{
+
+  return (
+    <TableComp2
+      headers={headerData}
+        onClick={onClick}
+        responseData={responseData}
+        clickAll={clickAll}
+        checkAllStatus={checkAllStatus}
+        href={href}
+        body={response.map((row)=>({
+          ...row,
+          // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+          action: (
+                <PublishStatus data={row}/>
+              ),
+        }))}
+    />
+  )
+}
+
+const PublishStatus = ({data})=>{
+  console.log(data,'datarow')
+  return (
+        <div className=''>
+            {data.status  ?  <Text1 color='text-green-400'>PUBLISHED</Text1>: <Button onClick={()=> alert(data._id)}>PUBLISH</Button> }      
+        </div>
+  )
+}
+
+
+
 
 export default TableComp;
