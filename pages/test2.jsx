@@ -2,9 +2,7 @@ import React from 'react'
 import { useState,useEffect } from 'react'
 import { PaginationLeft,PaginationRight } from '@/components/atoms/icons'
 import { Text1 } from '@/components/atoms/field'
-import Button from '@/components/atoms/button'
-import { MasterTableNew } from '@/components/organism/tablecomp'
-import { TableComp2 } from '@/components/organism/tablecomp'
+import { MasterTableLogs } from '@/components/organism/tablecomp'
 
 
 const Test2 = () => {
@@ -34,9 +32,13 @@ const Test2 = () => {
           label: 'Sub Location',
         },
         // {
-        //   name: 'type',
-        //   label: 'Type',
-        // }
+        //   lable:'Action',
+        //   name:'action',
+        // },
+        {
+          name: 'action',
+          label: 'Action',
+        }
       ];
 
       const newFilteredSample = [
@@ -46,7 +48,8 @@ const Test2 = () => {
             sourceData : "Google",  
             locationData :"Bangalore, India" ,
             subSourceData  :"Karnataka, Bangalore",
-            type:"Covid-19"
+            type:"Covid-19",
+            status:false
             },{
                 _id :35674532364,
                 sampleId:'0987654321',
@@ -54,7 +57,9 @@ const Test2 = () => {
                 sourceData : "Google",
                 locationData :"patna, India" ,
                 subSourceData  :"patna, Bihar",
-                type:"Covid-19"}
+                type:"Covid-19",
+                status:true
+              }
         
       ]
 
@@ -126,17 +131,34 @@ const master = [
                   type ={type}
 
               />  */}
-              <TableComp2
+              {/* <TableComp2
                  headers={headerMaster}
              responseData={(e) => console.log(e, "e")}
             body={master.map((item) => {
             return {
               ...item,
-              // href: `id=${item.id}`,
+              href: `id=${item.id}`,
             };
           })}
-          // href={`/testing/?`}
+          href={`/testing/?`}
+              /> */}
+              <MasterTableLogs 
+                   response={newFilteredSample}
+                  // headerData={[{ name: 'check', label:'' },...headerDataNew]}
+                  headerData={headerDataNew}
+                  checkedData={checkedNewData}
+                  responseData={(e) => onNewCheck(e)}
+                  clickAll={clickAll}
+                  onClick={(e)=> console.log(e,'onclick') }
+                  checkAllStatus={allClick}
+                  onEdit={(e)=> console.log(e)}
+                  onDelete ={(e)=> console.log(e)}
               />
+
+              {/* <div className='my-20'>
+                   <Button>PUBLISH</Button>
+                   <Text1 color='text-green-400'>PUBLISHED</Text1>
+              </div> */}
          
     </div>
   )

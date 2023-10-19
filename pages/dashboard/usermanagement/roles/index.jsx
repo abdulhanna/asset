@@ -95,7 +95,10 @@ const RolesPerimission = ({user,roles}) => {
                             clickAll={clickAll}
                             onClick={(e)=> console.log(e,'onclick') }
                             checkAllStatus={allClick} 
-                            currentPage={roles?.startSerialNumber}
+                            totalDoc={roles.totalDocuments}
+                            currentPage={roles?.currentPage}
+                            start={roles.startSerialNumber}
+                            end={roles.endSerialNumber}
                             pageSize={roles?.totalPages}
                             onPageChange={(e)=> console.log(e)}
            
