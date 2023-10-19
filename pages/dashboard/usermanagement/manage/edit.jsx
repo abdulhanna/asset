@@ -10,9 +10,11 @@ import { useRouter } from "next/router";
 import authApi from "helpers/use-api/auth";
 import userManageApi from "helpers/use-api/user-management/manage";
 import { ToastContainer, toast } from "react-toastify";
+import { DeleteConfirm } from "@/components/molecules/dialog";
 
 const Edit = ({ user, access_token, singlePermission }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [isOpen,setIsOpen] = useState(false)
   const [permission, setPermission] = useState(singlePermission.permission);
   const router = useRouter();
   const { id } = router.query;
@@ -55,18 +57,18 @@ const Edit = ({ user, access_token, singlePermission }) => {
   };
 
   const deActivateRole = async () => {
-    try {
-      const res = await userManageApi.deActivate(access_token, permission._id);
-      if (res.status == "200") {
-        notify("role deactivate successfully");
-      }
+    // try {
+    //   const res = await userManageApi.deActivate(access_token, permission._id);
+    //   if (res.status == "200") {
+    //     notify("role deactivate successfully");
+    //   }
 
-      setTimeout(() => {
-        router.push("/dashboard/usermanagement/manage");
-      }, 2000);
-    } catch (err) {
-      notify("error");
-    }
+    //   setTimeout(() => {
+    //     router.push("/dashboard/usermanagement/manage");
+    //   }, 2000);
+    // } catch (err) {
+    //   notify("error");
+    // }
     // alert(permission._id);
   };
 
@@ -92,7 +94,7 @@ const Edit = ({ user, access_token, singlePermission }) => {
                   EDIT
                 </Button>
               )}
-              <Button variant="danger" onClick={deActivateRole}>
+              <Button variant="danger" onClick={()=> setIsOpen(true)}>
                 DEACTIVATE
               </Button>
             </div>
@@ -177,6 +179,11 @@ const Edit = ({ user, access_token, singlePermission }) => {
                 <Text1>show All Access/Remove All Access</Text1>
                </div> */}
           <ToastContainer />
+          <DeleteConfirm check={isOpen}
+             close={()=> setIsOpen(!isOpen)} 
+            callDelete={deActivateRole} 
+            heading={'Are you sure want to deactivate Permission'}
+             para={'Are you want to deactivate the premission from the list'}/>
         </div>
       </MainLayout>
     </>
