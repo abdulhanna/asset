@@ -56,3 +56,20 @@ input[type="number"] {
   /* scrollbar-width: none; */
   /* Firefox */
 }
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  color: #7CC270 !important;
+
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+  color: #7CC270 !important;
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+  font-size: 1.8rem;
+}
+
+.css-z7uhs0-MuiStepConnector-line {
+  border-top-width: 2px;
+}

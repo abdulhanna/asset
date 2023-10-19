@@ -24,4 +24,9 @@ field.getStepsbyId = async (access_token, id) => hostedAxios.get(`/form-step/ste
 
 field.deleteSteps = async (access_token, id) => hostedAxios.delete(`/form-step/delete-form/${id}`, { headers: { cookie: access_token } })
 
+field.stepsForm = async (access_token, step) => hostedAxios.get(`/field-management/allGroupsWithStepForm?stepNo=${step}`, { headers: { cookie: access_token } })
+
+field.allStepsShow = async (access_token) => hostedAxios.get(`/form-step/listAllSteps`, { headers: { cookie: access_token } })
+
+
 export default field;

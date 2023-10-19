@@ -260,6 +260,10 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
         }
     }
 
+    const handlePreview = () => {
+        router.push('formPreview')
+    }
+
     console.log(stepData, "this is edit step")
 
     return (
@@ -283,7 +287,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
                     <div>
                         <Button onClick={handleAddButtonClick} variant="contained" className="mr-3"> ADD STEPS</Button>
 
-                        <Button className="mb-2 bg-green-500 hover:border-green-500 hover:bg-[#7CC270] hover:text-white px-6 py-2 rounded transition transform  ">
+                        <Button onClick={handlePreview} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-[#7CC270] hover:text-white px-6 py-2 rounded transition transform  ">
                             FORM PREVIEW
                         </Button>
                     </div>
