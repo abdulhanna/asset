@@ -21,6 +21,7 @@ const Organisations = ({ organisationList }) => {
     { label: "Verification", name: "verification" },
     { label: "Registration No.", name: "id" },
     { label: "CONTACT No", name: "contactNo" },
+    { label: "CReated ON", name: "createdAt" },
 
   ];
   const Headerbody = [

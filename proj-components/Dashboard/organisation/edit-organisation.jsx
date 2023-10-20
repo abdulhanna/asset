@@ -207,7 +207,7 @@ const EditOrganisation = ({ getOrganizationdetails, access_token }) => {
                 )}
               </div>
 
-              <TextField
+              {/* <TextField
                 label="Password"
                 bgColor="white"
                 type="password"
@@ -217,7 +217,7 @@ const EditOrganisation = ({ getOrganizationdetails, access_token }) => {
                 placeHolder="Enter Your Password"
                 onChange={handleChange}
                 disabled
-              />
+              /> */}
 
             </div>
           </div>
@@ -326,7 +326,7 @@ const EditOrganisation = ({ getOrganizationdetails, access_token }) => {
                 bgColor="white"
               >
                 <option value="">Choose Country</option>
-                <option value="delhi ">Delhi</option>
+                <option value="india ">India</option>
               </CustomSelect>
 
               <TextField
