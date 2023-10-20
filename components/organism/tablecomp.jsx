@@ -181,7 +181,7 @@ export const SampleTableNew = ({
         // type ={type}
         start={start}
         end={end}
-        totalDoc = {totalDoc}
+        totalDoc={totalDoc}
         currentPage={currentPage} // 1
         pageSize={pageSize} // 10
         onPageChange={onPageChange}
@@ -267,7 +267,7 @@ export const FieldActionTable = ({
       <div className="relative overflow-x-auto rounded-lg">
         <TableComp1
           headers={headers}
-          body={response.map((row) => {
+          body={response?.map((row) => {
             return {
               ...row,
               // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
@@ -386,16 +386,16 @@ const ToggleComp = ({ data }) => {
 };
 
 
-export const  MasterTableComponent = ({
+export const MasterTableComponent = ({
   headers,
   body,
   href,
   onClick,
   responseData,
   extraclasses,
-}) =>{
-    return (
-      <div className="h-auto py-8">
+}) => {
+  return (
+    <div className="h-auto py-8">
       <div className="relative overflow-x-auto rounded-lg">
         <Table4
           headers={headers}
@@ -408,7 +408,7 @@ export const  MasterTableComponent = ({
         />
       </div>
     </div>
-    )
+  )
 }
 
 // export const MasterTableLogs = ({
@@ -465,7 +465,7 @@ export const TableComp2 = ({
   return (
     <div className="h-auto py-8">
       <div className="relative overflow-x-auto rounded-lg">
-        <Table3 
+        <Table3
           headers={headers}
           data={body}
           classes={classes}
@@ -481,7 +481,7 @@ export const TableComp2 = ({
   );
 };
 
-export const MasterTableLogs =({
+export const MasterTableLogs = ({
   headerData,
   response,
   onClick,
@@ -498,7 +498,7 @@ export const MasterTableLogs =({
   end,
   pageSize,
   onPageChange,
-})=>{
+}) => {
 
   return (
     <TableComp2
@@ -523,9 +523,9 @@ export const MasterTableLogs =({
 const PublishStatus = ({data})=>{
   // console.log(data,'datarow')
   return (
-        <div className=''>
-            {data.status  ?  <Text1 color='text-green-400'>PUBLISHED</Text1>: <Button onClick={()=> alert(data._id)}>PUBLISH</Button> }      
-        </div>
+    <div className=''>
+      {data.status ? <Text1 color='text-green-400'>PUBLISHED</Text1> : <Button onClick={() => alert(data._id)}>PUBLISH</Button>}
+    </div>
   )
 }
 

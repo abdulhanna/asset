@@ -12,6 +12,7 @@ import Button from "../../../../components/atoms/button";
 import { SampleTableNew } from "../../../../components//organism/tablecomp";
 import { OrganisationTableNew } from "proj-components/Dashboard/organisation/table";
 import { useRouter } from "next/router";
+import { Nodata } from "../../../../components/atoms/icons";
 
 const OrganisationList = () => {
   const [checkedNewData, setCheckedNewData] = useState([]);
@@ -19,7 +20,7 @@ const OrganisationList = () => {
   const router = useRouter();
 
   const HeaderGoods = [
-    { label: "Name", name: "name" },
+    { label: "Organization Name", name: "name" },
     { label: "Type", name: "types" },
     { label: "Verification", name: "verification" },
     { label: "Batch", name: "batch" },
@@ -104,6 +105,17 @@ const OrganisationList = () => {
         </Button>
       </div>
 
+      <div className=' rounded-md flex items-center justify-center inset-y-2/4 inset-x-2/4  mt-[320px] overflow-hidden'>
+        <div className='text-center'>
+          <Nodata className={'flex justify-center'} />
+          <div className='mt-3'>
+            <span className='text-gray-600'> No Added Sub-group</span>
+
+          </div>
+        </div>
+
+      </div>
+
       <OrganisationTableNew
         response={Headerbody}
         headerData={[{ name: "check", label: "" }, ...HeaderGoods]}
@@ -113,8 +125,11 @@ const OrganisationList = () => {
         clickAll={clickAll}
         onClick={(e) => console.log(e, "onclick")}
         checkAllStatus={allClick}
-        currentPage={1}
-        pageSize={20}
+        totalDoc={checkedNewData?.currentPage}
+        currentPage={checkedNewData?.currentPage}
+        start={checkedNewData.startSerialNumber}
+        end={checkedNewData.endSerialNumber}
+        pageSize={checkedNewData?.totalPages}
         onPageChange={(page) => console.log(page)}
       />
     </>
