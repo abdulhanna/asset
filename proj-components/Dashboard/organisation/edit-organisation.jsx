@@ -119,7 +119,7 @@ const EditOrganisation = ({ getOrganizationdetails, access_token }) => {
 
     } catch (err) {
       console.log(err, "error");
-      error(err.message)
+      error(err.response.data.error)
     }
 
     //  router.push("/dashboard/root/organisation");

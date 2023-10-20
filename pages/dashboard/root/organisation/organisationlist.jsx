@@ -20,7 +20,7 @@ const OrganisationList = () => {
   const router = useRouter();
 
   const HeaderGoods = [
-    { label: "Name", name: "name" },
+    { label: "Organization Name", name: "name" },
     { label: "Type", name: "types" },
     { label: "Verification", name: "verification" },
     { label: "Batch", name: "batch" },

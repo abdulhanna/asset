@@ -69,10 +69,10 @@ export const Verification = ({ className }) => {
 };
 
 
-export const Resend = ({ className }) => {
+export const Resend = ({ className, onClick }) => {
   return (
     <>
-      <span className={className}>
+      <span className={className} onClick={onClick}>
         <svg width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="10" y="14" width="24" height="24" rx="12" fill="#FACC15" />
           <path d="M24 21.75L25.5 23.25L24 24.75" stroke="#FEFEFE" strokeLinecap="round" strokeLinejoin="round" />

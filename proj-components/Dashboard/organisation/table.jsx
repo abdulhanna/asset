@@ -2,7 +2,9 @@ import React from 'react'
 import { ColClickTable } from '@/components/molecules/table'
 import { SampleTableCheckBox } from '../tableItem';
 import Paging from '@/components/molecules/paging';
-import { Verification } from '@/components/atoms/icons';
+import { Verification, Resend } from '@/components/atoms/icons';
+import { toast } from 'react-toastify';
+import orgApi from 'helpers/use-api/organisations';
 
 const classes = {
   table: 'w-full text-sm text-left  ',
@@ -47,8 +49,6 @@ export const OrganisationTableNew = ({
   totalDoc,
   start,
   end,
-
-
   checkedData,
   clickAll,
   checkAllStatus,
@@ -76,7 +76,7 @@ export const OrganisationTableNew = ({
           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
           href: `id=${row._id}`,
           verification: (
-            <Verificationreq />
+            <Verificationreq data={row} />
           )
 
           //   type: <p>{row.isFieldSample && row.isFieldSample === true ? 'Field Sample':'Lab Sample'}</p>,
@@ -142,6 +142,21 @@ export const OrganisationTableNew = ({
 };
 
 
-export const Verificationreq = () => {
-  return <Verification />
+export const Verificationreq = ({ data }) => {
+  // console.log(data, "this is a Verification")
+  const verification = async () => {
+
+    let email = {
+      email: data.userId.email
+    }
+
+    try {
+      const res = await orgApi.resendEmail(email)
+      console.log(res)
+      toast.success("Sent email successfully")
+    } catch (e) {
+      toast.error("Error sending email")
+    }
+  }
+  return (data?.userId?.is_email_verified == true ? <Verification /> : <Resend onClick={verification} />)
 }

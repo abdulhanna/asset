@@ -493,20 +493,6 @@ function EditGroup({ user, access_token, groupOverview }) {
                         onDelete={(e) => console.log(e, "DEleted")}
                         onEdit={edit}
                       />
-                      {/* <TableComp
-                        headers={HeaderGoods}
-                        responseData={(e) => setData1(e)}
-                        body={group?.fields?.map((item, index) => {
-                          return {
-                            ...item,
-                            action: "action",
-                            isMandatory: true ? "Yes" : "NO",
-                            // href:`/${index}`
-                          };
-                        })}
-                        onClick={(e) => console.log(e)}
-                        editItem={(e) => setIsOpen(true)}
-                      /> */}
                     </>}
 
                   </div>
@@ -515,19 +501,6 @@ function EditGroup({ user, access_token, groupOverview }) {
             })
           }
 
-
-          {/*<TableComp*/}
-          {/*    headers={HeaderGoods}*/}
-          {/*    responseData={(e) => setData1(e)}*/}
-          {/*    body={Headerbody.map((item, index) => {*/}
-          {/*      return {*/}
-          {/*        ...item,*/}
-          {/*        // href:`/${index}`*/}
-          {/*      };*/}
-          {/*    })}*/}
-          {/*    onClick={(e) => console.log(e)}*/}
-          {/*    editItem={(e) => setIsOpen(true)}*/}
-          {/*/>*/}
         </div>
         <AddtextField open={textHigh} close={() => setTextHigh(false)} id={fieldData} />
         <EditDataComp

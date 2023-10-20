@@ -15,9 +15,25 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 
 // Confirm Delete MOdal
-const DeleteConfirm = ({ check, close }) => {
+const DeleteConfirm = ({ check, close, access_token, id }) => {
   console.log(check, "Delete Confirm")
+  console.log(id, "Delete Confirm")
 
+  const deletSubgroup = async (data) => {
+    console.log(data, "showData")
+    try {
+      const res = await field.deleteGroup(access_token, id)
+      console.log(res, "this is data")
+      toast.success("Deleted Successfully")
+      // setTimeout(() => {
+      //   router.reload()
+      // }, 1000)
+    } catch (e) {
+      console.log(e, "error deleting")
+      toast.error(e.message)
+    }
+
+  }
 
   const cancelButtonRef = useRef(null)
 
@@ -70,10 +86,14 @@ const DeleteConfirm = ({ check, close }) => {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                  // onClick={() => setOpen(false)}
+                    onClick={deletSubgroup}
                   >
                     Delete
                   </button>
+
+
+
+
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
@@ -120,7 +140,7 @@ const AddtextField = ({ open, close, id }) => {
 
   return (
     <>
-      <DialogPage1 open={open} close={close} width="w-[1288px]">
+      <DialogPage1 open={open} close={close} width="w-[800px]">
         <div className="w-full text-right  pb-3 pr-8">
           <button onClick={close} >
             <CloseIcon />
@@ -322,6 +342,8 @@ const Fieldgroupdescription = ({ user, access_token }) => {
         <DeleteConfirm
           check={deleteOPen}
           close={() => setDeleteOpen(!deleteOPen)}
+          id={id}
+          access_token={access_token}
         />
         <ToastContainer />
       </MainLayout>

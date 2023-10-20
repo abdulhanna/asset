@@ -17,10 +17,10 @@ const Organisations = ({ organisationList }) => {
 
   const HeaderGoods = [
     { label: "Name", name: "name" },
-    { label: "Type", name: "types" },
+    { label: "Eamil", name: "email" },
     { label: "Verification", name: "verification" },
-    { label: "GST No", name: "gstin" },
-    { label: "Id Number", name: "id" },
+    { label: "Registration No.", name: "id" },
+    { label: "CONTACT No", name: "contactNo" },
 
   ];
   const Headerbody = [
@@ -69,7 +69,8 @@ const Organisations = ({ organisationList }) => {
             name: cur?.organizationName,
             types: cur?.organizationType,
             id: cur?.organizationRegistrationNumber,
-            gstin: cur?.gstin
+            contactNo: cur?.contactNo,
+            email: cur?.userId?.email
           }
         })}
 

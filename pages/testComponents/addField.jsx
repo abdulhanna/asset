@@ -354,7 +354,7 @@ export const EditField = ({ user, access_token, close, id }) => {
   return (
     <div className="h-auto overflow-y-auto px-6  flex flex-col">
       <div className=" flex flex-col items-center pb-[52px]">
-        <Text1 size="2xl" className="py-2">Add Field</Text1>
+        <Text1 size="2xl" className="py-2">Edit Field</Text1>
         <Text1>Asset Description</Text1>
       </div>
       {fields?.map((item, index) => {

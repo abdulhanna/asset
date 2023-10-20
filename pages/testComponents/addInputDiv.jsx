@@ -92,20 +92,19 @@ const AddInputDiv = ({ Heading, labelName, getData, handleSave }) => {
             </div>
           );
         })}
-        <div className="w-[450px] ">
-          <button
+
+        <div className="mx-auto py-[30px]">
+          <Button
             type="button"
             onClick={handleSubmit}
-            className="text-[16px] font-[500] text-[#3B5FDA] ">
+            className=" bg-green-500 hover:border-green-500 hover:bg-[#7CC270] hover:text-white px-4 py-2 mr-3 rounded transition transform  ">
             + Add Another Group
-          </button>
-        </div>
-        <div className="mx-auto py-[30px]">
+          </Button>
           <Button
             onClick={handlesaveall}
             size="sm"
             variant="contained"
-            className={"font-body px-8"}>
+            className={"font-body px-8 py-2 h-[42px]"}>
             SAVE
           </Button>
         </div>
@@ -203,20 +202,19 @@ export const AddSubGroupInput = ({ Heading, labelName, getData, handleSave }) =>
             </div>
           );
         })}
-        <div className="w-[450px] ">
-          <button
+
+        <div className="mx-auto py-[30px]">
+          <Button
             type="button"
             onClick={handleSubmit}
-            className="text-[16px] font-[500] text-[#3B5FDA] ">
+            className=" bg-green-500 hover:border-green-500 hover:bg-[#7CC270] hover:text-white px-4 py-2 mr-3 rounded transition transform  ">
             + Add Another Group
-          </button>
-        </div>
-        <div className="mx-auto py-[30px]">
+          </Button>
           <Button
             onClick={handlesaveall}
             size="sm"
             variant="contained"
-            className={"font-body px-8"}>
+            className={"font-body px-8 py-2 h-[42px]"}>
             SAVE
           </Button>
         </div>
@@ -264,7 +262,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
   }
 
   return (
-    <div className="w-full flex justify-center py-[22px]">
+    <div className=" grid grid-cols-2 items-center  w-full justify-center py-[22px]">
       <div className="w-[700px] h-auto max-h-[550px] flex flex-col items-center overflow-y-auto">
         <Text1 size="2xl" weight="medium" className="py-3"> {Heading}</Text1>
 
@@ -277,7 +275,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
               <input
                 type="number"
                 placeholder="Step No."
-                className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 name="stepNo"
                 value={inputData.stepNo}
                 onChange={(e) => setInputData({ ...inputData, stepNo: e.target.value })}
@@ -290,7 +288,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
               <input
                 type="text"
                 placeholder="Step Name"
-                className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 name="stepName"
                 value={inputData.stepName}
                 onChange={(e) => setInputData({ ...inputData, stepName: e.target.value })}
@@ -312,7 +310,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
                 <input
                   type="number"
                   placeholder="Order No."
-                  className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  className="w-full h-11 px-2 mt-1  border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   name="orderNo"
                   value={group.orderNo}
                   onChange={(e) => handleChange(e, index)}
@@ -321,6 +319,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
               <div className="px-1">
 
                 <CustomSelect
+                  className="-mt-3 px-2"
                   onChange={(e) => handleChange(e, index)}
                   label={"Select Groups and order"}
                   selectHeight="h-[48px]"
@@ -346,7 +345,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
             onClick={handlesaveall}
             size="sm"
             variant="contained"
-            className={"font-body px-8 py-2"}>
+            className={"font-body px-8 py-2 h-[42px]"}>
             SAVE
           </Button>
         </div>
@@ -396,7 +395,7 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
   }
 
   return (
-    <div className="w-full flex justify-center py-[22px]">
+    <div className=" grid grid-cols-2 items-center  w-full  justify-center py-[22px]">
       <div className="w-[700px] h-auto max-h-[550px] flex flex-col items-center overflow-y-auto">
         <Text1 size="2xl" weight="medium" className="py-3"> {Heading}</Text1>
 
@@ -411,7 +410,7 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
               <input
                 type="number"
                 placeholder="Step No."
-                className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 name="stepNo"
                 value={inputData.stepNo}
                 onChange={(e) => setInputData({ ...inputData, stepNo: e.target.value })}
@@ -424,7 +423,7 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
               <input
                 type="text"
                 placeholder="Step Name"
-                className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 name="stepName"
                 value={inputData.stepName}
                 onChange={(e) => setInputData({ ...inputData, stepName: e.target.value })}
@@ -445,7 +444,7 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
                 <input
                   type="number"
                   placeholder="Order No."
-                  className="w-full mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   name="orderNo"
                   value={inputData?.groups[0]?.orderNo}
                   onChange={(e) => handleChange(e, index)}
@@ -453,6 +452,7 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
               </div>
 
               <CustomSelect
+                className="-mt-3 px-2"
                 value={inputData?.groups[0]?.groupId}
                 onChange={(e) => handleChange(e, index)}
                 label={"Select Groups and order"}
@@ -480,7 +480,7 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
             onClick={handlesaveall}
             size="sm"
             variant="contained"
-            className={"font-body px-8 py-2"}>
+            className={"font-body px-8 py-2 h-[42px]"}>
             SAVE
           </Button>
         </div>
