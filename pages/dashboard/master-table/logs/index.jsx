@@ -45,6 +45,7 @@ const LogTable = ({user}) => {
                   <MasterTableLogs 
                   response={headerBody}
                   headerData={header}
+                  href={'/dashboard/master-table/logs/single?'}
                   responseData={(e) => onNewCheck(e)}
                   onClick={(e)=> console.log(e,'onclick') }
               //  onDelete={(e)=> console.log(e,'delete')}

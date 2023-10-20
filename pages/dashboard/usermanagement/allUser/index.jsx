@@ -67,7 +67,7 @@ useEffect(()=>{
     // memberAccessApi.getAllMember(access_token,page,pageSize,JSON.stringify(sort))
 
    }
- console.log(memberList,'list',page,pageSize,sort)
+//  console.log(memberList,'list',page,pageSize,sort)
   return (
     <>
         <MainLayout User={user}>
@@ -79,9 +79,9 @@ useEffect(()=>{
          </div>
          <Button variant='contained' onClick={()=>router.push('/dashboard/usermanagement/allUser/add-user')}>ADD MEMBER</Button>
          </div>
-          {members.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
+          {members?.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
             <SampleTableNew
-               response={members.map((row)=>{
+               response={members?.map((row)=>{
                 return {...row,  userCodeId:row?.userProfile?.userCodeId,
                   name:row.userProfile?.name,
                 createdAt: DateTime.fromISO(row.createdAt).toLocaleString(
@@ -97,7 +97,7 @@ useEffect(()=>{
                   onClick={(e)=> console.log(e,'onclick') }
                   href={`/dashboard/usermanagement/allUser/single?`}
                   checkAllStatus={allClick}
-                  totalDoc={memberList.totalDocuments}
+                  totalDoc={memberList?.totalDocuments}
                   currentPage={memberList?.currentPage}
                   start={memberList.startSerialNumber}
                   end={memberList.endSerialNumber}
@@ -114,22 +114,31 @@ useEffect(()=>{
 export const getServerSideProps = async (appCtx) => {
   let access_token =
   "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-  const auth = await authApi.WhoAmI(appCtx)
+  // const auth = await authApi.WhoAmI(appCtx)
   // console.log(auth,'ddd')
-  if (!auth) {
-    return {
-      redirect: {
-        destination: '/auth/login',
-        permanent: false,
-      },
-    };
-  } 
+  // if (!auth) {
+  //   return {
+  //     redirect: {
+  //       destination: '/auth/login',
+  //       permanent: false,
+  //     },
+  //   };
+  // } 
   let page = 1
-  let pageSize = 4
+  let pageSize = 10
   let sort = {"createdAt":-1};
   let memberList 
+  let auth
   try{
-     
+     auth = await authApi.WhoAmI(appCtx)
+    if (!auth) {
+      return {
+        redirect: {
+          destination: '/auth/login',
+          permanent: false,
+        },
+      };
+    } 
     const {data} =await memberAccessApi.getAllMember(access_token,page,pageSize,JSON.stringify(sort))
     memberList = data
   }catch(err){

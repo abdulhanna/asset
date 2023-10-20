@@ -57,7 +57,7 @@ const Manage = ({ user, list }) => {
     }
   };
 
-  console.log(permissionList, "list");
+  // console.log(permissionList, "list");
 
   return (
     <>
@@ -112,23 +112,27 @@ const Manage = ({ user, list }) => {
 export const getServerSideProps = async (appCtx) => {
   let access_token =
     "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-  const auth = await authApi.WhoAmI(appCtx);
+  // const auth = await authApi.WhoAmI(appCtx);
   // console.log(auth,'ddd')
-  if (!auth) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permanent: false,
-      },
-    };
-  }
+  
   let page = 1
-  let pageSize = 5
+  let pageSize = 10
   let sort = {"createdAt":-1};
   let permissionList
   
- 
+   let auth
   try{
+     auth = await authApi.WhoAmI(appCtx);
+      
+     if (!auth) {
+      return {
+        redirect: {
+          destination: "/auth/login",
+          permanent: false,
+        },
+      };
+    }
+
     const {data} = await userManageApi.getAllPermission(access_token,page,pageSize,JSON.stringify(sort));
     
     permissionList = data;

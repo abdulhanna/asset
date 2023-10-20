@@ -92,7 +92,7 @@ export const CheckWithLinkTable = ({
   const router = useRouter()
 
   const sortData = (field, ascending) => {
-    return data.sort((a, b) => {
+    return data?.sort((a, b) => {
       if (field === 'date') {
         const dateA = a?.createdAt;
         const dateB = b?.createdAt;
@@ -184,7 +184,7 @@ export const CheckWithLinkTable = ({
       </thead>
 
       <tbody className={classes.tbody}>
-        {sortedData.map((dataRow, index) => {
+        {sortedData?.map((dataRow, index) => {
           return (
 
             <tr key={index}>
