@@ -12,11 +12,19 @@ import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
 import { StyledEngineProvider } from '@mui/material/styles';
 import Button from '@/components/atoms/button';
+import { InputField, TextField } from '@/components/atoms/field';
 
-function FormPreview({ user, allSteps, stepsHead }) {
+
+
+// Main Component
+
+function FormPreview({ user, intialStep, stepsHead, access_token }) {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
     const [steps, setSteps] = useState(stepsHead?.stepForms)
+
+    const [stepGroupData, setStepGroupData] = useState(intialStep)
+    const [count, setCount] = useState(stepGroupData[0]?.assetFormStepId.stepNo)
 
     const router = useRouter();
 
@@ -30,7 +38,11 @@ function FormPreview({ user, allSteps, stepsHead }) {
         })
     }
 
+    const stepData = () => {
 
+    }
+
+    // Generating all data by given steps Value 
     const generateStepsData = (fieldData) => {
         return fieldData.map((group) => {
             return {
@@ -45,63 +57,97 @@ function FormPreview({ user, allSteps, stepsHead }) {
         });
     };
 
+    // REndering of fields 
     const renderFields = (fields) => {
-        return fields.map((field) => {
-            switch (field.fieldType) {
-                case 'Input text':
-                    return (
-                        <div key={field._id}>
-                            <label>{field.name}</label>
-                            <input type="text" />
-                        </div>
-                    );
-                case 'Dropdown':
-                    return (
-                        <div key={field._id}>
-                            <label>{field.name}</label>
-                            <select>
-                                {field.listOptions.map((option, index) => (
-                                    <option key={index} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    );
-                case 'Radio':
-                    return (
-                        <div key={field._id}>
-                            <label>{field.name}</label>
-                            {field.listOptions.map((option, index) => (
-                                <div key={index}>
-                                    <input type="radio" value={option} name={field.name} />
-                                    <label>{option}</label>
-                                </div>
-                            ))}
-                        </div>
-                    );
-                default:
-                    return null; // Handle other field types if needed
-            }
-        });
+        return (
+            <>
+                <div className="grid grid-cols-3 gap-5">
+                    {
+                        fields.map((field) => {
+                            console.log(field.fieldInfo, "this is mandatory")
+                            switch (field.fieldType) {
+                                case 'Input text':
+                                    return (
+                                        <div key={field._id}>
+                                            <label className='text-xs text-gray-500'>
+                                                {field.name}
+                                                {field.isMandatory && <span className="text-red-500">*</span>}
+                                            </label>
+                                            <InputField type="text" placeHolder="Input Text " />
+                                        </div>
+                                    );
+
+                                case 'Input number':
+                                    return (
+                                        <div key={field._id}>
+                                            <label className='text-xs text-gray-500'>{field.name}</label>
+                                            <InputField type="number" placeHolder="Input Number " />
+                                        </div>
+                                    );
+
+                                case 'Dropdown':
+                                    return (
+                                        <div key={field._id} className="mb-4">
+                                            <label className="block text-gray-500 text-xs  '">{field.name}</label>
+                                            <select className="block w-full bg-white border border-gray-300 text-gray-500  rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                                {field.listOptions.map((option, index) => (
+                                                    <option key={index} value={option} >
+                                                        {option}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    );
+                                case 'Radio button':
+                                    return (
+                                        <div key={field._id} className="mb-4">
+                                            <label className="block text-gray-500  text-xs ' ">{field.name}</label>
+                                            <div className="flex flex-wra mt-5">
+                                                {field.listOptions.map((option, index) => (
+                                                    <div className="flex items-center mb-2 mr-4" key={index}>
+                                                        <input type="radio" value={option} name={field.name} className="mr-2" />
+                                                        <label className="text-sm">{option}</label>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+
+
+                                default:
+                                    return null; // Handle other field types if needed
+                            }
+                        })
+                    }
+                </div>
+            </>
+        )
+
     };
 
+    // REndering for SUbGRouPNAME
     const renderSubgroups = (subgroups) => {
         return subgroups.map((subgroup, subgroupIndex) => {
             return (
                 <div key={subgroupIndex}>
-                    <h3>{subgroup.subgroupName}</h3>
+                    <div className='flex'>
+
+                        <h3 className='text-sm text-gray-500 font-normal py-3'>{subgroup.subgroupName}</h3>
+                    </div>
                     {renderFields(subgroup.fields)}
                 </div>
             );
         });
     };
 
+    // RENDRING gROUP NAME 
     const renderSteps = (stepsData) => {
         return stepsData.map((group, groupIndex) => {
             return (
                 <div key={groupIndex}>
-                    <h2>{group.groupName}</h2>
+                    <div className='flex '>
+                        <h2 className='text-xl font-normal py-5'>{group.groupName}</h2>
+                    </div>
                     {renderSubgroups(group.subgroups)}
                 </div>
             );
@@ -115,12 +161,16 @@ function FormPreview({ user, allSteps, stepsHead }) {
         //     newSkipped.delete(activeStep);
         // }
 
+
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setCount((prevActiveStep) => prevActiveStep + 1)
+
         setSkipped(newSkipped);
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        setCount((prevActiveStep) => prevActiveStep - 1)
     };
 
     const handleReset = () => {
@@ -128,8 +178,28 @@ function FormPreview({ user, allSteps, stepsHead }) {
     };
 
 
-    const stepsData = generateStepsData(allSteps);
+    const stepsData = generateStepsData(stepGroupData);
 
+    useEffect(() => {
+        // console.log(count)
+        callStep()
+    }, [count])
+
+    const callStep = async () => {
+        console.log('call api')
+        // setCount(count)
+        console.log(count, "ths is count")
+        try {
+            const res = await field.stepsForm(access_token, count)
+            console.log(res.data, "this is count")
+            setStepGroupData(res?.data)
+
+            // router.push('/dashboard/root/field-management')
+        } catch (e) {
+            console.log(e)
+
+        }
+    }
     return (
         <>
             <MainLayout User={user} isScroll={true}>
@@ -137,37 +207,17 @@ function FormPreview({ user, allSteps, stepsHead }) {
                     <div>
                         <div className="flex items-center cursor-pointer" onClick={() => router.back()}>
                             <LeftArrowIcon />
-                            <Text1 size="2xl" >
-                                FORM PREVIEW
+                            <Text1 size="2xl" weight='medium'>
+                                Form Preview
                             </Text1>
                         </div>
-                        <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
+                        <Text1 className="pl-6 text-gray-600 p-2" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                     </div>
-                </div>
-
-                {renderSteps(stepsData)}
-
-                <StyledEngineProvider injectFirst>
-                    <Box sx={{ width: "100%" }}>
-                        <Stepper activeStep={activeStep} style={{ padding: '16px 0', borderRadius: '16px' }} >
-                            {stepsHead?.stepForms?.map((label, index) => {
-                                {
-                                    console.log(label.stepNo, "this is step")
-                                }
-                                const stepProps = {};
-                                const labelProps = {};
-                                return (
-
-                                    <Step key={label._id} {...stepProps} onClick={() => setActiveStep(label.stepNo)}>
-                                        <StepLabel {...labelProps}>{label.stepName}</StepLabel>
-                                    </Step>
-                                );
-                            })}
-                        </Stepper>
+                    <div>
                         {activeStep === steps.length ? (
                             <>
                                 <Typography sx={{ mt: 2, mb: 1 }}>
-                                    All steps completed - you&apos;re finished
+                                    You are Not Added Any Steps Yet!
                                 </Typography>
                                 <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                                     <Box sx={{ flex: "1 1 auto" }} />
@@ -176,25 +226,53 @@ function FormPreview({ user, allSteps, stepsHead }) {
                             </>
                         ) : (
                             <>
-                                <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+                                {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
                                 <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                                     <Button
                                         color="inherit"
-                                        disabled={activeStep === 0}
+                                        isDisabled={activeStep === 0}
                                         onClick={handleBack}
                                         sx={{ mr: 1 }}
+                                        className={activeStep === 0 ? "cursor-not-allowed" : null}
+
+
                                     >
                                         Back
                                     </Button>
                                     <Box sx={{ flex: "1 1 auto" }} />
-                                    <Button onClick={handleNext}>
+                                    <Button onClick={handleNext} variant='contained' className='ml-5 px-8' isDisabled={activeStep === stepsHead?.stepForms?.length - 1}>
                                         {activeStep === stepsHead?.stepForms?.length - 1 ? "Finish" : "Next"}
                                     </Button>
                                 </Box>
                             </>
                         )}
+                    </div>
+                </div>
+
+
+                <StyledEngineProvider injectFirst>
+                    <Box sx={{ width: "100%" }}>
+                        <Stepper activeStep={activeStep} style={{ padding: '16px 0', borderRadius: '16px' }} >
+                            {stepsHead?.stepForms?.map((label, index) => {
+
+                                const stepProps = {};
+                                const labelProps = {};
+                                return (
+
+                                    <Step key={label._id} {...stepProps} onClick={() => setActiveStep(activeStep)}>
+                                        <StepLabel {...labelProps}>{label.stepName}</StepLabel>
+                                    </Step>
+                                );
+                            })}
+                        </Stepper>
+
                     </Box>
                 </StyledEngineProvider>
+                <div className='w-full border border-white p-6 rounded-lg mt-2 bg-[#F7F7F7] '>
+
+                    {renderSteps(stepsData)}
+                </div>
+
             </MainLayout>
         </>
     );
@@ -210,6 +288,8 @@ export const getServerSideProps = async (appCtx) => {
     let access_token = 'cookie' in appCtx.req.headers ? appCtx.req.headers.cookie : null;
     const auth = await authApi.WhoAmI(appCtx)
 
+    const step = 1;
+
     if (!auth) {
         return {
             redirect: {
@@ -221,7 +301,7 @@ export const getServerSideProps = async (appCtx) => {
     }
 
 
-    const getAllSteps = await field.stepsForm(access_token)
+    const getAllSteps = await field.stepsForm(access_token, step)
     const stepsHead = await field.allStepsShow(access_token)
 
 
@@ -229,7 +309,7 @@ export const getServerSideProps = async (appCtx) => {
         props: {
             user: auth,
             access_token,
-            allSteps: getAllSteps?.data || [],
+            intialStep: getAllSteps?.data || [],
             stepsHead: stepsHead?.data || []
         }
     }

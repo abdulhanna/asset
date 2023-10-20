@@ -304,20 +304,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
         {inputData.groups.map((group, index) => (
           <div className="flex-col w-[680px] gap-2 2xl:w-[700] mx-auto py-1" key={index}>
             <div className="grid grid-cols-2 align-bottom">
-              <div className="px-1">
 
-                <CustomSelect
-                  onChange={(e) => handleChange(e, index)}
-                  label={"Data Type"}
-                  selectHeight="h-[48px]"
-                  name="groupId">
-                  <option value="">option</option>
-                  {getAllgroups?.map(group => (
-                    <option key={group._id} value={group._id}>{group.groupName}</option>
-                  ))}
-                </CustomSelect>
-
-              </div>
               <div className="px-1">
                 <label htmlFor="" className="">
                   <Text1 size="xs" className="text-slate-500 font-normal"> Order No. </Text1>
@@ -330,6 +317,20 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
                   value={group.orderNo}
                   onChange={(e) => handleChange(e, index)}
                 />
+              </div>
+              <div className="px-1">
+
+                <CustomSelect
+                  onChange={(e) => handleChange(e, index)}
+                  label={"Select Groups and order"}
+                  selectHeight="h-[48px]"
+                  name="groupId">
+                  <option value="">option</option>
+                  {getAllgroups?.map(group => (
+                    <option key={group._id} value={group._id}>{group.groupName}</option>
+                  ))}
+                </CustomSelect>
+
               </div>
             </div>
           </div>
@@ -439,21 +440,6 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
             <div className="grid grid-cols-2 align-bottom">
               <div className="px-1">
 
-                <CustomSelect
-                  value={inputData?.groups[0]?.groupId}
-                  onChange={(e) => handleChange(e, index)}
-                  label={"Data Type"}
-                  selectHeight="h-[48px]"
-                  name="groupId">
-                  <option value="">option</option>
-                  {getAllgroups?.map(group => (
-                    <option key={group._id} value={group._id}>{group.groupName}</option>
-                  ))}
-                </CustomSelect>
-
-              </div>
-              <div className="px-1">
-
                 <Text1 size="xs" className="text-slate-500 font-normal"> Order No. </Text1>
 
                 <input
@@ -465,6 +451,21 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
                   onChange={(e) => handleChange(e, index)}
                 />
               </div>
+
+              <CustomSelect
+                value={inputData?.groups[0]?.groupId}
+                onChange={(e) => handleChange(e, index)}
+                label={"Select Groups and order"}
+                selectHeight="h-[48px]"
+                name="groupId">
+                <option value="">option</option>
+                {getAllgroups?.map(group => (
+                  <option key={group._id} value={group._id}>{group.groupName}</option>
+                ))}
+              </CustomSelect>
+
+            </div>
+            <div className="px-1">
             </div>
           </div>
         ))}
