@@ -16,8 +16,8 @@ const Organisations = ({ organisationList }) => {
   console.log(organisations, 'hed------------------------------')
 
   const HeaderGoods = [
-    { label: "Name", name: "name" },
-    { label: "Eamil", name: "email" },
+    { label: "Organization Name", name: "name" },
+    { label: "Eamil ID", name: "email" },
     { label: "Verification", name: "verification" },
     { label: "Registration No.", name: "id" },
     { label: "CONTACT No", name: "contactNo" },
