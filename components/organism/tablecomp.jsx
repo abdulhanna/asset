@@ -224,6 +224,7 @@ export const AssignedUserTable = ({
   response,
   href,
   onClick,
+  onDelete,
   responseData,
   extraclasses,
 }) => {
@@ -233,9 +234,10 @@ export const AssignedUserTable = ({
         <ActionTable
           headers={headers}
           data={response.map((item) => {
+            // console.log(item,'item')
             return {
               ...item,
-              action: <TrashOutline />,
+              action: <TrashOutline onClick={()=>onDelete(item._id)}/>,
             };
           })}
           classes={classes}
@@ -521,10 +523,10 @@ export const MasterTableLogs =({
 }
 
 const PublishStatus = ({data})=>{
-  // console.log(data,'datarow')
+  console.log(data,'datarow')
   return (
         <div className=''>
-            {data.status  ?  <Text1 color='text-green-400'>PUBLISHED</Text1>: <Button onClick={()=> alert(data._id)}>PUBLISH</Button> }      
+            {data.publishStatus === "published"  ?  <Text1 color='text-green-400'>PUBLISHED</Text1>: <Button onClick={()=> alert(data._id)}>PUBLISH</Button> }      
         </div>
   )
 }

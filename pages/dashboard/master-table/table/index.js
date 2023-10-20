@@ -3,12 +3,11 @@ import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import NodataPage from '@/components/molecules/nodataPage'
 import Button from '@/components/atoms/button'
-import { Text1 } from '@/components/atoms/field'
-import { LeftArrowIcon } from '@/components/atoms/icons'
 import { useRouter } from 'next/router'
 import { SampleTableNew } from '@/components/organism/tablecomp'
 import DialogPage from '@/components/molecules/dialog'
-import { CustomSelect } from '@/components/atoms/field'
+import { CustomSelect,Text1 } from '@/components/atoms/field'
+import masterTableApi from 'helpers/use-api/master-table/table'
 
 const ModifyTableCall =({open,onClose,data})=>{
      const [list,setList] = useState(data)
@@ -30,7 +29,7 @@ const ModifyTableCall =({open,onClose,data})=>{
         <CustomSelect label={'Table type'} onChange={(e)=>setSelectedTable(e.target.value)}>
           <option value={''}>select</option>
          {list.map((cur)=>{
-          return <option key={cur._id} value={cur._id}>{cur.master_name}</option>
+          return <option key={cur._id} value={cur._id}>{cur.tableName}</option>
          })}
         </CustomSelect>
 
@@ -43,18 +42,18 @@ const ModifyTableCall =({open,onClose,data})=>{
   )
 }
 
-const Page = ({access_token,user}) => {
-    const [tableList,setTableList] = useState([])
+const Page = ({access_token,user,tables}) => {
+    const [tableList,setTableList] = useState(tables)
     const [checkedNewData, setCheckedNewData] = useState([]);
     const [allClick, setAllClick] = useState(false);
     const [isOpen,setIsOpen] = useState(false)
     const router = useRouter()
     const Header = [
-      {label:"Master Table Id",name:"master_table"},
-      {label:"Master Table Name",name:"master_name"},
-      {label:"Application to",name:"aplicable"},
+      {label:"Master Table Id",name:"tableCodeId"},
+      {label:"Master Table Name",name:"tableName"},
+      {label:"Application to",name:"applicableTo"},
       {label:"Created on",name:"createdAt"},
-      {label:"Created by",name:"user"},
+      {label:"Created by",name:"createdBy"},
     ]
     const HeaderBody =[
       {_id:"1234",master_table:"Table 01", master_name:"IT Act",aplicable:"all",createdAt:'1/2/2023',user:'john'},
@@ -88,6 +87,7 @@ const Page = ({access_token,user}) => {
         setCheckedNewData([...checkedNewData, data]);
       }
     };
+    console.log(tableList,'list')
   return (
     <>
         <MainLayout User={user} >
@@ -103,9 +103,9 @@ const Page = ({access_token,user}) => {
             <Button onClick={()=> setIsOpen(true)}>MODIFY MASTER TABLE</Button>
           </div>
          </div>
-          {HeaderBody.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
+          {tableList.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
           <SampleTableNew
-                  response={HeaderBody}
+                  response={tableList}
                   headerData={[{ name: "check", label: "" }, ...Header]}
                   checkedData={checkedNewData}
                   responseData={(e) => onNewCheck(e)}
@@ -121,7 +121,7 @@ const Page = ({access_token,user}) => {
                  onPageChange={(e)=> console.log(e)}
                 />
           </div>}
-            <ModifyTableCall open={isOpen} onClose={()=> setIsOpen(!isOpen)} data={HeaderBody}/>
+            <ModifyTableCall open={isOpen} onClose={()=> setIsOpen(!isOpen)} data={tableList}/>
          </div>
         </MainLayout>
     </>
@@ -131,29 +131,30 @@ const Page = ({access_token,user}) => {
 export const getServerSideProps = async (appCtx) => {
     let access_token =
     "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-    const auth =await authApi.WhoAmI(appCtx)
-    // console.log(auth,'ddd')
-    if (!auth) {
-      return {
-        redirect: {
-          destination: '/auth/login',
-          permanent: false,
-        },
-      };
-    } 
-  
-    let roles 
+   
+    let table 
+    let auth
     try{
-    //   const {data} = await userRolesApi.getRoles(access_token)
-    //   roles  =  data
+       auth =await authApi.WhoAmI(appCtx)
+      if (!auth) {
+        return {
+          redirect: {
+            destination: '/auth/login',
+            permanent: false,
+          },
+        };
+      } 
+      const {data} = await masterTableApi.allTable(access_token)
+      table  =  data
+      // console.log(data)
     }catch(err){
       console.log(err,'err')
     }
     return {
       props:{
-         user:auth,
+         user:auth || {},
          access_token,
-         roles:roles||[]
+         tables:table||[]
       }
     }
   

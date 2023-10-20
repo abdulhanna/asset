@@ -974,7 +974,7 @@ export const Table4 = ({
 
       <tbody className={classes.tbody}>
         {data.map((dataRow, index) => {
-          let codeLen = dataRow['code'].toString().length
+          let codeLen = dataRow['code']?.toString().length
            {/* console.log(codeLen,'row',index) */}
           return (
             <Link href={`${href}${href !== '#' ? dataRow.href : ''}`} key={index}>
@@ -988,7 +988,7 @@ export const Table4 = ({
                       onClick={() => {
                         onClick && onClick();
 
-                        responseData && responseData(dataRow);
+                        responseData && responseData(dataRow,index);
                       }}
                     >
                       {typeof dataRow[item.name] === 'function'

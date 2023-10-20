@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect,useRef } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import Button from '@/components/atoms/button'
@@ -7,32 +7,72 @@ import { LeftArrowIcon } from '@/components/atoms/icons'
 import { useRouter } from 'next/router'
 import { MasterTableComponent } from '@/components/organism/tablecomp'
 import DialogPage from '@/components/molecules/dialog'
+import NodataPage from '@/components/molecules/nodataPage'
+import masterTableApi from 'helpers/use-api/master-table/table'
+import { ToastContainer, toast } from "react-toastify";
 
-const ModifyComponent = ({open,onClose,row})=>{
+
+const ModifyComponent = ({open,onClose,row,updateData})=>{
    const [tableRow,setTableRow] = useState(row)
   //  console.log(tableRow,'table')
+  let arr = []
+  if(row){
+    for (const [key, value] of Object.entries(tableRow)) {
+      let a = {}
+      if(key !== '_id'){
+         a['label']  = key
+         a['value'] = value
+          // console.log(`${key}: ${value}`) 
+         arr.push(a)
+      }
+  }
+  }
+
+   const handleChange = (e)=>{
+    setTableRow({...tableRow,[e.target.name]: e.target.value })
+   }
+
+   const handleSubmit = ()=>{
+       
+              updateData(tableRow)
+              onClose()
+   }
+
+
+
   return (
     <DialogPage width='min-w-[400px]' open={open} close={onClose}>
         <div className='px-8 space-y-4'>
+        {/* {JSON.stringify(row)} */}
             <div className='text-center'><Text1 color='text-primary' size='2xl'>Modify</Text1></div>
             <div>
-              <TextField label='Code No' value={tableRow?.code}/>
+                {arr.map((cur,index)=>{
+                  return(<TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  key={index}/>)
+                })}
+              {/* <TextField label='Code No' value={tableRow?.code}/>
               <TextField label='Block of Asset (Description)' value={tableRow.description}/>
               <TextField label='Rate(SLM)' value={tableRow?.Rate1}/>
-              <TextField label='Rate(WDV)' value={tableRow?.Rate2}/>
+              <TextField label='Rate(WDV)' value={tableRow?.Rate2}/> */}
             </div>
             <div className='text-center'>
-            <Button variant='contained'> SAVE CHANGES</Button>
+            <Button variant='contained' onClick={handleSubmit}> SAVE CHANGES</Button>
             </div>
         </div>
     </DialogPage>
   )
 }
 
-const SingleTable = ({access_token,user}) => {
+const SingleTable = ({access_token,user,table}) => {
   const [isOpen,setIsOpen] = useState(false)
+  const [masterTable,setMasterTable] = useState(table)
+  const [tableHeader,setTableHeader] = useState([])
+  const [selectedId,setSelectedId] = useState()
   const [row,setRow] = useState()
     const router  = useRouter()
+    const isMounted = useRef(false);
+    const {id} = router.query
+    const notify = (msg)=> toast.success(msg)
+    const Error = (msg)=> toast.error(msg)
     const headerMaster = [
         {label:"Code NO" ,name:"code"},
         {label:"BLock Description", name :"description"},
@@ -45,7 +85,48 @@ const SingleTable = ({access_token,user}) => {
       {_id:'12140',code:'01B',description:"building material",Rate1:'8%',Rate2:'9%'}
     ]
 
-    console.log(row,'row')
+    useEffect(()=>{
+      if (isMounted.current) {
+        let arr = []
+        for (const [key, value] of Object.entries(table?.masterTableHeader)) {      
+        let a ={}
+          a['label'] = value
+          a['name'] = key
+          arr.push(a)
+      //   console.log(`${key}: ${value}`);
+      setTableHeader([...arr])
+      }
+      } else {
+        isMounted.current = true;
+      }
+  
+     
+     
+    },[])
+
+    // console.log(table,'row')
+
+    const updateHandle = (e)=>{
+        //  console.log(e)
+         const a = [...masterTable.masterTableData]
+         a[selectedId] = e
+         setMasterTable({...masterTable,masterTableData:a})
+        //  console.log(a,'sele')
+         
+    }
+
+  const handleSubmit = async()=>{
+      try{
+        const res = await masterTableApi.modifyTable(access_token,id,masterTable.masterTableData)
+        if(res.status == '200'){
+            notify('table modified')
+        }
+        // console.log(res,'res')
+      }catch(err){
+        console.log(err,'err')
+        Error(err?.response?.data?.error)
+      }
+  }
   return (
    <MainLayout User={user}>
      <div>
@@ -61,17 +142,22 @@ const SingleTable = ({access_token,user}) => {
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                </div>
                <div className='flex gap-4'>
-                 <Button variant='contained' onClick={()=> alert('delete table')}>SAVE CHANGES</Button>
+                 <Button variant='contained' onClick={handleSubmit}>SAVE CHANGES</Button>
                  {/* <Button  variant="contained" onClick={()=>console.log('dd')}>NEXT</Button> */}
                </div>
         </div>
 
         {/* TABLE SECTION */}
         <div>
-           <MasterTableComponent
-                   headers={headerMaster}
-              responseData={(e) => setRow(e)}
-              body={master.map((item) => {
+         {masterTable?.masterTableData.length === 0 ? <NodataPage/> : <div>
+         <MasterTableComponent
+                   headers={tableHeader}
+              responseData={(e,id) => {
+                setRow(e)
+                 setSelectedId(id)
+                // console.log(e,id)
+              }}
+              body={masterTable?.masterTableData.map((item) => {
               return {
                 ...item,
                 // href: `id=${item.id}`,
@@ -79,8 +165,10 @@ const SingleTable = ({access_token,user}) => {
             })}
             onClick={()=> setIsOpen(true)}
            />
+         </div>}
         </div>
-       { isOpen && <ModifyComponent open={isOpen} onClose={()=> setIsOpen(!isOpen)} row={row}/>}
+        <ToastContainer/>
+       { isOpen && <ModifyComponent open={isOpen} onClose={()=> setIsOpen(!isOpen)} row={row} updateData={updateHandle}/>}
      </div>
    </MainLayout>
   )
@@ -91,6 +179,7 @@ export const getServerSideProps = async (appCtx) => {
     "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
     const auth =await authApi.WhoAmI(appCtx)
     // console.log(auth,'ddd')
+    const {id} = appCtx.query
     if (!auth) {
       return {
         redirect: {
@@ -100,10 +189,11 @@ export const getServerSideProps = async (appCtx) => {
       };
     } 
   
-    let roles 
+    let table 
     try{
-    //   const {data} = await userRolesApi.getRoles(access_token)
-    //   roles  =  data
+      const {data} = await masterTableApi.getTable(access_token,id)
+   
+       table = data
     }catch(err){
       console.log(err,'err')
     }
@@ -111,7 +201,7 @@ export const getServerSideProps = async (appCtx) => {
       props:{
          user:auth,
          access_token,
-         roles:roles||[]
+         table:table||[]
       }
     }
   

@@ -2703,10 +2703,10 @@ export const ToggleButton = ({ classname, onClick }) => {
   );
 };
 
-export const TrashOutline = ({ className }) => {
+export const TrashOutline = ({ className, onClick }) => {
   return (
     <>
-      <span className={className}>
+      <span className={className} onClick={onClick}>
         <svg
           width="24"
           height="24"

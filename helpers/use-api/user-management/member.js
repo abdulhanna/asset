@@ -34,6 +34,10 @@ const memberAccessApi = {}
    headers: { Cookie: access_token }
  })
 
+ memberAccessApi.removeMember = (access_token,id) => hostedAxios.delete(`/user-management/members/delete/${id}`,{
+   headers: { Cookie: access_token }
+ })
+
  
 
 export default memberAccessApi

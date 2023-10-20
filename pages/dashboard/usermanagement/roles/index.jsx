@@ -84,7 +84,7 @@ const RolesPerimission = ({user,roles}) => {
                  <Button href={'/dashboard/usermanagement/roles/add-roles'} variant='contained' >CREATE ROLE</Button>
                </div>
                <div>
-                {!data.length ? (<NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/>):(
+                {!roleList.length ? (<NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/>):(
                     <>
                     <SampleTableNew
                           response={roleList}
