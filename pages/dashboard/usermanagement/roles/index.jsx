@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback,useEffect } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import { Text1 } from '@/components/atoms/field'
 import Button from '@/components/atoms/button'
 import NodataPage from '@/components/molecules/nodataPage'
 import { SampleTableNew } from '@/components/organism/tablecomp'
-import { useEffect } from 'react'
-import { doCheckAuth } from '@/utils/doCheckAuth'
 import userRolesApi from 'helpers/use-api/user-management/roles'
 import authApi from 'helpers/use-api/auth'
+import Debounce from 'helpers/debounce'
 
 const RolesPerimission = ({user,roles}) => {
   const [roleList,setRoleList] = useState(roles?.roles)
+  const [list,setList] = useState(roles)
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
+  const [page,setPage] = useState(roles?.currentPage)
+  const [pageSize,setPageSize] = useState(5)
+  const [sort,setSort] = useState({"created":-1})
   const header = [
     {
       label:"Role Name",
@@ -71,7 +74,25 @@ const RolesPerimission = ({user,roles}) => {
     }
   }
   
-  // console.log(roles,'list')
+  const callApi = useCallback(async(e)=>{
+    console.log('call Api',e.page)
+    const res = await memberAccessApi.getAllMember(access_token,e.page,pageSize,JSON.stringify(sort))
+    setList(res.data)
+    setRoleList(res?.data?.roles)
+    setPage(res.data.currentPage)
+    console.log(res.data,'res')
+  },[])
+
+  const handleSearchChange=Debounce(callApi
+    ,2000)
+
+  const handlePage  = async(e)=>{
+    //  console.log(e,'ee')
+    let value = e
+   handleSearchChange({page:value})
+    setPage(value)
+ }
+  console.log(roles,'list')
   return (
     <>
         <MainLayout User={user}>
@@ -96,11 +117,11 @@ const RolesPerimission = ({user,roles}) => {
                             onClick={(e)=> console.log(e,'onclick') }
                             checkAllStatus={allClick} 
                             totalDoc={roles.totalDocuments}
-                            currentPage={roles?.currentPage}
+                            currentPage={page}
                             start={roles.startSerialNumber}
                             end={roles.endSerialNumber}
                             pageSize={roles?.totalPages}
-                            onPageChange={(e)=> console.log(e)}
+                            onPageChange={handlePage}
            
        />
                     </>

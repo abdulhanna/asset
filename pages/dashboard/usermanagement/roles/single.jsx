@@ -187,10 +187,7 @@ const Single = ({user,roleSingle,access_token}) => {
 
         const handleSubmit = async()=>{
               try{
-                 const res = await userRolesApi.update(access_token,id,{
-                  role:role,
-                  assignedUser:assignedUser
-                 })
+                 const res = await userRolesApi.update(access_token,id,role)
 
                  if(res.status == "200"){
                   notify('Role updated')

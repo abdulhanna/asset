@@ -117,7 +117,7 @@ const SingleTable = ({access_token,user,table}) => {
 
   const handleSubmit = async()=>{
       try{
-        const res = await masterTableApi.modifyTable(access_token,id,masterTable.masterTableData)
+        const res = await masterTableApi.modifyTable(access_token,id,{masterTableData:masterTable.masterTableData})
         if(res.status == '200'){
             notify('table modified')
         }

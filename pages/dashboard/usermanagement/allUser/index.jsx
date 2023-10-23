@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useCallback } from 'react'
 import MainLayout from '../../../../proj-components/MainLayout'
 import NodataPage from '@/components/molecules/nodataPage'
 import { Text1 } from '@/components/atoms/field'
@@ -8,15 +8,16 @@ import { SampleTableNew } from '@/components/organism/tablecomp'
 import authApi from 'helpers/use-api/auth'
 import memberAccessApi from 'helpers/use-api/user-management/member'
 import { DateTime } from 'luxon'
-
+import Debounce from 'helpers/debounce'
 
 const AllUser = ({user,access_token,memberList}) => {
-  const [members,setMembers] = useState(memberList?.roles)
+  const [list,setList] = useState(memberList)
+  const [members,setMembers] = useState(memberList?.members)
   const [data,setData] = useState([])
   const [checkedNewData, setCheckedNewData] = useState([])
   const [page,setPage] = useState(memberList?.currentPage)
-  const [pageSize,setPageSize] = useState(4)
-  const [sort,setSort] = useState({"created":1})
+  const [pageSize,setPageSize] = useState(5)
+  const [sort,setSort] = useState({"createdAt":-1})
   const [allClick, setAllClick] = useState(false)
   const router = useRouter()
   const headerData = [
@@ -62,11 +63,48 @@ useEffect(()=>{
       setCheckedNewData([])
     }
    },[allClick])
-   const handlePage  = async(e)=>{
-     
-    // memberAccessApi.getAllMember(access_token,page,pageSize,JSON.stringify(sort))
 
+
+   function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this, args = arguments;
+        var later = function() {
+            // console.log(args,'dd')
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        // console.log(timeout)
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        // console.log(callNow)
+        if (callNow) func.apply(context, args);
+    };
+};
+ 
+const callApi = useCallback(async(e)=>{
+  console.log('call Api',e.page)
+  const res = await memberAccessApi.getAllMember(access_token,e.page,pageSize,JSON.stringify(sort))
+  setList(res.data)
+  setMembers(res?.data?.members)
+  setPage(res.data.currentPage)
+  console.log(res.data,'res')
+},[])
+
+const handleSearchChange=Debounce(callApi
+,2000)
+   
+
+   const handlePage  = async(e)=>{
+      //  console.log(e,'ee')
+      let value = e
+     handleSearchChange({page:value})
+      setPage(value)
    }
+   useEffect(()=>{
+    console.log(page,pageSize,'useEffect')
+   },[page])
 //  console.log(memberList,'list',page,pageSize,sort)
   return (
     <>
@@ -84,10 +122,8 @@ useEffect(()=>{
                response={members?.map((row)=>{
                 return {...row,  userCodeId:row?.userProfile?.userCodeId,
                   name:row.userProfile?.name,
-                createdAt: DateTime.fromISO(row.createdAt).toLocaleString(
-                // DateTime.DATE_MED
-                DateTime.DATETIME_SHORT
-              ),
+                createdAt:row.createdAt,
+                //  DateTime.fromISO(row.createdAt).toLocaleString(DateTime.DATETIME_SHORT ),
               roleName:row?.teamRoleId?.roleName}
                })}
                   headerData={[{ name: 'check', label:'' },...headerData]}
@@ -97,11 +133,11 @@ useEffect(()=>{
                   onClick={(e)=> console.log(e,'onclick') }
                   href={`/dashboard/usermanagement/allUser/single?`}
                   checkAllStatus={allClick}
-                  totalDoc={memberList?.totalDocuments}
-                  currentPage={memberList?.currentPage}
-                  start={memberList.startSerialNumber}
-                  end={memberList.endSerialNumber}
-                  pageSize={memberList?.totalPages}
+                  totalDoc={list?.totalDocuments}
+                  currentPage={page}
+                  start={list.startSerialNumber}
+                  end={list.endSerialNumber}
+                  pageSize={list?.totalPages}
                   onPageChange={handlePage}
             />
           </div>}
@@ -125,7 +161,7 @@ export const getServerSideProps = async (appCtx) => {
   //   };
   // } 
   let page = 1
-  let pageSize = 10
+  let pageSize = 5
   let sort = {"createdAt":-1};
   let memberList 
   let auth
