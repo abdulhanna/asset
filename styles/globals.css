@@ -56,3 +56,48 @@ input[type="number"] {
   /* scrollbar-width: none; */
   /* Firefox */
 }
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  color: #7CC270 !important;
+
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+  color: #7CC270 !important;
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+  font-size: 2.5rem;
+}
+
+.css-z7uhs0-MuiStepConnector-line {
+  border-top-width: 2px;
+}
+
+.rti--input {
+  width: 100%;
+}
+
+.rti--container {
+  height: 48px !important;
+}
+
+.accordion-item {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.accordion-title {
+  cursor: pointer;
+  background-color: #f4f4f4;
+  padding: 10px;
+}
+
+.accordion-content {
+  padding: 10px;
+  display: none;
+}
+
+.accordion-item.active .accordion-content {
+  display: block;
+}

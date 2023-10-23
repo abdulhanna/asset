@@ -5,23 +5,43 @@ import orgApi from "helpers/use-api/organisations";
 import Organisations from "proj-components/Dashboard/organisation/organisations";
 import { Text1 } from "@/components/atoms/field";
 import Button from "@/components/atoms/button";
+import { Nodata } from "@/components/atoms/icons";
 
 const Page = ({ user, organisationList, access_token }) => {
   // console.log(user,'user',organisationList)
 
+
   return (
     <>
-      <MainLayout User={user}>
+      <MainLayout User={user} isScroll={true}>
         <div className="flex justify-between   my-0">
           <Text1 size="2xl">All Organizations</Text1>
           <Button href={"/dashboard/root/organisation/add"} variant="contained">
             ADD ORGANIZATION
           </Button>
         </div>
-        <Organisations
-          organisationList={organisationList}
-          access_token={access_token}
-        />
+
+        {
+          organisationList?.organizations?.length == 0 ? <>
+            <div className=' rounded-md flex items-center justify-center inset-y-2/4 inset-x-2/4  mt-[320px] overflow-hidden'>
+              <div className='text-center'>
+                <Nodata className={'flex justify-center'} />
+                <div className='mt-3'>
+                  <span className='text-gray-600'> No Added Sub-group</span>
+                </div>
+              </div>
+            </div>
+          </> : <>
+
+            <Organisations
+              organisationList={organisationList}
+              access_token={access_token}
+            />
+          </>
+        }
+
+
+
       </MainLayout>
     </>
   );
