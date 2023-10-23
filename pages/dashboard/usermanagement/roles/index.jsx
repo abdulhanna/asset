@@ -57,7 +57,7 @@ const RolesPerimission = ({user,roles}) => {
    },[allClick])
 
   const onNewCheck=(data)=>{
-    console.log(data,'data')
+    // console.log(data,'data')
     const exist = checkedNewData.find(
         (element) => element._id === data._id
     );
@@ -71,7 +71,7 @@ const RolesPerimission = ({user,roles}) => {
     }
   }
   
-  console.log(roles,'list')
+  // console.log(roles,'list')
   return (
     <>
         <MainLayout User={user}>

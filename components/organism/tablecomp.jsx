@@ -122,7 +122,7 @@ export const SampleTableNew = ({
         clickAll={clickAll}
         checkAllStatus={checkAllStatus}
         href={href}
-        body={response.map((row) => ({
+        body={response?.map((row) => ({
           ...row,
 
           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
@@ -503,24 +503,25 @@ export const MasterTableLogs = ({
   return (
     <TableComp2
       headers={headerData}
-      onClick={onClick}
-      responseData={responseData}
-      clickAll={clickAll}
-      checkAllStatus={checkAllStatus}
-      href={href}
-      body={response.map((row) => ({
-        ...row,
-        // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
-        action: (
-          <PublishStatus data={row} />
-        ),
-      }))}
+        onClick={onClick}
+        responseData={responseData}
+        clickAll={clickAll}
+        checkAllStatus={checkAllStatus}
+        href={href}
+        body={response.map((row)=>({
+          ...row,
+          href:`id=${row._id}`,
+          // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+          action: (
+                <PublishStatus data={row}/>
+              ),
+        }))}
     />
   )
 }
 
-const PublishStatus = ({ data }) => {
-  console.log(data, 'datarow')
+const PublishStatus = ({data})=>{
+  // console.log(data,'datarow')
   return (
     <div className=''>
       {data.status ? <Text1 color='text-green-400'>PUBLISHED</Text1> : <Button onClick={() => alert(data._id)}>PUBLISH</Button>}

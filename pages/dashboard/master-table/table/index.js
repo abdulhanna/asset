@@ -16,9 +16,10 @@ const ModifyTableCall =({open,onClose,data})=>{
 
      const handleSubmit =()=>{
        const a = '/dashboard/master-table/table/modify?'
-       if(selectedTable !== null || selectedTable !== ""){
-      alert(`${a}${selectedTable}`)
-       }
+       if(selectedTable !== null && selectedTable !== ''){
+        window.location.href=a+`id=${selectedTable}`;
+        // alert(`${a}${selectedTable}`)
+        }
      }
 
   return (
@@ -66,6 +67,7 @@ const Page = ({access_token,user}) => {
     const clickAll = () => {
       setAllClick(!allClick);
     };
+    
     useEffect(() => {
       if (allClick === true) {
         setCheckedNewData(permissionList);

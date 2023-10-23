@@ -11,12 +11,14 @@ import { AssignedUserTable } from '@/components/organism/tablecomp'
 import authApi from 'helpers/use-api/auth'
 import userRolesApi from 'helpers/use-api/user-management/roles'
 import { ToastContainer, toast } from "react-toastify";
+import { DeleteConfirm } from '@/components/molecules/dialog'
 
 
 const Single = ({user,roleSingle,access_token}) => {
-  const [isEdit, setIsEdit] = useState(false)
-  const [data,setData] = useState([])
-    const router=useRouter()
+   const [isEdit, setIsEdit] = useState(false)
+    const [data,setData] = useState([])
+    const [isOpen,setIsOpen] = useState(false)
+     const router=useRouter()
     const [role,setRole] = useState(roleSingle.role)
     const [assignedUser,setAssignedUser] = useState(roleSingle.assignedUsers)
     const {id} = router.query
@@ -185,13 +187,13 @@ const Single = ({user,roleSingle,access_token}) => {
           
             if(data){
 
-              console.log(data,'data')
+              // console.log(data,'data')
             }
         },[data])
 
         // console.log(roleSingle,'role')
         useEffect(()=>{
-            console.log(assignedUser,'role');
+            // console.log(assignedUser,'role');
         },[role])
 
         const handleSubmit = async()=>{
@@ -213,7 +215,9 @@ const Single = ({user,roleSingle,access_token}) => {
               } 
         }
 
-
+  const deactiveHandle = ()=>{
+     alert('deactive')
+  }
   return (
     <>
         <MainLayout isScroll={true} User={user}>
@@ -225,7 +229,7 @@ const Single = ({user,roleSingle,access_token}) => {
                 </div>
                <div className='space-x-4'> 
                {isEdit ? <Button variant='contained' onClick={handleSubmit}>SAVE</Button> :<Button variant='contained' onClick={()=> setIsEdit(!isEdit)} isDisabled={false}>EDIT</Button>}
-                <Button variant='danger'>DEACTIVATE</Button>
+                <Button variant='danger' onClick={()=>setIsOpen(true)}>DEACTIVATE</Button>
                </div>
             </div>
             <div className='mt-8 space-y-8'>
@@ -298,6 +302,11 @@ const Single = ({user,roleSingle,access_token}) => {
                     />}
                  </div>
             </div>
+            <DeleteConfirm check={isOpen}
+             close={()=> setIsOpen(!isOpen)} 
+            callDelete={deactiveHandle} 
+            heading={'Are you sure want to deactivate Role'}
+             para={'Are you want to deactivate the role from the list'}/>
         </div>
         </MainLayout>
     </>

@@ -10,6 +10,7 @@ import authApi from 'helpers/use-api/auth'
 import memberAccessApi from 'helpers/use-api/user-management/member'
 import ButtonAction from '@/components/molecules/button'
 import { ToastContainer, toast } from "react-toastify";
+import { DeleteConfirm } from '@/components/molecules/dialog';
 
 const AddCompanyLogo = ({ open, close,handleFile }) => {
   const fileTypes = ["JPEG", "PNG", "JPG"];
@@ -79,6 +80,7 @@ const SingleUser = ({user,access_token,member,roles}) => {
   const [logoHigh, setLogoHigh] = useState(false)
   const [data,setData] = useState(member?.member)
   const [profilePic,setProfilePic] = useState(null)
+  const [isOpen,setIsOpen] = useState(false)
   const router = useRouter()
   const {id} = router.query
   const notify = (msg)=> toast.success(msg)
@@ -138,8 +140,21 @@ const SingleUser = ({user,access_token,member,roles}) => {
     }
   } 
   useEffect(()=>{
-      console.log(data,'data',id)
+      // console.log(data,'data',id)
   },[data])
+
+  const deactiveHandle = async()=>{
+    try{
+      const res =await memberAccessApi.deactivate(access_token,id)
+      if(res.status == '200'){
+        router.push('/dashboard/usermanagement/allUser')
+      }
+      console.log(res)
+    }catch(err){
+      console.log(err,'err')
+    }
+      // alert(id)
+  }
   // console.log(data,'mem')
   return (
     <>
@@ -152,7 +167,7 @@ const SingleUser = ({user,access_token,member,roles}) => {
            </div>
            <div className='space-x-2'>
            {showSave ?  <Button variant='contained' onClick={handleshow}>EDIT</Button> : <Button variant='contained' onClick={handleSubmit} >SAVE</Button>}  
-                <Button variant='danger'>DEACTIVATE</Button>
+                <Button variant='danger' onClick={()=>setIsOpen(true)}>DEACTIVATE</Button>
            </div>
            </div>
            <div className="flex p-5 py-5 flex-col gap-12">
@@ -184,7 +199,8 @@ const SingleUser = ({user,access_token,member,roles}) => {
                  />
                </div>
                <div className="w-3/12">
-                 <CustomSelect label={"User Role"} disabled={showSave} name={'teamRoleId'}   value={data.teamRoleId._id} onChange={handleChange}>
+                 <CustomSelect label={"User Role"} disabled={showSave} name={'teamRoleId'}   value={data.teamRoleId?._id} onChange={handleChange}>
+                 <option value={''}>select</option>
                  {roles.map((option,index)=>{
                 
                   return <option value={option._id} key={index}>{option.roleName}</option>
@@ -246,6 +262,7 @@ const SingleUser = ({user,access_token,member,roles}) => {
        
       </div>
       <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} handleFile={handleFile} ></AddCompanyLogo>
+      <DeleteConfirm check={isOpen} close={()=>setIsOpen(!isOpen)} callDelete={deactiveHandle} heading={'Are you sure want to Deactivated'} para={'Are you sure want to detaivate the member from list'}/>
       </MainLayout>
     </>
   )
