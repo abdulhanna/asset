@@ -290,9 +290,11 @@ const AddField = ({ user, access_token, close, id }) => {
 
 export const EditField = ({ user, access_token, close, id }) => {
 
+  console.log(id, "this is edit")
 
-  const initialValue = {
-    name: "",
+
+  const [fields, setFields] = useState([{
+    name: id.name,
     dataType: "",
     fieldType: "",
     fieldLength: "",
@@ -301,9 +303,9 @@ export const EditField = ({ user, access_token, close, id }) => {
     fieldInfo: "",
     isMandatory: true,
 
-  };
+  }]);
 
-  const [fields, setFields] = useState([initialValue]);
+  console.log(id.name, "jjj")
   const notify = (msg) => toast.success(msg)
   const error = (msg) => toast.danger(msg)
 
@@ -372,6 +374,7 @@ export const EditField = ({ user, access_token, close, id }) => {
                   placeholder="Name Of The Asset"
                   className=" h-[48px] w-full border-2 p-1 rounded"
                   name="name"
+                  value={fields.name}
                   onChange={(e) => handleChange(e, index)}
                 />
               </div>

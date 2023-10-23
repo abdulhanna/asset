@@ -107,6 +107,8 @@ const EditDataComp = ({ open, close, data }) => {
   //     validName: "",
   //   };
 
+  
+
   const [group, setGroup] = useState();
 
   useEffect(() => {
