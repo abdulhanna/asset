@@ -27,13 +27,19 @@ const Paging = ({currentPage,onPageChange,pageSize,totalDoc,end,start}) => {
     </div>
     <div className='flex items-center gap-2'>
     <PaginationLeft className={'cursor-pointer'} onClick={()=>{
+    
         if (current === 1 ) return 
+        setCurent(current - 1)
         onPageChange(current - 1)
     }}/>
     <Text1 className='bg-primary text-white py-1 px-2 rounded-sm'>{currentPage}</Text1>
    
     <Text1 size='lg'>  <span className='text-slate-400 mx-2'>of</span>{pageSize}</Text1>
-    <PaginationRight className={'cursor-pointer'} onClick={()=> onPageChange((Number(current)+1))}/>
+    <PaginationRight className={'cursor-pointer'} onClick={()=> {
+      if(pageSize === current) return 
+      setCurent(current +1)
+      onPageChange((Number(current)+1))
+    }}/>
  </div>
  </div>
   )

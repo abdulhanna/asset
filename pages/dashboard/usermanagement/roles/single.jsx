@@ -12,12 +12,15 @@ import authApi from 'helpers/use-api/auth'
 import userRolesApi from 'helpers/use-api/user-management/roles'
 import { ToastContainer, toast } from "react-toastify";
 import { DeleteConfirm } from '@/components/molecules/dialog'
+import memberAccessApi from 'helpers/use-api/user-management/member'
 
 
 const Single = ({user,roleSingle,access_token}) => {
    const [isEdit, setIsEdit] = useState(false)
     const [data,setData] = useState([])
     const [isOpen,setIsOpen] = useState(false)
+    const [isDelete,setIsDelete] = useState(false)
+    const [selected,setSelected] = useState()
      const router=useRouter()
     const [role,setRole] = useState(roleSingle.role)
     const [assignedUser,setAssignedUser] = useState(roleSingle.assignedUsers)
@@ -166,20 +169,6 @@ const Single = ({user,roleSingle,access_token}) => {
             ...role,
             permissions: data,
           });
-        // const data = [...role.Permissions]
-        // const key = Object.keys(e)[0]
-        // data[e.id] = {...data[e.id],[`${key}`]:e[key],removeAccess:false}
-        
-        //   if(data[e.id].read && data[e.id].readWrite && data[e.id].delete){
-        //     // console.log('allacess')
-        //     data[e.id] = {...data[e.id],allAccess:true}
-        //   }else{
-        //     data[e.id] = {...data[e.id],allAccess:false}
-        //   }
-          
-        //     setRole({
-        //       ...role,Permissions:data
-        //     })
         
         }
 
@@ -198,10 +187,7 @@ const Single = ({user,roleSingle,access_token}) => {
 
         const handleSubmit = async()=>{
               try{
-                 const res = await userRolesApi.update(access_token,id,{
-                  role:role,
-                  assignedUser:assignedUser
-                 })
+                 const res = await userRolesApi.update(access_token,id,role)
 
                  if(res.status == "200"){
                   notify('Role updated')
@@ -217,6 +203,19 @@ const Single = ({user,roleSingle,access_token}) => {
 
   const deactiveHandle = ()=>{
      alert('deactive')
+  }
+  const deleteHandle = async()=>{
+
+       try{
+          const res = await memberAccessApi.removeMember(access_token,selected)
+          if(res.status == '200'){
+            router.reload()
+          }
+          // console.log(res,'res')
+       }catch(err){
+        console.log(err,'err')
+       }
+    // alert(selected)
   }
   return (
     <>
@@ -299,9 +298,20 @@ const Single = ({user,roleSingle,access_token}) => {
                        headers={[...header,{name:'action',label:'action'}]} 
                        responseData={(e)=>setData([e])}
                        onClick={(e)=> console.log(data,'dd')}
+                       onDelete={(e)=> {
+                            setIsDelete(true)
+                            setSelected(e)
+                       }}
                     />}
                  </div>
             </div>
+            <DeleteConfirm
+              check={isDelete}
+              close={()=> setIsDelete(!isDelete)}
+              callDelete={deleteHandle} 
+             heading={'Are you sure want to delete Role'}
+             para={'Are you want to delete the role from the list'}/>
+      
             <DeleteConfirm check={isOpen}
              close={()=> setIsOpen(!isOpen)} 
             callDelete={deactiveHandle} 

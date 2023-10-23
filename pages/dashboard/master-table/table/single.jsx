@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import Button from '@/components/atoms/button'
@@ -7,16 +7,25 @@ import { LeftArrowIcon } from '@/components/atoms/icons'
 import { useRouter } from 'next/router'
 import { MasterTableComponent } from '@/components/organism/tablecomp'
 import { DeleteConfirm } from '@/components/molecules/dialog'
+import masterTableApi from 'helpers/use-api/master-table/table'
+import NodataPage from '@/components/molecules/nodataPage'
+// import masterTableApi from 'helpers/use-api/master-table/table'
+import { ToastContainer, toast } from "react-toastify";
 
 
-const SingleTable = ({access_token,user}) => {
+const SingleTable = ({access_token,user,table}) => {
     const router  = useRouter()
     const [isOpen,setIsOpen] = useState(false)
+    const[masteTable,setMasterTable] = useState(table.masterTableData)
+    const [tableHeader,setTableHeader] = useState([])
+    const {id} = router.query
+    const notify = (msg)=> toast.success(msg)
+    const Error = (msg)=> toast.error(msg)
     const headerMaster = [
-        {label:"Code NO" ,name:"code"},
-        {label:"BLock Description", name :"description"},
-        {label: "Rate(SLM)",name:'Rate1'},
-        {label:"Rate(WDB)", name:"Rate2"}
+        {label:"Code NO" ,name:"Code No"},
+        {label:"BLock Description", name :"Description"},
+        {label: "Rate(WDV)",name:'Rate(%) (WDV)'},
+        {label:"Rate(SLM)", name:"Rate1(%) (SLM)"}
        ] 
     const master = [
       {_id:'12143',code:'01',description:"building",Rate1:'10%',Rate2:'11%'},
@@ -24,9 +33,41 @@ const SingleTable = ({access_token,user}) => {
       {_id:'12140',code:'01B',description:"building material",Rate1:'8%',Rate2:'9%'}
     ]
 
-    const callDelete = ()=>{
-      alert('delete')
+    useEffect(()=>{
+        // console.log(table.masterTableHeader,'dd')
+        let arr = []
+        for (const [key, value] of Object.entries(table?.masterTableHeader)) {      
+        let a ={}
+          a['label'] = value
+          a['name'] = key
+          arr.push(a)
+      //   console.log(`${key}: ${value}`);
+      }
+
+      setTableHeader([...tableHeader,...arr])
+      // console.log(arr,'err')
+    },[])
+
+    const callDelete = async()=>{
+      // alert('delete')
+
+      try{
+         const res = await masterTableApi.removeTableById(access_token,id)
+         console.log(res,'res')
+         if(res.status == '200'){
+          notify('table deleted')
+         }
+         setTimeout(()=>{
+                 router.push('/dashboard/master-table/table')  
+         },2000)
+        
+      }catch(err){
+        Error(err?.response?.data?.error)
+        console.log(err,'err')
+      }
     }
+
+    console.log(tableHeader,id,'table')
   return (
    <MainLayout User={user}>
      <div>
@@ -49,16 +90,17 @@ const SingleTable = ({access_token,user}) => {
 
         {/* TABLE SECTION */}
         <div>
-           <MasterTableComponent
-                   headers={headerMaster}
+         {masteTable.length === 0 ? <div><NodataPage/></div> :
+         <MasterTableComponent
+                   headers={tableHeader}
              responseData={(e) => console.log(e, "e")}
-            body={master.map((item) => {
+            body={masteTable.map((item) => {
             return {
               ...item,
               // href: `id=${item.id}`,
             };
           })}
-           />
+           />}
         </div>
         <DeleteConfirm 
         check={isOpen}
@@ -76,7 +118,8 @@ export const getServerSideProps = async (appCtx) => {
     let access_token =
     "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
     const auth =await authApi.WhoAmI(appCtx)
-    // console.log(auth,'ddd')
+    // console.log(appCtx.query.id,'ddd')
+    let {id} = appCtx.query
     if (!auth) {
       return {
         redirect: {
@@ -86,10 +129,11 @@ export const getServerSideProps = async (appCtx) => {
       };
     } 
   
-    let roles 
+    let table 
     try{
-    //   const {data} = await userRolesApi.getRoles(access_token)
-    //   roles  =  data
+      const {data} = await masterTableApi.getTable(access_token,id)
+      // console.log(data,'data')
+      table  =  data
     }catch(err){
       console.log(err,'err')
     }
@@ -97,7 +141,7 @@ export const getServerSideProps = async (appCtx) => {
       props:{
          user:auth,
          access_token,
-         roles:roles||[]
+         table:table||[]
       }
     }
   

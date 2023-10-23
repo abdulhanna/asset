@@ -1,18 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
-import { LeftArrowIcon } from '@/components/atoms/icons'
+// import { LeftArrowIcon } from '@/components/atoms/icons'
 import { Text1 } from '@/components/atoms/field'
-import Button from '@/components/atoms/button'
+// import Button from '@/components/atoms/button'
 import { useRouter } from 'next/router'
 import { MasterTableLogs } from '@/components/organism/tablecomp'
+import masterTableApi from 'helpers/use-api/master-table/table'
+import NodataPage from '@/components/molecules/nodataPage'
 
-const LogTable = ({user}) => {
-    // const router= useRouter()
+const LogTable = ({user,access_token,tables}) => {
+  const [tablesList,setTablesList] = useState(tables)
+    const router= useRouter()
     const header = [
-      {label:"Table Id",name:'table_id'},
-      {label:'Table Name', name:"table_name"},
-      {label:'Updated by', name:"updated"},
+      {label:"Master Table Id",name:"tableCodeId"},
+      {label:"Master Table Name",name:"tableName"},
+      {label:'Updated by', name:"createdBy"},
       {label:'Update on', name:"createdAt"},
       {label:'Status/Action', name:"action"},
     ]
@@ -42,8 +45,9 @@ const LogTable = ({user}) => {
                         {/* <Button href={'/dashboard/master-table/table/upload'} variant="contained" onClick={handleSubmit}>NEXT</Button> */}
                 </div>
                 <div>
-                  <MasterTableLogs 
-                  response={headerBody}
+                {tablesList.length  === 0 ? <NodataPage/> :<div>
+                <MasterTableLogs 
+                  response={tablesList}
                   headerData={header}
                   href={'/dashboard/master-table/logs/single?'}
                   responseData={(e) => onNewCheck(e)}
@@ -51,6 +55,7 @@ const LogTable = ({user}) => {
               //  onDelete={(e)=> console.log(e,'delete')}
               //  onEdit={(e)=> console.log(e)}
                    />
+                </div>}
                 </div>
             </div>
         </MainLayout>
@@ -72,10 +77,10 @@ export const getServerSideProps = async (appCtx) => {
       };
     } 
   
-    let roles 
+    let tables
     try{
-    //   const {data} = await userRolesApi.getRoles(access_token)
-    //   roles  =  data
+      const {data} = await masterTableApi.allTable(access_token)
+      tables  =  data
     }catch(err){
       console.log(err,'err')
     }
@@ -83,7 +88,7 @@ export const getServerSideProps = async (appCtx) => {
       props:{
          user:auth,
          access_token,
-         roles:roles||[]
+         tables:tables||[]
       }
     }
   

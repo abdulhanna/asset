@@ -28,4 +28,8 @@ userRolesApi.update = (access_token,id,data)=> hostedAxios.put(`/user-management
   headers: { Cookie: access_token }
 })
 
+userRolesApi.removeRole = (access_token,id) => hostedAxios.delete(`/user-management/roles/${id}`,{
+  headers: { Cookie: access_token }
+})
+
 export default userRolesApi;

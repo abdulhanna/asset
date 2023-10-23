@@ -57,19 +57,19 @@ const Edit = ({ user, access_token, singlePermission }) => {
   };
 
   const deActivateRole = async () => {
-    // try {
-    //   const res = await userManageApi.deActivate(access_token, permission._id);
-    //   if (res.status == "200") {
-    //     notify("role deactivate successfully");
-    //   }
+    try {
+      const res = await userManageApi.deActivate(access_token, permission._id);
+      if (res.status == "200") {
+        notify("role deactivate successfully");
+      }
 
-    //   setTimeout(() => {
-    //     router.push("/dashboard/usermanagement/manage");
-    //   }, 2000);
-    // } catch (err) {
-    //   notify("error");
-    // }
-    // alert(permission._id);
+      setTimeout(() => {
+        router.push("/dashboard/usermanagement/manage");
+      }, 2000);
+    } catch (err) {
+      notify("error");
+    }
+    alert(permission._id);
   };
 
   return (
@@ -85,6 +85,9 @@ const Edit = ({ user, access_token, singlePermission }) => {
               <Text1 size="2xl">Permission</Text1>
             </div>
             <div className="flex gap-5">
+               <Button variant="danger" onClick={()=> setIsOpen(true)}>
+                DELETE
+              </Button>
               {isEdit ? (
                 <Button variant="contained" onClick={submitPermission}>
                   SAVE
@@ -94,9 +97,7 @@ const Edit = ({ user, access_token, singlePermission }) => {
                   EDIT
                 </Button>
               )}
-              <Button variant="danger" onClick={()=> setIsOpen(true)}>
-                DEACTIVATE
-              </Button>
+             
             </div>
           </div>
           <div className="flex gap-11">
