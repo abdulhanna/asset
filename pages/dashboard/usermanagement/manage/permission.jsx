@@ -19,6 +19,7 @@ const Permission = ({ user, access_token }) => {
     actions: false,
     allAccess: false,
     removeAccess: false,
+    isDeactivated:false
   });
   //  console.log(access_token,'token')
   const handleToggle = useCallback(
@@ -54,7 +55,8 @@ const Permission = ({ user, access_token }) => {
   return (
     <>
       <MainLayout User={user}>
-        <div>
+        <div className="space-y-4">
+        {/* HEADER SECTION */}
           <div className="flex justify-between items-center">
             <div
               className="flex items-center space-x-2 cursor-pointer"
@@ -69,9 +71,13 @@ const Permission = ({ user, access_token }) => {
               </Button>
             </div>
           </div>
-          <div className="my-10">
+
+          <div className="space-y-4">
+
+          {/* MODULE NAME */}
+          <div className="space-y-6">
             <Text1>Module Name</Text1>
-            <div className="flex items-center gap-4 mt-6">
+            <div className="flex items-center gap-4">
               <TextField
                 className="w-1/4"
                 label="Module Name"
@@ -96,6 +102,9 @@ const Permission = ({ user, access_token }) => {
               </CustomSelect>
             </div>
           </div>
+
+
+          {/* PERMISSION SECTION */}
           <div className="space-y-6">
             <Text1>Permissions </Text1>
             <div className="flex gap-10">
@@ -119,6 +128,32 @@ const Permission = ({ user, access_token }) => {
               />
             </div>
           </div>
+
+          {/* STATUS */}
+          <div className="space-y-6 ">
+            <Text1>Status</Text1>
+            <CustomSelect
+                className="w-1/4"
+                label="Status"
+                name={'isDeactivated'}
+                value={permission.isDeactivated}
+                onChange={(e) =>
+                // console.log(e.target.value,'ss')
+                  setPermission({
+                    ...permission,
+                    [e.target.name]:e.target.value
+                    // dashboardType: e.target.value,
+                  })
+                }
+              >
+                <option value={""}>Choose one</option>
+                <option value={false}>Active</option>
+                <option value={true}>Inactive</option>
+              </CustomSelect>
+          </div>
+          </div>
+
+
           {/* <div className='my-10 flex space-x-4'>
                 <input type='checkbox' checked={permission.allAccess} value={permission.allAccess} onChange={(e)=>{
                   // console.log(e.target.checked?"checked":"unChecked",'ss')

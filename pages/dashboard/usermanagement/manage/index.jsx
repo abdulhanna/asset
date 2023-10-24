@@ -98,7 +98,7 @@ const Manage = ({ user, list }) => {
                   start={list.startSerialNumber}
                   end={list.endSerialNumber}
                   pageSize={list?.totalPages}
-                    onPageChange={(e)=> console.log(e)}
+                  onPageChange={(e)=> console.log(e)}
                 />
               </div>
             )}
