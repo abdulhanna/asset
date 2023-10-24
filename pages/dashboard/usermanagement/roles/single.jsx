@@ -279,7 +279,7 @@ const Single = ({user,roleSingle,access_token}) => {
                     })}
                     {!isEdit && role.permissions.map((item,index)=>{
 
-                      return <AccordinRead data={item} label={item.moduleName}></AccordinRead>
+                      return <AccordinRead data={item} label={item.moduleName} key={index}></AccordinRead>
                     })}
                      </div>
                     
