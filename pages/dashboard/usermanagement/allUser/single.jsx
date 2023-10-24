@@ -144,16 +144,16 @@ const SingleUser = ({user,access_token,member,roles}) => {
   },[data])
 
   const deactiveHandle = async()=>{
-    try{
-      const res =await memberAccessApi.deactivate(access_token,id)
-      if(res.status == '200'){
-        router.push('/dashboard/usermanagement/allUser')
-      }
-      console.log(res)
-    }catch(err){
-      console.log(err,'err')
-    }
-      // alert(id)
+    // try{
+    //   const res =await memberAccessApi.deactivate(access_token,id)
+    //   if(res.status == '200'){
+    //     router.push('/dashboard/usermanagement/allUser')
+    //   }
+    //   console.log(res)
+    // }catch(err){
+    //   console.log(err,'err')
+    // }
+      alert(id)
   }
   // console.log(data,'mem')
   return (
@@ -166,8 +166,9 @@ const SingleUser = ({user,access_token,member,roles}) => {
            <Text1 size='2xl' >Johdoe</Text1>
            </div>
            <div className='space-x-2'>
+           <Button variant='danger' onClick={()=>setIsOpen(true)}>DELETE</Button>
            {showSave ?  <Button variant='contained' onClick={handleshow}>EDIT</Button> : <Button variant='contained' onClick={handleSubmit} >SAVE</Button>}  
-                <Button variant='danger' onClick={()=>setIsOpen(true)}>DEACTIVATE</Button>
+                
            </div>
            </div>
            <div className="flex p-5 py-5 flex-col gap-12">
@@ -262,7 +263,7 @@ const SingleUser = ({user,access_token,member,roles}) => {
        
       </div>
       <AddCompanyLogo open={logoHigh} close={() => setLogoHigh(false)} handleFile={handleFile} ></AddCompanyLogo>
-      <DeleteConfirm check={isOpen} close={()=>setIsOpen(!isOpen)} callDelete={deactiveHandle} heading={'Are you sure want to Deactivated'} para={'Are you sure want to detaivate the member from list'}/>
+      <DeleteConfirm check={isOpen} close={()=>setIsOpen(!isOpen)} callDelete={deactiveHandle} heading={'Are you sure want to Delete'} para={'Are you sure want to delete the member from list'}/>
       </MainLayout>
     </>
   )

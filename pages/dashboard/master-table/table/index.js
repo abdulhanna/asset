@@ -43,7 +43,7 @@ const ModifyTableCall =({open,onClose,data})=>{
 }
 
 const Page = ({access_token,user,tables}) => {
-    const [tableList,setTableList] = useState(tables)
+    const [tableList,setTableList] = useState(tables?.data)
     const [checkedNewData, setCheckedNewData] = useState([]);
     const [allClick, setAllClick] = useState(false);
     const [isOpen,setIsOpen] = useState(false)
@@ -87,7 +87,7 @@ const Page = ({access_token,user,tables}) => {
         setCheckedNewData([...checkedNewData, data]);
       }
     };
-    console.log(tableList,'list')
+    console.log(tables,'list')
   return (
     <>
         <MainLayout User={user} >

@@ -1,6 +1,7 @@
 import Table from "../molecules/table";
 import { useState } from "react";
 import Button from "../atoms/button";
+// import { DateTime } from "luxon";
 import {
   SampleTableCheckBox,
   ClickCheckBoxComp,
@@ -127,7 +128,8 @@ export const SampleTableNew = ({
 
           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
           href: `id=${row._id}`,
-          isDeactivated: row.isDeactivated ? "InActive" : "Active"
+          isDeactivated: row.isDeactivated ? "InActive" : "Active",
+          createdAt: DateTime.fromISO(row.createdAt).toFormat('MMM-dd-yy, hh:mm:a'),
           //   type: <p>{row.isFieldSample && row.isFieldSample === true ? 'Field Sample':'Lab Sample'}</p>,
           //   href: row.sampleStatus === '2New'?`/dashboard/sample/sampleDetails/?sampleId=${row._id}`:'',
           //   sampleId: row.sample_id.toUpperCase(),

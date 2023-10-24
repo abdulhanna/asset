@@ -76,7 +76,7 @@ const RolesPerimission = ({user,roles}) => {
   
   const callApi = useCallback(async(e)=>{
     console.log('call Api',e.page)
-    const res = await memberAccessApi.getAllMember(access_token,e.page,pageSize,JSON.stringify(sort))
+    const res = await memberAccessApi.getRoles(access_token,e.page,pageSize,JSON.stringify(sort))
     setList(res.data)
     setRoleList(res?.data?.roles)
     setPage(res.data.currentPage)

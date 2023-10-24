@@ -10,7 +10,7 @@ import masterTableApi from 'helpers/use-api/master-table/table'
 import NodataPage from '@/components/molecules/nodataPage'
 
 const LogTable = ({user,access_token,tables}) => {
-  const [tablesList,setTablesList] = useState(tables)
+  const [tablesList,setTablesList] = useState(tables.data)
     const router= useRouter()
     const header = [
       {label:"Master Table Id",name:"tableCodeId"},
