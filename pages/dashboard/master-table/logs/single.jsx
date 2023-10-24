@@ -7,7 +7,6 @@ import { LeftArrowIcon } from '@/components/atoms/icons'
 import { useRouter } from 'next/router'
 import { MasterTableComponent } from '@/components/organism/tablecomp'
 import masterTableApi from 'helpers/use-api/master-table/table'
-// import { useScroll } from 'framer-motion'
 import NodataPage from '@/components/molecules/nodataPage'
 import { DeleteConfirm } from '@/components/molecules/dialog'
 import { ToastContainer, toast } from "react-toastify";
@@ -60,6 +59,16 @@ const SingleTable = ({access_token,user,table}) => {
         console.log(err,'error')
       }
     }
+
+    const handlePublishTable = async()=>{
+
+      try{
+
+      }catch(err){
+        console.log(err,'err')
+      }
+
+    }
   //  console.log(masterTable,'table')
   return (
    <MainLayout User={user}>
@@ -76,7 +85,7 @@ const SingleTable = ({access_token,user,table}) => {
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                </div>
                <div className='flex gap-4'>
-                 {masterTable.publishStatus !== "published" && <Button variant='contained' onClick={()=> alert('delete table')}>PUBLISH</Button>}
+                 {masterTable.publishStatus !== "published" && <Button variant='contained' onClick={handlePublishTable}>PUBLISH</Button>}
                  <Button  variant="danger" onClick={()=>setIsOpen(true)}>DISCARD DRAFT</Button>
                </div>
         </div>
@@ -98,6 +107,7 @@ const SingleTable = ({access_token,user,table}) => {
           </div>}
         </div>
         <ToastContainer/>
+        
         <DeleteConfirm check={isOpen}
          close={()=>setIsOpen(!isOpen)} 
          callDelete={deactiveHandle} 

@@ -31,7 +31,12 @@ masterTableApi.discardDraft = (access_token,id)=> hostedAxios.delete(`/master-ta
     headers: { Cookie: access_token } 
 })
 
+masterTableApi.publishDraftTable = (access_token,id) => hostedAxios.put(`/master-table/publish/${id}`,{
+    headers: { Cookie: access_token } 
+})
+
 masterTableApi.modifyTable = (access_token,id,data) => hostedAxios.put(`master-table/modifyTable/${id}`,data,{
     headers: { Cookie: access_token } 
 })
+
 export default masterTableApi

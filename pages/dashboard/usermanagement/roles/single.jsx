@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import { Accordin,AccordinRead } from '@/components/molecules/accordion'
-import { Text1 } from '@/components/atoms/field'
+import { CustomSelect, Text1 } from '@/components/atoms/field'
 import { ToggleButton, ToggleOnButton,LeftArrowIcon, ToggleRemoveOnButton } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import { TextField,TextInputArea } from '@/components/atoms/field'
@@ -217,10 +217,13 @@ const Single = ({user,roleSingle,access_token}) => {
        }
     // alert(selected)
   }
+  console.log(role,'rople')
   return (
     <>
         <MainLayout isScroll={true} User={user}>
         <div>
+
+           {/* HEADER SECTION */}
             <div className='flex justify-between items-center cursor-pointer'>
                 <div className='flex items-center' onClick={()=> router.back()}>
                   <LeftArrowIcon/>
@@ -232,6 +235,7 @@ const Single = ({user,roleSingle,access_token}) => {
                 
                </div>
             </div>
+            {/* INFO SECTION */}
             <div className='mt-8 space-y-8'>
                  <div className='space-y-3'>
                     <Text1>Role Name</Text1>
@@ -252,7 +256,7 @@ const Single = ({user,roleSingle,access_token}) => {
                         }} isDisabled={!isEdit}>RESTORE DEFAULTS</Button>
                      </div>
                      <div>
-                      {role.permissions.map((item,index)=>{
+                      { isEdit && role.permissions.map((item,index)=>{
 
                         return <Accordin  label={item.moduleName}
                       handleClick={handleClick}
@@ -260,7 +264,7 @@ const Single = ({user,roleSingle,access_token}) => {
                       key={index}
                       id={index}>
                        
-                 <div className="flex gap-6 items-center">
+                   <div className="flex gap-6 items-center">
                       {Object.entries(item).map((val,id) => {
                         const [key, value] = val;
                           if ( key === "actions" || key === 'read' || key === "readWrite") {
@@ -271,11 +275,41 @@ const Single = ({user,roleSingle,access_token}) => {
                           })}
                  </div>
 
-                     </Accordin>   
+                     </Accordin>
+                    })}
+                    {!isEdit && role.permissions.map((item,index)=>{
+
+                      return <AccordinRead data={item} label={item.moduleName}></AccordinRead>
                     })}
                      </div>
                     
                  </div>
+
+                 {/* USER STATUS */}
+                  <div className="space-y-6 ">
+                    <Text1>Status</Text1>
+                    <CustomSelect
+                        className="w-1/4"
+                        label="Status"
+                        name={'isDeactivated'}
+                        disabled={!isEdit}
+                        value={role.isDeactivated}
+                        onChange={(e) =>
+                        // console.log(e.target.value,'ss')
+                          setRole({
+                            ...role,
+                            [e.target.name]:e.target.value
+                            // dashboardType: e.target.value,
+                          })
+                        }
+                      >
+                      <option value={""}>Choose one</option>
+                      <option value={false}>Active</option>
+                      <option value={true}>Inactive</option>
+                    </CustomSelect>
+                   </div>
+                    
+                    {/* ASSINGNED USER TABLE */}
                  <div>
                     <Text1  size='lg'>Assigned Users</Text1>
                     {!isEdit ?  <TableComp

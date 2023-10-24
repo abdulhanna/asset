@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "proj-components/MainLayout";
-import { Text1, TextField, TextInputArea } from "@/components/atoms/field";
+import { CustomSelect, Text1, TextField, TextInputArea } from "@/components/atoms/field";
 import {
   LeftArrowIcon,
   ToggleButton,
@@ -140,6 +140,8 @@ const AddRoles = ({ user, access_token, permissions }) => {
     <>
       <MainLayout isScroll={true} User={user}>
         <div>
+
+         {/* HEADER SECTION */}
           <div className="flex justify-between items-center py-4">
             <div
               className="flex items-center cursor-pointer"
@@ -150,6 +152,8 @@ const AddRoles = ({ user, access_token, permissions }) => {
             </div>
             <Button variant="contained" onClick={handleSubmit}>SAVE</Button>
           </div>
+           
+          {/* INFO SECTION */}
           <div className="mt-8 space-y-8">
             <div className="space-y-3">
               <Text1>Role Name</Text1>
@@ -291,6 +295,13 @@ const AddRoles = ({ user, access_token, permissions }) => {
                   ); */}
                 })}
               </div>
+            </div>
+            <div className="space-y-3">
+              <Text1>Status</Text1>
+              <CustomSelect label={'Status'} value={''}>
+                <option value="" selected disabled hidden>select</option>
+              </CustomSelect>
+              {/* <TextField className="w-1/4" label="Status"/> */}
             </div>
           </div>
           <ToastContainer/>

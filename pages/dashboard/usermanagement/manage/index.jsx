@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import MainLayout from "proj-components/MainLayout";
 import NodataPage from "@/components/molecules/nodataPage";
 import Button from "@/components/atoms/button";
@@ -7,10 +7,16 @@ import { PermissionActionTable } from "@/components/organism/tablecomp";
 import { SampleTableNew } from "@/components/organism/tablecomp";
 import authApi from "helpers/use-api/auth";
 import userManageApi from "helpers/use-api/user-management/manage";
+import Debounce from "helpers/debounce";
 
-const Manage = ({ user, list }) => {
-  const [permissionList, setPermissionList] = useState(list?.permissions);
+
+
+const Manage = ({ user, List ,access_token}) => {
+  const [permissionList, setPermissionList] = useState(List?.permissions);
+  const [list,setList] = useState(List)
   const [checkedNewData, setCheckedNewData] = useState([]);
+  const [page,setPage] = useState(List?.currentPage)
+  const [pageSize,setPageSize] = useState(5)
   const [allClick, setAllClick] = useState(false);
 
   const headers = [
@@ -57,6 +63,24 @@ const Manage = ({ user, list }) => {
     }
   };
 
+  const callApi = useCallback(async(e)=>{
+    console.log('call Api',e.page)
+    const res = await memberAccessApi.getAllMember(access_token,e.page,pageSize,JSON.stringify(sort))
+    setList(res.data)
+    setPermissionList(res?.data?.members)
+    setPage(res.data.currentPage)
+    // console.log(res.data,'res')
+  },[])
+
+  const handleSearchChange=Debounce(callApi
+    ,2000)
+
+  const handlePage = ()=>{
+    let value = e
+    handleSearchChange({page:value})
+     setPage(value)
+  }
+
   // console.log(permissionList, "list");
 
   return (
@@ -94,11 +118,11 @@ const Manage = ({ user, list }) => {
                   onClick={(e) => console.log(e, "onclick")}
                   checkAllStatus={allClick}
                   totalDoc={list.totalDocuments}
-                  currentPage={list?.currentPage}
+                  currentPage={page}
                   start={list.startSerialNumber}
                   end={list.endSerialNumber}
                   pageSize={list?.totalPages}
-                  onPageChange={(e)=> console.log(e)}
+                  onPageChange={handlePage}
                 />
               </div>
             )}
@@ -145,7 +169,8 @@ export const getServerSideProps = async (appCtx) => {
   return {
     props: {
       user: auth,
-      list:permissionList|| [],
+      access_token,
+      List:permissionList|| [],
     },
   };
 };

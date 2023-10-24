@@ -17,7 +17,7 @@ const Organisations = ({ organisationList }) => {
 
   const HeaderGoods = [
     { label: "Organization Name", name: "name" },
-    { label: "Eamil ID", name: "email" },
+    { label: "Email ID", name: "email" },
     { label: "Verification", name: "verification" },
     { label: "Registration No.", name: "id" },
     { label: "CONTACT No", name: "contactNo" },
