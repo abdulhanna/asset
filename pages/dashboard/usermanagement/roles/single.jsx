@@ -227,8 +227,9 @@ const Single = ({user,roleSingle,access_token}) => {
                   <Text1 size='2xl'> Roles Description</Text1>
                 </div>
                <div className='space-x-4'> 
+               <Button variant='danger' onClick={()=>setIsOpen(true)}>DELETE</Button>
                {isEdit ? <Button variant='contained' onClick={handleSubmit}>SAVE</Button> :<Button variant='contained' onClick={()=> setIsEdit(!isEdit)} isDisabled={false}>EDIT</Button>}
-                <Button variant='danger' onClick={()=>setIsOpen(true)}>DEACTIVATE</Button>
+                
                </div>
             </div>
             <div className='mt-8 space-y-8'>

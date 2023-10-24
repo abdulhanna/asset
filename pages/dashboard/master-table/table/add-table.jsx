@@ -36,7 +36,7 @@ const AddTable = ({access_token,user}) => {
         fieldName:"Rate(%)",
         dataType:"number",
         depreciationType:'',
-        options:['WDV','SLM','USAGE']
+        options:['WDV','SLM','Usage']
       }
     ]
   })
@@ -60,6 +60,7 @@ const AddTable = ({access_token,user}) => {
       const res = await masterTableApi.addTable(access_token,fields)
       notify('Table added')
       if(res.status == '200'){
+        router.push(`/dashboard/master-table/table/upload?id=${res.data._id}`)
         // router.push(`dashboard/master-table/table/upload?id=${res.data._id}`)
       }
       console.log(res.data._id,'res')

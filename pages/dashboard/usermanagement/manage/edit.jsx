@@ -69,13 +69,16 @@ const Edit = ({ user, access_token, singlePermission }) => {
     } catch (err) {
       notify("error");
     }
-    alert(permission._id);
+    // alert(permission._id);
   };
 
+// console.log(permission,'dd')
   return (
     <>
       <MainLayout User={user}>
         <div className="space-y-10">
+
+        {/* HEADER SECTION */}
           <div className="flex justify-between items-center">
             <div
               className="flex items-center gap-3 cursor-pointer"
@@ -100,6 +103,7 @@ const Edit = ({ user, access_token, singlePermission }) => {
              
             </div>
           </div>
+
           <div className="flex gap-11">
             <TextField
               className="w-1/4"
@@ -122,6 +126,8 @@ const Edit = ({ user, access_token, singlePermission }) => {
               <option value={"superadmin"}>SuperAdmin</option>
             </CustomSelect>
           </div>
+
+          {/* PERMISSION SECTION */}
           <div className="space-y-10">
             <Text1>Permissions</Text1>
             <div className="flex gap-10">
@@ -163,6 +169,32 @@ const Edit = ({ user, access_token, singlePermission }) => {
               )}
             </div>
           </div>
+
+          {/* STATUS SECTION */}
+          <div className="space-y-6 ">
+            <Text1>Status</Text1>
+            <CustomSelect
+                className="w-1/4"
+                label="Status"
+                name={'isDeactivated'}
+                disabled={!isEdit}
+                value={permission.isDeactivated}
+                onChange={(e) =>
+                // console.log(e.target.value,'ss')
+                  setPermission({
+                    ...permission,
+                    [e.target.name]:e.target.value
+                    // dashboardType: e.target.value,
+                  })
+                }
+              >
+                <option value={""}>Choose one</option>
+                <option value={false}>Active</option>
+                <option value={true}>Inactive</option>
+              </CustomSelect>
+          </div>
+
+          
           {/* <div className='my-10 flex space-x-4'>
                 <input type='checkbox' checked={permission.allAccess} value={permission.allAccess} onChange={(e)=> setPermission({...permission,allAccess:e.target.checked})} disabled={!isEdit}/>
                 <Text1>show All Access/Remove All Access</Text1>
