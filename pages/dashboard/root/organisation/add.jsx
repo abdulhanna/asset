@@ -82,7 +82,7 @@ const AddOganisation = ({ user, access_token }) => {
   // Submitbutton
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setProfileErrors(validate(companyprofileData));
+    // setProfileErrors(validate(companyprofileData));
     setIsSubmit(true);
 
     try {
