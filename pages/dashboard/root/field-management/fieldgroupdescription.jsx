@@ -25,6 +25,7 @@ const DeleteConfirm = ({ check, close, access_token, id }) => {
       const res = await field.deleteGroup(access_token, id)
       console.log(res, "this is data")
       toast.success("Deleted Successfully")
+      close()
       // setTimeout(() => {
       //   router.reload()
       // }, 1000)
@@ -136,7 +137,9 @@ const AddInputField = ({ open, close, showData, setShow }) => {
 };
 
 // MOdal Add text field
-const AddtextField = ({ open, close, id }) => {
+const AddtextField = ({ open, close, id, access_token }) => {
+
+
 
   return (
     <>
@@ -146,7 +149,7 @@ const AddtextField = ({ open, close, id }) => {
             <CloseIcon />
           </button>
         </div>
-        <AddField close={close} id={id} />
+        <AddField close={close} id={id} access_token />
       </DialogPage1>
     </>
   );
@@ -161,6 +164,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   const [getsubGroup, setgetsubGroup] = useState();
   const [selectedId, setSelectedId] = useState()
   const [deleteOPen, setDeleteOpen] = useState(false);
+
 
   const router = useRouter();
 
@@ -244,6 +248,8 @@ const Fieldgroupdescription = ({ user, access_token }) => {
 
 
 
+
+
   return (
     <>
       <MainLayout User={user} isScroll={true}>
@@ -302,9 +308,11 @@ const Fieldgroupdescription = ({ user, access_token }) => {
                   }
                 </div>
                 <div>
+
                   <Button id={component._id} onClick={() => {
                     setSelectedId(component._id);
                     setTextHigh(true)
+
                   }} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
                     ADD FIELD
                   </Button>
@@ -316,14 +324,14 @@ const Fieldgroupdescription = ({ user, access_token }) => {
 
                 <div className="grid grid-cols-4 gap-4">
 
-
-
                   {
                     component?.fields?.map((groupField) => {
                       return (
                         <>
+
                           <div className="border rounded-md p-3 bg-[#F7F7F7]">
                             {groupField?.name}
+
                           </div>
                         </>
                       )
@@ -338,7 +346,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
 
 
         <AddInputField open={inputHigh} close={() => setInputHigh(false)} showData={showData} setShow={setShow} />
-        <AddtextField open={textHigh} close={() => setTextHigh(false)} id={selectedId} />
+        <AddtextField open={textHigh} close={() => setTextHigh(false)} id={selectedId} access_token />
         <DeleteConfirm
           check={deleteOPen}
           close={() => setDeleteOpen(!deleteOPen)}

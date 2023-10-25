@@ -7,10 +7,28 @@ import field from "helpers/use-api/fieldmanagment";
 import { ToastContainer, toast } from 'react-toastify';
 import { TagsInput } from "react-tag-input-component";
 
+
+// ADDING FIELD-------------------
 const AddField = ({ user, access_token, close, id }) => {
 
 
+  const [subgroupField, setSubgroupField] = useState();
 
+  console.log(id, "tis is id subgroup")
+  const GroupFieldData = async () => {
+
+    try {
+      const res = await field.fieldNamebySubgroupID(access_token, id)
+      setSubgroupField(res.data.fields)
+      console.log(res.data, "this is a new id data")
+    } catch (err) {
+      console.log(err, "hhjthis is error");
+    }
+  }
+
+  useEffect(() => {
+    GroupFieldData()
+  }, [])
 
   const [selected, setSelected] = useState([]);
 
@@ -24,7 +42,6 @@ const AddField = ({ user, access_token, close, id }) => {
     fieldInfo: "",
     dependentFieldId: [],
     dependentOn: "",
-
     isMandatory: true,
 
   };
@@ -84,7 +101,6 @@ const AddField = ({ user, access_token, close, id }) => {
           router.reload()
         }, 1000)
       }
-
 
     } catch (e) {
       console.log("This is an error");
@@ -175,7 +191,7 @@ const AddField = ({ user, access_token, close, id }) => {
                     value={selected}
                     onChange={setSelected}
                     name="listOptions"
-                    placeHolder="enter List Option"
+                    placeHolder="Enter List Option"
                     classNames='h-5'
                   />
                 </div>
@@ -198,18 +214,19 @@ const AddField = ({ user, access_token, close, id }) => {
 
               {item.fieldRelation === 'Dependent' ? (
                 <>
-                  <div className="flex flex-col gap-1">
-                    <label htmlFor="" className="">
-                      Dependent Field
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Dependent Field 1"
-                      className="w-full h-[48px] border-2 p-1 rounded"
-                      name="dependentFieldId"
-                      onChange={(e) => handleChange(e, index)}
-                    />
-                  </div>
+
+                  <CustomSelect
+                    className=" px-2"
+                    onChange={(e) => handleChange(e, index)}
+                    label={"Dependent Field"}
+                    selectHeight="h-[48px]"
+                    name="dependentFieldId">
+                    <option value="">Select Dependent Field</option>
+                    {subgroupField?.map(group => (
+                      <option key={group._id} value={group._id}>{group.name}</option>
+                    ))}
+                  </CustomSelect>
+
                   <div className="flex flex-col gap-1">
                     <label htmlFor="" className="">
                       Dependent On
@@ -288,53 +305,76 @@ const AddField = ({ user, access_token, close, id }) => {
 };
 
 
-export const EditField = ({ user, access_token, close, id }) => {
-
-  console.log(id, "this is edit")
 
 
-  const [fields, setFields] = useState([{
-    name: id.name,
-    dataType: "",
-    fieldType: "",
-    fieldLength: "",
-    fieldRelation: "",
-    errorMessage: "",
-    fieldInfo: "",
-    isMandatory: true,
+// EDITING FIELDS------------------
+export const EditField = ({ user, access_token, close, fieldSingleData }) => {
 
-  }]);
 
-  console.log(id.name, "jjj")
-  const notify = (msg) => toast.success(msg)
-  const error = (msg) => toast.danger(msg)
+
+
+
+  const [selected, setSelected] = useState(fieldSingleData.listOptions);
+  const [fieldID, setFieldID] = useState(fieldSingleData._id)
+
+
+  const [fields, setFields] = useState({
+    dataType: fieldSingleData.dataType,
+    dependentFieldId: [],
+    dependentOn: fieldSingleData.dependentOn,
+    errorMessage: fieldSingleData.errorMessage,
+    fieldInfo: fieldSingleData.fieldInfo,
+    fieldLength: fieldSingleData.fieldLength,
+    fieldRelation: fieldSingleData.fieldRelation,
+    fieldType: fieldSingleData.fieldType,
+    isMandatory: fieldSingleData.isMandatory,
+
+    name: fieldSingleData.name,
+    organizationId: fieldSingleData.organizationId
+  });
+
+  useEffect(() => {
+
+    setFields({
+      ...fields,
+      listOptions: [...selected],
+      isMandatory: fieldSingleData.isMandatory === "Yes" ? true : false,
+    })
+
+  }, [selected])
+
+
+
+
+  const notify = (msg) => toast?.success(msg)
+  const error = (msg) => toast?.error(msg)
 
 
 
   const router = useRouter();
 
-
-
-  const handleAddField = () => {
-
-    console.log("test---")
-  };
-
-  const handleChange = (e, index) => {
-    const data = [...fields];
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    data[index][name] = value;
+    // const data = fields;
+
+    // if (name === 'listOptions') {
+    //   data[name] = selected;
+    // } else {
+    //   data[name] = value;
+    // }
+    setFields(prevFields => ({
+      ...prevFields,
+      [name]: value,
+
+    }));
   };
+
+  console.log(selected, "this is selected");
 
   const handleSave = async () => {
-    setFields([initialValue]);
-
-    let object = {
-      fields
-    }
 
     try {
-      const res = await field.addField(access_token, id, object)
+      const res = await field.editFieldbyFieldID(access_token, fieldID, fields)
       if (res.status === 200) {
         notify("Added Successfully")
         close()
@@ -343,12 +383,12 @@ export const EditField = ({ user, access_token, close, id }) => {
         }, 1000)
       }
 
-
     } catch (e) {
+      error(e.message)
       console.log("This is an error");
     }
 
-    console.log(object);
+    console.log(fields, "this is a field");
 
 
   };
@@ -359,126 +399,183 @@ export const EditField = ({ user, access_token, close, id }) => {
         <Text1 size="2xl" className="py-2">Edit Field</Text1>
         <Text1>Asset Description</Text1>
       </div>
-      {fields?.map((item, index) => {
-        return (
-          <>
-            <div
-              className=" grid grid-cols-2  gap-x-[32px] gap-y-[32px] pb-[20px]"
-              key={index}>
-              <div className=" flex flex-col gap-1 ">
-                <label htmlFor="" className="">
-                  Field Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Name Of The Asset"
-                  className=" h-[48px] w-full border-2 p-1 rounded"
-                  name="name"
-                  value={fields.name}
-                  onChange={(e) => handleChange(e, index)}
-                />
-              </div>
-              <div className=" justify-center items-center ">
-                <CustomSelect
-                  onChange={(e) => handleChange(e, index)}
-                  label={"Data Type"}
-                  selectHeight="h-[48px]"
-                  name="dataType">
-                  <option value="">option</option>
-                  <option value="string">String</option>
-                  <option value="number">Number</option>
-                  <option value="list">List</option>
-                  <option value="date">Date</option>
-                </CustomSelect>
+      <>
 
-              </div>
-              <div className=" justify-center items-center ">
-                <CustomSelect
-                  onChange={(e) => handleChange(e, index)}
-                  label={"Field Type"}
-                  selectHeight="h-[48px]"
-                  name="fieldType">
-                  <option value="">option</option>
-                  <option value="Input text">Input text</option>
-                  <option value="Input number">Input number</option>
-                  <option value="Dropdown">Dropdown</option>
-                  <option value="Textarea">Textarea</option>
+        <div
+          className=" grid grid-cols-2 items-center  gap-x-[32px] gap-y-[32px] pb-[20px]">
+          <div className=" flex flex-col gap-1 ">
+            <label htmlFor="" className="">
+              Field Name
+            </label>
+            <input
+              type="text"
+              placeholder="Name Of The Asset"
+              className=" h-[48px] w-full border-2 p-1 rounded"
+              name="name"
+              value={fields.name}
+              onChange={(e) => setFields({ ...fields, name: e.target.value })}
+            />
+          </div>
+          <div className=" justify-center items-center ">
+            <CustomSelect
+              onChange={(e) => handleChange(e)}
+              value={fields.dataType}
+              label={"Data Type"}
+              selectHeight="h-[48px]"
+              name="dataType">
+              <option value="">option</option>
+              <option value="string">String</option>
+              <option value="number">Number</option>
+              <option value="list">List</option>
+              <option value="date">Date</option>
+            </CustomSelect>
 
-                  Textarea
-                </CustomSelect>
-              </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="" className="">
-                  Field Length
-                </label>
-                <input
-                  type="number"
-                  placeholder="number"
-                  className="w-full h-[48px] border-2 p-1 rounded"
-                  name="fieldLength"
-                  onChange={(e) => handleChange(e, index)}
-                />
-              </div>
+          </div>
+          <div className=" justify-center items-center ">
+            <CustomSelect
+              onChange={(e) => handleChange(e)}
+              label={"Field Type"}
+              selectHeight="h-[48px]"
+              name="fieldType"
+              value={fields.fieldType}
+            >
+              <option value="">option</option>
+              <option value="Input text">Input text</option>
+              <option value="Input number">Input number</option>
+              <option value="Dropdown">Dropdown</option>
+              <option value="Radio button">Radio</option>
+              <option value="Textarea">Textarea</option>
 
-              <div className=" justify-center items-center ">
-                <CustomSelect
-                  onChange={(e) => handleChange(e, index)}
-                  label={"Field Relation"}
-                  selectHeight="h-[48px]"
-                  name="fieldRelation">
-                  <option value="">option</option>
-                  <option value="Dependent">Dependent</option>
-                  <option value="Independent">Independent</option>
-
-                </CustomSelect>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label htmlFor="" className="">
-                  Error message
-                </label>
-                <input
-                  type="text"
-                  placeholder="Error message"
-                  className="w-full h-[48px] border-2 p-1 rounded"
-                  name="errorMessage"
-                  onChange={(e) => handleChange(e, index)}
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label htmlFor="" className="">
-                  Field Info
-                </label>
-                <input
-                  type="text"
-                  placeholder="Help text"
-                  className="w-full h-[48px] border-2 p-1 rounded"
-                  name="fieldInfo"
-                  onChange={(e) => handleChange(e, index)}
-                />
-              </div>
+              Textarea
+            </CustomSelect>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="" className="">
+              Field Length
+            </label>
+            <input
+              type="number"
+              value={fields.fieldLength}
+              placeholder="number"
+              className="w-full h-[48px] border-2 p-1 rounded"
+              name="fieldLength"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
 
 
-              <div className="flex items-center  ">
-                <div className="flex items-center h-[48px]">
-                  <input
-                    id="link-checkbox"
-                    type="checkbox"
-                    name="isMandatory"
-                    className=" h-[48px] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
+          {fields.dataType === 'list' ? (
 
-                    className="ml-2 text-sm font-body text-gray-900 dark:text-gray-300">
-                    Mendatory Field ?
-                  </label>
-                </div>
-              </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="" className="">
+                List Option
+              </label>
+              <TagsInput
+                value={selected}
+                onChange={setSelected}
+                name="listOptions"
+                placeHolder="Enter List Option"
+                classNames='h-5'
+              />
             </div>
-          </>
-        );
-      })}
+          ) : null}
+
+
+          <div className=" justify-center items-center ">
+            <CustomSelect
+              onChange={(e) => handleChange(e)}
+              label={"Field Relation"}
+              selectHeight="h-[48px]"
+              name="fieldRelation"
+              value={fields.fieldRelation}
+            >
+              <option value="">option</option>
+              <option value="Dependent">Dependent</option>
+              <option value="Independent">Independent</option>
+
+            </CustomSelect>
+          </div>
+
+
+          {fields.fieldRelation === 'Dependent' ? (
+            <>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="" className="">
+                  Dependent Field
+                </label>
+                <input
+                  type="text"
+                  placeholder="Dependent Field 1"
+                  className="w-full h-[48px] border-2 p-1 rounded"
+                  name="dependentFieldId"
+                  onChange={(e) => handleChange(e)}
+                  value={fields.dependentFieldId}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="" className="">
+                  Dependent On
+                </label>
+                <input
+                  type="text"
+                  placeholder="Dependent ON "
+                  className="w-full h-[48px] border-2 p-1 rounded"
+                  name="dependentOn"
+                  value={fields.dependentOn}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+            </>
+          ) : null}
+
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="" className="">
+              Error message
+            </label>
+            <input
+              type="text"
+              placeholder="Error message"
+              className="w-full h-[48px] border-2 p-1 rounded"
+              name="errorMessage"
+              value={fields.errorMessage}
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="" className="">
+              Field Info
+            </label>
+            <input
+              type="text"
+              placeholder="Help text"
+              className="w-full h-[48px] border-2 p-1 rounded"
+              name="fieldInfo"
+              value={fields.fieldInfo}
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+
+
+          <div className="flex items-center  ">
+            <div className="flex items-center h-[48px]">
+              <input
+                id="link-checkbox"
+                type="checkbox"
+                name="isMandatory"
+                value={fields.isMandatory}
+                className=" h-[48px] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+
+                className="ml-2 text-sm font-body text-gray-900 dark:text-gray-300">
+                Mendatory Field ?
+              </label>
+            </div>
+          </div>
+        </div>
+      </>
 
       <div className="flex gap-[50px] pb-6 justify-center">
         <Button
