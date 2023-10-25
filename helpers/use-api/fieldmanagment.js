@@ -30,7 +30,7 @@ field.allStepsShow = async (access_token) => hostedAxios.get(`/form-step/listAll
 
 field.deleteGroup = async (access_token, id) => hostedAxios.delete(`/field-management/delete-group/${id}`, { headers: { cookie: access_token } })
 
-
+field.deletFieldbyId = async (access_token, id) => hostedAxios.delete(`/field-management/delete-field/${id}`, { headers: { cookie: access_token } })
 
 
 export default field;
