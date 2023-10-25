@@ -298,7 +298,7 @@ const AddRoles = ({ user, access_token, permissions }) => {
             </div>
             <div className="space-y-3">
               <Text1>Status</Text1>
-              <CustomSelect label={'Status'} value={''}>
+              <CustomSelect className={'w-1/4'} label={'Status'} value={''}>
                 <option value="" selected disabled hidden>select</option>
               </CustomSelect>
               {/* <TextField className="w-1/4" label="Status"/> */}
