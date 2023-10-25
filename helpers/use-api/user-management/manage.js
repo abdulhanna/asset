@@ -34,7 +34,7 @@ userManageApi.updatePermission = (access_token, id, data) => {
 };
 
 userManageApi.deActivate = (access_token, id) => {
-  return hostedAxios.put(`/user-management/permissions/deactivate/${id}`, {
+  return hostedAxios.delete(`/user-management/permissions/delete/${id}`, {
     headers: { Cookie: access_token }
   });
 };
