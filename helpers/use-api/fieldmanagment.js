@@ -32,5 +32,9 @@ field.deleteGroup = async (access_token, id) => hostedAxios.delete(`/field-manag
 
 field.deletFieldbyId = async (access_token, id) => hostedAxios.delete(`/field-management/delete-field/${id}`, { headers: { cookie: access_token } })
 
+field.editFieldbyFieldID = async (access_token, id, data) => hostedAxios.put(`/field-management/edit-field/${id}`, data, { headers: { cookie: access_token } })
+
+field.fieldNamebySubgroupID = async (access_token, id) => hostedAxios.get(`/field-management/subgroup/${id}`, { headers: { cookie: access_token } })
+
 
 export default field;

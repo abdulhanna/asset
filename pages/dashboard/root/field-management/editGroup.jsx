@@ -17,6 +17,7 @@ import AddField, { EditField } from "pages/testComponents/addField";
 
 
 
+
 // Confirm Delete MOdal
 const DeleteConfirm = ({ check, close }) => {
   console.log(check, "Delete Confirm")
@@ -101,14 +102,17 @@ const DeleteConfirm = ({ check, close }) => {
 const DeleteConfirmField = ({ check, close, fieldId, access_token }) => {
   // console.log(fieldId, "Delete Confirm-----")
 
+  const router = useRouter()
+
   const deleteField = async () => {
     try {
       const res = await field.deletFieldbyId(access_token, fieldId)
       console.log(res, "this is deletFeild respnse")
       toast.success("Deleted Successfully")
-      // setTimeout(() => {
-      //   router.reload()
-      // }, 1000)
+      close()
+      setTimeout(() => {
+        router.reload()
+      }, 1000)
     }
     catch (err) {
       console.log(err)
@@ -188,7 +192,6 @@ const DeleteConfirmField = ({ check, close, fieldId, access_token }) => {
     </Transition.Root>
   )
 }
-
 
 
 // EDitComponent Component
@@ -360,7 +363,7 @@ const AddtextField = ({ open, close, id }) => {
             <CloseIcon />
           </button>
         </div> */}
-        <EditField close={close} id={id} />
+        <EditField close={close} fieldSingleData={id} />
       </DialogPage1>
     </>
   );

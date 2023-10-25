@@ -170,7 +170,7 @@ const AddOganisation = ({ user, access_token }) => {
                   <p className="text-red-500">{profileErrors.EmailAddress}</p>
                 </div>
 
-                <TextField
+                {/* <TextField
                   label="Password"
                   bgColor="white"
                   type="password"
@@ -190,7 +190,7 @@ const AddOganisation = ({ user, access_token }) => {
                   value={companyprofileData.confirmPassword}
                   placeHolder="Enter Your Password"
                   onChange={handleChange}
-                />
+                /> */}
               </div>
             </div>
 
