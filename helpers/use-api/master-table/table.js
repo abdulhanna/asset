@@ -1,7 +1,7 @@
 import { hostedAxios } from "../hostedAxios"
 const masterTableApi = {}
 
-masterTableApi.allTable = (access_token)=> hostedAxios.get('/master-table/listAllTables',{
+masterTableApi.allTable = (access_token,page,pageSize,sort)=> hostedAxios.get(`/master-table/listAllTables?page=${page}&size=${pageSize}&sort=${sort}`,{
     headers: { Cookie: access_token }
 })
 

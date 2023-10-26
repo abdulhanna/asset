@@ -83,9 +83,6 @@ export const TableComp1 = ({
           data={body}
           classes={classes}
           href={href}
-          // clickAll={clickAll}
-          // checkAllStatus={checkAllStatus}
-          // editItem={editItem}
           extra={extraclasses}
           onClick={onClick}
           responseData={responseData}
@@ -110,6 +107,7 @@ export const SampleTableNew = ({
   end,
   pageSize,
   onPageChange,
+  onPageSize,
   chemicalPaginationData,
   microPaginationData,
   type,
@@ -178,15 +176,14 @@ export const SampleTableNew = ({
         }))}
       />
       <Paging
-        // chemicalItems ={chemicalPaginationData}
-        // microItems ={microPaginationData}
-        // type ={type}
+      
         start={start}
         end={end}
         totalDoc={totalDoc}
         currentPage={currentPage} // 1
         pageSize={pageSize} // 10
         onPageChange={onPageChange}
+        onPageSize={onPageSize}
       />
     </>
   );
@@ -274,7 +271,7 @@ export const FieldActionTable = ({
           body={response?.map((row) => {
             return {
               ...row,
-              // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
+       
               action: (
                 <EditDelete data={row} onEdit={onEdit} onDelete={onDelete} />
               ),
@@ -415,45 +412,8 @@ export const MasterTableComponent = ({
   )
 }
 
-// export const MasterTableLogs = ({
-//   headers,
-//   response,
-//   href,
-//   onClick,
-//   onEdit,
-//   onDelete,
-//   checkedData,
-//   clickAll,
-//   checkAllStatus,
-//   responseData,
-//   extraclasses,
-// })=>{
-//     return (
-//       <div className="h-auto py-4">
-//         <div className="relative overflow-x-auto rounded-lg">
-//           <TableComp1
-//             headers={headers}
-//             body={response?.map((row) => {
-//               return {
-//                 ...row,
-//                 // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
-//                 action: (
-//                   <EditDelete data={row} onEdit={onEdit} onDelete={onDelete} />
-//                 ),
-//               };
-//             })}
-//             classes={classes}
-//             href={href}
-//             extra={extraclasses}
-//             onClick={onClick}
-//             clickAll={clickAll}
-//             checkAllStatus={checkAllStatus}
-//             responseData={responseData}
-//           />
-//         </div>
-//       </div>
-//     )
-// }
+
+
 
 export const TableComp2 = ({
   headers,
@@ -467,7 +427,7 @@ export const TableComp2 = ({
   extraclasses,
 }) => {
   return (
-    <div className="h-auto py-8">
+    <div className="h-auto min-h-[650px] py-8">
       <div className="relative overflow-x-auto rounded-lg">
         <Table3
           headers={headers}
@@ -502,10 +462,12 @@ export const MasterTableLogs = ({
   end,
   pageSize,
   onPageChange,
+  onPageSize
 }) => {
 
   return (
-    <TableComp2
+      <>
+          <TableComp2
       headers={headerData}
         onClick={onClick}
         responseData={responseData}
@@ -515,12 +477,22 @@ export const MasterTableLogs = ({
         body={response.map((row)=>({
           ...row,
           href:`id=${row._id}`,
-          // check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
           action: (
                 <PublishStatus data={row}/>
               ),
         }))}
+        
     />
+     <Paging
+        start={start}
+        end={end}
+        totalDoc={totalDoc}
+        currentPage={currentPage} // 1
+        pageSize={pageSize} // 10
+        onPageChange={onPageChange}
+        onPageSize={onPageSize}
+      />
+      </>
   )
 }
 
