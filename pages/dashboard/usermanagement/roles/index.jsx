@@ -8,13 +8,13 @@ import userRolesApi from 'helpers/use-api/user-management/roles'
 import authApi from 'helpers/use-api/auth'
 import Debounce from 'helpers/debounce'
 
-const RolesPerimission = ({user,roles}) => {
+const RolesPerimission = ({user,roles,access_token}) => {
   const [roleList,setRoleList] = useState(roles?.roles)
   const [list,setList] = useState(roles)
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
   const [page,setPage] = useState(roles?.currentPage)
-  const [pageSize,setPageSize] = useState(5)
+  const [pageSize,setPageSize] = useState(10)
   const [sort,setSort] = useState({"created":-1})
   const header = [
     {
@@ -92,6 +92,15 @@ const RolesPerimission = ({user,roles}) => {
    handleSearchChange({page:value})
     setPage(value)
  }
+
+ const onPageSize = useCallback(async(e)=>{
+  setPageSize(e.target.value)
+  const res =  await userRolesApi.getRoles(access_token,page,e.target.value,JSON.stringify(sort)) 
+  setList(res.data)
+  setRoleList(res?.data?.roles)
+  setPage(res.data.currentPage)
+  //  console.log(e.target.value,'onPageSoze',res)
+},[])
   console.log(roles,'list')
   return (
     <>
@@ -122,6 +131,7 @@ const RolesPerimission = ({user,roles}) => {
                             end={roles.endSerialNumber}
                             pageSize={roles?.totalPages}
                             onPageChange={handlePage}
+                            onPageSize={onPageSize}
            
        />
                     </>

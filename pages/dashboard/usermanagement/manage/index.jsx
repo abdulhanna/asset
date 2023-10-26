@@ -16,7 +16,8 @@ const Manage = ({ user, List ,access_token}) => {
   const [list,setList] = useState(List)
   const [checkedNewData, setCheckedNewData] = useState([]);
   const [page,setPage] = useState(List?.currentPage)
-  const [pageSize,setPageSize] = useState(5)
+  const [pageSize,setPageSize] = useState(10)
+  const [sort,setSort] = useState({"createdAt":-1})
   const [allClick, setAllClick] = useState(false);
 
   const headers = [
@@ -65,9 +66,9 @@ const Manage = ({ user, List ,access_token}) => {
 
   const callApi = useCallback(async(e)=>{
     console.log('call Api',e.page)
-    const res = await memberAccessApi.getAllMember(access_token,e.page,pageSize,JSON.stringify(sort))
+    const res = await userManageApi.getAllPermission(access_token,e.page,pageSize,JSON.stringify(sort))
     setList(res.data)
-    setPermissionList(res?.data?.members)
+    setPermissionList(res?.data?.permissions)
     setPage(res.data.currentPage)
     // console.log(res.data,'res')
   },[])
@@ -80,6 +81,16 @@ const Manage = ({ user, List ,access_token}) => {
     handleSearchChange({page:value})
      setPage(value)
   }
+
+  const onPageSize = useCallback(async(e)=>{
+    setPageSize(e.target.value)
+    const res =  await userManageApi.getAllPermission(access_token,page,e.target.value,JSON.stringify(sort));
+    console.log(res,'res')
+    setList(res.data)
+    setPermissionList(res?.data?.permissions)
+    setPage(res.data.currentPage)
+    //  console.log(e.target.value,'onPageSoze',res)
+  },[])
 
   // console.log(permissionList, "list");
 
@@ -123,6 +134,7 @@ const Manage = ({ user, List ,access_token}) => {
                   end={list.endSerialNumber}
                   pageSize={list?.totalPages}
                   onPageChange={handlePage}
+                  onPageSize={onPageSize}
                 />
               </div>
             )}
