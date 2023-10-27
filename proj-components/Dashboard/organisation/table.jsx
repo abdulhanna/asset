@@ -56,7 +56,7 @@ export const OrganisationTableNew = ({
   currentPage,
   pageSize,
   onPageChange,
-  onpageSize,
+  onPageSize,
   chemicalPaginationData,
   microPaginationData,
   type
@@ -72,7 +72,7 @@ export const OrganisationTableNew = ({
         clickAll={clickAll}
         checkAllStatus={checkAllStatus}
         href={`/dashboard/root/organisation/organizationprofile?`}
-        body={response.map((row) => ({
+        body={response?.map((row) => ({
           ...row,
 
           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
@@ -143,7 +143,7 @@ export const OrganisationTableNew = ({
         totalDoc={totalDoc}
         currentPage={currentPage} // 1
         pageSize={pageSize} // 10
-        onpageSize={onpageSize}
+        onPageSize={onPageSize}
         onPageChange={onPageChange} />
 
     </>
@@ -194,7 +194,7 @@ export const VerificationEmail = ({ data }) => {
   }
   return (
     <div className='flex items-center'>
-      <div className='w-[180px]'><span>{data.userId.email}</span></div>
+      <div className='w-[160px]'><span>{data.userId.email}</span></div>
       {data?.userId?.is_email_verified == true ? <Verification /> : <Resend />}
     </div>
   )
@@ -218,7 +218,7 @@ export const VerificationPhone = ({ data }) => {
   }
   return (
     <div className='flex items-center'>
-      <span className='w-[120px]'>{data.contactNo}</span>
+      <span className='w-[100px]'>{data.contactNo}</span>
       {data?.userId?.is_phone_verified == true ? <Verification /> : <Resend />}
     </div>
   )

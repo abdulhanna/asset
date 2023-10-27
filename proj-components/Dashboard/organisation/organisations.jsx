@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { OrganisationTableNew } from './table'
 import Button from '@/components/atoms/button'
 import { Text1 } from '@/components/atoms/field'
@@ -8,11 +8,16 @@ import { CubeTransparentIcon } from '@heroicons/react/20/solid'
 import { DateTime } from 'luxon'
 import Debounce from 'helpers/debounce'
 import orgApi from 'helpers/use-api/organisations'
+import NodataPage from '@/components/molecules/nodataPage'
 
-const Organisations = ({ organisationList }) => {
+const Organisations = ({ organisationList, access_token }) => {
+  const [list, setList] = useState(organisationList)
   const [organisations, setOrganisations] = useState(organisationList)
   const [checkedNewData, setCheckedNewData] = useState([])
   const [allClick, setAllClick] = useState(false)
+  const [page, setPage] = useState(organisationList?.currentPage)
+  const [pageSize, setPageSize] = useState(10)
+  const [sort, setSort] = useState({ "createdAt": -1 })
   const router = useRouter();
 
 
@@ -51,7 +56,16 @@ const Organisations = ({ organisationList }) => {
     }
   }
 
-  const onpageSize = () => {
+  const onPageSize = async (e) => {
+    setPageSize(e.target.value)
+    try {
+      const res = await orgApi.getAll(access_token, page, e.target.value, JSON.stringify(sort));
+      setList(res.data)
+      setOrganisations(res?.data)
+      setPage(res.data.currentPage)
+    } catch (err) {
+      console.log(err, 'err')
+    }
 
   }
 
@@ -60,15 +74,15 @@ const Organisations = ({ organisationList }) => {
     let organizationList
 
     try {
-      const res = await orgApi.getAll(access_token);
-      organizationList = res?.data
+      const res = await orgApi.getAll(access_token, e.page, pageSize, JSON.stringify(sort));
+      setList(res.data)
+      setOrganisations(res?.data)
+      setPage(res.data.currentPage)
+      console.log(res.data, 'res')
     } catch (err) {
       console.log(err, 'err')
     }
-    setList(res.data)
-    setMembers(res?.data?.members)
-    setPage(res.data.currentPage)
-    console.log(res.data, 'res')
+
   }, [])
 
   const handleSearchChange = Debounce(callApi
@@ -94,37 +108,49 @@ const Organisations = ({ organisationList }) => {
     }
   }, [allClick])
 
+  console.log(organisationList.length, "this is length")
+
   return (
     <div>
-      <OrganisationTableNew
-        response={organisations?.organizations?.map((cur) => {
-          return {
-            ...cur,
-            name: cur?.organizationName,
-            types: cur?.organizationType,
-            id: cur?.organizationRegistrationNumber,
-            contactNo: cur?.contactNo,
-            email: cur?.userId?.email,
-            gst: cur?.gstin,
-            createdAt: DateTime.fromISO(cur?.createdAt).toFormat('MMM-dd-yy, hh:mm:a'),
-          }
-        })}
+      {
+        organisationList.length == 0 ?
+          <>
+            <NodataPage text={"Add Organisation"} />
+          </>
+          :
+          <>
+            <OrganisationTableNew
+              response={organisations?.organizations?.map((cur) => {
+                return {
+                  ...cur,
+                  name: cur?.organizationName,
+                  types: cur?.organizationType,
+                  id: cur?.organizationRegistrationNumber,
+                  contactNo: cur?.contactNo,
+                  email: cur?.userId?.email,
+                  gst: cur?.gstin,
+                  createdAt: DateTime.fromISO(cur?.createdAt).toFormat('MMM-dd-yy, hh:mm:a'),
+                }
+              })}
 
-        headerData={[{ name: 'check', label: '' }, ...HeaderGoods]}
-        checkedData={checkedNewData}
-        responseData={(e) => onNewCheck(e)}
-        //  href={`/dashboard/root/organisation/organizationprofile?`}
-        clickAll={clickAll}
-        onClick={(e) => console.log(e, 'onclick')}
-        checkAllStatus={allClick}
-        totalDoc={organisationList?.totalDocuments}
-        currentPage={organisationList?.currentPage}
-        start={organisationList.startSerialNumber}
-        end={organisationList.endSerialNumber}
-        pageSize={organisationList?.totalPages}
-        onpageSize={onpageSize}
-        onPageChange={handlePage}
-      />
+              headerData={[{ name: 'check', label: '' }, ...HeaderGoods]}
+              checkedData={checkedNewData}
+              responseData={(e) => onNewCheck(e)}
+              //  href={`/dashboard/root/organisation/organizationprofile?`}
+              clickAll={clickAll}
+              onClick={(e) => console.log(e, 'onclick')}
+              checkAllStatus={allClick}
+              totalDoc={list?.totalDocuments}
+              currentPage={page}
+              start={list.startSerialNumber}
+              end={list.endSerialNumber}
+              pageSize={list?.totalPages}
+              onPageSize={onPageSize}
+              onPageChange={handlePage}
+            />
+          </>
+      }
+
     </div>
   )
 }

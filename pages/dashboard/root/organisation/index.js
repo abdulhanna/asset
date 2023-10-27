@@ -40,8 +40,6 @@ const Page = ({ user, organisationList, access_token }) => {
           </>
         }
 
-
-
       </MainLayout>
     </>
   );
@@ -61,9 +59,14 @@ export const getServerSideProps = async (appCtx) => {
     };
   }
   let organizationList
+  let page = 1
+  let pageSize = 10
+  let sort = { "createdAt": -1 };
+  let memberList
+
 
   try {
-    const res = await orgApi.getAll(access_token);
+    const res = await orgApi.getAll(access_token, page, pageSize, JSON.stringify(sort));
     organizationList = res?.data
   } catch (err) {
     console.log(err, 'err')
