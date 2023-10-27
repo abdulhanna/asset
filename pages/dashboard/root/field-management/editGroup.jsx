@@ -19,9 +19,27 @@ import AddField, { EditField } from "pages/testComponents/addField";
 
 
 // Confirm Delete MOdal
-const DeleteConfirm = ({ check, close }) => {
-  console.log(check, "Delete Confirm")
+const DeleteConfirm = ({ check, close, deletesubgroupID, access_token }) => {
 
+  const router = useRouter()
+
+  const deleteSubgroup = async () => {
+
+    try {
+      const res = await field.deleteSubGroup(access_token, deletesubgroupID)
+      if (res.status == 200) {
+        toast.success("Deleted Successfully")
+        close()
+        setTimeout(() => {
+          router.reload()
+        }, 1000)
+      }
+
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
 
   const cancelButtonRef = useRef(null)
 
@@ -74,7 +92,7 @@ const DeleteConfirm = ({ check, close }) => {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                  // onClick={() => setOpen(false)}
+                    onClick={deleteSubgroup}
                   >
                     Delete
                   </button>
@@ -383,6 +401,7 @@ function EditGroup({ user, access_token, groupOverview }) {
   const [inputHigh, setInputHigh] = useState(false);
   const [textHigh, setTextHigh] = useState(false);
   const [fieldData, setFieldData] = useState('');
+  const [deletesubgroupID, setDeletesubgroupID] = useState()
 
 
   console.log(editGroup, "this is group")
@@ -505,10 +524,13 @@ function EditGroup({ user, access_token, groupOverview }) {
 
   };
 
-  const Delete = () => {
+  const Delete = (data) => {
     setDeleteOpen(!deleteOPen)
-    console.log(deleteOPen, "this is a delete")
+    setDeletesubgroupID(data)
+    // console.log(deleteOPen, "this is a delete")
   }
+
+
 
   const clickAll = (e) => {
 
@@ -575,10 +597,11 @@ function EditGroup({ user, access_token, groupOverview }) {
             editGroup?.subgroups?.map((group, index) => {
               return (
                 <>
+                  {console.log(group._id, "this is a group")}
                   <div key={index}>
                     <div className=" flex justify-between items-center ">
                       <TextField onChange={e => handleFormChangeSubgroup(index, e)} label={"Sub Group Name"} placeHolder="Sub Group Name " name="subgroupName" value={group?.subgroupName} />
-                      <Button onClick={Delete} variant='danger' className="mb-2 h-10 mt-3  bg-red-500 hover:border-red-500 hover:bg-red-500 hover:text-white px-3 py-2 rounded transition transform  ">
+                      <Button onClick={() => Delete(group._id)} variant='danger' className="mb-2 h-10 mt-3  bg-red-500 hover:border-red-500 hover:bg-red-500 hover:text-white px-3 py-2 rounded transition transform  ">
                         DELETE SUB-GROUP
                       </Button>
                     </div>
@@ -622,6 +645,8 @@ function EditGroup({ user, access_token, groupOverview }) {
         <DeleteConfirm
           check={deleteOPen}
           close={() => setDeleteOpen(!deleteOPen)}
+          deletesubgroupID={deletesubgroupID}
+          access_token={access_token}
         />
 
         <DeleteConfirmField check={deleteField} close={() => setDeleteField(!deleteField)} fieldId={deleteID} access_token={access_token} />

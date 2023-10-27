@@ -30,6 +30,9 @@ field.allStepsShow = async (access_token) => hostedAxios.get(`/form-step/listAll
 
 field.deleteGroup = async (access_token, id) => hostedAxios.delete(`/field-management/delete-group/${id}`, { headers: { cookie: access_token } })
 
+
+field.deleteSubGroup = async (access_token, id) => hostedAxios.delete(`/field-management/delete-subgroup/${id}`, { headers: { cookie: access_token } })
+
 field.deletFieldbyId = async (access_token, id) => hostedAxios.delete(`/field-management/delete-field/${id}`, { headers: { cookie: access_token } })
 
 field.editFieldbyFieldID = async (access_token, id, data) => hostedAxios.put(`/field-management/edit-field/${id}`, data, { headers: { cookie: access_token } })

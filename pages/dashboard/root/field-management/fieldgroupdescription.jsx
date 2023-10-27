@@ -19,6 +19,8 @@ const DeleteConfirm = ({ check, close, access_token, id }) => {
   console.log(check, "Delete Confirm")
   console.log(id, "Delete Confirm")
 
+  const router = useRouter()
+
   const deletSubgroup = async (data) => {
     console.log(data, "showData")
     try {
@@ -26,9 +28,9 @@ const DeleteConfirm = ({ check, close, access_token, id }) => {
       console.log(res, "this is data")
       toast.success("Deleted Successfully")
       close()
-      // setTimeout(() => {
-      //   router.reload()
-      // }, 1000)
+      setTimeout(() => {
+        router.back()
+      }, 1000)
     } catch (e) {
       console.log(e, "error deleting")
       toast.error(e.message)
