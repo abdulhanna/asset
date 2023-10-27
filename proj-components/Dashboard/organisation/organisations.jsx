@@ -5,6 +5,9 @@ import { Text1 } from '@/components/atoms/field'
 import { useRouter } from 'next/router'
 import { Verified, ResendEmail } from '@/components/atoms/icons'
 import { CubeTransparentIcon } from '@heroicons/react/20/solid'
+import { DateTime } from 'luxon'
+import Debounce from 'helpers/debounce'
+import orgApi from 'helpers/use-api/organisations'
 
 const Organisations = ({ organisationList }) => {
   const [organisations, setOrganisations] = useState(organisationList)
@@ -17,11 +20,11 @@ const Organisations = ({ organisationList }) => {
 
   const HeaderGoods = [
     { label: "Organization Name", name: "name" },
+    { label: "GSTIN", name: "gst" },
     { label: "Email ID", name: "email" },
-    { label: "Verification", name: "verification" },
-    { label: "Registration No.", name: "id" },
     { label: "CONTACT No", name: "contactNo" },
     { label: "CReated ON", name: "createdAt" },
+    { label: "Action", name: "action" },
 
   ];
   const Headerbody = [
@@ -48,6 +51,36 @@ const Organisations = ({ organisationList }) => {
     }
   }
 
+  const onpageSize = () => {
+
+  }
+
+  const callApi = useCallback(async (e) => {
+    console.log('call Api', e.page)
+    let organizationList
+
+    try {
+      const res = await orgApi.getAll(access_token);
+      organizationList = res?.data
+    } catch (err) {
+      console.log(err, 'err')
+    }
+    setList(res.data)
+    setMembers(res?.data?.members)
+    setPage(res.data.currentPage)
+    console.log(res.data, 'res')
+  }, [])
+
+  const handleSearchChange = Debounce(callApi
+    , 2000)
+
+
+  const handlePage = async (e) => {
+    //  console.log(e,'ee')
+    let value = e
+    handleSearchChange({ page: value })
+    setPage(value)
+  }
 
   useEffect(() => {
     console.log(checkedNewData, 'cehc')
@@ -71,7 +104,9 @@ const Organisations = ({ organisationList }) => {
             types: cur?.organizationType,
             id: cur?.organizationRegistrationNumber,
             contactNo: cur?.contactNo,
-            email: cur?.userId?.email
+            email: cur?.userId?.email,
+            gst: cur?.gstin,
+            createdAt: DateTime.fromISO(cur?.createdAt).toFormat('MMM-dd-yy, hh:mm:a'),
           }
         })}
 
@@ -87,7 +122,8 @@ const Organisations = ({ organisationList }) => {
         start={organisationList.startSerialNumber}
         end={organisationList.endSerialNumber}
         pageSize={organisationList?.totalPages}
-        onPageChange={(page) => console.log(page)}
+        onpageSize={onpageSize}
+        onPageChange={handlePage}
       />
     </div>
   )
