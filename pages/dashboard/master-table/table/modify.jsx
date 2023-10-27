@@ -127,6 +127,8 @@ const SingleTable = ({access_token,user,table}) => {
         Error(err?.response?.data?.error)
       }
   }
+
+  console.log(masterTable,'table');
   return (
    <MainLayout User={user}>
      <div>

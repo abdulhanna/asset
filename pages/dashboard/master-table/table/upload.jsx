@@ -33,11 +33,12 @@ const Upload = ({user,fileModel,access_token}) => {
 
       try{
          const res = await masterTableApi.uploadFile(access_token,formData)
+         console.log(res,'res')
          if(res.status == '200'){
             notify('Excel file uploaded')
          }
          setTimeout(()=>{
-            router.push('/dashboard/master-table/table')
+            // router.push('/dashboard/master-table/table')
          })
         //  console.log(res,'res')
       }catch(err){

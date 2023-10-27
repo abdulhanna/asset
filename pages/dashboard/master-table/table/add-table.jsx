@@ -49,7 +49,7 @@ const AddTable = ({access_token,user}) => {
     const a = {fieldName:`Rate${fields.fields.length-3}(%)`,
     dataType:'number',
     depreciationType:'',
-    options:['WDV','SLM','USAGE']}
+    options:['WDV','SLM','Usage']}
     field = [...field,a]
     // console.log(field,'field')
     setFields({...fields,fields:field})

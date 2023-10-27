@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState,useCallback} from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import { Accordin,AccordinRead } from '@/components/molecules/accordion'
 import { CustomSelect, Text1 } from '@/components/atoms/field'
@@ -26,6 +26,7 @@ const Single = ({user,roleSingle,access_token}) => {
     const [assignedUser,setAssignedUser] = useState(roleSingle.assignedUsers)
     const {id} = router.query
     const notify = (msg)=> toast.success(msg)
+    const Error = (msg) => toast.error(msg)
 
     // console.log(router.query,'ee')
       const header = [
@@ -46,19 +47,7 @@ const Single = ({user,roleSingle,access_token}) => {
         }
       ]
 
-      const headerbody = [
-        {
-          name:'jack',
-          role:'admin',
-          email:"jack@test.com",
-          status:'Active'
-        },{
-          name:'john',
-          role:'admin',
-          email:'john@test.com',
-          status:'Active'
-        }
-      ]
+ 
 
       const handleClick = (e)=>{
         const data = [...role.permissions];
@@ -201,21 +190,39 @@ const Single = ({user,roleSingle,access_token}) => {
               } 
         }
 
-  const deactiveHandle = ()=>{
-     alert('deactive')
-  }
-  const deleteHandle = async()=>{
+  const deleteHandle = useCallback(async()=>{
 
        try{
-          const res = await memberAccessApi.removeMember(access_token,selected)
+          const res = await userRolesApi.removeRole(access_token,id)
           if(res.status == '200'){
-            router.reload()
+            // router.reload()
+            notify('Role deleted')
           }
-          // console.log(res,'res')
+          setTimeout(()=>{
+            router.push('/dashboard/usermanagement/roles')
+          })
+          console.log(res,'res')
        }catch(err){
         console.log(err,'err')
+        Error(err.response.data.error)
        }
     // alert(selected)
+  },[])
+
+  const deleteMember = async()=>{
+
+    try{
+        const res = await memberAccessApi.removeMember(access_token,selected)
+        if(res.status == '200'){
+          notify('Member deleted')
+        }
+        router.reload()
+        console.log(res,'ss')
+    }catch(err){
+      Error(err.response.data.error)
+      console.log(err, 'err')
+    }
+        alert('delete member')
   }
   console.log(role,'rople')
   return (
@@ -310,7 +317,7 @@ const Single = ({user,roleSingle,access_token}) => {
                    </div>
                     
                     {/* ASSINGNED USER TABLE */}
-                 <div>
+                   {assignedUser.length !== 0 && <div>
                     <Text1  size='lg'>Assigned Users</Text1>
                     {!isEdit ?  <TableComp
                       headers={header}
@@ -322,7 +329,7 @@ const Single = ({user,roleSingle,access_token}) => {
                         }
                       })}
                     />  :
-                     <AssignedUserTable 
+                      <AssignedUserTable 
                      response={assignedUser?.map((user)=>{
                       return {...user,
                         name:user?.userProfile?.name,
@@ -338,20 +345,20 @@ const Single = ({user,roleSingle,access_token}) => {
                             setSelected(e)
                        }}
                     />}
-                 </div>
+                 </div>}
             </div>
             <DeleteConfirm
-              check={isDelete}
-              close={()=> setIsDelete(!isDelete)}
+              check={isOpen}
+              close={()=> setIsOpen(!isOpen)}
               callDelete={deleteHandle} 
              heading={'Are you sure want to delete Role'}
              para={'Are you want to delete the role from the list'}/>
       
-            <DeleteConfirm check={isOpen}
-             close={()=> setIsOpen(!isOpen)} 
-            callDelete={deactiveHandle} 
-            heading={'Are you sure want to deactivate Role'}
-             para={'Are you want to deactivate the role from the list'}/>
+            <DeleteConfirm check={isDelete}
+             close={()=> setIsDelete(!isDelete)} 
+            callDelete={deleteMember} 
+            heading={'Are you sure want to delete Member'}
+             para={'Are you want to delete the member from the list'}/>
         </div>
         </MainLayout>
     </>

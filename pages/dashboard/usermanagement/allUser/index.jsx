@@ -16,7 +16,7 @@ const AllUser = ({user,access_token,memberList}) => {
   const [data,setData] = useState([])
   const [checkedNewData, setCheckedNewData] = useState([])
   const [page,setPage] = useState(memberList?.currentPage)
-  const [pageSize,setPageSize] = useState(5)
+  const [pageSize,setPageSize] = useState(10)
   const [sort,setSort] = useState({"createdAt":-1})
   const [allClick, setAllClick] = useState(false)
   const router = useRouter()
@@ -102,6 +102,15 @@ const handleSearchChange=Debounce(callApi
      handleSearchChange({page:value})
       setPage(value)
    }
+
+   const onPageSize = useCallback(async(e)=>{
+    setPageSize(e.target.value)
+    const res = await memberAccessApi.getAllMember(access_token,page,e.target.value,JSON.stringify(sort))
+    setList(res.data)
+    setMembers(res?.data?.members)
+    setPage(res.data.currentPage)
+    //  console.log(e.target.value,'onPageSoze',res)
+  },[])
    useEffect(()=>{
     console.log(page,pageSize,'useEffect')
    },[page])
@@ -141,6 +150,7 @@ const handleSearchChange=Debounce(callApi
                   end={list.endSerialNumber}
                   pageSize={list?.totalPages}
                   onPageChange={handlePage}
+                  onPageSize={onPageSize}
             />
           </div>}
          </div>
@@ -163,7 +173,7 @@ export const getServerSideProps = async (appCtx) => {
   //   };
   // } 
   let page = 1
-  let pageSize = 5
+  let pageSize = 10
   let sort = {"createdAt":-1};
   let memberList 
   let auth
