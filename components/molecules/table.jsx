@@ -972,12 +972,14 @@ export const Table4 = ({
 
       <tbody className={classes.tbody}>
         {data.map((dataRow, index) => {
-          let codeLen = dataRow['code']?.toString().length
-          {/* console.log(codeLen,'row',index) */ }
+          
+          let codeLen = dataRow['parentcode']
+          console.log(dataRow,'row',codeLen === undefined)
+           {/* console.log(codeLen,'row',index) */}
           return (
             <Link href={`${href}${href !== '#' ? dataRow.href : ''}`} key={index}>
               {/* <Link href={`${dataRow.href}`}> */}
-              <tr className={`${codeLen > 2 ? "" : "text-blue-500"} `}>
+              <tr className={`${codeLen === undefined ? "text-blue-500" :""} `}>
                 {headers.map((item) => {
                   return (
                     <td

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useCallback} from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 // import { LeftArrowIcon } from '@/components/atoms/icons'
@@ -8,9 +8,14 @@ import { useRouter } from 'next/router'
 import { MasterTableLogs } from '@/components/organism/tablecomp'
 import masterTableApi from 'helpers/use-api/master-table/table'
 import NodataPage from '@/components/molecules/nodataPage'
+import Debounce from 'helpers/debounce'
 
 const LogTable = ({user,access_token,tables}) => {
+  const [list,setList] = useState(tables)
   const [tablesList,setTablesList] = useState(tables.data)
+  const [page,setPage] = useState(tables.currentPage)
+  const [pageSize,setPageSize] = useState(10)
+  const [sort,setSort] = useState({"createdAt":-1})
     const router= useRouter()
     const header = [
       {label:"Master Table Id",name:"tableCodeId"},
@@ -28,9 +33,39 @@ const LogTable = ({user,access_token,tables}) => {
     const handleSubmit = ()=>{
 
     }
+
+
+    const callApi = useCallback(async(e)=>{
+      console.log('call Api',e.page)
+
+      const res = await masterTableApi.allTable(access_token,e.page,pageSize,JSON.stringify(sort))
+      console.log(res,'res')
+      setList(res.data)
+      setTablesList(res?.data?.data)
+      setPage(res.data.currentPage)
+     
+    },[])
+    const handleSearchChange=Debounce(callApi
+      ,2000)
+
+    const handlePage =(e)=>{
+      let value = e
+      handleSearchChange({page:value})
+       setPage(value)
+    }
+
+    const onPageSize = useCallback(async(e)=>{
+      setPageSize(e.target.value)
+      const res = await masterTableApi.allTable(access_token,page,e.target.value,JSON.stringify(sort))
+      setList(res.data)
+      setTablesList(res?.data?.data)
+      setPage(res.data.currentPage)
+      //  console.log(e.target.value,'onPageSoze',res)
+    },[])
+
   return (
       <>
-        <MainLayout User={user}>
+        <MainLayout User={user} isScroll={true}>
             <div>
                 {/* HEADER SECTION */}
                 <div className="w-full flex justify-between items-center space-y-2">
@@ -52,6 +87,13 @@ const LogTable = ({user,access_token,tables}) => {
                   href={'/dashboard/master-table/logs/single?'}
                   responseData={(e) => onNewCheck(e)}
                   onClick={(e)=> console.log(e,'onclick') }
+                  totalDoc={list?.totalDocuments}
+                  currentPage={page}
+                  start={list.startSerialNumber}
+                  end={list.endSerialNumber}
+                  pageSize={list?.totalPages}
+                 onPageChange={handlePage}
+                 onPageSize = {onPageSize}
               //  onDelete={(e)=> console.log(e,'delete')}
               //  onEdit={(e)=> console.log(e)}
                    />
@@ -77,9 +119,12 @@ export const getServerSideProps = async (appCtx) => {
       };
     } 
   
+    let page = 1
+    let pageSize = 10
+    let sort = {"createdAt":-1};
     let tables
     try{
-      const {data} = await masterTableApi.allTable(access_token)
+      const {data} = await masterTableApi.allTable(access_token,page,pageSize,JSON.stringify(sort))
       tables  =  data
     }catch(err){
       console.log(err,'err')

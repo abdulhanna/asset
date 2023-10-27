@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useCallback } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import NodataPage from '@/components/molecules/nodataPage'
@@ -8,10 +8,12 @@ import { SampleTableNew } from '@/components/organism/tablecomp'
 import DialogPage from '@/components/molecules/dialog'
 import { CustomSelect,Text1 } from '@/components/atoms/field'
 import masterTableApi from 'helpers/use-api/master-table/table'
+import Debounce from 'helpers/debounce'
 
 const ModifyTableCall =({open,onClose,data})=>{
      const [list,setList] = useState(data)
      const [selectedTable,setSelectedTable ] = useState(null)
+     const [page,setPage] = useState()
 
      const handleSubmit =()=>{
        const a = '/dashboard/master-table/table/modify?'
@@ -43,10 +45,14 @@ const ModifyTableCall =({open,onClose,data})=>{
 }
 
 const Page = ({access_token,user,tables}) => {
+    const [list,setList] = useState(tables)
     const [tableList,setTableList] = useState(tables?.data)
     const [checkedNewData, setCheckedNewData] = useState([]);
     const [allClick, setAllClick] = useState(false);
     const [isOpen,setIsOpen] = useState(false)
+    const [page,setPage] = useState(tables.currentPage)
+    const [pageSize,setPageSize] = useState(10)
+    const [sort,setSort] = useState({"createdAt":-1})
     const router = useRouter()
     const Header = [
       {label:"Master Table Id",name:"tableCodeId"},
@@ -69,7 +75,7 @@ const Page = ({access_token,user,tables}) => {
     
     useEffect(() => {
       if (allClick === true) {
-        setCheckedNewData(permissionList);
+        setCheckedNewData(tableList);
       } else {
         setCheckedNewData([]);
       }
@@ -87,10 +93,38 @@ const Page = ({access_token,user,tables}) => {
         setCheckedNewData([...checkedNewData, data]);
       }
     };
-    console.log(tables,'list')
+
+    const callApi = useCallback(async(e)=>{
+      console.log('call Api',e.page)
+
+      const res = await masterTableApi.allTable(access_token,e.page,pageSize,JSON.stringify(sort))
+      console.log(res,'res')
+      setList(res.data)
+      setTableList(res?.data?.data)
+      setPage(res.data.currentPage)
+     
+    },[])
+    const handleSearchChange=Debounce(callApi
+      ,2000)
+
+    const handlePage =(e)=>{
+      let value = e
+      handleSearchChange({page:value})
+       setPage(value)
+    }
+
+    const onPageSize = useCallback(async(e)=>{
+      setPageSize(e.target.value)
+      const res = await masterTableApi.allTable(access_token,page,e.target.value,JSON.stringify(sort))
+      setList(res.data)
+      setTableList(res?.data?.data)
+      setPage(res.data.currentPage)
+      //  console.log(e.target.value,'onPageSoze',res)
+    },[])
+    // console.log(tables,'list')
   return (
     <>
-        <MainLayout User={user} >
+        <MainLayout User={user} isScroll={true}>
         <div className=''>
         {/* HEADER SECTION */}
          <div className='flex justify-between items-center'>
@@ -113,12 +147,13 @@ const Page = ({access_token,user,tables}) => {
                   href={`/dashboard/master-table/table/single?`}
                   onClick={(e) => console.log(e, "onclick")}
                   checkAllStatus={allClick}
-                  totalDoc={10}
-                  currentPage={1}
-                  start={1}
-                  end={1}
-                  pageSize={1}
-                 onPageChange={(e)=> console.log(e)}
+                  totalDoc={list?.totalDocuments}
+                  currentPage={page}
+                  start={list.startSerialNumber}
+                  end={list.endSerialNumber}
+                  pageSize={list?.totalPages}
+                 onPageChange={handlePage}
+                 onPageSize = {onPageSize}
                 />
           </div>}
             <ModifyTableCall open={isOpen} onClose={()=> setIsOpen(!isOpen)} data={tableList}/>
@@ -131,7 +166,10 @@ const Page = ({access_token,user,tables}) => {
 export const getServerSideProps = async (appCtx) => {
     let access_token =
     "cookie" in appCtx.req.headers ? appCtx.req.headers.cookie : null;
-   
+     
+    let page = 1
+    let pageSize = 10
+    let sort = {"createdAt":-1};
     let table 
     let auth
     try{
@@ -144,7 +182,7 @@ export const getServerSideProps = async (appCtx) => {
           },
         };
       } 
-      const {data} = await masterTableApi.allTable(access_token)
+      const {data} = await masterTableApi.allTable(access_token,page,pageSize,JSON.stringify(sort))
       table  =  data
       // console.log(data)
     }catch(err){
