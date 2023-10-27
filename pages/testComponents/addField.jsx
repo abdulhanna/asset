@@ -271,7 +271,7 @@ const AddField = ({ user, access_token, close, id }) => {
 
 
               <div className="flex items-center  ">
-                <div className="flex items-center h-[48px]">
+                <div className="flex items-center h-[48px] mt-2">
                   <input
                     id="link-checkbox"
                     type="checkbox"

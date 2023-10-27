@@ -11,6 +11,8 @@ import { LeftArrowIcon } from "@/components/atoms/icons";
 import { doCheckAuth } from "@/utils/doCheckAuth";
 import authApi from "helpers/use-api/auth";
 import orgApi from "helpers/use-api/organisations";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/bootstrap.css";
 
 
 const AddOganisation = ({ user, access_token }) => {
@@ -170,6 +172,23 @@ const AddOganisation = ({ user, access_token }) => {
                   <p className="text-red-500">{profileErrors.EmailAddress}</p>
                 </div>
 
+                <div>
+                  <Text size="sm" weight="semibold" classname="mb-3">
+                    Contact No.
+                  </Text>
+                  <PhoneInput
+                    country={"eg"}
+                    defaultCountry="in"
+                    enableSearch={true}
+                    value={companyprofileData.contactNo}
+                    name="contactNo"
+                    onChange={(contactNo) => setCompanyprofileData({
+                      contactNo: contactNo
+                    })}
+                  />
+                </div>
+
+
                 {/* <TextField
                   label="Password"
                   bgColor="white"
@@ -305,7 +324,7 @@ const AddOganisation = ({ user, access_token }) => {
                   onChange={handleChange}
                 />
                 <TextField
-                  label="PAN No."
+                  label="PAN "
                   bgColor="white"
                   type="text"
                   textSize="lg"
@@ -314,7 +333,7 @@ const AddOganisation = ({ user, access_token }) => {
                   name="pan"
                 />
 
-                <TextField
+                {/* <TextField
                   label="Contact No."
                   bgColor="white"
                   type="text"
@@ -322,7 +341,9 @@ const AddOganisation = ({ user, access_token }) => {
                   placeHolder="Enter Your contactNo"
                   onChange={handleChange}
                   name="contactNo"
-                />
+                /> */}
+
+
 
                 <TextField
                   label="GSTIN No."

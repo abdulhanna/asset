@@ -334,7 +334,7 @@ export const ColClickTable = ({
                 return (
                   <td
                     key={item.name}
-                    className={`${classes.td} ${extra} ${index === 1 ? 'text-blue-400' : ''}`}
+                    className={`${classes.td} ${extra} ${index === 1 ? 'text-blue-500 cursor-pointer' : ''} `}
                     onClick={() => {
                       if (index === 0) {
                         responseData && responseData(dataRow);
@@ -799,7 +799,7 @@ export const Table3 = ({
   headers,
   data,
   classes,
-  href ="#",
+  href = "#",
   extra,
   onClick,
   responseData,
@@ -887,17 +887,17 @@ export const Table3 = ({
         <tr className={classes.tr}>
 
           {headers.map((item, index) => (
-            
+
             <th
               key={index}
               className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${index === lastIndex && 'rounded-tr-lg'
                 }`}
               scope="col"
-              onClick={() =>  handleSortClick(item.name)}
+              onClick={() => handleSortClick(item.name)}
             >
               <div className="flex flex-row">
-                { typeof item.label === 'function' ? item.label() : item.label}
-                { <div className='text-black'>{index !== lastIndex && renderSortIcon(item.name)}</div>}
+                {typeof item.label === 'function' ? item.label() : item.label}
+                {<div className='text-black'>{index !== lastIndex && renderSortIcon(item.name)}</div>}
               </div>
 
             </th>
@@ -916,7 +916,7 @@ export const Table3 = ({
                     key={item.name}
                     className={`${classes.td} ${extra}`}
                     onClick={() => {
-                      if(index !== lastIndex){
+                      if (index !== lastIndex) {
                         onClick && router.push(`${href}${href !== '#' ? dataRow.href : ''}`);
                       }
                       // if (index === lastIndex) {
@@ -988,7 +988,7 @@ export const Table4 = ({
                       onClick={() => {
                         onClick && onClick();
 
-                        responseData && responseData(dataRow,index);
+                        responseData && responseData(dataRow, index);
                       }}
                     >
                       {typeof dataRow[item.name] === 'function'
