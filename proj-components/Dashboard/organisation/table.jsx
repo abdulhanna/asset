@@ -5,6 +5,7 @@ import Paging from '@/components/molecules/paging';
 import { Verification, Resend } from '@/components/atoms/icons';
 import { toast } from 'react-toastify';
 import orgApi from 'helpers/use-api/organisations';
+import Button from '@/components/atoms/button';
 
 const classes = {
   table: 'w-full text-sm text-left  ',
@@ -22,7 +23,7 @@ export const OrganisationTableComponent = ({ headers,
   responseData,
   extraclasses, clickAll, checkAllStatus }) => {
   return (
-    <div className="h-auto min-h-[600px] py-4">
+    <div className="h-auto min-h-[600px] py-8">
       <div className="relative overflow-x-auto rounded-lg">
         <ColClickTable
           headers={headers}
@@ -55,6 +56,7 @@ export const OrganisationTableNew = ({
   currentPage,
   pageSize,
   onPageChange,
+  onPageSize,
   chemicalPaginationData,
   microPaginationData,
   type
@@ -70,14 +72,20 @@ export const OrganisationTableNew = ({
         clickAll={clickAll}
         checkAllStatus={checkAllStatus}
         href={`/dashboard/root/organisation/organizationprofile?`}
-        body={response.map((row) => ({
+        body={response?.map((row) => ({
           ...row,
 
           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
           href: `id=${row._id}`,
-          verification: (
+
+          email: (
+            <VerificationEmail data={row} />
+          ),
+          contactNo: (<VerificationPhone data={row} />),
+          action: (
             <Verificationreq data={row} />
           )
+
 
           //   type: <p>{row.isFieldSample && row.isFieldSample === true ? 'Field Sample':'Lab Sample'}</p>,
           //   href: row.sampleStatus === '2New'?`/dashboard/sample/sampleDetails/?sampleId=${row._id}`:'',
@@ -135,6 +143,7 @@ export const OrganisationTableNew = ({
         totalDoc={totalDoc}
         currentPage={currentPage} // 1
         pageSize={pageSize} // 10
+        onPageSize={onPageSize}
         onPageChange={onPageChange} />
 
     </>
@@ -158,5 +167,61 @@ export const Verificationreq = ({ data }) => {
       toast.error("Error sending email")
     }
   }
-  return (data?.userId?.is_email_verified == true ? <Verification /> : <Resend onClick={verification} />)
+  return (
+    <div>
+      <Button onClick={verification}>
+        Resend Email
+      </Button>
+    </div>
+  )
 }
+
+export const VerificationEmail = ({ data }) => {
+  // console.log(data, "this is a Verification")
+  const verification = async () => {
+
+    let email = {
+      email: data.userId.email
+    }
+
+    // try {
+    //   const res = await orgApi.resendEmail(email)
+    //   console.log(res)
+    //   toast.success("Sent email successfully")
+    // } catch (e) {
+    //   toast.error("Error sending email")
+    // }
+  }
+  return (
+    <div className='flex items-center'>
+      <div className='w-[160px]'><span>{data.userId.email}</span></div>
+      {data?.userId?.is_email_verified == true ? <Verification /> : <Resend />}
+    </div>
+  )
+}
+
+export const VerificationPhone = ({ data }) => {
+  // console.log(data, "this is a Verification")
+  const verification = async () => {
+
+    let email = {
+      email: data.userId.email
+    }
+
+    // try {
+    //   const res = await orgApi.resendEmail(email)
+    //   console.log(res)
+    //   toast.success("Sent email successfully")
+    // } catch (e) {
+    //   toast.error("Error sending email")
+    // }
+  }
+  return (
+    <div className='flex items-center'>
+      <span className='w-[100px]'>{data.contactNo}</span>
+      {data?.userId?.is_phone_verified == true ? <Verification /> : <Resend />}
+    </div>
+  )
+}
+
+

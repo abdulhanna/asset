@@ -69,7 +69,7 @@ const FieldOverview = ({ user, access_token }) => {
 
   return (
     <>
-      <div className='flex justify-between mb-4 px-2'>
+      <div className='flex justify-between mb-4 '>
         <Text1 size="2xl" weight="medium">
           Field Management
         </Text1>
