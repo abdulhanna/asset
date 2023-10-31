@@ -65,7 +65,7 @@ const ModifyComponent = ({open,onClose,row,updateData})=>{
 const SingleTable = ({access_token,user,table}) => {
   const [isOpen,setIsOpen] = useState(false)
   const [masterTable,setMasterTable] = useState(table)
-  const [tableHeader,setTableHeader] = useState([])
+  const [tableHeader,setTableHeader] = useState(table?.masterTableHeader)
   const [selectedId,setSelectedId] = useState()
   const [row,setRow] = useState()
     const router  = useRouter()
@@ -86,19 +86,19 @@ const SingleTable = ({access_token,user,table}) => {
     ]
 
     useEffect(()=>{
-      if (isMounted.current) {
-        let arr = []
-        for (const [key, value] of Object.entries(table?.masterTableHeader)) {      
-        let a ={}
-          a['label'] = value
-          a['name'] = key
-          arr.push(a)
-      //   console.log(`${key}: ${value}`);
-      setTableHeader([...arr])
-      }
-      } else {
-        isMounted.current = true;
-      }
+      // if (isMounted.current) {
+      //   let arr = []
+      //   for (const [key, value] of Object.entries(table?.masterTableHeader)) {      
+      //   let a ={}
+      //     a['label'] = value
+      //     a['name'] = key
+      //     arr.push(a)
+      // //   console.log(`${key}: ${value}`);
+      // setTableHeader([...arr])
+      // }
+      // } else {
+      //   isMounted.current = true;
+      // }
   
      
      
@@ -128,7 +128,7 @@ const SingleTable = ({access_token,user,table}) => {
       }
   }
 
-  console.log(masterTable,'table');
+  // console.log(masterTable,'table');
   return (
    <MainLayout User={user}>
      <div>
@@ -144,8 +144,8 @@ const SingleTable = ({access_token,user,table}) => {
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                </div>
                <div className='flex gap-4'>
+               <Button  variant="contained" onClick={()=>alert('add new row')}>ADD ROW</Button>
                  <Button variant='contained' onClick={handleSubmit}>SAVE CHANGES</Button>
-                 {/* <Button  variant="contained" onClick={()=>console.log('dd')}>NEXT</Button> */}
                </div>
         </div>
 

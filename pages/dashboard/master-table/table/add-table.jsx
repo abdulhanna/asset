@@ -8,7 +8,7 @@ import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
 import { useRouter } from 'next/router'
 import masterTableApi from 'helpers/use-api/master-table/table'
 import { ToastContainer, toast } from "react-toastify";
-
+import { DeleteIcon } from '@/components/atoms/icons'
 const AddTable = ({access_token,user}) => {
   const [fields,setFields] = useState({
     codeGenerationType: "auto",
@@ -16,7 +16,7 @@ const AddTable = ({access_token,user}) => {
     tableName:"",
     applicableTo:"",
     fields: "",
-    fields:   [
+    fixedFields:   [
       {
         fieldName:"Code No",
         dataType:"alphanumeric",
@@ -32,6 +32,14 @@ const AddTable = ({access_token,user}) => {
         dataType:"alphanumeric",
         type:'text'
       },
+      // {
+      //   fieldName:"Rate(%)",
+      //   dataType:"number",
+      //   depreciationType:'',
+      //   options:['WDV','SLM','Usage']
+      // }
+    ],
+    rateFields:[
       {
         fieldName:"Rate(%)",
         dataType:"number",
@@ -45,29 +53,41 @@ const AddTable = ({access_token,user}) => {
   const Error = (msg) => toast.error(msg)
 
   const addField = ()=>{
-    let field = [...fields.fields]
-    const a = {fieldName:`Rate${fields.fields.length-3}(%)`,
+    let field = [...fields.rateFields]
+    const a = {fieldName:`Rate${fields.rateFields.length}(%)`,
     dataType:'number',
     depreciationType:'',
     options:['WDV','SLM','Usage']}
     field = [...field,a]
     // console.log(field,'field')
-    setFields({...fields,fields:field})
+    setFields({...fields,rateFields:field})
   }
-  const handleSubmit = async()=>{
-        
+
+  const callApi = async()=>{
+    let result
     try{
       const res = await masterTableApi.addTable(access_token,fields)
       notify('Table added')
-      if(res.status == '200'){
-        router.push(`/dashboard/master-table/table/upload?id=${res.data._id}`)
-        // router.push(`dashboard/master-table/table/upload?id=${res.data._id}`)
-      }
-      console.log(res.data._id,'res')
+      result = res
+      return  res
+     
     }catch(err){
       Error(err?.response?.data?.error)
       console.log(err?.response?.data?.error,'err')
     }
+  }
+  const handleSubmit = async()=>{
+        const result =await callApi()
+        if(result !== undefined){
+            router.push(`/dashboard/master-table/table/add-row?id=${result.data._id}`)
+        }
+  }
+
+  const handleSubmit1 =async()=>{
+    const result =await callApi()
+    if(result !== undefined){
+      router.push(`/dashboard/master-table/table/upload?id=${result.data._id}`)
+     }
   }
 
   useEffect(()=>{
@@ -76,7 +96,7 @@ const AddTable = ({access_token,user}) => {
   return (
        <>
         <MainLayout User={user} isScroll={true}>
-            <div className='space-y-5'>
+            <div className='space-y-4'>
                 {/* HEADING  */}
                <div className="w-full flex justify-between items-center">
                     <div>
@@ -88,7 +108,10 @@ const AddTable = ({access_token,user}) => {
                       </div>
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                     </div>
-                    <Button  variant="contained" onClick={handleSubmit}>NEXT</Button>
+                   <div className='flex gap-4'>
+                       <Button  variant="contained" onClick={handleSubmit}>DESIGN MANUALLY</Button>
+                       <Button variant='contained' onClick={handleSubmit1}>UPLOAD MASTER TABLE</Button>
+                   </div>
                </div>
                {/* TABLE Information */}
                <div className=''>
@@ -114,11 +137,11 @@ const AddTable = ({access_token,user}) => {
                    </div>
                </div>
 
-               {/* TABLE FIELD */}
+               {/* FIXED FIELD */}
                 <div>
-                  <Text1 weight='semibold'>Table Fields</Text1>
+                  <Text1 weight='semibold'>Fixed Fields</Text1>
                    <div className='hello'>
-                   {fields.fields.map((cur,index)=>{
+                   {fields.fixedFields.map((cur,index)=>{
                     {/* console.log(index,'ss') */}
                     return <div className='grid grid-cols-4 gap-4 items-center' key={index}>
                       <TextField label='Filed Name' value={cur.fieldName}/>
@@ -133,10 +156,44 @@ const AddTable = ({access_token,user}) => {
                           return <option value={option} key={id}>{option}</option>
                         })}
                        </CustomSelect>:  <TextField label='Data Type' value={cur.dataType}/>}
-                       <div className='col-start-4 flex justify-end w-full pt-2'>{fields.fields.length-1 === index && <Button onClick={addField}>ADD RATE FIELD</Button>}</div>
+                       {/* <div className='col-start-4 flex justify-end w-full pt-2'>{fields.fields.length-1 === index && <Button onClick={addField}>ADD RATE FIELD</Button>}</div> */}
                     </div>
                   })}
                    </div>
+                </div>
+                <div>
+                   <div className='flex justify-between items-center'>
+                     <Text1 weight='semibold'>Rate Fields</Text1>
+                     <Button onClick={addField}>ADD RATE FIELD</Button>
+                   </div>
+                   {fields.rateFields.map((cur,index)=>{
+
+                    return <div className='grid grid-cols-4 gap-4 items-center' key={index}>
+                      <TextField label='Filed Name' value={cur.fieldName}/>
+                       {cur.dataType === "number" ? <>
+                       <CustomSelect name={`depreciationType`}  label={`Depriciation Method`} onChange={(e)=>{
+                        const data = [...fields.rateFields]
+                        data[index].depreciationType=e.target.value;
+                        setFields({...fields,rateFields:data})
+                        // console.log(data)
+                        }}>
+                       <option value={''}>select</option>
+                        {cur.options.map((option,id)=>{
+                          return <option value={option} key={id}>{option}</option>
+                        })}
+                       </CustomSelect>
+                       
+                       </>
+                       :  <TextField label='Data Type' value={cur.dataType}/>}
+                       <div className='col-start-4 flex justify-end w-full   pt-2'>{ <DeleteIcon className={' border border-red-400 rounded-md'} onClick={()=>{
+                           const rate = [...fields.rateFields]
+                                 rate.splice(index,1)
+                                 setFields({...fields,rateFields:rate})
+                          //  console.log(rate,'reate')
+                       } }/>}</div>
+                    </div>
+                   })}
+
                 </div>
                 <ToastContainer/>
                </div>

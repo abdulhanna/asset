@@ -13,7 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const SingleTable = ({access_token,user,table}) => {
   const [masterTable,setMasterTable] = useState(table)
-  const [tableHeader,setTableHeader] = useState([])
+  const [tableHeader,setTableHeader] = useState(table.masterTableHeader)
   const [isOpen,setIsOpen] = useState(false)
     const router  = useRouter()
     const {id} = router.query
@@ -32,15 +32,15 @@ const SingleTable = ({access_token,user,table}) => {
     ]
 
     useEffect(()=>{
-      let arr = []
-      for (const [key, value] of Object.entries(table?.masterTableHeader)) {      
-      let a ={}
-        a['label'] = value
-        a['name'] = key
-        arr.push(a)
-    //   console.log(`${key}: ${value}`);
-    }
-      setTableHeader([...tableHeader,...arr])
+    //   let arr = []
+    //   for (const [key, value] of Object.entries(table?.masterTableHeader)) {      
+    //   let a ={}
+    //     a['label'] = value
+    //     a['name'] = key
+    //     arr.push(a)
+    // //   console.log(`${key}: ${value}`);
+    // }
+    //   setTableHeader([...tableHeader,...arr])
     },[])
 
     const deactiveHandle = async()=>{
