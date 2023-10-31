@@ -177,14 +177,15 @@ const AddOganisation = ({ user, access_token }) => {
                     Contact No.
                   </Text>
                   <PhoneInput
-                    country={"eg"}
-                    defaultCountry="in"
+                    country={"in"}
+                    defaultCountry={"in"}
                     enableSearch={true}
                     value={companyprofileData.contactNo}
                     name="contactNo"
                     onChange={(contactNo) => setCompanyprofileData({
                       contactNo: contactNo
                     })}
+                    countryCodeEditable={false}
                   />
                 </div>
 
@@ -431,12 +432,12 @@ const AddOganisation = ({ user, access_token }) => {
               />
 
               <TextField
-                label="Zip Code"
+                label="PIn Code"
                 bgColor="white"
                 type="text"
                 textSize="lg"
                 name="pinCode"
-                placeHolder="Enter Your Zipcode"
+                placeHolder="Enter Your Pincode"
                 onChange={handleChange1}
               />
             </div>
