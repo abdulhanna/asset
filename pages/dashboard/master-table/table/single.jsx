@@ -17,7 +17,7 @@ const SingleTable = ({access_token,user,table}) => {
     const router  = useRouter()
     const [isOpen,setIsOpen] = useState(false)
     const[masteTable,setMasterTable] = useState(table.masterTableData)
-    const [tableHeader,setTableHeader] = useState([])
+    const [tableHeader,setTableHeader] = useState(table?.masterTableHeader)
     const {id} = router.query
     const notify = (msg)=> toast.success(msg)
     const Error = (msg)=> toast.error(msg)
@@ -33,21 +33,7 @@ const SingleTable = ({access_token,user,table}) => {
       {_id:'12140',code:'01B',description:"building material",Rate1:'8%',Rate2:'9%'}
     ]
 
-    useEffect(()=>{
-        // console.log(table.masterTableHeader,'dd')
-        let arr = []
-        for (const [key, value] of Object.entries(table?.masterTableHeader)) {      
-        let a ={}
-          a['label'] = value
-          a['name'] = key
-          arr.push(a)
-      //   console.log(`${key}: ${value}`);
-      }
-
-      setTableHeader([...tableHeader,...arr])
-      // console.log(arr,'err')
-    },[])
-
+  
     const callDelete = async()=>{
       // alert('delete')
 
@@ -67,7 +53,7 @@ const SingleTable = ({access_token,user,table}) => {
       }
     }
 
-    console.log(tableHeader,id,'table')
+    console.log(table,id,'table')
   return (
    <MainLayout User={user}>
      <div>
@@ -84,17 +70,16 @@ const SingleTable = ({access_token,user,table}) => {
                </div>
                <div className='flex gap-4'>
                  <Button onClick={()=> setIsOpen(true)}>DELETE TABLE</Button>
-                 {/* <Button  variant="contained" onClick={()=>console.log('dd')}>NEXT</Button> */}
                </div>
         </div>
 
         {/* TABLE SECTION */}
         <div>
-         {masteTable.length === 0 ? <div><NodataPage/></div> :
+         {masteTable?.length === 0 ? <div><NodataPage/></div> :
          <MasterTableComponent
                    headers={tableHeader}
              responseData={(e) => console.log(e, "e")}
-            body={masteTable.map((item) => {
+            body={masteTable?.map((item) => {
             return {
               ...item,
               // href: `id=${item.id}`,
@@ -132,7 +117,7 @@ export const getServerSideProps = async (appCtx) => {
     let table 
     try{
       const {data} = await masterTableApi.getTable(access_token,id)
-      // console.log(data,'data')
+      console.log(data,'data')
       table  =  data
     }catch(err){
       console.log(err,'err')

@@ -127,7 +127,7 @@ export const SampleTableNew = ({
           check: <SampleTableCheckBox data={checkedData} bodyData={row} />,
           href: `id=${row._id}`,
           isDeactivated: row.isDeactivated ? "InActive" : "Active",
-          createdAt: DateTime.fromISO(row.createdAt).toFormat('MMM-dd-yy, hh:mm:a'),
+          createdAt: DateTime.fromISO(row.createdAt).toFormat('dd-MM-yy, hh:mm:a'),
           //   type: <p>{row.isFieldSample && row.isFieldSample === true ? 'Field Sample':'Lab Sample'}</p>,
           //   href: row.sampleStatus === '2New'?`/dashboard/sample/sampleDetails/?sampleId=${row._id}`:'',
           //   sampleId: row.sample_id.toUpperCase(),
@@ -455,14 +455,13 @@ export const MasterTableLogs = ({
   checkedData,
   clickAll,
   checkAllStatus,
-  onEdit,
-  onDelete,
   currentPage,
   start,
   end,
   pageSize,
   onPageChange,
-  onPageSize
+  onPageSize,
+  publishCall 
 }) => {
 
   return (
@@ -476,10 +475,11 @@ export const MasterTableLogs = ({
         href={href}
         body={response.map((row) => ({
           ...row,
-          href: `id=${row._id}`,
+          href:`id=${row._id}`,
+          createdAt: DateTime.fromISO(row.createdAt).toFormat('dd-MM-yy, hh:mm:a'),
           action: (
-            <PublishStatus data={row} />
-          ),
+                <PublishStatus data={row}  publishCall={publishCall}/>
+              ),
         }))}
 
       />
@@ -496,12 +496,12 @@ export const MasterTableLogs = ({
   )
 }
 
-const PublishStatus = ({ data }) => {
-  console.log(data, 'datarow')
+const PublishStatus = ({data,publishCall})=>{
+  // console.log(data,'datarow')
   return (
-    <div className=''>
-      {data.publishStatus === "published" ? <Text1 color='text-green-400'>PUBLISHED</Text1> : <Button onClick={() => alert(data._id)}>PUBLISH</Button>}
-    </div>
+        <div className=''>
+            {data.publishStatus === "published"  ?  <Text1 color='text-green-400'>PUBLISHED</Text1>: <Button onClick={()=> publishCall(data._id)}>PUBLISH</Button> }      
+        </div>
   )
 }
 

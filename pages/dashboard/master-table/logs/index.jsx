@@ -94,6 +94,7 @@ const LogTable = ({user,access_token,tables}) => {
                   pageSize={list?.totalPages}
                  onPageChange={handlePage}
                  onPageSize = {onPageSize}
+                 publishCall={(e)=> alert(e)}
               //  onDelete={(e)=> console.log(e,'delete')}
               //  onEdit={(e)=> console.log(e)}
                    />
