@@ -317,9 +317,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
                                     return (
                                         {
                                             ...row,
-                                            createdAt: DateTime.fromISO(row.createdAt).toLocaleString(
-                                                DateTime.DATETIME_SHORT
-                                            ),
+                                            createdAt: DateTime.fromISO(row.createdAt).toFormat('dd-MM-yy, hh:mm:a'),
                                         }
                                     )
                                 })}

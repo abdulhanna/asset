@@ -5,6 +5,7 @@ import AddField from 'pages/testComponents/addField';
 import { CloseIcon } from '@/components/atoms/icons';
 import { DialogPage1 } from "@/components/molecules/dialog";
 import { useRouter } from 'next/router';
+import { AccordionField } from '@/components/molecules/accordion';
 
 
 
@@ -77,9 +78,9 @@ const Groupview = (allgroups) => {
           {allgroups.allgroups?.map((component, index) => (
             <>
               <div key={component._id} className="flex justify-between  py-2 ">
-                <div className='flex'>
-                  {/* <Text1 size='2xl' >{component.groupName}</Text1> */}
-                  <h1 className='text-blue-500 text-xl font-normal'><span className='pr-2 text-green-400 font-semibold '>{index + 1}</span> {component.groupName}</h1>
+                {/* <div className='flex'>
+                  <Text1 size='2xl' >{component.groupName}</Text1>
+
                   {
                     component?.isMandatory === true && <><div className=' '>
                       <svg className="w-2 h-2 text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -87,56 +88,48 @@ const Groupview = (allgroups) => {
                       </svg>
                     </div></>
                   }
-                </div>
-                <div>
-                  {/* <Button  onClick={() => setTextHigh(true)} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
-              Add Field
-           </Button>
-          <Button onClick={editGroup} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-green-600 hover:text-white px-6 py-2 rounded transition transform hover:scale-110 ">
-            Edit Group
-          </Button> */}
-                  <Button onClick={ManageGroup} href={`/dashboard/root/field-management/fieldgroupdescription?id=${component?._id}&name=${component?.groupName}`} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
-                    Manage Group
-                  </Button>
-                </div>
+                </div> */}
+
+                <AccordionField label={component.groupName}
+                  handleClick={ManageGroup}
+                  data={component}
+                  key={index}
+                  id={component._id}>
+
+                  <div>
+                    {
+                      component?.subgroups?.map((subGroup, index1) => {
+                        return (
+                          <>
+                            <h1 className='text-gray-500 pb-4'>
+                              {subGroup.subgroupName}
+                            </h1>
+                            <div className="grid grid-cols-4 gap-4 py-1 pb-5">
+                              {
+                                subGroup?.fields?.map((groupField) => {
+                                  return (
+                                    <>
+
+                                      <div className="border rounded-md p-3 bg-[#F7F7F7]" >
+                                        {groupField?.name}
+                                      </div>
+                                    </>
+                                  )
+                                })
+                              }
+                            </div>
+
+                          </>
+                        )
+                      })
+                    }
+                  </div>
+
+                </AccordionField>
+
               </div>
               <div>
 
-
-
-                <div>
-                  {
-                    component?.subgroups?.map((subGroup, index1) => {
-                      return (
-                        <>
-                          <h1 className='text-gray-500'>
-                            <span className='pr-2  text-green-400 font-semibold'>{`${index + 1}.${index1 + 1}`}</span>{subGroup.subgroupName}
-                          </h1>
-                          <div className="grid grid-cols-4 gap-4 py-1 pb-5">
-                            {
-                              subGroup?.fields?.map((groupField) => {
-                                return (
-                                  <>
-
-                                    <div className="border rounded-md p-3 bg-[#F7F7F7]" >
-                                      {groupField?.name}
-                                    </div>
-                                  </>
-                                )
-                              })
-                            }
-                          </div>
-
-                        </>
-                      )
-                    })
-                  }
-                </div>
-
-              </div>
-
-              <div className='py-6'>
-                <div className='border-[#C8C8C8] block'></div>
               </div>
 
             </>
