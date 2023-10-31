@@ -10,7 +10,7 @@ import authApi from 'helpers/use-api/auth'
 
 const FieldMangment = ({ user, allgroups }) => {
   const handleAddButtonClick = () => {
-    console.log("thhh")
+    console.log("thhh",allgroups)
   }
   return (
     <>

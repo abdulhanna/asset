@@ -38,7 +38,7 @@ const Upload = ({user,fileModel,access_token}) => {
             notify('Excel file uploaded')
          }
          setTimeout(()=>{
-            // router.push('/dashboard/master-table/table')
+            router.push('/dashboard/master-table/table')
          })
         //  console.log(res,'res')
       }catch(err){
