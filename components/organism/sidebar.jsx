@@ -35,10 +35,10 @@ export const SidebarItem = ({
             `${classname}`,
             'w-full inline-block p-2 flex flex-row items-center cursor-pointer text-sm rounded',
             {
-              'bg-menuBG text-primary font-body': active,
+              'bg-white text-primary font-body p-4': active,
             },
             {
-              'hover:bg-gray-100 hover:text-gray-400 text-gray-400': !active,
+              'hover:bg-gray-100 hover:text-gray-400 text-gray-400 p-4': !active,
             }
           )}
         >

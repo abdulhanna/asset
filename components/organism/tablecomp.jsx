@@ -176,7 +176,7 @@ export const SampleTableNew = ({
         }))}
       />
       <Paging
-      
+
         start={start}
         end={end}
         totalDoc={totalDoc}
@@ -236,7 +236,7 @@ export const AssignedUserTable = ({
             // console.log(item,'item')
             return {
               ...item,
-              action: <TrashOutline onClick={()=>onDelete(item._id)}/>,
+              action: <TrashOutline onClick={() => onDelete(item._id)} />,
             };
           })}
           classes={classes}
@@ -271,7 +271,7 @@ export const FieldActionTable = ({
           body={response?.map((row) => {
             return {
               ...row,
-       
+
               action: (
                 <EditDelete data={row} onEdit={onEdit} onDelete={onDelete} />
               ),
@@ -466,24 +466,24 @@ export const MasterTableLogs = ({
 }) => {
 
   return (
-      <>
-          <TableComp2
-      headers={headerData}
+    <>
+      <TableComp2
+        headers={headerData}
         onClick={onClick}
         responseData={responseData}
         clickAll={clickAll}
         checkAllStatus={checkAllStatus}
         href={href}
-        body={response.map((row)=>({
+        body={response.map((row) => ({
           ...row,
-          href:`id=${row._id}`,
+          href: `id=${row._id}`,
           action: (
-                <PublishStatus data={row}/>
-              ),
+            <PublishStatus data={row} />
+          ),
         }))}
-        
-    />
-     <Paging
+
+      />
+      <Paging
         start={start}
         end={end}
         totalDoc={totalDoc}
@@ -492,16 +492,16 @@ export const MasterTableLogs = ({
         onPageChange={onPageChange}
         onPageSize={onPageSize}
       />
-      </>
+    </>
   )
 }
 
-const PublishStatus = ({data})=>{
-  console.log(data,'datarow')
+const PublishStatus = ({ data }) => {
+  console.log(data, 'datarow')
   return (
-        <div className=''>
-            {data.publishStatus === "published"  ?  <Text1 color='text-green-400'>PUBLISHED</Text1>: <Button onClick={()=> alert(data._id)}>PUBLISH</Button> }      
-        </div>
+    <div className=''>
+      {data.publishStatus === "published" ? <Text1 color='text-green-400'>PUBLISHED</Text1> : <Button onClick={() => alert(data._id)}>PUBLISH</Button>}
+    </div>
   )
 }
 

@@ -18,8 +18,7 @@ const MainLayout = ({ children, isScroll, User }) => {
               } w-full  h-full  pb-20`}
           >
             <div
-              className={` 3xl:px-12 3xl:py-12 2xl:px-8 2xl:py-12 relative  xl:px-8 xl:py-4 container  overflow-y-auto flex-1`}
-            >
+              className={`3xl:px-8 3xl:py-6 2xl:px-8 2xl:py-6 relative  xl:px-8 xl:py-4 container  overflow-y-auto flex-1`} >
               {children}
             </div>
           </div>

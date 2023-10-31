@@ -18,7 +18,7 @@ const Paging = ({ currentPage, onPageChange, pageSize, totalDoc, end, start, onP
 
   }, [current])
   return (
-    <div className='flex justify-between items-center text-slate-400'>
+    <div className='flex justify-between items-center text-slate-400 '>
       <div className='flex items-center space-x-2'>
         <Text1>Item per page</Text1>
 
