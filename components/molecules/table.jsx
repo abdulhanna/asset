@@ -334,7 +334,7 @@ export const ColClickTable = ({
                 return (
                   <td
                     key={item.name}
-                    className={`${classes.td} ${extra} ${index === 1 ? 'text-blue-500 cursor-pointer' : ''} `}
+                    className={`${classes.td} ${extra} ${index === 1 ? 'text-greay-500 cursor-pointer' : 'cursor-default'} `}
                     onClick={() => {
                       if (index === 0) {
                         responseData && responseData(dataRow);

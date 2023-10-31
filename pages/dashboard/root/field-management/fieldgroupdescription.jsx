@@ -255,7 +255,7 @@ const Fieldgroupdescription = ({ user, access_token }) => {
   return (
     <>
       <MainLayout User={user} isScroll={true}>
-        <div className='flex justify-between mb-4 px-2'>
+        <div className='flex justify-between mb-4 '>
 
           <div className='flex items-center cursor-pointer space-x-2' onClick={() => router.back()}>
             <LeftArrowIcon />
@@ -333,7 +333,6 @@ const Fieldgroupdescription = ({ user, access_token }) => {
 
                           <div className="border rounded-md p-3 bg-[#F7F7F7]">
                             {groupField?.name}
-
                           </div>
                         </>
                       )
