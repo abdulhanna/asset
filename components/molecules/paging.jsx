@@ -7,7 +7,7 @@ import { CustomSelect } from '../atoms/field'
 
 const Paging = ({ currentPage, onPageChange, pageSize, totalDoc, end, start, onPageSize }) => {
 
-  console.log(onPageSize, "thsi is page size")
+
 
   const [current, setCurent] = useState(currentPage)
   const [size, setSize] = useState(pageSize)
