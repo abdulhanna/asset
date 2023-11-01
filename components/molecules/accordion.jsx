@@ -49,14 +49,14 @@ export const AccordionField = (props) => {
             <AnimatePresence>
                 <motion.div
                     key="question"
-                    className={`rounded-t-md shadow-sm px-2 py-2 bg-transparent cursor-pointer font-body border border-slate-300 w-full ${isActive ? 'border-b-0' : 'rounded-b-lg'}`}
+                    className={`rounded-t-md  shadow-sm px-2 py-2 bg-transparent cursor-pointer font-body border border-slate-300 w-full ${isActive ? 'border-b-0' : 'rounded-b-lg'}`}
 
                 >
                     <motion.div className="flex justify-between capitalize items-center space-x-2 w-full ml-1">
 
                         {/* <p> {props.label} </p> */}
                         <Text1 size='lg'>{props.label}</Text1>
-                        <div className='flex gap-4 items-center'>
+                        <div className='flex gap-4 items-baseline'>
                             <div className='flex gap-4'>
                                 <div className='flex items-center gap-1'>
 
@@ -86,7 +86,7 @@ export const AccordionField = (props) => {
                                 },
                             }}
                             exit={{ opacity: 0 }}
-                            className=" px-2 py-4  text-sm text-gray-700 border border-slate-300 rounded-b-md "
+                            className=" px-2 py-4 bg-[#F7F7F7] text-sm text-gray-700 border border-slate-300 rounded-b-md "
                         >
                             {props.children}
                         </motion.div>

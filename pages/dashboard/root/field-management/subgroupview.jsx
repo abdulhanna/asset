@@ -96,27 +96,30 @@ const Groupview = (allgroups) => {
                   key={index}
                   id={component._id}>
 
-                  <div>
+                  <div className=''>
                     {
                       component?.subgroups?.map((subGroup, index1) => {
                         return (
                           <>
-                            <h1 className='text-gray-500 pb-4'>
-                              {subGroup.subgroupName}
-                            </h1>
-                            <div className="grid grid-cols-4 gap-4 py-1 pb-5">
-                              {
-                                subGroup?.fields?.map((groupField) => {
-                                  return (
-                                    <>
+                            <div className='bg-white border rounded-lg mb-3 border-gray-100 p-4'>
+                              <Text1 size='md' weight="medium" classname='mb-4'>
+                                {subGroup.subgroupName}
+                              </Text1>
 
-                                      <div className="border rounded-md p-3 bg-[#F7F7F7]" >
-                                        {groupField?.name}
-                                      </div>
-                                    </>
-                                  )
-                                })
-                              }
+                              <div className="grid grid-cols-4 gap-4 py-1 pb-5">
+                                {
+                                  subGroup?.fields?.map((groupField) => {
+                                    return (
+                                      <>
+
+                                        <div className="border rounded-md p-3  bg-[#F1F5FD]" >
+                                          {groupField?.name}
+                                        </div>
+                                      </>
+                                    )
+                                  })
+                                }
+                              </div>
                             </div>
 
                           </>
