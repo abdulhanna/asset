@@ -95,10 +95,10 @@ const Page = ({access_token,user,tables}) => {
     };
 
     const callApi = useCallback(async(e)=>{
-      console.log('call Api',e.page)
+      // console.log('call Api',e)
 
-      const res = await masterTableApi.allTable(access_token,e.page,pageSize,JSON.stringify(sort))
-      console.log(res,'res')
+      const res = await masterTableApi.allTable(access_token,e.page,e.pageSize,JSON.stringify(sort))
+      // console.log(res,'res',e.page,pageSize)
       setList(res.data)
       setTableList(res?.data?.data)
       setPage(res.data.currentPage)
@@ -109,19 +109,23 @@ const Page = ({access_token,user,tables}) => {
 
     const handlePage =(e)=>{
       let value = e
-      handleSearchChange({page:value})
+      // console.log(pageSize,'handlePage')
+      handleSearchChange({page:value,pageSize:pageSize})
        setPage(value)
     }
 
     const onPageSize = useCallback(async(e)=>{
-      setPageSize(e.target.value)
+      setPageSize(Number(e.target.value))
       const res = await masterTableApi.allTable(access_token,page,e.target.value,JSON.stringify(sort))
+      console.log(res,page,pageSize,'list')
       setList(res.data)
       setTableList(res?.data?.data)
       setPage(res.data.currentPage)
       //  console.log(e.target.value,'onPageSoze',res)
     },[])
-    // console.log(tables,'list')
+
+    // console.log(pageSize,page,'list')
+   
   return (
     <>
         <MainLayout User={user} isScroll={true}>
@@ -137,6 +141,10 @@ const Page = ({access_token,user,tables}) => {
             <Button onClick={()=> setIsOpen(true)}>MODIFY MASTER TABLE</Button>
           </div>
          </div>
+         {checkedNewData.length > 0 && <div className='bg-slate-100 py-4 px-4 mt-4'>
+                 <Text1>{`${checkedNewData.length} has been selected for export csv`}</Text1>
+               
+              </div> }
           {tableList.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
           <SampleTableNew
                   response={tableList}

@@ -36,10 +36,10 @@ const LogTable = ({user,access_token,tables}) => {
 
 
     const callApi = useCallback(async(e)=>{
-      console.log('call Api',e.page)
+      // console.log('call Api',e)
 
-      const res = await masterTableApi.allTable(access_token,e.page,pageSize,JSON.stringify(sort))
-      console.log(res,'res')
+      const res = await masterTableApi.allTable(access_token,e.page,e.pageSize,JSON.stringify(sort))
+      // console.log(res,'res')
       setList(res.data)
       setTablesList(res?.data?.data)
       setPage(res.data.currentPage)
@@ -50,7 +50,7 @@ const LogTable = ({user,access_token,tables}) => {
 
     const handlePage =(e)=>{
       let value = e
-      handleSearchChange({page:value})
+      handleSearchChange({page:value,pageSize:pageSize})
        setPage(value)
     }
 
@@ -79,6 +79,7 @@ const LogTable = ({user,access_token,tables}) => {
                         </div>
                         {/* <Button href={'/dashboard/master-table/table/upload'} variant="contained" onClick={handleSubmit}>NEXT</Button> */}
                 </div>
+                {/* {checkData} */}
                 <div>
                 {tablesList.length  === 0 ? <NodataPage/> :<div>
                 <MasterTableLogs 
