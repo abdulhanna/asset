@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import memberAccessApi from 'helpers/use-api/user-management/member'
-import { LeftArrowIcon } from '@/components/atoms/icons'
+import { LeftArrowIcon, DeleteIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
 import { useRouter } from 'next/router'
 import masterTableApi from 'helpers/use-api/master-table/table'
 import { ToastContainer, toast } from "react-toastify";
-import { DeleteIcon } from '@/components/atoms/icons'
+
+
+
+
 const AddTable = ({access_token,user}) => {
   const [fields,setFields] = useState({
     codeGenerationType: "auto",
@@ -109,7 +112,7 @@ const AddTable = ({access_token,user}) => {
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                     </div>
                    <div className='flex gap-4'>
-                       <Button  variant="contained" onClick={handleSubmit}>DESIGN MANUALLY</Button>
+                       {/* <Button  variant="contained" onClick={handleSubmit}>DESIGN MANUALLY</Button> */}
                        <Button variant='contained' onClick={handleSubmit1}>UPLOAD MASTER TABLE</Button>
                    </div>
                </div>

@@ -85,8 +85,13 @@ const SingleTable = ({access_token,user,table}) => {
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                </div>
                <div className='flex gap-4'>
-                 {masterTable.publishStatus !== "published" && <Button variant='contained' onClick={handlePublishTable}>PUBLISH</Button>}
+                 {masterTable.publishStatus !== "published" ? <div className='flex gap-2'> 
                  <Button  variant="danger" onClick={()=>setIsOpen(true)}>DISCARD DRAFT</Button>
+                 <Button  href={`/dashboard/master-table/table/modify?id=${id}`}>EDIT MASTER TABLE</Button>
+                 <Button variant='contained' onClick={handlePublishTable}>PUBLISH</Button> 
+                
+                 </div> :   <Button  variant="danger" onClick={()=>setIsOpen(true)}>DELETE MASTER TABLE</Button>}
+              
                </div>
         </div>
 
@@ -97,10 +102,9 @@ const SingleTable = ({access_token,user,table}) => {
                    headers={tableHeader}
              responseData={(e) => console.log(e, "e")}
             body={masterTable?.masterTableData.map((item) => {
-              // console.log(item)
+            
             return {
               ...item,
-              // href: `id=${item.id}`,
             };
           })}
            />
