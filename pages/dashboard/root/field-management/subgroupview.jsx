@@ -77,7 +77,7 @@ const Groupview = (allgroups) => {
           {/* Display Text */}
           {allgroups.allgroups?.map((component, index) => (
             <>
-              <div key={component._id} className="flex justify-between  py-2 ">
+              <div key={component._id} className="flex justify-between">
                 {/* <div className='flex'>
                   <Text1 size='2xl' >{component.groupName}</Text1>
 

@@ -45,7 +45,7 @@ export const AccordionField = (props) => {
         props.handleClick(e)
     }
     return (
-        <motion.div className="w-full my-4">
+        <motion.div className="w-full my-2">
             <AnimatePresence>
                 <motion.div
                     key="question"
@@ -56,9 +56,9 @@ export const AccordionField = (props) => {
 
                         {/* <p> {props.label} </p> */}
                         <Text1 size='lg'>{props.label}</Text1>
-                        <div className='flex gap-4 items-baseline'>
+                        <div className='flex gap-4 items-center'>
                             <div className='flex gap-4'>
-                                <div className='flex items-center gap-1'>
+                                <div className='flex items-center gap-1 mt-2'>
 
                                     <Button onClick={props.handleClick} href={`/dashboard/root/field-management/fieldgroupdescription?id=${props?.id}`} className="mb-2 bg-blue-500 hover:bg-blue-600 hover:text-white px-6 py-2 mx-4 rounded transition transform hover:scale-110 ">
                                         Manage Group
