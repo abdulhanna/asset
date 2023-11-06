@@ -17,6 +17,8 @@ import { Nodata } from "../../../../components/atoms/icons";
 const OrganisationList = () => {
   const [checkedNewData, setCheckedNewData] = useState([]);
   const [allClick, setAllClick] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   const HeaderGoods = [
@@ -87,6 +89,8 @@ const OrganisationList = () => {
       setCheckedNewData([]);
     }
   }, [allClick]);
+
+
 
   return (
     <>

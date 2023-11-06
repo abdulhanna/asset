@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Text1 from '@/components/atoms/field'
 import Button from '../../../../components/atoms/button';
 import AddField from 'pages/testComponents/addField';
@@ -6,6 +6,8 @@ import { CloseIcon } from '@/components/atoms/icons';
 import { DialogPage1 } from "@/components/molecules/dialog";
 import { useRouter } from 'next/router';
 import { AccordionField } from '@/components/molecules/accordion';
+import { Fieldskeleton } from '@/components/organism/Homeskeleton';
+
 
 
 
@@ -28,6 +30,7 @@ import { AccordionField } from '@/components/molecules/accordion';
 const Groupview = (allgroups) => {
 
   const [textHigh, setTextHigh] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   // console.log(allgroups?.allgroups, "this is daaa field managment")
 
@@ -65,6 +68,17 @@ const Groupview = (allgroups) => {
     console.log(id, "this is id")
   }
 
+
+  useEffect(() => {
+    setLoading(true)
+    const wait = setTimeout(() => {
+      // getInventoryData();
+      // getInventorycarcount();
+      setLoading(false);
+    }, 1000)
+    return () => clearTimeout(wait);
+  }, []);
+
   console.log(allgroups, "this is all groups")
 
 
@@ -75,10 +89,14 @@ const Groupview = (allgroups) => {
         <div className="w-full h-[80vh] overflow-auto">
           {/* Add Field Button */}
           {/* Display Text */}
-          {allgroups.allgroups?.map((component, index) => (
-            <>
-              <div key={component._id} className="flex justify-between">
-                {/* <div className='flex'>
+          {
+            loading == false ?
+
+              <>
+                {allgroups.allgroups?.map((component, index) => (
+                  <>
+                    <div key={component._id} className="flex justify-between">
+                      {/* <div className='flex'>
                   <Text1 size='2xl' >{component.groupName}</Text1>
 
                   {
@@ -90,56 +108,62 @@ const Groupview = (allgroups) => {
                   }
                 </div> */}
 
-                <AccordionField label={component.groupName}
-                  handleClick={ManageGroup}
-                  data={component}
-                  key={index}
-                  id={component._id}>
+                      <AccordionField label={component.groupName}
+                        handleClick={ManageGroup}
+                        data={component}
+                        key={index}
+                        id={component._id}>
 
-                  <div className=''>
-                    {
-                      component?.subgroups?.map((subGroup, index1) => {
-                        return (
-                          <>
-                            <div className='bg-white border rounded-lg mb-3 border-gray-100 p-4'>
-                              <Text1 size='md' weight="medium" classname='mb-4'>
-                                {subGroup.subgroupName}
-                              </Text1>
+                        <div className=''>
+                          {
+                            component?.subgroups?.map((subGroup, index1) => {
+                              return (
+                                <>
+                                  <div className='bg-white border rounded-lg mb-3 border-gray-100 p-4'>
+                                    <Text1 size='md' weight="medium" classname='mb-4'>
+                                      {subGroup.subgroupName}
+                                    </Text1>
 
-                              <div className="grid grid-cols-4 gap-4 py-1 pb-5">
-                                {
-                                  subGroup?.fields?.map((groupField) => {
-                                    return (
-                                      <>
+                                    <div className="grid grid-cols-4 gap-4 py-1 pb-5">
+                                      {
+                                        subGroup?.fields?.map((groupField) => {
+                                          return (
+                                            <>
 
-                                        <div className="border rounded-md p-3  bg-[#F1F5FD]" >
-                                          {groupField?.name}
-                                        </div>
-                                      </>
-                                    )
-                                  })
-                                }
-                              </div>
-                            </div>
+                                              <div className="border rounded-md p-3  bg-[#F1F5FD]" >
+                                                {groupField?.name}
+                                              </div>
+                                            </>
+                                          )
+                                        })
+                                      }
+                                    </div>
+                                  </div>
 
-                          </>
-                        )
-                      })
-                    }
-                  </div>
+                                </>
+                              )
+                            })
+                          }
+                        </div>
 
-                </AccordionField>
+                      </AccordionField>
 
-              </div>
-              <div>
+                    </div>
+                    <div>
 
-              </div>
+                    </div>
 
-            </>
+                  </>
 
 
 
-          ))}
+                ))}
+
+              </> :
+
+              <Fieldskeleton />
+          }
+
         </div>
         {/* <AddtextField open={textHigh} close={() => setTextHigh(false)} /> */}
       </div>

@@ -74,7 +74,7 @@ const FieldOverview = ({ user, access_token }) => {
           Field Management
         </Text1>
         <div className='flex'>
-          <Button onClick={handleAddButtonClick} variant="contained"> ADD FIELD GROUP</Button>
+          <Button onClick={handleAddButtonClick} variant="contained"> + ADD FIELD GROUP</Button>
           <Button onClick={handleFormMangement} className="mx-2"> FORM  MANAGEMENT</Button>
         </div>
       </div>
