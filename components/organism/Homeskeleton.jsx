@@ -15,7 +15,7 @@ const SkeletonItem = () => {
             {/* <h2 className="section-title mt-4">
                 <Skeleton duration={1} height={220} />
             </h2> */}
-            <ul className="list  grid grid-cols-4 gap-4">
+            <ul className="list  grid grid-cols-4 gap-4 mt-4">
                 {Array(36)
                     .fill()
                     .map((item, index) => (
