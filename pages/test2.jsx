@@ -86,6 +86,9 @@ const Test2 = () => {
       
     
     //   }
+
+ 
+    
      
    const headerMaster = [
     {label:"Code NO" ,name:"code"},
@@ -142,7 +145,7 @@ const master = [
           })}
           href={`/testing/?`}
               /> */}
-              <MasterTableLogs 
+              {/* <MasterTableLogs 
                    response={newFilteredSample}
                   // headerData={[{ name: 'check', label:'' },...headerDataNew]}
                   headerData={headerDataNew}
@@ -153,7 +156,7 @@ const master = [
                   checkAllStatus={allClick}
                   onEdit={(e)=> console.log(e)}
                   onDelete ={(e)=> console.log(e)}
-              />
+              /> */}
 
               {/* <div className='my-20'>
                    <Button>PUBLISH</Button>

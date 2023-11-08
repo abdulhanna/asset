@@ -22,18 +22,18 @@ const AddTable = ({access_token,user}) => {
     fixedFields:   [
       {
         fieldName:"Code No",
-        dataType:"alphanumeric",
-        type:"text"
+        dataType:"number",
+        // type:"text"
       },
       {
         fieldName:"Description",
-        dataType:"alphanumeric",
-        type:"text"
+        dataType:"string",
+        // type:"text"
       },
       {
         fieldName:"Parent Code",
-        dataType:"alphanumeric",
-        type:'text'
+        dataType:"number",
+        // type:'text'
       },
       // {
       //   fieldName:"Rate(%)",
@@ -51,6 +51,8 @@ const AddTable = ({access_token,user}) => {
       }
     ]
   })
+
+
   const router  = useRouter()
   const notify = (msg)=> toast.success(msg)
   const Error = (msg) => toast.error(msg)
@@ -147,8 +149,10 @@ const AddTable = ({access_token,user}) => {
                    {fields.fixedFields.map((cur,index)=>{
                     {/* console.log(index,'ss') */}
                     return <div className='grid grid-cols-4 gap-4 items-center' key={index}>
-                      <TextField label='Filed Name' value={cur.fieldName}/>
-                       {cur.dataType === "number" ?<CustomSelect name={`depreciationType`}  label={`Depriciation Method`} onChange={(e)=>{
+                      <TextField label='Filed Name' value={cur.fieldName} disabled={true}/>
+                      <TextField label='Data Type' value={cur.dataType} disabled={true}/>
+                      
+                       {/* <CustomSelect name={`depreciationType`}  label={`Depriciation Method`} onChange={(e)=>{
                         const data = [...fields.fields]
                         data[index].depreciationType=e.target.value;
                         setFields({...fields,fields:data})
@@ -158,7 +162,8 @@ const AddTable = ({access_token,user}) => {
                         {cur.options.map((option,id)=>{
                           return <option value={option} key={id}>{option}</option>
                         })}
-                       </CustomSelect>:  <TextField label='Data Type' value={cur.dataType}/>}
+                       </CustomSelect>: */}
+                         
                        {/* <div className='col-start-4 flex justify-end w-full pt-2'>{fields.fields.length-1 === index && <Button onClick={addField}>ADD RATE FIELD</Button>}</div> */}
                     </div>
                   })}
