@@ -32,7 +32,6 @@ const Page = ({ user, organisationList, access_token }) => {
               </div>
             </div>
           </> : <>
-
             <Organisations
               organisationList={organisationList}
               access_token={access_token}

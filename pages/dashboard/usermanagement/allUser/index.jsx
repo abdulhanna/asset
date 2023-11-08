@@ -9,6 +9,7 @@ import authApi from 'helpers/use-api/auth'
 import memberAccessApi from 'helpers/use-api/user-management/member'
 import { DateTime } from 'luxon'
 import Debounce from 'helpers/debounce'
+import { Homeskeleton } from '@/components/organism/Homeskeleton'
 
 const AllUser = ({ user, access_token, memberList }) => {
   const [list, setList] = useState(memberList)
@@ -19,6 +20,10 @@ const AllUser = ({ user, access_token, memberList }) => {
   const [pageSize, setPageSize] = useState(10)
   const [sort, setSort] = useState({ "createdAt": -1 })
   const [allClick, setAllClick] = useState(false)
+
+  const [loading, setLoading] = useState(false)
+
+
   const router = useRouter()
   const headerData = [
     { label: 'User Id', name: 'userCodeId' },
@@ -63,6 +68,17 @@ const AllUser = ({ user, access_token, memberList }) => {
       setCheckedNewData([])
     }
   }, [allClick])
+
+
+  useEffect(() => {
+    setLoading(true)
+    const wait = setTimeout(() => {
+      // getInventoryData();
+      // getInventorycarcount();
+      setLoading(false);
+    }, 1000)
+    return () => clearTimeout(wait);
+  }, []);
 
 
   function debounce(func, wait, immediate) {
@@ -124,37 +140,44 @@ const AllUser = ({ user, access_token, memberList }) => {
               <Text1 size='2xl'>All Member</Text1>
               <Text1 className='text-lightGray' size='sm'>We have nothing here yet. Start by adding a Field Group.</Text1>
             </div>
-            <Button variant='contained' onClick={() => router.push('/dashboard/usermanagement/allUser/add-user')}>ADD MEMBER</Button>
+            <Button variant='contained' onClick={() => router.push('/dashboard/usermanagement/allUser/add-user')}> + ADD MEMBER</Button>
           </div>
-          {members?.length === 0 ? <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'} /> : <div className=''>
-            <SampleTableNew
-              response={members?.map((row) => {
-                return {
-                  ...row, userCodeId: row?.userProfile?.userCodeId,
-                  name: row.userProfile?.name,
-                  // createdAt:row.createdAt,
-                  // createdAt: DateTime.fromISO(row.createdAt).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS),
-                  // createdAt: DateTime.fromISO(row.createdAt).toFormat('MM/dd/yy,hh:mm:a'),
+          {members?.length === 0 ? <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'} />
+            :
+            loading == false ? <>
+              <div className=''>
+                <SampleTableNew
+                  response={members?.map((row) => {
+                    return {
+                      ...row, userCodeId: row?.userProfile?.userCodeId,
+                      name: row.userProfile?.name,
+                      // createdAt:row.createdAt,
+                      // createdAt: DateTime.fromISO(row.createdAt).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS),
+                      // createdAt: DateTime.fromISO(row.createdAt).toFormat('MM/dd/yy,hh:mm:a'),
 
-                  roleName: row?.teamRoleId?.roleName
-                }
-              })}
-              headerData={[{ name: 'check', label: '' }, ...headerData]}
-              checkedData={checkedNewData}
-              responseData={(e) => onNewCheck(e)}
-              clickAll={clickAll}
-              onClick={(e) => console.log(e, 'onclick')}
-              href={`/dashboard/usermanagement/allUser/single?`}
-              checkAllStatus={allClick}
-              totalDoc={list?.totalDocuments}
-              currentPage={page}
-              start={list.startSerialNumber}
-              end={list.endSerialNumber}
-              pageSize={list?.totalPages}
-              onPageChange={handlePage}
-              onPageSize={onPageSize}
-            />
-          </div>}
+                      roleName: row?.teamRoleId?.roleName
+                    }
+                  })}
+                  headerData={[{ name: 'check', label: '' }, ...headerData]}
+                  checkedData={checkedNewData}
+                  responseData={(e) => onNewCheck(e)}
+                  clickAll={clickAll}
+                  onClick={(e) => console.log(e, 'onclick')}
+                  href={`/dashboard/usermanagement/allUser/single?`}
+                  checkAllStatus={allClick}
+                  totalDoc={list?.totalDocuments}
+                  currentPage={page}
+                  start={list.startSerialNumber}
+                  end={list.endSerialNumber}
+                  pageSize={list?.totalPages}
+                  onPageChange={handlePage}
+                  onPageSize={onPageSize}
+                />
+              </div>
+            </> : <>
+              <Homeskeleton />
+            </>
+          }
         </div>
       </MainLayout>
     </>
