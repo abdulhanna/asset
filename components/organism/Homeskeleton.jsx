@@ -19,7 +19,7 @@ const SkeletonItem = () => {
                 {Array(36)
                     .fill()
                     .map((item, index) => (
-                        <div>
+                        <div key={index}>
                             <li className="card" key={index}>
                                 <Skeleton height={50} />
                             </li>

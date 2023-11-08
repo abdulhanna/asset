@@ -87,8 +87,7 @@ const Organisations = ({ organisationList, access_token }) => {
 
   }, [])
 
-  const handleSearchChange = Debounce(callApi
-    , 2000)
+  const handleSearchChange = Debounce(callApi, 2000)
 
 
   const handlePage = async (e) => {
