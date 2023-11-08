@@ -151,8 +151,8 @@ const Page = ({access_token,user,tables}) => {
                
               </div> }
 
-              <div className='flex my-4 gap-4'>{tabList.map((tab)=>{
-                return <p className={`${activeTab === tab ? "underline decoration-primary underline-offset-2 text-primary":""} cursor-pointer`} onClick={()=> setActiveTab(tab)}>{tab}</p>
+              <div className='flex my-4 gap-4'>{tabList.map((tab,index)=>{
+                return <p className={`${activeTab === tab ? "underline decoration-primary underline-offset-2 text-primary":""} cursor-pointer`} onClick={()=> setActiveTab(tab)} key={index}>{tab}</p>
               })}</div>
           {tableList.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
           <SampleTableNew

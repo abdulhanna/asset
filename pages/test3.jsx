@@ -277,8 +277,8 @@ const ITEMS = [
         <table className={classes.table}>
           <thead className={classes.thead}>
             <tr className={classes.tr}>
-              {header.map((head) => {
-                return <th className={classes.th}> {head.Label}</th>;
+              {header.map((head,index) => {
+                return <th className={classes.th} key={index}> {head.Label}</th>;
               })}
              
             </tr>
