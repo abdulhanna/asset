@@ -33,7 +33,7 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
     if(key !== '_id'){
        a['label']  = key
        a['value'] = value
-        console.log(`${key}: ${value}`) 
+        // console.log(`${key}: ${value}`) 
        arr.push(a)
     }
 }
@@ -213,9 +213,11 @@ const SingleTable = ({access_token,user,table}) => {
       }
   }
 
-  const addRow = (e)=>{
-    
-    console.log(e)
+  const addRow = (data)=>{
+    const a = [...masterTable.masterTableData]
+    a.push(data)
+    setMasterTable({...masterTable,masterTableData:a})
+    // console.log(data,'ddd',a)
   }
 
   // console.log(masterTable,'table');

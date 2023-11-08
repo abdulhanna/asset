@@ -13,6 +13,12 @@ export const getServerSideProps = async (appCtx) => {
 
     const auth = await authApi.WhoAmI(appCtx)
     // console.log(auth,'auth')
+
+    // return {
+    //   props:{
+
+    //   }
+    // }
     if(!auth){
       return {
         redirect:{

@@ -78,7 +78,7 @@ export const CheckWithLinkTable = ({
   headers,
   data,
   classes,
-  href,
+  href = '#',
   extra,
   onClick,
   responseData,

@@ -52,7 +52,11 @@ const Page = ({access_token,user,tables}) => {
     const [isOpen,setIsOpen] = useState(false)
     const [page,setPage] = useState(tables.currentPage)
     const [pageSize,setPageSize] = useState(10)
+    const [activeTab,setActiveTab] = useState('ALL Master Table')
     const [sort,setSort] = useState({"createdAt":-1})
+    const tabList = ["ALL Master Table","Table Structures","Drafts"]
+    
+    let publishStatus = "published"
     const router = useRouter()
     const Header = [
       {label:"Master Table Id",name:"tableCodeId"},
@@ -97,7 +101,7 @@ const Page = ({access_token,user,tables}) => {
     const callApi = useCallback(async(e)=>{
       // console.log('call Api',e)
 
-      const res = await masterTableApi.allTable(access_token,e.page,e.pageSize,JSON.stringify(sort))
+      const res = await masterTableApi.allTable(access_token,e.page,e.pageSize,JSON.stringify(sort),publishStatus)
       // console.log(res,'res',e.page,pageSize)
       setList(res.data)
       setTableList(res?.data?.data)
@@ -105,7 +109,7 @@ const Page = ({access_token,user,tables}) => {
      
     },[])
     const handleSearchChange=Debounce(callApi
-      ,2000)
+      ,1000)
 
     const handlePage =(e)=>{
       let value = e
@@ -116,7 +120,7 @@ const Page = ({access_token,user,tables}) => {
 
     const onPageSize = useCallback(async(e)=>{
       setPageSize(Number(e.target.value))
-      const res = await masterTableApi.allTable(access_token,page,e.target.value,JSON.stringify(sort))
+      const res = await masterTableApi.allTable(access_token,page,e.target.value,JSON.stringify(sort),publishStatus)
       console.log(res,page,pageSize,'list')
       setList(res.data)
       setTableList(res?.data?.data)
@@ -137,14 +141,19 @@ const Page = ({access_token,user,tables}) => {
             <Text1 className='text-lightGray' size='sm'>We have nothing here yet. Start by adding a Field Group.</Text1>
           </div>
           <div className='flex gap-4'>
-            <Button variant='contained' onClick={()=>router.push('/dashboard/master-table/table/add-table')}>DESIGN MASTER TABLE</Button>
-            <Button onClick={()=> setIsOpen(true)}>MODIFY MASTER TABLE</Button>
+            <Button variant='contained' onClick={()=>router.push('/dashboard/master-table/table/add-table')}>Create New</Button>
+            {/* <Button onClick={()=> setIsOpen(true)}>MODIFY MASTER TABLE</Button> */}
           </div>
          </div>
+         
          {checkedNewData.length > 0 && <div className='bg-slate-100 py-4 px-4 mt-4'>
                  <Text1>{`${checkedNewData.length} has been selected for export csv`}</Text1>
                
               </div> }
+
+              <div className='flex my-4 gap-4'>{tabList.map((tab,index)=>{
+                return <p className={`${activeTab === tab ? "underline decoration-primary underline-offset-2 text-primary":""} cursor-pointer`} onClick={()=> setActiveTab(tab)} key={index}>{tab}</p>
+              })}</div>
           {tableList.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
           <SampleTableNew
                   response={tableList}
@@ -178,6 +187,7 @@ export const getServerSideProps = async (appCtx) => {
     let page = 1
     let pageSize = 10
     let sort = {"createdAt":-1};
+    let publishStatus = "published"
     let table 
     let auth
     try{
@@ -190,7 +200,7 @@ export const getServerSideProps = async (appCtx) => {
           },
         };
       } 
-      const {data} = await masterTableApi.allTable(access_token,page,pageSize,JSON.stringify(sort))
+      const {data} = await masterTableApi.allTable(access_token,page,pageSize,JSON.stringify(sort),publishStatus)
       table  =  data
       // console.log(data)
     }catch(err){
