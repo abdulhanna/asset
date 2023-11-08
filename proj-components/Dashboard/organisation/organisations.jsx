@@ -129,7 +129,7 @@ const Organisations = ({ organisationList, access_token }) => {
                   contactNo: cur?.contactNo,
                   email: cur?.userId?.email,
                   gst: cur?.gstin,
-                  createdAt: DateTime.fromISO(cur?.createdAt).toFormat('MMM-dd-yy, hh:mm:a'),
+                  createdAt: DateTime.fromISO(cur.createdAt).toFormat('dd-MM-yy, hh:mm:a'),
                 }
               })}
 
