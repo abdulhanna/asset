@@ -17,7 +17,7 @@ const Page = ({ user, organisationList, access_token }) => {
         <div className="flex justify-between   my-0">
           <Text1 size="2xl">All Organizations</Text1>
           <Button href={"/dashboard/root/organisation/add"} variant="contained">
-            ADD ORGANIZATION
+            <span className="mr-2.5">+</span> ADD ORGANIZATION
           </Button>
         </div>
 

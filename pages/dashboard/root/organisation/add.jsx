@@ -13,10 +13,16 @@ import authApi from "helpers/use-api/auth";
 import orgApi from "helpers/use-api/organisations";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
+import { Country, State, City } from "country-state-city";
+import Select from "react-select";
 
 
 const AddOganisation = ({ user, access_token }) => {
   const router = useRouter();
+
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
 
   const [companyprofileData, setCompanyprofileData] = useState({
     email: "",
@@ -33,10 +39,10 @@ const AddOganisation = ({ user, access_token }) => {
     mainAddress: {
       address1: "",
       address2: "",
-      city: "",
-      state: "",
+      city: selectedCity,
+      state: selectedState,
       pinCode: "",
-      country: "",
+      country: selectedCountry,
     },
   });
 
@@ -49,6 +55,9 @@ const AddOganisation = ({ user, access_token }) => {
       // alert("done done")
     }
   }, [profileErrors]);
+
+
+  console.log(selectedCountry?.name, "this is country")
 
   // Handling all data for Company Profile
   const handleChange = (e) => {
@@ -68,6 +77,7 @@ const AddOganisation = ({ user, access_token }) => {
       ...prevData,
       mainAddress: {
         ...prevData.mainAddress,
+        country: selectedCountry?.name,
         [name]: value,
       },
     }));
@@ -304,16 +314,35 @@ const AddOganisation = ({ user, access_token }) => {
                   </option>
                 </CustomSelect>
 
-                <CustomSelect
+                {/* <CustomSelect
                   label="Country"
                   onChange={handleChange1}
                   name="country"
                   selectHeight="h-[48px]"
                   bgColor="white"
                 >
+
                   <option value="">Choose Country</option>
-                  <option value="delhi ">India</option>
-                </CustomSelect>
+                  <option value="delhi">Delhi</option>
+                </CustomSelect> */}
+
+                <div className="self-center">
+                  <label className="font-normal text-sm text-textColor">Country</label>
+                  <Select
+                    options={Country.getAllCountries()}
+                    name="country"
+                    getOptionLabel={(options) => {
+                      return options["name"];
+                    }}
+                    getOptionValue={(options) => {
+                      return options["name"];
+                    }}
+                    value={selectedCountry}
+                    onChange={(item) => {
+                      setSelectedCountry(item);
+                    }}
+                  />
+                </div>
 
                 <TextField
                   label="Registration Num"
@@ -411,25 +440,50 @@ const AddOganisation = ({ user, access_token }) => {
             </div>
 
             <div className="grid grid-cols-3 gap-4 mb-2">
-              <TextField
-                label="City"
-                bgColor="white"
-                type="text"
-                textSize="lg"
-                name="city"
-                placeHolder="Enter Your City"
-                onChange={handleChange1}
-              />
 
-              <TextField
-                label="State"
-                bgColor="white"
-                type="text"
-                textSize="lg"
-                name="state"
-                placeHolder="Enter Your State"
-                onChange={handleChange1}
-              />
+
+              <div className="self-center">
+                <label className="font-normal text-sm text-textColor">State</label>
+                <Select
+                  menuPosition={'top'}
+                  menuPlacement="auto"
+                  minMenuHeight={300}
+                  options={State?.getStatesOfCountry(selectedCountry?.isoCode)}
+                  getOptionLabel={(options) => {
+                    return options["name"];
+                  }}
+                  getOptionValue={(options) => {
+                    return options["name"];
+                  }}
+                  value={selectedState}
+                  onChange={(item) => {
+                    setSelectedState(item);
+                  }}
+                />
+              </div>
+
+              <div className="self-center">
+                <label className="font-normal text-sm text-textColor">City</label>
+                <Select
+                  menuPosition={'top'}
+                  menuPlacement="auto"
+                  minMenuHeight={300}
+                  options={City.getCitiesOfState(
+                    selectedState?.countryCode,
+                    selectedState?.isoCode
+                  )}
+                  getOptionLabel={(options) => {
+                    return options["name"];
+                  }}
+                  getOptionValue={(options) => {
+                    return options["name"];
+                  }}
+                  value={selectedCity}
+                  onChange={(item) => {
+                    setSelectedCity(item);
+                  }}
+                />
+              </div>
 
               <TextField
                 label="PIn Code"

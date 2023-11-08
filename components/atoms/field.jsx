@@ -329,6 +329,9 @@ export const CustomSelect = ({
   className,
   selectHeight = "",
   value,
+  options,
+  getOptionLabel,
+  getOptionValue
 }) => {
   return (
     <div className={`flex  flex-col py-1 2xl:py-2 gap-0.5 2xl:gap-1 ${className}`}>
@@ -338,9 +341,12 @@ export const CustomSelect = ({
         id={id}
         name={name}
         value={value}
-        className={` px-1 ${selectHeight} rounded border-[1px] p-6 py-[12px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
+        className={` px-1 ${selectHeight} textField rounded border-[1px] p-6 py-[12px] active:outline-none w-full ${bgColor} focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent`}
         onChange={onChange}
         disabled={disabled}
+        option={options}
+        getOptionLabel={getOptionLabel}
+        getOptionValue={getOptionValue}
       >
         {children}
       </select>

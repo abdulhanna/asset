@@ -9,6 +9,7 @@ import { DateTime } from 'luxon'
 import Debounce from 'helpers/debounce'
 import orgApi from 'helpers/use-api/organisations'
 import NodataPage from '@/components/molecules/nodataPage'
+import { Homeskeleton } from '@/components/organism/Homeskeleton'
 
 const Organisations = ({ organisationList, access_token }) => {
   const [list, setList] = useState(organisationList)
@@ -18,6 +19,7 @@ const Organisations = ({ organisationList, access_token }) => {
   const [page, setPage] = useState(organisationList?.currentPage)
   const [pageSize, setPageSize] = useState(10)
   const [sort, setSort] = useState({ "createdAt": -1 })
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
 
 
@@ -85,8 +87,7 @@ const Organisations = ({ organisationList, access_token }) => {
 
   }, [])
 
-  const handleSearchChange = Debounce(callApi
-    , 2000)
+  const handleSearchChange = Debounce(callApi, 2000)
 
 
   const handlePage = async (e) => {
@@ -108,6 +109,16 @@ const Organisations = ({ organisationList, access_token }) => {
     }
   }, [allClick])
 
+  useEffect(() => {
+    setLoading(true)
+    const wait = setTimeout(() => {
+      // getInventoryData();
+      // getInventorycarcount();
+      setLoading(false);
+    }, 1000)
+    return () => clearTimeout(wait);
+  }, []);
+
   console.log(organisationList.length, "this is length")
 
   return (
@@ -118,7 +129,7 @@ const Organisations = ({ organisationList, access_token }) => {
             <NodataPage text={"Add Organisation"} />
           </>
           :
-          <>
+          loading == false ? <>
             <OrganisationTableNew
               response={organisations?.organizations?.map((cur) => {
                 return {
@@ -148,7 +159,7 @@ const Organisations = ({ organisationList, access_token }) => {
               onPageSize={onPageSize}
               onPageChange={handlePage}
             />
-          </>
+          </> : <Homeskeleton />
       }
 
     </div>

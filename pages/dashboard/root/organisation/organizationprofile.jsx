@@ -85,8 +85,6 @@ const Profile = ({ user, getOrganizationbyId, access_token }) => {
 
 export const getServerSideProps = async (appCtx) => {
 
-
-
   const { id } = appCtx.query
 
 
