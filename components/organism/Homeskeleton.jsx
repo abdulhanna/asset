@@ -20,7 +20,7 @@ const SkeletonItem = () => {
                     .fill()
                     .map((item, index) => (
                         <div key={index}>
-                            <li className="card" key={index}>
+                            <li className="card p-3" key={index}>
                                 <Skeleton height={10} />
                             </li>
                         </div>
@@ -36,22 +36,22 @@ export const Fieldskeleton = () => {
             <h2 className="section-title">
                 <Skeleton duration={1} height={50} />
             </h2>
-            <h2 className="section-title mt-4">
-                <Skeleton duration={1} height={80} />
+            <h2 className="section-title mt-4 p-2">
+                <Skeleton duration={1} height={30} />
             </h2>
 
-            <h2 className="section-title mt-4">
-                <Skeleton duration={1} height={80} />
-            </h2>
-
-
-            <h2 className="section-title mt-4">
-                <Skeleton duration={1} height={80} />
+            <h2 className="section-title mt-4 p-2">
+                <Skeleton duration={1} height={30} />
             </h2>
 
 
-            <h2 className="section-title mt-4">
-                <Skeleton duration={1} height={80} />
+            <h2 className="section-title mt-4 p-2">
+                <Skeleton duration={1} height={30} />
+            </h2>
+
+
+            <h2 className="section-title mt-4 p-2">
+                <Skeleton duration={1} height={30} />
             </h2>
 
         </section>

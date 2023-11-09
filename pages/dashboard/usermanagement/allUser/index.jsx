@@ -129,6 +129,7 @@ const AllUser = ({ user, access_token, memberList }) => {
   }, [])
   useEffect(() => {
     console.log(page, pageSize, 'useEffect')
+
   }, [page])
   //  console.log(memberList,'list',page,pageSize,sort)
   return (
