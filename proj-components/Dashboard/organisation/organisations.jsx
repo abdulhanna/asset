@@ -39,7 +39,7 @@ const Organisations = ({ organisationList, access_token }) => {
     { _id: 2, name: "siddhu", types: "employe", verification: <Verified />, batch: "B", id: "231" },
     { _id: 3, name: "john", types: "employe", verification: <ResendEmail />, batch: "C", id: "3241" },
   ];
-  
+
   const clickAll = (e) => {
     setAllClick(!allClick)
   }

@@ -63,7 +63,6 @@ const EditStepform = ({ open, editStep, getAllgroups, close, setShow, handleSave
 }
 
 
-
 // Confirm Delete MOdal
 const DeleteConfirm = ({ check, close, callDelete }) => {
     console.log(check, "Delete Confirm")
@@ -209,6 +208,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
             console.log(res?.data?.formStepDataById, "this is a stepdetaild by id")
             setStepData(res?.data?.formStepDataById)
             notify(res.data.message)
+            router.reload()
             // router.push('/dashboard/root/field-management')
         } catch (e) {
             console.log(e)
@@ -231,6 +231,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
             // }, 1000)
         } catch (e) {
             console.log(e)
+            error(e.response.data.error)
         }
         setShow(true)
         close()

@@ -403,10 +403,7 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
       groups: inputData.groups.filter(group => group.groupId && group.orderNo)
     };
     handleSave(formattedData);
-
   }
-
-
 
   return (
     <div className=" grid grid-cols-2 items-center  w-full  justify-center py-[22px]">

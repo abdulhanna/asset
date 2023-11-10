@@ -144,7 +144,7 @@ export const SidebarSubList = ({
       >
         <div className="flex flex-row">
           {/* <div className={cn('border-l-2', 'border-primary', 'my-3')} /> */}
-          <div className="px-4 py-4">{children}</div>
+          <div className="px-8 py-4">{children}</div>
         </div>
       </div>
     </div>
