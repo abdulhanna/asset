@@ -10,6 +10,7 @@ import masterTableApi from 'helpers/use-api/master-table/table'
 import NodataPage from '@/components/molecules/nodataPage'
 import DialogPage,{ DeleteConfirm } from '@/components/molecules/dialog'
 import { ToastContainer, toast } from "react-toastify";
+import { Nodata } from '@/components/atoms/icons'
 
 
 const ModifyComponent = ({open,onClose,row,updateData,header})=>{
@@ -218,17 +219,24 @@ const SingleTable = ({access_token,user,table}) => {
                       </div>
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                </div>
-               <div className='flex gap-4'>
-                 {/* <Button>UPLOAD DOCUMNET</Button>
-                 <Button onClick={()=> alert('add row')}>ADD ROW</Button> */}
-                 <Button href={`/dashboard/master-table/table/modify?id=${id}`} variant='contained'>MODIFY MASTER TABLE</Button>
-               </div>
+               {masteTable.length == 0 &&  <div className='flex gap-4'>
+               <Button>DOWNLOAD CSV STRUCTURE</Button>
+                 <Button>UPLOAD DOCUMNET</Button>
+                 <Button href={`/dashboard/master-table/table/modify?id=${id}`}>ENTER RATES</Button>
+                 {/* <Button href={`/dashboard/master-table/table/modify?id=${id}`} variant='contained'>MODIFY MASTER TABLE</Button> */}
+               </div>}
+               {masteTable.length !== 0 &&  <div className='flex gap-4'>
+               <Button variant='danger'>DISCARD DRAFT</Button>
+               <Button href={`/dashboard/master-table/table/draft?id=${id}`}>EDIT MASTER TABLE</Button>
+               <Button variant='contained'>PUBLISH</Button>
+
+               </div>}
+               
         </div>
 
         {/* TABLE SECTION */}
         <div>
-         {masteTable?.length === 0 ? <div><NodataPage/></div> :
-         <MasterTableComponent
+        <MasterTableComponent
                    headers={tableHeader}
              responseData={(e,id) =>{
               // setRow(e)
@@ -241,7 +249,15 @@ const SingleTable = ({access_token,user,table}) => {
             };
           })}
           onClick={(e)=>console.log(e)}
-           />}
+           />
+         {masteTable?.length === 0 && <div className='h-screen flex flex-col justify-center items-center space-y-4'>
+           <div className='flex justify-center overflow-hidden'> 
+           <Nodata className={"flex justify-center items-center"}/>
+           </div>
+           <Text1 size='lg' weight='medium' color='text-primary'>No Data Yet</Text1>
+         </div> 
+       
+           }
         </div>
         {/* <DeleteConfirm 
         check={isOpen}

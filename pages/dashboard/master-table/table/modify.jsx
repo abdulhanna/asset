@@ -10,6 +10,8 @@ import DialogPage from '@/components/molecules/dialog'
 import NodataPage from '@/components/molecules/nodataPage'
 import masterTableApi from 'helpers/use-api/master-table/table'
 import { ToastContainer, toast } from "react-toastify";
+import Modifytable from 'proj-components/Dashboard/masterTable/modifytable'
+import { arrayMove } from 'helpers/formdataConverter'
 
 
 const ModifyComponent = ({open,onClose,row,updateData,header})=>{
@@ -139,42 +141,13 @@ const SingleTable = ({access_token,user,table}) => {
     const {id} = router.query
     const notify = (msg)=> toast.success(msg)
     const Error = (msg)=> toast.error(msg)
-    const headerMaster = [
-        {label:"Code NO" ,name:"code"},
-        {label:"BLock Description", name :"description"},
-        {label: "Rate(SLM)",name:'Rate1'},
-        {label:"Rate(WDB)", name:"Rate2"}
-       ] 
-    const master = [
-      {_id:'12143',code:'01',description:"building",Rate1:'10%',Rate2:'11%'},
-      {_id:'12141',code:'01A',description:"building ",Rate1:'4%',Rate2:'3.9%'},
-      {_id:'12140',code:'01B',description:"building material",Rate1:'8%',Rate2:'9%'}
-    ]
 
-    useEffect(()=>{
-      // if (isMounted.current) {
-      //   let arr = []
-      //   for (const [key, value] of Object.entries(table?.masterTableHeader)) {      
-      //   let a ={}
-      //     a['label'] = value
-      //     a['name'] = key
-      //     arr.push(a)
-      // //   console.log(`${key}: ${value}`);
-      // setTableHeader([...arr])
-      // }
-      // } else {
-      //   isMounted.current = true;
-      // }
-  
-     
-     
-    },[])
 
     useEffect(()=>{
       let dummy = {}
       if(element.current){
     
-          table.masterTableHeader.map((cur)=>{
+          table.masterTableHeader?.map((cur)=>{
             dummy[cur.name] = ""
             // console.log(cur.name,'cur')
           })
@@ -189,13 +162,14 @@ const SingleTable = ({access_token,user,table}) => {
     
     },[])
 
-    // console.log(table,'row')
+    
 
     const updateHandle = (e)=>{
         //  console.log(e)
          const a = [...masterTable.masterTableData]
          a[selectedId] = e
          setMasterTable({...masterTable,masterTableData:a})
+         setSelectedId('')
         //  console.log(a,'sele')
          
     }
@@ -215,12 +189,48 @@ const SingleTable = ({access_token,user,table}) => {
 
   const addRow = (data)=>{
     const a = [...masterTable.masterTableData]
-    a.push(data)
+    if(selectedId){
+      a.splice(selectedId,0,data)
+    }else{
+      a.push(data)
+    }
+    
+    // a[selectedId] = data
+    // a.push(data)
     setMasterTable({...masterTable,masterTableData:a})
+    setSelectedId('')
     // console.log(data,'ddd',a)
   }
 
-  // console.log(masterTable,'table');
+  const onDragDrop = (oldIndex,newIndex,data)=>{
+    console.log(oldIndex,newIndex,data)
+    // console.log(masterTable)
+    setMasterTable({...masterTable,masterTableData:arrayMove(data,oldIndex,newIndex)})
+  }
+
+  useEffect(()=>{
+    console.log(masterTable,'table');
+  },[masterTable])
+
+  const onSortEnd = useCallback(({ oldIndex, newIndex }) => {
+    console.log(oldIndex,newIndex)
+    // onDragDrop(items,oldIndex,newIndex)
+  // setItems((oldItems) => arrayMove(oldItems, oldIndex, newIndex));
+  // setMasterTable({...masterTable,masterTableData:arrayMove(master.masterTableData,oldIndex,newIndex)})
+  setMasterTable((prevMasterTable) => {
+    const newMasterTableData = arrayMove(prevMasterTable.masterTableData, oldIndex, newIndex);
+    
+    return {
+      ...prevMasterTable,
+      masterTableData: newMasterTableData,
+    };
+  });
+  
+
+}, []);
+
+console.log(selectedId,'id')
+  
   return (
    <MainLayout User={user}>
      <div>
@@ -236,7 +246,7 @@ const SingleTable = ({access_token,user,table}) => {
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                </div>
                <div className='flex gap-4'>
-                 <Button   onClick={()=>alert('add new row')}>UPLOAD DOCUMNET</Button>
+                 {/* <Button   onClick={()=>alert('add new row')}>UPLOAD DOCUMNET</Button> */}
                  <Button   onClick={()=> setIsOpen(true)}>ADD ROW</Button>
                  <Button variant='contained' onClick={handleSubmit}>SAVE CHANGES</Button>
                </div>
@@ -244,23 +254,45 @@ const SingleTable = ({access_token,user,table}) => {
 
         {/* TABLE SECTION */}
         <div>
-         {masterTable?.masterTableData.length === 0 ? <NodataPage/> : <div>
-         <MasterTableComponent
+        <Modifytable
+         header={[...tableHeader,{label:'Action',name:'action'}]}
+         headerdata={masterTable?.masterTableData?.map((item) => {
+              return {
+                ...item,
+                // href: `id=${item.id}`,
+              };
+            })}
+                onDragDrop={onDragDrop}
+                onEdit={(e,id)=>{
+                  setRow(e)
+                  setSelectedId(id)
+                  setIsActive(true)
+                }}
+                onDelete={(e)=>console.log(e)}
+                onSortEnd={onSortEnd}
+                onRowadd={(e)=> {
+                  setSelectedId(e+1)
+                  setIsOpen(true)
+                }}
+         />
+        {/* <MasterTableComponent
                    headers={tableHeader}
               responseData={(e,id) => {
                 setRow(e)
                  setSelectedId(id)
                 // console.log(e,id)
               }}
-              body={masterTable?.masterTableData.map((item) => {
+              body={masterTable?.masterTableData?.map((item) => {
               return {
                 ...item,
                 // href: `id=${item.id}`,
               };
             })}
             onClick={()=> setIsActive(true)}
-           />
-         </div>}
+           /> */}
+         {/* {masterTable?.masterTableData?.length == 0 ? <NodataPage /> : <div>
+        
+         </div>} */}
         </div>
         <ToastContainer/>
         { isActive && <ModifyComponent open={isActive} onClose={()=> setIsActive(!isActive)} row={row} updateData={updateHandle} header={head}/>}

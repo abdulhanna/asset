@@ -7,6 +7,7 @@ import React, { useState, useCallback } from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { SortableHandle } from "react-sortable-hoc";
 // import arrayMove from 'array-move';
+import { arrayMove } from "helpers/formdataConverter";
 
 const classes = {
     table: "w-full text-sm text-left  ",
@@ -15,22 +16,14 @@ const classes = {
     tbody: "bg-white cursor-pointer",
     tr: "text-[#121212] font-body text-sm text-left ",
     th: "px-6 py-4  truncate",
-    td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate text-[#121212] border-t border-white",
+    td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white",
   };
 
-const arrayMoveMutate = (array, from, to) => {
-    array.splice(to < 0 ? array.length + to : to, 0, array.splice(from, 1)[0]);
-  };
-  
-  const arrayMove = (array, from, to) => {
-    array = array.slice();
-    arrayMoveMutate(array, from, to);
-    return array;
-  };
+
   
 //   export default arrayMove;
   
-const header= [ {
+const headerLabel= [ {
     "name": "codeno",
     "label": "Code No"
 },
@@ -49,7 +42,10 @@ const header= [ {
 {
     "name": "rate1(%)(usage)",
     "label": "Rate1(%) (Usage)"
-}]
+},{
+  "name": "action",
+  "label": "Action"
+},]
 const headerdata= [{
     "_id": "6541ee27c6ddd03f0782db73",
     "codeno": "10",
@@ -78,38 +74,34 @@ const headerdata= [{
     "rate2(%)(slm)": "r324"
 }]
 const RowHandler = SortableHandle(() => <div className="mr-3 cursor-grab">| |</div>);
+
 const TableRow = (props) => {
     // console.log(props.obj, "props");
     const headerkey = Object.keys(props.obj);
-    // console.log(headerkey, "header");
+    const code = props.obj['parentcode']
+    // console.log(code, "header");
     return (
-      <tr className={classes.tr}>
+      <tr className={`${(code === "" || code ===undefined) ? "text-red-300":""} ${classes.tr}`}>
         {headerkey.map((head, index) => {
+          {/* console.log(head,'head') */}
           return (
             <>
-              {index === 0 ? (
-                <td className={classes.td}>
-                  <div className="flex gap-2">
+              {
+                <td  className={`px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white`}>
+                <div className="flex justify-between">
+                {index === 0 ? <div className="flex gap-2">
                     <RowHandler />
                     {props.obj[head]}
-                  </div>
+                  </div>: <>{props.obj[head]}</> }
+                </div>
+                
+                  
                 </td>
-              ) : (
-                <td className={classes.td}>{props.obj[head]}</td>
-              )}
+                
+              }
             </>
           );
         })}
-        {/* <td>
-          <div className="firstElement">
-            <RowHandler />
-            {props.obj.first}
-          </div>
-        </td>
-        <td>{props.second}</td>
-        <td>{props.third}</td>
-        <td>{props.fourth}</td>
-        <td>{props.action}</td> */}
       </tr>
     );
   };
@@ -254,31 +246,25 @@ const ITEMS = [
   
   
   const SortableCont = SortableContainer(({ children }) => {
-    return <tbody>{children}</tbody>;
+    return <tbody className={classes.tbody}>{children}</tbody>;
   });
   
   const SortableItem = SortableElement((props) => <TableRow {...props} />);
   
   const MyTable = () => {
-    const [items, setItems] = useState(ITEMS);
+    const [items, setItems] = useState(headerdata);
   
     const onSortEnd = useCallback(({ oldIndex, newIndex }) => {
       setItems((oldItems) => arrayMove(oldItems, oldIndex, newIndex));
     }, []);
-    const header = [
-      { Label: "First", name: "first" },
-      { Label: "Second", name: "second" },
-      { Label: "Third", name: "third" },
-      { Label: "Fourth", name: "fourth" },
-      { Label: "Action", name: "action" }
-    ];
+
     return (
-      <div>
+      <div className="m-4">
         <table className={classes.table}>
           <thead className={classes.thead}>
             <tr className={classes.tr}>
-              {header.map((head,index) => {
-                return <th className={classes.th} key={index}> {head.Label}</th>;
+              {headerLabel.map((head,index) => {
+                return <th className={classes.th} key={index}> {head.label}</th>;
               })}
              
             </tr>
@@ -290,30 +276,24 @@ const ITEMS = [
             lockAxis="y"
             lockToContainerEdges={true}
             lockOffset={["30%", "50%"]}
-            helperClass="helperContainerClass"
+            helperClass="bg-blue-400 text-red-200"
             useDragHandle={true}
           >
             {items.map((value, index) => {
               let obj = {};
               {
-                header.map((head) => {
+                headerLabel.map((head) => {
                   obj[head.name] = value[head.name];
-                  // <SortableItem
-                  //   key={`item-${index}`}
-                  //   index={index}
-                  //   first={`${value[head.name]}`}
-                  //   //  first:{`${value[head.name]} `}
-                  // />;
-                  // console.log(value[head.name], head.name);
                 });
-                // console.log(obj, "obj");
+              
               }
               obj = {
                 ...obj,
-                action: <button onClick={() => alert(value._id)}>delete</button>
+                action: <div><button className="border border-2" onClick={() => alert(value.codeno)}>Edit</button><button className="border border-2" onClick={() => alert(value._id)}>delete</button></div>
+
               };
               return (
-                console.log(obj, "obj"),
+               
                 (
                   <SortableItem
                     // data = obj
