@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useCallback } from 'react'
+import React, { useState,useEffect, useCallback, useRef } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import NodataPage from '@/components/molecules/nodataPage'
@@ -8,6 +8,7 @@ import { SampleTableNew } from '@/components/organism/tablecomp'
 import DialogPage from '@/components/molecules/dialog'
 import { CustomSelect,Text1 } from '@/components/atoms/field'
 import masterTableApi from 'helpers/use-api/master-table/table'
+import { MasterTableLogs } from '@/components/organism/tablecomp'
 import Debounce from 'helpers/debounce'
 
 const ModifyTableCall =({open,onClose,data})=>{
@@ -44,7 +45,15 @@ const ModifyTableCall =({open,onClose,data})=>{
   )
 }
 
-const Page = ({access_token,user,tables}) => {
+const header = [
+  {label:"Master Table Id",name:"tableCodeId"},
+  {label:"Master Table Name",name:"tableName"},
+  {label:'Updated by', name:"createdBy"},
+  {label:'Update on', name:"createdAt"},
+  {label:'Status/Action', name:"action"},
+]
+
+const Page = ({access_token,user,tables,draftTable,structureTable}) => {
     const [list,setList] = useState(tables)
     const [tableList,setTableList] = useState(tables?.data)
     const [checkedNewData, setCheckedNewData] = useState([]);
@@ -52,7 +61,12 @@ const Page = ({access_token,user,tables}) => {
     const [isOpen,setIsOpen] = useState(false)
     const [page,setPage] = useState(tables.currentPage)
     const [pageSize,setPageSize] = useState(10)
+    const [activeTab,setActiveTab] = useState('ALL Master Table')
     const [sort,setSort] = useState({"createdAt":-1})
+    const tabList = ["ALL Master Table","Table Structures","Drafts"]
+    const isMounted = useRef(false)
+    
+    let publishStatus = "published"
     const router = useRouter()
     const Header = [
       {label:"Master Table Id",name:"tableCodeId"},
@@ -95,33 +109,64 @@ const Page = ({access_token,user,tables}) => {
     };
 
     const callApi = useCallback(async(e)=>{
-      console.log('call Api',e.page)
+      // console.log('call Api',e)
 
-      const res = await masterTableApi.allTable(access_token,e.page,pageSize,JSON.stringify(sort))
-      console.log(res,'res')
+      const res = await masterTableApi.allTable(access_token,e.page,e.pageSize,JSON.stringify(sort),publishStatus)
+      // console.log(res,'res',e.page,pageSize)
       setList(res.data)
       setTableList(res?.data?.data)
       setPage(res.data.currentPage)
      
     },[])
     const handleSearchChange=Debounce(callApi
-      ,2000)
+      ,1000)
 
     const handlePage =(e)=>{
       let value = e
-      handleSearchChange({page:value})
+      // console.log(pageSize,'handlePage')
+      handleSearchChange({page:value,pageSize:pageSize})
        setPage(value)
     }
 
     const onPageSize = useCallback(async(e)=>{
-      setPageSize(e.target.value)
-      const res = await masterTableApi.allTable(access_token,page,e.target.value,JSON.stringify(sort))
+      setPageSize(Number(e.target.value))
+      const res = await masterTableApi.allTable(access_token,page,e.target.value,JSON.stringify(sort),publishStatus)
+      console.log(res,page,pageSize,'list')
       setList(res.data)
       setTableList(res?.data?.data)
       setPage(res.data.currentPage)
       //  console.log(e.target.value,'onPageSoze',res)
     },[])
-    // console.log(tables,'list')
+
+    useEffect(()=>{
+
+      if(isMounted.current){
+
+        if(activeTab=== "ALL Master Table"){
+        // console.log(activeTab,tables)
+        setTableList(tables?.data)
+        setPage(tables.currentPage)
+        }
+        if(activeTab=== "Table Structures"){
+          // console.log(structureTable,activeTab)
+          setTableList(structureTable.data)
+          setPage(structureTable.currentPage)
+        }
+        if(activeTab=== "Drafts"){
+          // console.log(draftTable,activeTab)
+          setTableList(draftTable.data)
+          setPage(draftTable.currentPage)
+        }
+      }
+
+      return ()=>{
+        isMounted.current = true
+      }
+      
+    },[activeTab])
+
+    // console.log(draftTable,'list',structureTable)
+   
   return (
     <>
         <MainLayout User={user} isScroll={true}>
@@ -133,11 +178,22 @@ const Page = ({access_token,user,tables}) => {
             <Text1 className='text-lightGray' size='sm'>We have nothing here yet. Start by adding a Field Group.</Text1>
           </div>
           <div className='flex gap-4'>
-            <Button variant='contained' onClick={()=>router.push('/dashboard/master-table/table/add-table')}>DESIGN MASTER TABLE</Button>
-            <Button onClick={()=> setIsOpen(true)}>MODIFY MASTER TABLE</Button>
+            <Button variant='contained' onClick={()=>router.push('/dashboard/master-table/table/add-table')}>Create New</Button>
+            {/* <Button onClick={()=> setIsOpen(true)}>MODIFY MASTER TABLE</Button> */}
           </div>
          </div>
-          {tableList.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
+         
+         {checkedNewData.length > 0 && <div className='bg-slate-100 py-4 px-4 mt-4'>
+                 <Text1>{`${checkedNewData.length} has been selected for export csv`}</Text1>
+               
+              </div> }
+
+              <div className='flex my-4 gap-4'>{tabList.map((tab,index)=>{
+                return <p className={`${activeTab === tab ? "underline decoration-primary underline-offset-2 text-primary":""} cursor-pointer`} onClick={()=> setActiveTab(tab)} key={index}>{tab}</p>
+              })}</div>
+
+              {activeTab === "ALL Master Table" && <div>
+                     {tableList.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
           <SampleTableNew
                   response={tableList}
                   headerData={[{ name: "check", label: "" }, ...Header]}
@@ -156,7 +212,71 @@ const Page = ({access_token,user,tables}) => {
                  onPageSize = {onPageSize}
                 />
           </div>}
-            <ModifyTableCall open={isOpen} onClose={()=> setIsOpen(!isOpen)} data={tableList}/>
+              </div>}
+              {activeTab === "Table Structures" && <div>
+                  
+              {tableList.length  === 0 ? <NodataPage/> :<div>
+                <MasterTableLogs 
+                  response={tableList}
+                  headerData={header}
+                  href={'/dashboard/master-table/table/single?'}
+                  responseData={(e) => onNewCheck(e)}
+                  onClick={(e)=> console.log(e,'onclick') }
+                  totalDoc={structureTable?.totalDocuments}
+                  currentPage={page}
+                  start={structureTable.startSerialNumber}
+                  end={structureTable.endSerialNumber}
+                  pageSize={structureTable?.totalPages}
+                 onPageChange={handlePage}
+                 onPageSize = {onPageSize}
+                 publishCall={(e)=> alert(e)}
+              //  onDelete={(e)=> console.log(e,'delete')}
+              //  onEdit={(e)=> console.log(e)}
+                   />
+                </div>}
+              </div>}
+              {activeTab === "Drafts" && <div>
+                  {tableList.length  === 0 ? <NodataPage/> :<div>
+                    <MasterTableLogs 
+                      response={tableList}
+                      headerData={header}
+                      href={'/dashboard/master-table/table/single?'}
+                      responseData={(e) => onNewCheck(e)}
+                      onClick={(e)=> console.log(e,'onclick') }
+                      totalDoc={draftTable?.totalDocuments}
+                      currentPage={page}
+                      start={draftTable.startSerialNumber}
+                      end={draftTable.endSerialNumber}
+                      pageSize={draftTable?.totalPages}
+                    onPageChange={handlePage}
+                    onPageSize = {onPageSize}
+                    publishCall={(e)=> alert(e)}
+                  //  onDelete={(e)=> console.log(e,'delete')}
+                  //  onEdit={(e)=> console.log(e)}
+                      />
+                    </div>}
+              </div>}
+              
+          {/* {tableList.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
+          <SampleTableNew
+                  response={tableList}
+                  headerData={[{ name: "check", label: "" }, ...Header]}
+                  checkedData={checkedNewData}
+                  responseData={(e) => onNewCheck(e)}
+                  clickAll={clickAll}
+                  href={`/dashboard/master-table/table/single?`}
+                  onClick={(e) => console.log(e, "onclick")}
+                  checkAllStatus={allClick}
+                  totalDoc={list?.totalDocuments}
+                  currentPage={page}
+                  start={list.startSerialNumber}
+                  end={list.endSerialNumber}
+                  pageSize={list?.totalPages}
+                 onPageChange={handlePage}
+                 onPageSize = {onPageSize}
+                />
+          </div>} */}
+            {/* <ModifyTableCall open={isOpen} onClose={()=> setIsOpen(!isOpen)} data={tableList}/> */}
          </div>
         </MainLayout>
     </>
@@ -170,7 +290,11 @@ export const getServerSideProps = async (appCtx) => {
     let page = 1
     let pageSize = 10
     let sort = {"createdAt":-1};
+    let publishStatus = "published"
+    let publishStatus1 = "unpublished"
     let table 
+    let table1
+    let structureTable
     let auth
     try{
        auth =await authApi.WhoAmI(appCtx)
@@ -182,8 +306,12 @@ export const getServerSideProps = async (appCtx) => {
           },
         };
       } 
-      const {data} = await masterTableApi.allTable(access_token,page,pageSize,JSON.stringify(sort))
+      const {data} = await masterTableApi.allTable(access_token,page,pageSize,JSON.stringify(sort),publishStatus)
+      const {data:data1} = await masterTableApi.allTable(access_token,page,pageSize,JSON.stringify(sort),publishStatus1)
+      const {data:data2} = await masterTableApi.tableStructue(access_token,page,pageSize,JSON.stringify(sort))
+      table1 = data1
       table  =  data
+      structureTable = data2
       // console.log(data)
     }catch(err){
       console.log(err,'err')
@@ -192,7 +320,10 @@ export const getServerSideProps = async (appCtx) => {
       props:{
          user:auth || {},
          access_token,
-         tables:table||[]
+         tables:table||[],
+         draftTable:table1,
+         structureTable:structureTable
+
       }
     }
   

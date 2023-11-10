@@ -22,7 +22,7 @@ authApi.WhoAmI = async (appCtx) => {
           Cookie: `access_token=${access_token}`,
         },
       });
-
+      // console.log(response,'res*****************')
       user = response.data.data; // Extract user data from response
 
       // console.log(user, 'user.data');

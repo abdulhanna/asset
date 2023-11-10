@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import memberAccessApi from 'helpers/use-api/user-management/member'
-import { LeftArrowIcon } from '@/components/atoms/icons'
+import { LeftArrowIcon, DeleteIcon } from '@/components/atoms/icons'
 import Button from '@/components/atoms/button'
 import { CustomSelect, Text1, TextField } from '@/components/atoms/field'
 import { useRouter } from 'next/router'
 import masterTableApi from 'helpers/use-api/master-table/table'
 import { ToastContainer, toast } from "react-toastify";
-import { DeleteIcon } from '@/components/atoms/icons'
+
+
+
+
 const AddTable = ({access_token,user}) => {
   const [fields,setFields] = useState({
     codeGenerationType: "auto",
@@ -19,18 +22,18 @@ const AddTable = ({access_token,user}) => {
     fixedFields:   [
       {
         fieldName:"Code No",
-        dataType:"alphanumeric",
-        type:"text"
+        dataType:"number",
+        // type:"text"
       },
       {
         fieldName:"Description",
-        dataType:"alphanumeric",
-        type:"text"
+        dataType:"string",
+        // type:"text"
       },
       {
         fieldName:"Parent Code",
-        dataType:"alphanumeric",
-        type:'text'
+        dataType:"number",
+        // type:'text'
       },
       // {
       //   fieldName:"Rate(%)",
@@ -48,6 +51,8 @@ const AddTable = ({access_token,user}) => {
       }
     ]
   })
+
+
   const router  = useRouter()
   const notify = (msg)=> toast.success(msg)
   const Error = (msg) => toast.error(msg)
@@ -109,7 +114,7 @@ const AddTable = ({access_token,user}) => {
                       <Text1 className="pl-4" size="sm">We have nothing here yet. Start by adding an Organization.</Text1>
                     </div>
                    <div className='flex gap-4'>
-                       <Button  variant="contained" onClick={handleSubmit}>DESIGN MANUALLY</Button>
+                       {/* <Button  variant="contained" onClick={handleSubmit}>DESIGN MANUALLY</Button> */}
                        <Button variant='contained' onClick={handleSubmit1}>UPLOAD MASTER TABLE</Button>
                    </div>
                </div>
@@ -144,8 +149,10 @@ const AddTable = ({access_token,user}) => {
                    {fields.fixedFields.map((cur,index)=>{
                     {/* console.log(index,'ss') */}
                     return <div className='grid grid-cols-4 gap-4 items-center' key={index}>
-                      <TextField label='Filed Name' value={cur.fieldName}/>
-                       {cur.dataType === "number" ?<CustomSelect name={`depreciationType`}  label={`Depriciation Method`} onChange={(e)=>{
+                      <TextField label='Filed Name' value={cur.fieldName} disabled={true}/>
+                      <TextField label='Data Type' value={cur.dataType} disabled={true}/>
+                      
+                       {/* <CustomSelect name={`depreciationType`}  label={`Depriciation Method`} onChange={(e)=>{
                         const data = [...fields.fields]
                         data[index].depreciationType=e.target.value;
                         setFields({...fields,fields:data})
@@ -155,7 +162,8 @@ const AddTable = ({access_token,user}) => {
                         {cur.options.map((option,id)=>{
                           return <option value={option} key={id}>{option}</option>
                         })}
-                       </CustomSelect>:  <TextField label='Data Type' value={cur.dataType}/>}
+                       </CustomSelect>: */}
+                         
                        {/* <div className='col-start-4 flex justify-end w-full pt-2'>{fields.fields.length-1 === index && <Button onClick={addField}>ADD RATE FIELD</Button>}</div> */}
                     </div>
                   })}

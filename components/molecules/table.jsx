@@ -78,7 +78,7 @@ export const CheckWithLinkTable = ({
   headers,
   data,
   classes,
-  href,
+  href = '#',
   extra,
   onClick,
   responseData,
@@ -950,14 +950,14 @@ export const Table4 = ({
   onClick,
   responseData,
 }) => {
-  const lastIndex = headers.length - 1;
+  const lastIndex = headers?.length - 1;
 
 
   return (
     <table className={classes.table}>
       <thead className={classes.thead}>
         <tr className={classes.tr}>
-          {headers.map((item, index) => (
+          {headers?.map((item, index) => (
 
             <th key={index}
               className={`${classes.th} ${index === 0 && 'rounded-tl-lg'}  ${index === lastIndex && 'rounded-tr-lg'

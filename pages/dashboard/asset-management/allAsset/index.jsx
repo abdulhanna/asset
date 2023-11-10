@@ -3,7 +3,8 @@ import MainLayout from 'proj-components/MainLayout'
 import Button from '@/components/atoms/button'
 import { Text1 } from '@/components/atoms/field'
 import NodataPage from '@/components/molecules/nodataPage'
-import { doCheckAuth } from '@/utils/doCheckAuth'
+import authApi from 'helpers/use-api/auth'
+// import { doCheckAuth } from '@/utils/doCheckAuth'
 
 const AllAssets = ({user}) => {
     
@@ -24,8 +25,10 @@ const AllAssets = ({user}) => {
 
 export const getServerSideProps = async (appCtx) => {
    
-  const auth =await doCheckAuth(appCtx)
-  // console.log(auth,'ddd')
+  const auth =await authApi.WhoAmI(appCtx)
+
+  
+  console.log(auth,'ddd')
   if (!auth) {
     return {
       redirect: {

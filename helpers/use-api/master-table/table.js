@@ -1,7 +1,11 @@
 import { hostedAxios } from "../hostedAxios"
 const masterTableApi = {}
 
-masterTableApi.allTable = (access_token, page, pageSize, sort) => hostedAxios.get(`/master-table/listAllTables?page=${page}&size=${pageSize}&sort=${sort}`, {
+masterTableApi.allTable = (access_token, page, pageSize, sort,publishStatus="") => hostedAxios.get(`/master-table/listAllTables?page=${page}&size=${pageSize}&sort=${sort}&publishStatus=${publishStatus}`, {
+    headers: { Cookie: access_token }
+})
+
+masterTableApi.tableStructue = (access_token, page, pageSize, sort,publishStatus="") => hostedAxios.get(`/master-table/listAllTableStructures?page=${page}&size=${pageSize}&sort=${sort}`, {
     headers: { Cookie: access_token }
 })
 
@@ -39,5 +43,7 @@ masterTableApi.publishDraftTable = (access_token, id) => hostedAxios.put(`/maste
 masterTableApi.modifyTable = (access_token, id, data) => hostedAxios.put(`master-table/modifyTable/${id}`, data, {
     headers: { Cookie: access_token }
 })
+
+
 
 export default masterTableApi

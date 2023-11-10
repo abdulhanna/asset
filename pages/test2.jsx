@@ -3,11 +3,17 @@ import { useState,useEffect } from 'react'
 import { PaginationLeft,PaginationRight } from '@/components/atoms/icons'
 import { Text1 } from '@/components/atoms/field'
 import { MasterTableLogs } from '@/components/organism/tablecomp'
-
+import Modifytable from 'proj-components/Dashboard/masterTable/modifytable'
+import { arrayMove } from 'helpers/formdataConverter'
 
 const Test2 = () => {
     const [checkedNewData, setCheckedNewData] = useState([])
     const [allClick, setAllClick] = useState(false)
+    const [masterData,setMasterData] = useState([
+      {_id:'12143',code:'01',description:"building",Rate1:'10%', parentcode:'',Rate2:'11%'},
+      {_id:'12141',code:'01A',description:"building ", parentcode:'01',Rate1:'4%',Rate2:'3.9%'},
+      {_id:'12140',code:'01B',description:"building material", parentcode:'01',Rate1:'8%',Rate2:'9%'}
+    ])
     const headerDataNew = [
         // { name: 'date',
         //   label: 'Date' },
@@ -86,20 +92,25 @@ const Test2 = () => {
       
     
     //   }
+
+ 
+    
      
    const headerMaster = [
     {label:"Code NO" ,name:"code"},
+    {label:"Parentcode" ,name:"parentcode"},
     {label:"BLock Description", name :"description"},
     {label: "Rate(SLM)",name:'Rate1'},
-    {label:"Rate(WDB)", name:"Rate2"}
+    {label:"Rate(WDB)", name:"Rate2"},
+    
    ] 
 const master = [
-  {_id:'12143',code:'01',description:"building",Rate1:'10%',Rate2:'11%'},
-  {_id:'12141',code:'01A',description:"building ",Rate1:'4%',Rate2:'3.9%'},
-  {_id:'12140',code:'01B',description:"building material",Rate1:'8%',Rate2:'9%'}
+  {_id:'12143',code:'01',description:"building",Rate1:'10%', parentcode:'',Rate2:'11%'},
+  {_id:'12141',code:'01A',description:"building ", parentcode:'01',Rate1:'4%',Rate2:'3.9%'},
+  {_id:'12140',code:'01B',description:"building material", parentcode:'01',Rate1:'8%',Rate2:'9%'}
 ]
     useEffect(()=>{
-        console.log(checkedNewData,'cehc')
+        // console.log(checkedNewData,'cehc')
     },[checkedNewData])
 
     useEffect(()=>{
@@ -109,6 +120,12 @@ const master = [
           setCheckedNewData([])
         }
        },[allClick])
+
+      const onDragDrop = (oldIndex,newIndex)=>{
+        // setMasterData(arrayMove(masterData,oldIndex,newIndex))
+        // console.log(oldIndex,newIndex,'data')
+      }
+      console.log(masterData,'masterdata')
   return (
     <div className='p-8'>
       <h2>Master table</h2>
@@ -142,7 +159,7 @@ const master = [
           })}
           href={`/testing/?`}
               /> */}
-              <MasterTableLogs 
+              {/* <MasterTableLogs 
                    response={newFilteredSample}
                   // headerData={[{ name: 'check', label:'' },...headerDataNew]}
                   headerData={headerDataNew}
@@ -153,12 +170,18 @@ const master = [
                   checkAllStatus={allClick}
                   onEdit={(e)=> console.log(e)}
                   onDelete ={(e)=> console.log(e)}
-              />
+              /> */}
 
               {/* <div className='my-20'>
                    <Button>PUBLISH</Button>
                    <Text1 color='text-green-400'>PUBLISHED</Text1>
               </div> */}
+
+              <Modifytable
+                header={[...headerMaster,{label:'Action',name:'action'}]}
+                headerdata={masterData}
+                onDragDrop={onDragDrop}
+              />
          
     </div>
   )
