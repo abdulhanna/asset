@@ -37,7 +37,12 @@ const Accordion = () => {
 
 export const AccordionField = (props) => {
     const [isActive, setIsActive] = useState(false)
+    console.log(props.data._id, "this is props_data")
+    console.log(props.id, "this is prop")
     const toggle = () => {
+        if (props.data._id === props.id) {
+
+        }
         setIsActive(!isActive)
     }
 

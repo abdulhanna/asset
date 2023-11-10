@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/atoms/button";
 import { Text1 } from "../../components/atoms/field";
 import Chechkbox from "../../components/atoms/checkBox";
@@ -274,21 +274,23 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
               </label>
               <input
                 type="number"
+                min="1"
                 placeholder="Step No."
-                className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-2 h-[48px] mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 name="stepNo"
                 value={inputData.stepNo}
                 onChange={(e) => setInputData({ ...inputData, stepNo: e.target.value })}
               />
             </div>
-            <div className="px-1">
+            <div className="px-2">
               <label htmlFor="" className="">
                 <Text1 size="xs" className="text-slate-500 font-normal"> Step Name </Text1>
               </label>
               <input
                 type="text"
                 placeholder="Step Name"
-                className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+
+                className="w-full px-2 h-[48px] mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 name="stepName"
                 value={inputData.stepName}
                 onChange={(e) => setInputData({ ...inputData, stepName: e.target.value })}
@@ -309,8 +311,9 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
                 </label>
                 <input
                   type="number"
+                  min="1"
                   placeholder="Order No."
-                  className="w-full h-11 px-2 mt-1  border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  className="w-full h-[48px] px-2 mt-1  border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   name="orderNo"
                   value={group.orderNo}
                   onChange={(e) => handleChange(e, index)}
@@ -324,7 +327,7 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
                   label={"Select Groups and order"}
                   selectHeight="h-[48px]"
                   name="groupId">
-                  <option value="">option</option>
+                  <option value="">Select Group</option>
                   {getAllgroups?.map(group => (
                     <option key={group._id} value={group._id}>{group.groupName}</option>
                   ))}
@@ -343,7 +346,6 @@ export const AddStep = ({ Heading, getAllgroups, getData, subheading, handleSave
           </Button>
           <Button
             onClick={handlesaveall}
-            size="sm"
             variant="contained"
             className={"font-body px-8 py-2 h-[42px]"}>
             SAVE
@@ -361,10 +363,21 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
   const [inputData, setInputData] = useState({
     stepNo: editStep?.stepNo,
     stepName: editStep?.stepName,
-    groups: [
-      { groupId: editStep?.groups[0]?.groupId, orderNo: editStep?.groups[0]?.orderNo }
-    ]
+    groups: []
   });
+
+  // Setting the editstep value 
+  useEffect(() => {
+    if (editStep?.groups) {
+      setInputData(prevState => ({
+        ...prevState,
+        groups: editStep.groups.map(group => ({
+          groupId: group.groupId,
+          orderNo: group.orderNo
+        }))
+      }))
+    }
+  }, [editStep])
 
 
 
@@ -390,8 +403,6 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
       groups: inputData.groups.filter(group => group.groupId && group.orderNo)
     };
     handleSave(formattedData);
-
-
   }
 
   return (
@@ -410,20 +421,21 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
               <input
                 type="number"
                 placeholder="Step No."
-                className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                min="1"
+                className="w-full px-2 h-[48px] mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 name="stepNo"
                 value={inputData.stepNo}
                 onChange={(e) => setInputData({ ...inputData, stepNo: e.target.value })}
               />
             </div>
-            <div className="px-1">
+            <div className="px-2">
 
               <Text1 size="xs" className="text-slate-500 font-normal"> Step Name </Text1>
 
               <input
                 type="text"
                 placeholder="Step Name"
-                className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full px-2 h-[48px] mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                 name="stepName"
                 value={inputData.stepName}
                 onChange={(e) => setInputData({ ...inputData, stepName: e.target.value })}
@@ -443,22 +455,23 @@ export const EditStep = ({ Heading, editStep, getAllgroups, getData, subheading,
 
                 <input
                   type="number"
+                  min="1"
                   placeholder="Order No."
-                  className="w-full px-2 h-11 mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  className="w-full px-1 h-[48px] mt-1 border-2 p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
                   name="orderNo"
-                  value={inputData?.groups[0]?.orderNo}
+                  value={group.orderNo}
                   onChange={(e) => handleChange(e, index)}
                 />
               </div>
 
               <CustomSelect
                 className="-mt-3 px-2"
-                value={inputData?.groups[0]?.groupId}
+                value={group?.groupId}
                 onChange={(e) => handleChange(e, index)}
                 label={"Select Groups and order"}
                 selectHeight="h-[48px]"
                 name="groupId">
-                <option value="">option</option>
+                <option value="">Select Group</option>
                 {getAllgroups?.map(group => (
                   <option key={group._id} value={group._id}>{group.groupName}</option>
                 ))}
