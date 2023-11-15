@@ -23,7 +23,8 @@ module.exports = {
         menuBG: "rgba(7,109,169,0.12)",
         menuText: "#076DA9",
         fieldBg: "rgba(196,196,196,0.25)",
-        lightGray :'#818181'
+        lightGray :'#818181',
+        medium_green:'#5DA64E'
       },
       
 

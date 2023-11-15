@@ -128,10 +128,40 @@ const RowAdd = ({open,onClose,row,addRow})=>{
   )
 }
 
+const SubmitTable = ({open,onClose,handleSubmitFile})=>{
+
+  
+
+   return  <DialogPage width='max-w-[540px]' open={open} close={onClose}>
+         <div className='space-y-8'>
+            <div>
+              <Text1 size='xl'>
+                Would like to Save the master table as a Draft or Publish directly?
+             </Text1>
+             <Text1 color='text-lightGray'>
+              By saving the master table as a draft, you can continue making changes later.
+              Publishing the master table will be irreversible.
+             </Text1>
+            </div>
+            <div className='flex justify-evenly'>
+              <Button variant='contained' onClick={()=>{
+                onClose();
+                handleSubmitFile('unpublished')
+              }}>SAVE AS DRAFT</Button>
+              <Button className={'bg-medium_green text-white px-8'} onClick={()=>{
+                onClose()
+                handleSubmitFile('published')
+              }}>PUBLISH</Button>
+            </div>
+         </div>
+   </DialogPage>
+  }
+
 const SingleTable = ({access_token,user,table}) => {
   const [isOpen,setIsOpen] = useState(false)
   const [isActive,setIsActive] = useState(false)
   const [masterTable,setMasterTable] = useState(table)
+  const [isSubmit,setIsSubmit] = useState(false)
   const [tableHeader,setTableHeader] = useState(table?.masterTableHeader)
   const [selectedId,setSelectedId] = useState()
   const [row,setRow] = useState()
@@ -175,16 +205,21 @@ const SingleTable = ({access_token,user,table}) => {
     }
 
   const handleSubmit = async()=>{
-      try{
-        const res = await masterTableApi.modifyTable(access_token,id,{masterTableData:masterTable.masterTableData})
-        if(res.status == '200'){
-            notify('table modified')
-        }
-        // console.log(res,'res')
-      }catch(err){
-        console.log(err,'err')
-        Error(err?.response?.data?.error)
-      }
+      setIsSubmit(true)
+      // try{
+      //   const res = await masterTableApi.modifyTable(access_token,id,{masterTableData:masterTable.masterTableData})
+      //   if(res.status == '200'){
+      //       notify('table modified')
+      //   }
+      //   // console.log(res,'res')
+      // }catch(err){
+      //   console.log(err,'err')
+      //   Error(err?.response?.data?.error)
+      // }
+  }
+
+  const handleSubmitFile = (e)=>{
+    alert(e)
   }
 
   const addRow = (data)=>{
@@ -195,8 +230,6 @@ const SingleTable = ({access_token,user,table}) => {
       a.push(data)
     }
     
-    // a[selectedId] = data
-    // a.push(data)
     setMasterTable({...masterTable,masterTableData:a})
     setSelectedId('')
     // console.log(data,'ddd',a)
@@ -214,22 +247,40 @@ const SingleTable = ({access_token,user,table}) => {
 
   const onSortEnd = useCallback(({ oldIndex, newIndex }) => {
     console.log(oldIndex,newIndex)
-    // onDragDrop(items,oldIndex,newIndex)
-  // setItems((oldItems) => arrayMove(oldItems, oldIndex, newIndex));
-  // setMasterTable({...masterTable,masterTableData:arrayMove(master.masterTableData,oldIndex,newIndex)})
-  setMasterTable((prevMasterTable) => {
+    setMasterTable((prevMasterTable) => {
     const newMasterTableData = arrayMove(prevMasterTable.masterTableData, oldIndex, newIndex);
-    
     return {
       ...prevMasterTable,
       masterTableData: newMasterTableData,
     };
   });
   
+  }, []);
+ 
+  // const onDelete = useCallback((pos)=>{
+  //    const data = [...masterTable.masterTableData]
+  //    const newData = data.filter((val,index)=> index !== pos)
+  //    console.log(data,'data',newData)
+  //   //  data.splice(pos,1)
+  //   //  console.log(data,'ss',pos)
+  //   // console.log(masterTable.masterTableData);
+  //   // setMasterTable((prevMasterTable)=>{
+  //   //       return {
+  //   //         ...prevMasterTable,
+  //   //         masterTableData : data  
+  //   //       }
+  //   // })
+  //     //  alert(pos)
+  // },[])
 
-}, []);
-
-console.log(selectedId,'id')
+  const onDelete = (pos)=>{
+    const a = [...masterTable.masterTableData]
+    //  console.log(a,pos);
+     a.splice(pos,1)
+     setMasterTable({...masterTable,masterTableData:a})
+     
+  }
+// console.log(masterTable,'id')
   
   return (
    <MainLayout User={user}>
@@ -248,7 +299,7 @@ console.log(selectedId,'id')
                <div className='flex gap-4'>
                  {/* <Button   onClick={()=>alert('add new row')}>UPLOAD DOCUMNET</Button> */}
                  <Button   onClick={()=> setIsOpen(true)}>ADD ROW</Button>
-                 <Button variant='contained' onClick={handleSubmit}>SAVE CHANGES</Button>
+                 <Button variant='contained' onClick={handleSubmit}>SAVE</Button>
                </div>
         </div>
 
@@ -268,7 +319,7 @@ console.log(selectedId,'id')
                   setSelectedId(id)
                   setIsActive(true)
                 }}
-                onDelete={(e)=>console.log(e)}
+                onDelete={onDelete}
                 onSortEnd={onSortEnd}
                 onRowadd={(e)=> {
                   setSelectedId(e+1)
@@ -297,6 +348,7 @@ console.log(selectedId,'id')
         <ToastContainer/>
         { isActive && <ModifyComponent open={isActive} onClose={()=> setIsActive(!isActive)} row={row} updateData={updateHandle} header={head}/>}
         {isOpen &&   <RowAdd open={isOpen} onClose={()=> setIsOpen(!isOpen)} row={head} addRow={addRow}/>}
+        {isSubmit && <SubmitTable open={isSubmit} onClose={()=> setIsSubmit(!isSubmit)} handleSubmitFile={handleSubmitFile}/>}
      </div>
    </MainLayout>
   )

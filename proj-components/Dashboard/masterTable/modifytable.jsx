@@ -3,16 +3,21 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { SortableHandle } from "react-sortable-hoc";
 import { arrayMove } from "helpers/formdataConverter";
 import { EditIcon,DeleteIcon,Handler,PlusSign,NewDeleteIcon } from "@/components/atoms/icons";
+import { TableComp2 } from "@/components/organism/tablecomp";
+import Paging from "@/components/molecules/paging";
+import { DateTime } from "luxon";
+import { DonwloadIcon } from "@/components/atoms/icons";
+import { Text1 } from "@/components/atoms/field";
 
 
 const classes = {
     table: "w-full text-sm text-left  ",
-    thead:
-      "text-sm  uppercase bg-[#F7F7F7] border-b text-gray-500  font-semibold",
+    thead:"text-sm  uppercase bg-[#F7F7F7] border-b text-gray-500  font-semibold",
     tbody: "bg-white ",
     tr: "text-[#121212] font-body text-md text-left ",
     th: "px-6 py-4  truncate",
-    td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white",
+    // td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white",
+    td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white min-w-[150px] max-w-full",
   };
 
   const RowHandler = SortableHandle(() => <div className="mr-3 cursor-grab"><Handler/></div>);
@@ -29,7 +34,7 @@ const classes = {
           return (
             <>
               {
-                <td  className={`px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white`}>
+                <td  className={`${classes.td}`}>
                  {index === 0 ? <div className="flex gap-2">
                     <RowHandler />
                     {props.obj[head]}
@@ -65,18 +70,7 @@ const Modifytable = ({
 
     const [items, setItems] = useState([]);
   
-    // const onSortEnd = useCallback(({ oldIndex, newIndex }) => {
-    //     // console.log(oldIndex,newIndex)
-    //     onDragDrop(items,oldIndex,newIndex)
-    //   setItems((oldItems) => arrayMove(oldItems, oldIndex, newIndex));
-  
-    // }, []);
 
-    // useEffect(()=>{
-    //      setItems(headerdata)
-    // },[headerdata])
-
-    // console.log(items,'items')
   return (
       <div className="my-4">
           <table className={classes.table}>
@@ -95,7 +89,7 @@ const Modifytable = ({
             lockAxis="y"
             lockToContainerEdges={true}
             lockOffset={["30%", "50%"]}
-            helperClass="helperContainerClass"
+            helperClass="w-auto border-dashed border-2 border-indigo-600"
             useDragHandle={true}
           >
             {headerdata?.map((value, index) => {
@@ -137,14 +131,90 @@ export default Modifytable
 
 const EditDelete = ({onEdit,onDelete,data,index,onRowadd})=>{
     // console.log(data,'data')
-    return  <div className="flex items-center space-x-4">
+    return  <div className="flex  space-x-4">
        <PlusSign className={'bg-slate-100 p-2 rounded-md'} onClick={()=>onRowadd(index)}/>
       <EditIcon classname={'bg-slate-100 rounded-md p-2'} onClick={() => onEdit(data,index)} />
       <NewDeleteIcon
         className={"bg-slate-100 p-2 rounded-md "}
 
-        onClick={() => onDelete(data._id)} // Add delete functionality here
+        onClick={() => onDelete(index)} // Add delete functionality here
       />
     </div>
 
+}
+
+
+export const MasterTableStructure = ({
+  headerData,
+  response,
+  onClick,
+  responseData,
+  href,
+  totalDoc,
+  checkedData,
+  clickAll,
+  checkAllStatus,
+  currentPage,
+  start,
+  end,
+  pageSize,
+  onPageChange,
+  onPageSize,
+  publishCall
+})=>{
+   return <>
+    <TableComp2
+         headers={headerData}
+        onClick={onClick}
+        responseData={responseData}
+        clickAll={clickAll}
+        checkAllStatus={checkAllStatus}
+        href={href}
+        body={response.map((row) => ({
+          ...row,
+          href:`id=${row._id}`,
+          createdAt: DateTime.fromISO(row.createdAt).toFormat('dd-MM-yy, hh:mm:a'),
+          action: (
+                <ActionWork row={row}/>
+              ),
+        }))}
+    />
+      <Paging
+        start={start}
+        end={end}
+        totalDoc={totalDoc}
+        currentPage={currentPage} // 1
+        pageSize={pageSize} // 10
+        onPageChange={onPageChange}
+        onPageSize={onPageSize}
+      />
+   </>
+}
+
+const ActionWork = ({row})=>{
+  // console.log(row,'row')
+
+  const isBrowser = () => typeof window !== 'undefined';
+
+  const handleDownload = async () => {
+    try {
+      // Trigger the download by opening the API route in a new window or tab
+      const downloadUrl = row.sampleFile;
+      window.open(downloadUrl, '_blank');
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
+   };
+
+
+  return <div className="flex items-end" onClick={()=>{
+        if (isBrowser()) { //Only add the event listener client-side
+        
+        handleDownload()
+       // window.open(fileModel.sampleFile, '_blank');
+       }
+  }}>
+     <DonwloadIcon/>
+     <Text1 className="underline" color="text-primary">Donwload</Text1>
+  </div>
 }

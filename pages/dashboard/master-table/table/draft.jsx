@@ -11,6 +11,7 @@ import { arrayMove } from 'helpers/formdataConverter'
 import { ToastContainer, toast } from "react-toastify";
 import DialogPage from '@/components/molecules/dialog'
 import { TextField } from '@/components/atoms/field'
+import UploadFile from '@/components/organism/uploadFile'
 
 const ModifyComponent = ({open,onClose,row,updateData,header})=>{
     const [tableRow,setTableRow] = useState(row)
@@ -126,9 +127,64 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
     )
   }
 
+  const UploadDocs  = ({open,onClose,handleSubmit})=>{
+    const [file,setFile] = useState(null)
+  
+  
+    const handleChange = (file)=>{
+        setFile(file)
+    }
+  
+  
+    const isBrowser = () => typeof window !== 'undefined';
+  
+    const handleDownload = async () => {
+      try {
+        // Trigger the download by opening the API route in a new window or tab
+        const downloadUrl = fileModel.SampleFile;
+        window.open(downloadUrl, '_blank');
+      } catch (error) {
+        console.error('Error downloading file:', error);
+      }
+     };
+     
+      return <DialogPage width={'w-[500px]'} open={open} close={onClose}>
+            <div className='space-y-8'>
+              {/* <h3>Upload Documents</h3> */}
+              <div className='text-center mt-2'>
+                <Text1 size='xl'>Upload Master Table</Text1>
+              </div>
+            
+              
+              <div>
+                  <UploadFile file={file} handleChange={handleChange}/>
+                   <Text1>Download a sample file,  <span className='text-primary text-lg cursor-pointer' onClick={()=>{
+                    // router.replace(fileModel.sampleFile)
+                     if (isBrowser()) { //Only add the event listener client-side
+          
+                       handleDownload()
+                      // window.open(fileModel.sampleFile, '_blank');
+                      }
+                   }}>Sample File.xlsx</span> and re-upload.</Text1>
+              </div>
+              <div className='flex justify-around'>
+               
+                 <Button>Cancel</Button>
+                 <Button className={'px-8'} variant='contained' onClick={()=>{
+                  onClose();
+                  handleSubmit(file)
+                 }}>Save</Button>
+              </div>
+              
+            </div>
+      </DialogPage>
+  }
+
+
 const Draft = ({user,access_token,table}) => {
     const [isOpen,setIsOpen] = useState(false)
     const [isActive,setIsActive] = useState(false)
+    const [isUpload,setIsUpload]  = useState(false)
     const [masterTable,setMasterTable] = useState(table)
     const [tableHeader,setTableHeader] = useState(table?.masterTableHeader)
     const [selectedId,setSelectedId] = useState()
@@ -220,7 +276,38 @@ const Draft = ({user,access_token,table}) => {
 
 }, []);
 
-console.log(table,'table',masterTable,tableHeader);
+const handleSubmitFile = async(file)=>{
+  const formData= new FormData()
+  // console.log(file,'file');
+  formData.append('file',file)
+  formData.append('tableCodeId',table.tableCodeId)
+
+  try{
+     const res = await masterTableApi.uploadFile(access_token,formData)
+     console.log(res,'res')
+     if(res.status == '200'){
+        notify('Excel file uploaded as Draft')
+     }
+     setTimeout(()=>{
+        router.push('/dashboard/master-table/table')
+     },2000)
+    //  console.log(res,'res')
+  }catch(err){
+    // console.log(err.response.data.error,'err')
+    Error(err?.response?.data?.error)
+  }
+}
+
+const onDelete = (pos)=>{
+  const a = [...masterTable.masterTableData]
+  //  console.log(a,pos);
+   a.splice(pos,1)
+  //  console.log(a,'a')
+   setMasterTable({...masterTable,masterTableData:a})
+   
+}
+
+// console.log(table,'table');
   return (<MainLayout User={user}>
        <div>
          {/* HEADER */}
@@ -237,8 +324,8 @@ console.log(table,'table',masterTable,tableHeader);
                 <div className='flex gap-4'>
                     {/* <Button   onClick={()=>alert('add new row')}>UPLOAD DOCUMNET</Button> */}
                     <Button   onClick={()=> setIsOpen(true)}>ADD ROW</Button>
-                    <Button   onClick={()=> alert('upload')}>DOWNLOAD SAMPLE FILE</Button>
-                    <Button   onClick={()=> alert('upload')}>UPLOAD MASTER TABLE</Button>
+                    {/* <Button   onClick={()=> alert('upload')}>DOWNLOAD SAMPLE FILE</Button> */}
+                    <Button   onClick={()=> setIsUpload(true)}>UPLOAD MASTER TABLE</Button>
                     <Button variant='contained' onClick={()=>alert('dd')}>SAVE CHANGES</Button>
                 </div>
             </div>
@@ -259,7 +346,7 @@ console.log(table,'table',masterTable,tableHeader);
                         setSelectedId(id)
                         setIsActive(true)
                         }}
-                        onDelete={(e)=>console.log(e)}
+                        onDelete={onDelete}
                         onSortEnd={onSortEnd}
                         onRowadd={(e)=> {
                         setSelectedId(e+1)
@@ -270,6 +357,7 @@ console.log(table,'table',masterTable,tableHeader);
             <ToastContainer/>
         { isActive && <ModifyComponent open={isActive} onClose={()=> setIsActive(!isActive)} row={row} updateData={updateHandle} header={head}/>}
         {isOpen &&   <RowAdd open={isOpen} onClose={()=> setIsOpen(!isOpen)} row={head} addRow={addRow}/>}
+        {isUpload && <UploadDocs open={isUpload} onClose={()=> setIsUpload(!isUpload)} handleSubmit={handleSubmitFile}/>}
        </div>
   </MainLayout>    
   )

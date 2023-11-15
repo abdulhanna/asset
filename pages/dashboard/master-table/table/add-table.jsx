@@ -89,9 +89,9 @@ const AddTable = ({access_token,user}) => {
   }
 
   const handleSubmit1 =async()=>{
-    const result =await callApi()
+    const result = await callApi()
     if(result !== undefined){
-      router.push(`/dashboard/master-table/table/upload?id=${result.data._id}`)
+      router.push(`/dashboard/master-table/table`)
      }
   }
 
@@ -115,7 +115,7 @@ const AddTable = ({access_token,user}) => {
                     </div>
                    <div className='flex gap-4'>
                        {/* <Button  variant="contained" onClick={handleSubmit}>DESIGN MANUALLY</Button> */}
-                       <Button variant='contained' onClick={handleSubmit1}>UPLOAD MASTER TABLE</Button>
+                       <Button variant='contained' onClick={handleSubmit1}>SAVE</Button>
                    </div>
                </div>
                {/* TABLE Information */}

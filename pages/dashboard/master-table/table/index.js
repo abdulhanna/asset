@@ -9,6 +9,7 @@ import DialogPage from '@/components/molecules/dialog'
 import { CustomSelect,Text1 } from '@/components/atoms/field'
 import masterTableApi from 'helpers/use-api/master-table/table'
 import { MasterTableLogs } from '@/components/organism/tablecomp'
+import { MasterTableStructure } from 'proj-components/Dashboard/masterTable/modifytable'
 import Debounce from 'helpers/debounce'
 
 const ModifyTableCall =({open,onClose,data})=>{
@@ -59,7 +60,7 @@ const Page = ({access_token,user,tables,draftTable,structureTable}) => {
     const [checkedNewData, setCheckedNewData] = useState([]);
     const [allClick, setAllClick] = useState(false);
     const [isOpen,setIsOpen] = useState(false)
-    const [page,setPage] = useState(tables.currentPage)
+    const [page,setPage] = useState(tables?.currentPage)
     const [pageSize,setPageSize] = useState(10)
     const [activeTab,setActiveTab] = useState('ALL Master Table')
     const [sort,setSort] = useState({"createdAt":-1})
@@ -149,12 +150,12 @@ const Page = ({access_token,user,tables,draftTable,structureTable}) => {
         }
         if(activeTab=== "Table Structures"){
           // console.log(structureTable,activeTab)
-          setTableList(structureTable.data)
+          setTableList(structureTable?.data)
           setPage(structureTable.currentPage)
         }
         if(activeTab=== "Drafts"){
           // console.log(draftTable,activeTab)
-          setTableList(draftTable.data)
+          setTableList(draftTable?.data)
           setPage(draftTable.currentPage)
         }
       }
@@ -166,7 +167,16 @@ const Page = ({access_token,user,tables,draftTable,structureTable}) => {
     },[activeTab])
 
     // console.log(draftTable,'list',structureTable)
-   
+  const publishDraftTable = async(id)=>{
+      // alert(id)
+      try{
+         const res =   await masterTableApi.publishDraftTable(access_token,id)
+          console.log(res,'res')
+      }catch(err){
+        console.log(err,'err');
+      }
+     
+  }
   return (
     <>
         <MainLayout User={user} isScroll={true}>
@@ -200,7 +210,7 @@ const Page = ({access_token,user,tables,draftTable,structureTable}) => {
                   checkedData={checkedNewData}
                   responseData={(e) => onNewCheck(e)}
                   clickAll={clickAll}
-                  href={`/dashboard/master-table/table/single?`}
+                  href={`/dashboard/master-table/table/published?`}
                   onClick={(e) => console.log(e, "onclick")}
                   checkAllStatus={allClick}
                   totalDoc={list?.totalDocuments}
@@ -213,10 +223,12 @@ const Page = ({access_token,user,tables,draftTable,structureTable}) => {
                 />
           </div>}
               </div>}
+
+              {/* TABLE STRUCTURE */}
               {activeTab === "Table Structures" && <div>
                   
               {tableList.length  === 0 ? <NodataPage/> :<div>
-                <MasterTableLogs 
+                <MasterTableStructure 
                   response={tableList}
                   headerData={header}
                   href={'/dashboard/master-table/table/single?'}
@@ -250,32 +262,13 @@ const Page = ({access_token,user,tables,draftTable,structureTable}) => {
                       pageSize={draftTable?.totalPages}
                     onPageChange={handlePage}
                     onPageSize = {onPageSize}
-                    publishCall={(e)=> alert(e)}
+                    publishCall={publishDraftTable}
                   //  onDelete={(e)=> console.log(e,'delete')}
                   //  onEdit={(e)=> console.log(e)}
                       />
                     </div>}
               </div>}
               
-          {/* {tableList.length === 0 ?   <NodataPage text={'We have nothing here yet. Start by adding a Location. Know how?'}/> :<div className=''>
-          <SampleTableNew
-                  response={tableList}
-                  headerData={[{ name: "check", label: "" }, ...Header]}
-                  checkedData={checkedNewData}
-                  responseData={(e) => onNewCheck(e)}
-                  clickAll={clickAll}
-                  href={`/dashboard/master-table/table/single?`}
-                  onClick={(e) => console.log(e, "onclick")}
-                  checkAllStatus={allClick}
-                  totalDoc={list?.totalDocuments}
-                  currentPage={page}
-                  start={list.startSerialNumber}
-                  end={list.endSerialNumber}
-                  pageSize={list?.totalPages}
-                 onPageChange={handlePage}
-                 onPageSize = {onPageSize}
-                />
-          </div>} */}
             {/* <ModifyTableCall open={isOpen} onClose={()=> setIsOpen(!isOpen)} data={tableList}/> */}
          </div>
         </MainLayout>
