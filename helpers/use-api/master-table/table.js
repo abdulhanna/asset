@@ -25,14 +25,23 @@ masterTableApi.removeTableById = (access_token, id) => hostedAxios.delete(`/mast
     headers: { Cookie: access_token }
 })
 
-masterTableApi.uploadFile = (access_token, data) => hostedAxios.put(`master-table/uploadTableData`, data, {
+masterTableApi.uploadFile = (access_token, data) => hostedAxios.put(`/master-table/uploadTableData`, data, {
     headers: {
         'Content-Type': 'multipart/form-data',
         Cookie: access_token
     }
 })
 
-masterTableApi.discardDraft = (access_token, id) => hostedAxios.delete(`/master-table/deleteDraftTable/${id}`, {
+masterTableApi.uploadTableStructure = (access_token, data) => hostedAxios.put(`/master-table/uploadandCreateTable`, data, {
+    headers: {
+        'Content-Type': 'multipart/form-data',
+        Cookie: access_token
+    }
+})
+
+
+
+masterTableApi.discardDraft = (access_token, id) => hostedAxios.delete(`/master-table/discardDraftTable/${id}`, {
     headers: { Cookie: access_token }
 })
 

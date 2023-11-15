@@ -16,7 +16,7 @@ const classes = {
     tbody: "bg-white cursor-pointer",
     tr: "text-[#121212] font-body text-sm text-left ",
     th: "px-6 py-4  truncate",
-    td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white",
+    td: "px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white min-w-[200px] max-w-[400px]",
   };
 
 
@@ -81,13 +81,23 @@ const TableRow = (props) => {
     const code = props.obj['parentcode']
     // console.log(code, "header");
     return (
-      <tr className={`${(code === "" || code ===undefined) ? "text-red-300":""} ${classes.tr}`}>
+      <tr className={`${(code === "" || code ===undefined) ? "text-red-300":"text-black"} ${classes.tr}`}>
         {headerkey.map((head, index) => {
           {/* console.log(head,'head') */}
           return (
             <>
+            {/* {index === 0 ? (
+              <td className="">
+                <div className="flex flex-row">
+                  <RowHandler />
+                  {props.obj[head]}
+                </div>
+              </td>
+            ) : (
+              <td className="">{props.obj[head]}</td>
+            )} */}
               {
-                <td  className={`px-6 py-4 text-sm font-normal  tracking-tighter turncate  border-t border-white`}>
+                <td  className={`${classes.td}`}>
                 <div className="flex justify-between">
                 {index === 0 ? <div className="flex gap-2">
                     <RowHandler />
@@ -272,11 +282,12 @@ const ITEMS = [
           </thead>
           <SortableCont
             onSortEnd={onSortEnd}
+
             axis="y"
             lockAxis="y"
             lockToContainerEdges={true}
             lockOffset={["30%", "50%"]}
-            helperClass="bg-blue-400 text-red-200"
+            helperClass="bg-blue-400 text-red-200 w-auto"
             useDragHandle={true}
           >
             {items.map((value, index) => {
