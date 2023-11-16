@@ -218,8 +218,19 @@ const SingleTable = ({access_token,user,table}) => {
       // }
   }
 
-  const handleSubmitFile = (e)=>{
-    alert(e)
+  const handleSubmitFile = async(e)=>{
+
+    try{
+        const res = await masterTableApi.modifyTable(access_token,id,{masterTableData:masterTable.masterTableData,publishStatus:e})
+        console.log(res,'res')
+        if(res.status == '200'){
+                 notify('table modified')
+            }
+    }catch(err){
+      // console.log(err,'err')
+      Error(err?.response?.data?.error)
+    }
+    // alert(e)
   }
 
   const addRow = (data)=>{
