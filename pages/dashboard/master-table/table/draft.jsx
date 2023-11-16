@@ -53,7 +53,7 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
   
     console.log(tableRow,'row')
   
-  
+   
   
    return (
      <DialogPage width='min-w-[400px]' open={open} close={onClose}>
@@ -61,8 +61,10 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
          {/* {JSON.stringify(row)} */}
              <div className='text-center'><Text1 color='text-primary' size='2xl'>Modify</Text1></div>
              <div>
-                 {arr.map((cur,index)=>{
-                   return(<TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  key={index}/>)
+                 {arr?.map((cur,index)=>{
+                   return(<div  key={index}>
+                    <TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange} />
+                   </div>)
                  })}
                {/* <TextField label='Code No' value={tableRow?.code}/>
                <TextField label='Block of Asset (Description)' value={tableRow.description}/>
@@ -114,7 +116,9 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
            </div>
            <div>
                   {arr?.map((cur,index)=>{
-                    return(<TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  key={index}/>)
+                    return(<div key={index}>
+                      <TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  />
+                    </div>)
                   })}
           
            </div>

@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from 'react'
+import React, { useState, Fragment, useRef, useEffect } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import { LeftArrowIcon } from '@/components/atoms/icons'
@@ -14,7 +14,7 @@ import { FieldActionTable } from '@/components/organism/tablecomp'
 import { DateTime } from 'luxon'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-
+import { Homeskeleton } from '@/components/organism/Homeskeleton';
 
 
 
@@ -23,12 +23,11 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 const AddInputField = ({ open, getAllgroups, close, showData, setShow }) => {
 
     const getData = ({ data }) => {
-
         console.log(data, "yes this dta")
     }
 
     const handleSave = (data) => {
-        console.log(data, "this is data")
+        console.log(data, "this is data for custom data")
         showData(data)
 
         setShow(true)
@@ -54,7 +53,6 @@ const EditStepform = ({ open, editStep, getAllgroups, close, setShow, handleSave
     }
 
 
-
     return (
         <>
             <DialogPage open={open} close={close}>
@@ -63,7 +61,6 @@ const EditStepform = ({ open, editStep, getAllgroups, close, setShow, handleSave
         </>
     )
 }
-
 
 
 // Confirm Delete MOdal
@@ -169,6 +166,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
     const [deleteOPen, setDeleteOpen] = useState(false);
     const [deleteid, setDeleteid] = useState('')
     const [stepId, setStepId] = useState('')
+    const [loading, setLoading] = useState(false)
 
     console.log(steps, "this is a step")
 
@@ -182,7 +180,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
     ];
 
     const notify = (msg) => toast.success(msg)
-    // const error = (msg) => toast.danger(msg)
+    const error = (msg) => toast.error(msg)
 
     const router = useRouter()
 
@@ -196,12 +194,11 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
             const res = await field.addStep(access_token, data)
             console.log(res)
             notify(res.data.message)
-            // router.push('/dashboard/root/field-management')
+            router.reload()
         } catch (e) {
             console.log(e)
-
+            error(e.response.data.error)
         }
-
     }
 
     const editStep = async (e) => {
@@ -211,6 +208,7 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
             console.log(res?.data?.formStepDataById, "this is a stepdetaild by id")
             setStepData(res?.data?.formStepDataById)
             notify(res.data.message)
+            router.reload()
             // router.push('/dashboard/root/field-management')
         } catch (e) {
             console.log(e)
@@ -228,11 +226,12 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
             console.log(res, "this is data")
             notify("Updated Successfully")
 
-            setTimeout(() => {
-                router.reload()
-            }, 1000)
+            // setTimeout(() => {
+            //     router.reload()
+            // }, 1000)
         } catch (e) {
             console.log(e)
+            error(e.response.data.error)
         }
         setShow(true)
         close()
@@ -264,6 +263,14 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
         router.push('formPreview')
     }
 
+    useEffect(() => {
+        setLoading(true)
+        const wait = setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+        return () => clearTimeout(wait)
+    }, [])
+
     console.log(stepData, "this is edit step")
 
     return (
@@ -278,14 +285,14 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
                                 Form Managment
                             </Text1>
                         </div>
-                        <div className='ml-6'>
-                            <Text1 size="xs" weight="normal">
+                        <div >
+                            <Text1 size="xs" weight="normal" className='ml-4'>
                                 Form Managment
                             </Text1>
                         </div>
                     </div>
                     <div>
-                        <Button onClick={handleAddButtonClick} variant="contained" className="mr-3"> ADD STEPS</Button>
+                        <Button onClick={handleAddButtonClick} variant="contained" className="mr-3">+ ADD STEPS</Button>
 
                         <Button onClick={handlePreview} className="mb-2 bg-green-500 hover:border-green-500 hover:bg-[#7CC270] hover:text-white px-6 py-2 rounded transition transform  ">
                             FORM PREVIEW
@@ -295,44 +302,54 @@ const FieldGroup = ({ user, access_token, allgroups, allSteps }) => {
                 </div>
 
                 {
-                    steps.length == 0 ?
+                    loading == false ?
                         <>
-                            <div className=' rounded-md flex items-center justify-center inset-y-2/4 inset-x-2/4  mt-[320px] overflow-hidden'>
-                                <div className='text-center'>
-                                    <Nodata className={'flex justify-center'} />
-                                    <div className='mt-3'>
-                                        <span className='text-gray-600'> No Added Sub-group</span>
+                            {
+                                steps.length == 0 ?
+                                    <>
+                                        <div className=' rounded-md flex items-center justify-center inset-y-2/4 inset-x-2/4  mt-[320px] overflow-hidden'>
+                                            <div className='text-center'>
+                                                <Nodata className={'flex justify-center'} />
+                                                <div className='mt-3'>
+                                                    <span className='text-gray-600'> No Added Sub-group</span>
 
-                                    </div>
-                                </div>
+                                                </div>
+                                            </div>
 
-                            </div>
+                                        </div>
+                                    </>
+                                    :
+                                    <>
+
+                                        <FieldActionTable
+                                            className="py-0"
+                                            response={steps.map((row) => {
+                                                return (
+                                                    {
+                                                        ...row,
+                                                        createdAt: DateTime.fromISO(row.createdAt).toFormat('dd-MM-yy, hh:mm:a'),
+                                                    }
+                                                )
+                                            })}
+                                            headers={Headersteps}
+                                            // checkedData={checkedNewData}
+                                            // responseData={(e) => onNewCheck(e)}
+                                            //  clickAll={clickAll}
+                                            onClick={(e) => console.log(e, 'clickAll')}
+                                            //  checkAllStatus={allClick}
+                                            onDelete={Delete}
+                                            onEdit={editStep}
+
+                                        />
+
+                                    </>
+                            }
                         </>
                         :
                         <>
-
-                            <FieldActionTable
-                                className="py-0"
-                                response={steps.map((row) => {
-                                    return (
-                                        {
-                                            ...row,
-                                            createdAt: DateTime.fromISO(row.createdAt).toFormat('dd-MM-yy, hh:mm:a'),
-                                        }
-                                    )
-                                })}
-                                headers={Headersteps}
-                                // checkedData={checkedNewData}
-                                // responseData={(e) => onNewCheck(e)}
-                                //  clickAll={clickAll}
-                                onClick={(e) => console.log(e, 'clickAll')}
-                                //  checkAllStatus={allClick}
-                                onDelete={Delete}
-                                onEdit={editStep}
-
-                            />
-
+                            <Homeskeleton />
                         </>
+
                 }
 
                 <EditStepform getAllgroups={allgroups} open={editPopup} editStep={stepData} close={() => setEditPopup(false)} setShow={setShow} handleSave={handleUpdate} />

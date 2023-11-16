@@ -78,9 +78,6 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
 
 const RowAdd = ({open,onClose,row,addRow})=>{
   const [dataRow,setDataRow] = useState(row)
-  const [name, setName] = useState('')
-
-
 
   let arr = []
   if(row){
@@ -89,7 +86,7 @@ const RowAdd = ({open,onClose,row,addRow})=>{
       if(key !== '_id'){
          a['label']  = key
          a['value'] = value
-          // console.log(`${key}: ${value}`) 
+          console.log(`${key}: ${value}`) 
          arr.push(a)
       }
   }
@@ -99,11 +96,11 @@ const RowAdd = ({open,onClose,row,addRow})=>{
     setDataRow({...dataRow,[e.target.name]: e.target.value })
    },[dataRow])
   useEffect(()=>{
-   
-    console.log(dataRow,'arrr')
-  },[dataRow])
+     console.log('arrr',row)
+  
+  },[])
 
-
+   console.log(arr,'end')
   return (
     <DialogPage width='min-w-[400px]' open={open} close={onClose}>
       <div className='space-y-4 px-8'>
@@ -112,7 +109,7 @@ const RowAdd = ({open,onClose,row,addRow})=>{
          {/* {JSON.stringify(arr)} */}
          </div>
          <div>
-                {arr?.map((cur,index)=>{
+                {arr.length >0 && arr.map((cur,index)=>{
                   return(<div key={index}>
                     <TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  />
                   </div>)

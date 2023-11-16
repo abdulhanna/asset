@@ -1289,7 +1289,7 @@ export const ForgetPasswordIcon = ({ className }) => {
 
 export const Handler = ({className})=>{
   return <span className={className}>
-       <svg width="24px" height="24px" viewBox="-5.76 -5.76 35.52 35.52" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#918d8d"><g id="SVGRepo_bgCarrier" strokeWidth="0"><rect x="-5.76" y="-5.76" width="35.52" height="35.52" rx="1.4208" fill="#cee2e8" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 10H19M14 19L12 21L10 19M14 5L12 3L10 5M5 14H19" stroke="#000000" strokeWidth="0.8399999999999999" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+       <svg width="24px" height="24px" viewBox="-5.76 -5.76 35.52 35.52" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#918d8d"><g id="SVGRepo_bgCarrier" strokeWidth="0"><rect x="-5.76" y="-5.76" width="35.52" height="35.52" rx="1.4208" fill="#cee2e8" strokeWidth="0"></rect></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 10H19M14 19L12 21L10 19M14 5L12 3L10 5M5 14H19" stroke="#000000" strokeWidth="0.8399999999999999" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
   </span>
 }
 

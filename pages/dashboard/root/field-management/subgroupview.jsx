@@ -31,6 +31,8 @@ const Groupview = (allgroups) => {
 
   const [textHigh, setTextHigh] = useState(false);
   const [loading, setLoading] = useState(false)
+  const [isActive, setIsActive] = useState(false)
+  const [accordionId, setAccordionId] = useState()
 
   // console.log(allgroups?.allgroups, "this is daaa field managment")
 
@@ -64,9 +66,15 @@ const Groupview = (allgroups) => {
 
   // Manage Group Functions:
 
-  const ManageGroup = (id) => {
-    console.log(id, "this is id")
+  const ManageGroup = (e) => {
+    console.log(e)
   }
+
+  const clickItem = (id) => {
+
+    console.log(id, "this is clickID")
+  }
+
 
 
   useEffect(() => {
@@ -112,7 +120,10 @@ const Groupview = (allgroups) => {
                         handleClick={ManageGroup}
                         data={component}
                         key={index}
-                        id={component._id}>
+                        id={component._id}
+                        clickItem={clickItem}
+
+                      >
 
                         <div className=''>
                           {

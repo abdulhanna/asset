@@ -6,7 +6,7 @@ const SkeletonItem = () => {
     return (
         <section>
             <h2 className="section-title">
-                <Skeleton duration={1} height={100} />
+                <Skeleton duration={1} height={50} />
             </h2>
             {/* <h2 className="section-title mt-4">
                 <Skeleton duration={1} height={220} />
@@ -15,13 +15,13 @@ const SkeletonItem = () => {
             {/* <h2 className="section-title mt-4">
                 <Skeleton duration={1} height={220} />
             </h2> */}
-            <ul className="list  grid grid-cols-4 gap-4 mt-4">
-                {Array(36)
+            <ul className="list  grid grid-cols-5 gap-5 mt-4">
+                {Array(35)
                     .fill()
                     .map((item, index) => (
                         <div key={index}>
-                            <li className="card" key={index}>
-                                <Skeleton height={50} />
+                            <li className="card p-3" key={index}>
+                                <Skeleton height={10} />
                             </li>
                         </div>
                     ))}
@@ -36,22 +36,22 @@ export const Fieldskeleton = () => {
             <h2 className="section-title">
                 <Skeleton duration={1} height={50} />
             </h2>
-            <h2 className="section-title mt-4">
-                <Skeleton duration={1} height={80} />
+            <h2 className="section-title mt-4 p-2">
+                <Skeleton duration={1} height={30} />
             </h2>
 
-            <h2 className="section-title mt-4">
-                <Skeleton duration={1} height={80} />
-            </h2>
-
-
-            <h2 className="section-title mt-4">
-                <Skeleton duration={1} height={80} />
+            <h2 className="section-title mt-4 p-2">
+                <Skeleton duration={1} height={30} />
             </h2>
 
 
-            <h2 className="section-title mt-4">
-                <Skeleton duration={1} height={80} />
+            <h2 className="section-title mt-4 p-2">
+                <Skeleton duration={1} height={30} />
+            </h2>
+
+
+            <h2 className="section-title mt-4 p-2">
+                <Skeleton duration={1} height={30} />
             </h2>
 
         </section>

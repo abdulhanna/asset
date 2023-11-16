@@ -61,7 +61,7 @@ function FormPreview({ user, intialStep, stepsHead, access_token }) {
     const renderFields = (fields) => {
         return (
             <>
-                <div className="grid grid-cols-3 gap-5">
+                <div className="grid grid-cols-3 gap-5 items-baseline">
                     {
                         fields.map((field) => {
                             console.log(field.fieldInfo, "this is mandatory")
@@ -89,7 +89,7 @@ function FormPreview({ user, intialStep, stepsHead, access_token }) {
                                     return (
                                         <div key={field._id} className="mb-4">
                                             <label className="block text-gray-500 text-xs  '">{field.name}</label>
-                                            <select className="block w-full bg-white border border-gray-300 text-gray-500  rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                            <select className="block w-full h-[48px]  bg-white border border-gray-300 text-gray-500  rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                                 {field.listOptions.map((option, index) => (
                                                     <option key={index} value={option} >
                                                         {option}
