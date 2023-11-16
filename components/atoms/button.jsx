@@ -50,7 +50,7 @@ const Button = ({ href, id, children, className, size = 'md', variant = "primary
             "bg-red-200 text-red-600 rounded bg-transparent border border-red-500": variant === "danger",
             "bg-yellow-600 text-white rounded-sm": variant === "yellow",
             "bg-teal-700 text-white rounded-sm": variant === "teal",
-            "bg-green-500 text-white rounded-sm": variant === "green"
+            "bg-medium_green text-white rounded-sm": variant === "green"
         })} onClick={onClick} disabled={isDisabled}>
             {content}
         </button>

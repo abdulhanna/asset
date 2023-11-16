@@ -51,7 +51,7 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
     }
   
   
-    // console.log(tableRow,'row')
+    console.log(tableRow,'row')
   
   
   
@@ -101,7 +101,7 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
      },[dataRow])
     useEffect(()=>{
      
-      // console.log(dataRow,'arrr')
+      console.log(dataRow,'arrr')
     },[dataRow])
   
   
@@ -307,6 +307,27 @@ const onDelete = (pos)=>{
    
 }
 
+const saveDratTable = async()=>{
+  //  console.log(masterTable.masterTableData,'table')
+  try{
+    const res = await masterTableApi.editTable(access_token,id,{masterTableData:masterTable.masterTableData})
+
+    if(res.status == 200){
+      notify("Saved Successfully")
+      
+      setTimeout(()=>{
+        router.push('/dashboard/master-table/table')
+      },2000)
+    }
+     console.log(res,'res')
+  }catch(err){
+    console.log(err?.response?.data?.error,'err')
+    Error(err?.response?.data?.error)
+  }
+      // alert('save table')
+     
+}
+
 // console.log(table,'table');
   return (<MainLayout User={user}>
        <div>
@@ -326,7 +347,7 @@ const onDelete = (pos)=>{
                     <Button   onClick={()=> setIsOpen(true)}>ADD ROW</Button>
                     {/* <Button   onClick={()=> alert('upload')}>DOWNLOAD SAMPLE FILE</Button> */}
                     <Button   onClick={()=> setIsUpload(true)}>UPLOAD MASTER TABLE</Button>
-                    <Button variant='contained' onClick={()=>alert('dd')}>SAVE CHANGES</Button>
+                    <Button variant='contained' onClick={saveDratTable}>SAVE CHANGES</Button>
                 </div>
             </div>
 

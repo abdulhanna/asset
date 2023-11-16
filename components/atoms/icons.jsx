@@ -747,7 +747,7 @@ export const NewDeleteIcon = ({className ,onClick})=>{
    return <span className={className} onClick={onClick}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
   <path d="M5.25 5.25L6.1875 20.25C6.23203 21.1167 6.8625 21.75 7.6875 21.75H16.3125C17.1408 21.75 17.7595 21.1167 17.8125 20.25L18.75 5.25" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
-  <path d="M3.75 5.25H20.25" stroke="#FC5555" stroke-miterlimit="10" strokeLinecap="round"/>
+  <path d="M3.75 5.25H20.25" stroke="#FC5555" strokeMiterlimit="10" strokeLinecap="round"/>
   <path d="M9 5.25V3.375C8.99957 3.22715 9.02838 3.08066 9.08476 2.94397C9.14114 2.80729 9.22399 2.6831 9.32854 2.57854C9.4331 2.47399 9.55729 2.39114 9.69397 2.33476C9.83066 2.27838 9.97715 2.24957 10.125 2.25H13.875C14.0229 2.24957 14.1693 2.27838 14.306 2.33476C14.4427 2.39114 14.5669 2.47399 14.6715 2.57854C14.776 2.6831 14.8589 2.80729 14.9153 2.94397C14.9716 3.08066 15.0004 3.22715 15 3.375V5.25" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
   <path d="M12 8.25V18.75" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
   <path d="M8.625 8.25L9 18.75" stroke="#FC5555" strokeLinecap="round" strokeLinejoin="round"/>
@@ -829,8 +829,8 @@ export const DragDropArrow = ({ className }) => {
     <span className={className}>
       <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="26" cy="26" r="26" fill="#527CE5" />
-        <path d="M16.5 25.25L25.5 16.25L34.5 25.25" stroke="#FEFEFE" stroke-width="2" stroke-miterlimit="10" strokeLinecap="square" />
-        <path d="M25.5 17.5V35.75" stroke="#FEFEFE" stroke-width="2" stroke-miterlimit="10" strokeLinecap="square" />
+        <path d="M16.5 25.25L25.5 16.25L34.5 25.25" stroke="#FEFEFE" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="square" />
+        <path d="M25.5 17.5V35.75" stroke="#FEFEFE" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="square" />
       </svg>
 
     </span>
@@ -1289,7 +1289,7 @@ export const ForgetPasswordIcon = ({ className }) => {
 
 export const Handler = ({className})=>{
   return <span className={className}>
-       <svg width="24px" height="24px" viewBox="-5.76 -5.76 35.52 35.52" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#918d8d"><g id="SVGRepo_bgCarrier" stroke-width="0"><rect x="-5.76" y="-5.76" width="35.52" height="35.52" rx="1.4208" fill="#cee2e8" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 10H19M14 19L12 21L10 19M14 5L12 3L10 5M5 14H19" stroke="#000000" stroke-width="0.8399999999999999" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+       <svg width="24px" height="24px" viewBox="-5.76 -5.76 35.52 35.52" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#918d8d"><g id="SVGRepo_bgCarrier" strokeWidth="0"><rect x="-5.76" y="-5.76" width="35.52" height="35.52" rx="1.4208" fill="#cee2e8" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 10H19M14 19L12 21L10 19M14 5L12 3L10 5M5 14H19" stroke="#000000" strokeWidth="0.8399999999999999" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
   </span>
 }
 
@@ -3172,7 +3172,7 @@ export const PlusSign = ({className,onClick})=>{
 
   return <span className={className} onClick={onClick}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M21 12C21 7.03125 16.9688 3 12 3C7.03125 3 3 7.03125 3 12C3 16.9688 7.03125 21 12 21C16.9688 21 21 16.9688 21 12Z" stroke="#3B5FDA" stroke-miterlimit="10"/>
+        <path d="M21 12C21 7.03125 16.9688 3 12 3C7.03125 3 3 7.03125 3 12C3 16.9688 7.03125 21 12 21C16.9688 21 21 16.9688 21 12Z" stroke="#3B5FDA" strokeMiterlimit="10"/>
         <path d="M12 8.25V15.75" stroke="#3B5FDA" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M15.75 12H8.25" stroke="#3B5FDA" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>

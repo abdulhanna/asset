@@ -49,7 +49,11 @@ masterTableApi.publishDraftTable = (access_token, id) => hostedAxios.put(`/maste
     headers: { Cookie: access_token }
 })
 
-masterTableApi.modifyTable = (access_token, id, data) => hostedAxios.put(`master-table/modifyTable/${id}`, data, {
+masterTableApi.modifyTable = (access_token, id, data) => hostedAxios.put(`/master-table/modifyTable/${id}`, data, {
+    headers: { Cookie: access_token }
+})
+
+masterTableApi.editTable = (access_token, id, data) => hostedAxios.put(`/master-table/editTable/${id}`, data, {
     headers: { Cookie: access_token }
 })
 
