@@ -96,11 +96,11 @@ const RowAdd = ({open,onClose,row,addRow})=>{
     setDataRow({...dataRow,[e.target.name]: e.target.value })
    },[dataRow])
   useEffect(()=>{
-     console.log('arrr',row)
+    //  console.log('arrr',row)
   
   },[])
 
-   console.log(arr,'end')
+   console.log(arr,'end',row)
   return (
     <DialogPage width='min-w-[400px]' open={open} close={onClose}>
       <div className='space-y-4 px-8'>
@@ -109,7 +109,7 @@ const RowAdd = ({open,onClose,row,addRow})=>{
          {/* {JSON.stringify(arr)} */}
          </div>
          <div>
-                {arr.length >0 && arr.map((cur,index)=>{
+                {arr.length > 0 && arr.map((cur,index)=>{
                   return(<div key={index}>
                     <TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  />
                   </div>)
@@ -288,7 +288,7 @@ const SingleTable = ({access_token,user,table}) => {
      setMasterTable({...masterTable,masterTableData:a})
      
   }
-// console.log(masterTable,'id')
+console.log(head,'head')
   
   return (
    <MainLayout User={user}>
