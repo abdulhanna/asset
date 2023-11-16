@@ -129,7 +129,7 @@ import UploadFile from '@/components/organism/uploadFile'
 // }
 
 
-const UploadDocs  = ({open,onClose,handleSubmit})=>{
+const UploadDocs  = ({open,onClose,handleSubmit,donwloadLink})=>{
   const [file,setFile] = useState(null)
 
 
@@ -147,12 +147,14 @@ const UploadDocs  = ({open,onClose,handleSubmit})=>{
   const handleDownload = async () => {
     try {
       // Trigger the download by opening the API route in a new window or tab
-      const downloadUrl = fileModel.SampleFile;
+      const downloadUrl = donwloadLink;
       window.open(downloadUrl, '_blank');
     } catch (error) {
       console.error('Error downloading file:', error);
     }
    };
+
+   console.log(donwloadLink,'link')
    
     return <DialogPage width={'w-[500px]'} open={open} close={onClose}>
           <div className='space-y-8'>
@@ -255,6 +257,7 @@ const SingleTable = ({access_token,user,table}) => {
       // console.log(file,'file');
       formData.append('file',file)
       formData.append('tableCodeId',table.tableCodeId)
+      formData.append('publishStatus','unpublished')
 
       try{
          const res = await masterTableApi.uploadTableStructure(access_token,formData)
@@ -293,7 +296,7 @@ const SingleTable = ({access_token,user,table}) => {
      },[])
 
 
-    // console.log(table,'table')
+    // console.log(table.sampleFile,'table')
   return (
    <MainLayout User={user}>
      <div>
@@ -358,7 +361,7 @@ const SingleTable = ({access_token,user,table}) => {
 
 {/* { isActive && <ModifyComponent open={isActive} onClose={()=> setIsActive(!isActive)} row={row} updateData={updateHandle} header={head}/>} */}
 {/* {isOpen &&   <RowAdd open={isOpen} onClose={()=> setIsOpen(!isOpen)} row={row} addRow={addRow}/>} */}
-{isUpload &&  <UploadDocs open={isUpload} onClose={()=> setIsUpload(!isUpload)} handleSubmit={handleSubmit}/>}
+{isUpload &&  <UploadDocs open={isUpload} onClose={()=> setIsUpload(!isUpload)} handleSubmit={handleSubmit} donwloadLink={table.sampleFile}/>}
      </div>
    </MainLayout>
   )

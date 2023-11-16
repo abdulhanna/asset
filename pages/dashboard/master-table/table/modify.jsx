@@ -22,10 +22,8 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
  useEffect(()=>{
      let obj = {}
   for(const [key,value] of Object.entries(header)){
-          obj[key] = tableRow[key] ? tableRow[key] : ""
-      
+          obj[key] = tableRow[key] ? tableRow[key] : ""   
   }
-
   setTableRow(obj)
       // console.log(header,'heade',tableRow)
  },[])
@@ -52,7 +50,7 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
   }
 
 
-  // console.log(tableRow,'row')
+  console.log(tableRow,'row')
 
 
 
@@ -102,7 +100,7 @@ const RowAdd = ({open,onClose,row,addRow})=>{
    },[dataRow])
   useEffect(()=>{
    
-    // console.log(dataRow,'arrr')
+    console.log(dataRow,'arrr')
   },[dataRow])
 
 
@@ -115,7 +113,9 @@ const RowAdd = ({open,onClose,row,addRow})=>{
          </div>
          <div>
                 {arr?.map((cur,index)=>{
-                  return(<TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  key={index}/>)
+                  return(<div key={index}>
+                    <TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  />
+                  </div>)
                 })}
         
          </div>
@@ -148,7 +148,7 @@ const SubmitTable = ({open,onClose,handleSubmitFile})=>{
                 onClose();
                 handleSubmitFile('unpublished')
               }}>SAVE AS DRAFT</Button>
-              <Button className={'bg-medium_green text-white px-8'} onClick={()=>{
+              <Button variant='green' className={'px-8'} onClick={()=>{
                 onClose()
                 handleSubmitFile('published')
               }}>PUBLISH</Button>
