@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useRef,useCallback } from 'react'
+import React, { useState,useEffect,useRef,useCallback,useContext } from 'react'
 import MainLayout from 'proj-components/MainLayout'
 import authApi from 'helpers/use-api/auth'
 import Button from '@/components/atoms/button'
@@ -77,47 +77,84 @@ const ModifyComponent = ({open,onClose,row,updateData,header})=>{
 }
 
 const RowAdd = ({open,onClose,row,addRow})=>{
-  const [dataRow,setDataRow] = useState(row)
+  const {user,table,access_token} = useContext(ContextSinglePlan)
+  const [dataRow,setDataRow] = useState()
+  // const [head,setHead] = useState()
+  const element = useRef(false)
+  useEffect(()=>{
+    let dummy = {}
+    if(element.current){
+  
+        table.masterTableHeader.map((cur)=>{
+          dummy[cur.name] = ""
+          // console.log(cur.name,'cur')
+        })
+        // console.log(dummy)
+        setDataRow(dummy)
+      // console.log(table,'table')
+    }
 
-  let arr = []
-  if(row){
-    for (const [key, value] of Object.entries(dataRow)) {
-      let a = {}
-      if(key !== '_id'){
-         a['label']  = key
-         a['value'] = value
-          console.log(`${key}: ${value}`) 
-         arr.push(a)
-      }
-  }
-  }
+    return ()=>{
+      element.current = true
+    }
+  
+  },[])
+  // const [dataRow,setDataRow] = useState(row)
+
+  // let arr = []
+  // if(row){
+  //   for (const [key, value] of Object.entries(dataRow)) {
+  //     let a = {}
+  //     if(key !== '_id'){
+  //        a['label']  = key
+  //        a['value'] = value
+  //         console.log(`${key}: ${value}`) 
+  //        arr.push(a)
+  //     }
+  // }
+  // }
 
   const handleChange = useCallback((e)=>{
     setDataRow({...dataRow,[e.target.name]: e.target.value })
    },[dataRow])
-  useEffect(()=>{
-    //  console.log('arrr',row)
-  
-  },[])
-
-   console.log(arr,'end',row)
+ 
+  //  Object.entries(dataRow).map((cur)=>{
+  //   console.log(cur)
+  //  })
+   console.log(dataRow,'end')
   return (
     <DialogPage width='min-w-[400px]' open={open} close={onClose}>
       <div className='space-y-4 px-8'>
          <div className='text-center'>
          <Text1 size='2xl' color='text-primary'> Add Row</Text1>
-         {/* {JSON.stringify(arr)} */}
+         {/* {JSON.stringify(dataRow)} */}
          </div>
          <div>
+
+         { dataRow && Object.entries(dataRow).map(([key, value], index) => {
+        return (
+          <div key={index}>
+          <TextField label={key} name={key} value={value} onChange={handleChange}  />
+            {/* <label>{key}</label>
+            <input value={value} name={key} onChange={handleChange} /> */}
+          </div>
+        );
+         console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+      })}
+         </div>
+         {/* <div>
                 {arr.length > 0 && arr.map((cur,index)=>{
                   return(<div key={index}>
                     <TextField label={cur.label} name={cur.label} value={cur.value} onChange={handleChange}  />
                   </div>)
                 })}
         
-         </div>
+         </div> */}
         <div className='text-center'> <Button variant='contained' onClick={()=>{
           addRow(dataRow)
+          const emptyDataRow = Object.fromEntries(Object.keys(dataRow).map(key => [key, ""]));
+        setDataRow(emptyDataRow);
+          // setDataRow()
           onClose()
         }}>SAVE ROW</Button></div>
       </div>
@@ -154,7 +191,8 @@ const SubmitTable = ({open,onClose,handleSubmitFile})=>{
    </DialogPage>
   }
 
-const SingleTable = ({access_token,user,table}) => {
+const SingleTable = (props) => {
+  const {user,table,access_token} = useContext(ContextSinglePlan)
   const [isOpen,setIsOpen] = useState(false)
   const [isActive,setIsActive] = useState(false)
   const [masterTable,setMasterTable] = useState(table)
@@ -174,7 +212,7 @@ const SingleTable = ({access_token,user,table}) => {
       let dummy = {}
       if(element.current){
     
-          table.masterTableHeader?.map((cur)=>{
+          table?.masterTableHeader?.map((cur)=>{
             dummy[cur.name] = ""
             // console.log(cur.name,'cur')
           })
@@ -288,8 +326,8 @@ const SingleTable = ({access_token,user,table}) => {
      setMasterTable({...masterTable,masterTableData:a})
      
   }
-console.log(head,'head')
-  
+// console.log(head,'head')
+// console.log(master,'master');  
   return (
    <MainLayout User={user}>
      <div>
@@ -334,28 +372,11 @@ console.log(head,'head')
                   setIsOpen(true)
                 }}
          />
-        {/* <MasterTableComponent
-                   headers={tableHeader}
-              responseData={(e,id) => {
-                setRow(e)
-                 setSelectedId(id)
-                // console.log(e,id)
-              }}
-              body={masterTable?.masterTableData?.map((item) => {
-              return {
-                ...item,
-                // href: `id=${item.id}`,
-              };
-            })}
-            onClick={()=> setIsActive(true)}
-           /> */}
-         {/* {masterTable?.masterTableData?.length == 0 ? <NodataPage /> : <div>
-        
-         </div>} */}
+     
         </div>
         <ToastContainer/>
         { isActive && <ModifyComponent open={isActive} onClose={()=> setIsActive(!isActive)} row={row} updateData={updateHandle} header={head}/>}
-        {isOpen &&   <RowAdd open={isOpen} onClose={()=> setIsOpen(!isOpen)} row={head} addRow={addRow}/>}
+          <RowAdd open={isOpen} onClose={()=> setIsOpen(!isOpen)} row={head} addRow={addRow}/>
         {isSubmit && <SubmitTable open={isSubmit} onClose={()=> setIsSubmit(!isSubmit)} handleSubmitFile={handleSubmitFile}/>}
      </div>
    </MainLayout>
@@ -396,4 +417,17 @@ export const getServerSideProps = async (appCtx) => {
   }
 
 
-export default SingleTable
+  export const ContextSinglePlan = React.createContext(null);
+
+const ContextWrap = (props) => {
+
+    return <ContextSinglePlan.Provider value={props}>
+        <SingleTable />
+    </ContextSinglePlan.Provider>
+}
+
+
+export default ContextWrap;
+
+
+// export default SingleTable
